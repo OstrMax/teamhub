@@ -1,0 +1,161 @@
+"use client";
+
+import { useState } from "react";
+
+type CallRecord = {
+  id: number;
+  name: string;
+  extension: string;
+  type: "Personal" | "Directory";
+  typeColor: string;
+  direction: "incoming" | "outgoing" | "missed";
+  duration: string;
+  date: string;
+  time: string;
+};
+
+const callRecords: CallRecord[] = [
+  { id: 1, name: "Terry Crews", extension: "X9421", type: "Personal", typeColor: "#2CAD43", direction: "incoming", duration: "02:11", date: "5/11/2025", time: "1:22 AM" },
+  { id: 2, name: "Cameron Lopez", extension: "X1112", type: "Directory", typeColor: "#4A9EF5", direction: "missed", duration: "00:00", date: "4/11/2025", time: "8:21 AM" },
+  { id: 3, name: "Cameron Lopez", extension: "X1112", type: "Directory", typeColor: "#4A9EF5", direction: "missed", duration: "00:00", date: "4/11/2025", time: "8:21 AM" },
+  { id: 4, name: "Cameron Lopez", extension: "X1112", type: "Directory", typeColor: "#4A9EF5", direction: "missed", duration: "00:00", date: "4/11/2025", time: "8:21 AM" },
+  { id: 5, name: "Anneta Walson", extension: "X752", type: "Personal", typeColor: "#2CAD43", direction: "outgoing", duration: "00:33", date: "3/11/2025", time: "10:15 AM" },
+];
+
+const filterTabs = ["ALL", "MISSED", "INCOMING", "OUTGOING"] as const;
+
+export default function CallLog() {
+  const [activeFilter, setActiveFilter] = useState<string>("ALL");
+  const [search, setSearch] = useState("");
+
+  const filtered = callRecords.filter((r) => {
+    if (activeFilter === "MISSED") return r.direction === "missed";
+    if (activeFilter === "INCOMING") return r.direction === "incoming";
+    if (activeFilter === "OUTGOING") return r.direction === "outgoing";
+    return true;
+  });
+
+  return (
+    <div className="flex flex-col flex-1 overflow-hidden">
+      {/* Filter tabs */}
+      <div className="flex items-center gap-4 px-6 py-3 border-b border-[#E5E6E8]">
+        {filterTabs.map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveFilter(tab)}
+            className={`text-xs font-semibold tracking-wider transition-colors flex items-center gap-1 ${
+              activeFilter === tab
+                ? "text-[#001221]"
+                : "text-[#7F888F] hover:text-[#4C5863]"
+            }`}
+          >
+            {activeFilter === tab && (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#001221" strokeWidth="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            )}
+            {tab}
+          </button>
+        ))}
+      </div>
+
+      {/* Search */}
+      <div className="px-6 py-3">
+        <div className="flex items-center gap-2 px-4 py-2 bg-[#F2F2F3] rounded-lg">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            type="text"
+            placeholder="Search calls"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="flex-1 bg-transparent outline-none text-sm text-[#001221] placeholder:text-[#7F888F]"
+          />
+        </div>
+      </div>
+
+      {/* Table header */}
+      <div className="grid grid-cols-[1fr_100px_80px_120px_60px] gap-2 px-6 py-2 text-xs font-semibold text-[#7F888F] tracking-wider border-b border-[#E5E6E8]">
+        <span>TO / FROM</span>
+        <span>TYPE</span>
+        <span>DURATION</span>
+        <span>CALL TIME</span>
+        <span></span>
+      </div>
+
+      {/* Records */}
+      <div className="flex-1 overflow-y-auto">
+        {filtered.map((record) => (
+          <div
+            key={record.id}
+            className="grid grid-cols-[1fr_100px_80px_120px_60px] gap-2 items-center px-6 py-3 hover:bg-[#F2F2F3] transition-colors cursor-pointer group border-b border-[#F2F2F3]"
+          >
+            {/* Name & direction */}
+            <div className="flex items-center gap-3">
+              {/* Direction icon */}
+              <div className="shrink-0">
+                {record.direction === "incoming" && (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="2">
+                    <line x1="7" y1="17" x2="17" y2="7"/>
+                    <polyline points="7 7 7 17 17 17"/>
+                  </svg>
+                )}
+                {record.direction === "outgoing" && (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="2">
+                    <line x1="7" y1="17" x2="17" y2="7"/>
+                    <polyline points="17 17 17 7 7 7"/>
+                  </svg>
+                )}
+                {record.direction === "missed" && (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E53935" strokeWidth="2">
+                    <line x1="7" y1="17" x2="17" y2="7"/>
+                    <polyline points="7 7 7 17 17 17"/>
+                  </svg>
+                )}
+              </div>
+              <div>
+                <p className="text-sm font-medium text-[#001221]">{record.name}</p>
+                <span className="text-xs text-[#4C5863] bg-[#F2F2F3] px-1.5 py-0.5 rounded border border-[#E5E6E8] inline-block mt-0.5">
+                  {record.extension}
+                </span>
+              </div>
+            </div>
+
+            {/* Type */}
+            <div className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: record.typeColor }} />
+              <span className="text-sm text-[#001221]">{record.type}</span>
+            </div>
+
+            {/* Duration */}
+            <span className="text-sm text-[#001221]">{record.duration}</span>
+
+            {/* Call time */}
+            <div>
+              <p className="text-sm text-[#001221]">{record.date}</p>
+              <p className="text-xs text-[#7F888F]">{record.time}</p>
+            </div>
+
+            {/* Actions */}
+            <div className="flex items-center gap-1">
+              <button className="p-1 rounded hover:bg-[#E5E6E8] transition-colors">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="1.5">
+                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+                </svg>
+              </button>
+              <button className="p-1 rounded hover:bg-[#E5E6E8] transition-colors opacity-0 group-hover:opacity-100">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#4C5863">
+                  <circle cx="12" cy="5" r="1.5"/>
+                  <circle cx="12" cy="12" r="1.5"/>
+                  <circle cx="12" cy="19" r="1.5"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

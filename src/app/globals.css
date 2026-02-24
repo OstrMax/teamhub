@@ -1,26 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-background: #ffffff;
+  --color-foreground: #001221;
+  --color-primary-025: #E8EDF5;
+  --color-primary-900: #0B182E;
+  --color-black-050: #F2F2F3;
+  --color-black-100: #E5E6E8;
+  --color-black-200: #CCCFD2;
+  --color-black-500: #7F888F;
+  --color-black-600: #4C5863;
+  --color-black-900: #001221;
+  --color-success-400: #2CAD43;
+  --color-warning-400: #FCC624;
+  --color-warning-500: #FBBD00;
+  --color-green: #34C759;
+  --color-sidebar-bg: #2a1051;
+  --color-sidebar-active: #783a9b;
+  --color-sidebar-gradient-start: rgb(41, 15, 79);
+  --color-sidebar-gradient-mid1: rgb(112, 22, 156);
+  --color-sidebar-gradient-mid2: rgb(132, 25, 178);
+  --color-sidebar-gradient-end: rgb(180, 10, 131);
+  --font-inter: "Inter", sans-serif;
+  --font-manrope: "Manrope", sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-inter);
+  margin: 0;
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-black-200);
+  border-radius: 3px;
 }
