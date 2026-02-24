@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 type ContactStatus = "available" | "busy" | "ringing" | "away" | "offline";
 
@@ -45,7 +46,7 @@ const dialPadKeys = [
   { digit: "3", sub: "DEF" },
   { digit: "4", sub: "GHI" },
   { digit: "5", sub: "JKL" },
-  { digit: "6", sub: "MNO" },
+  { digit: "6", sub: "NMO" },
   { digit: "7", sub: "PQRS" },
   { digit: "8", sub: "TUV" },
   { digit: "9", sub: "WXYZ" },
@@ -59,120 +60,140 @@ export default function OperatorConsolePage() {
   const [activeTab, setActiveTab] = useState("Contacts");
   const [phoneInput, setPhoneInput] = useState("");
   const [gridView, setGridView] = useState(true);
+  const [showOngoingCall, setShowOngoingCall] = useState(true);
+  const [holdCalls, setHoldCalls] = useState([
+    { id: 1, name: "(416) 7638098", time: "00:00:02" },
+    { id: 2, name: "Terry Lowlance", time: "00:01:01" },
+  ]);
+
+  const handleEndCall = () => {
+    setShowOngoingCall(false);
+  };
+
+  const handlePickupHold = (id: number) => {
+    setHoldCalls((prev) => prev.filter((c) => c.id !== id));
+  };
 
   return (
     <div className="flex h-full overflow-hidden">
       {/* Left Panel - Dial Pad & Active Calls */}
-      <div className="w-[320px] shrink-0 border-r border-[#E5E6E8] flex flex-col h-full bg-white overflow-y-auto">
+      <div className="w-[300px] shrink-0 border-r border-[#E5E6E8] flex flex-col h-full bg-white overflow-y-auto">
         {/* Operator Header */}
         <div className="px-4 pt-4 pb-2">
           <div className="flex items-center gap-3">
             <h1 className="text-lg font-semibold text-[#001221]">Operator</h1>
-            <div className="flex items-center gap-1 text-sm text-[#4C5863]">
+            <button className="flex items-center gap-1 text-sm text-[#4C5863] hover:text-[#001221] transition-colors">
               <span>+12063127805</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
-            </div>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
           </div>
         </div>
 
         {/* Ongoing Call */}
-        <div className="px-4 py-2">
-          <span className="text-xs font-semibold text-[#001221]">Ongoing call</span>
-          <div className="mt-2 bg-[#1a0a2e] rounded-xl p-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-white text-sm font-medium">(416) 7638098</div>
-                <div className="text-white/60 text-xs mt-0.5">00:00:02</div>
+        {showOngoingCall && (
+          <div className="px-4 py-2 animate-[fadeIn_0.3s_ease-out]">
+            <span className="text-xs font-semibold text-[#001221]">Ongoing call</span>
+            <div className="mt-2 bg-[#1a0a2e] rounded-xl p-3 transition-all duration-300">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-white text-sm font-medium">(416) 7638098</div>
+                  <div className="text-white/60 text-xs mt-0.5">00:00:02</div>
+                </div>
+                <span className="px-2 py-0.5 bg-[#3B82F6]/20 text-[#60A5FA] text-[10px] font-medium rounded flex items-center gap-1">
+                  <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="7 17 2 12 7 7"/><polyline points="17 7 22 12 17 17"/></svg>
+                  External
+                </span>
               </div>
-              <span className="px-2 py-0.5 bg-[#3B82F6]/20 text-[#60A5FA] text-[10px] font-medium rounded flex items-center gap-1">
-                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="7 17 2 12 7 7"/><polyline points="17 7 22 12 17 17"/></svg>
-                External
-              </span>
-            </div>
-            <div className="flex items-center gap-2 mt-3">
-              <div className="flex items-center gap-1 bg-white/10 rounded-full px-3 py-1.5">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                <span className="text-white text-xs">Blind</span>
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
-              </div>
-              <button className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
-              </button>
-              <button className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="18" r="1"/></svg>
-              </button>
-              <button className="w-8 h-8 rounded-full bg-[#EF4444] flex items-center justify-center hover:bg-[#DC2626] ml-auto">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M23.71 16.67C20.66 13.78 16.54 12 12 12 7.46 12 3.34 13.78.29 16.67c-.18.18-.29.43-.29.71 0 .28.11.53.29.71l2.48 2.48c.18.18.43.29.71.29.27 0 .52-.11.7-.28.79-.74 1.69-1.36 2.66-1.85.33-.16.56-.5.56-.9v-3.1C8.69 14.25 10.32 14 12 14s3.31.25 4.9.72v3.1c0 .39.23.74.56.9.98.49 1.87 1.12 2.67 1.85.18.18.43.28.7.28.28 0 .53-.11.71-.29l2.48-2.48c.18-.18.29-.43.29-.71 0-.27-.11-.52-.29-.7z"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* On Hold */}
-        <div className="px-4 py-2">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-[#001221]">On Hold</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2"><polyline points="18 15 12 9 6 15"/></svg>
-          </div>
-          <div className="mt-2 space-y-2">
-            <div className="flex items-center justify-between bg-[#F8F0FF] rounded-lg px-3 py-2.5">
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-[#001221]">(416) 7638098</span>
-                <span className="text-xs text-[#7F888F]">00:00:02</span>
-              </div>
-              <button className="w-7 h-7 rounded-full bg-[#2a1051] flex items-center justify-center">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
-              </button>
-            </div>
-            <div className="flex items-center justify-between bg-[#F8F0FF] rounded-lg px-3 py-2.5">
-              <span className="text-sm text-[#001221]">Terry Lowlance</span>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-[#7F888F]">00:01:01</span>
-                <button className="w-7 h-7 rounded-full bg-[#2a1051] flex items-center justify-center">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
+              <div className="flex items-center gap-2 mt-3">
+                <button className="flex items-center gap-1 bg-white/10 rounded-full px-3 py-1.5 hover:bg-white/20 transition-colors active:scale-95">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  <span className="text-white text-xs">Blind</span>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <button className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors active:scale-95">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+                </button>
+                <button className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors active:scale-95">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="18" r="1"/></svg>
+                </button>
+                <button
+                  onClick={handleEndCall}
+                  className="w-8 h-8 rounded-full bg-[#EF4444] flex items-center justify-center hover:bg-[#DC2626] transition-all active:scale-90 ml-auto"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M23.71 16.67C20.66 13.78 16.54 12 12 12 7.46 12 3.34 13.78.29 16.67c-.18.18-.29.43-.29.71 0 .28.11.53.29.71l2.48 2.48c.18.18.43.29.71.29.27 0 .52-.11.7-.28.79-.74 1.69-1.36 2.66-1.85.33-.16.56-.5.56-.9v-3.1C8.69 14.25 10.32 14 12 14s3.31.25 4.9.72v3.1c0 .39.23.74.56.9.98.49 1.87 1.12 2.67 1.85.18.18.43.28.7.28.28 0 .53-.11.71-.29l2.48-2.48c.18-.18.29-.43.29-.71 0-.27-.11-.52-.29-.7z"/></svg>
                 </button>
               </div>
             </div>
           </div>
-        </div>
+        )}
 
-        {/* Phone input */}
-        <div className="px-4 py-3">
+        {/* On Hold */}
+        {holdCalls.length > 0 && (
+          <div className="px-4 py-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-[#001221]">On Hold</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2"><polyline points="18 15 12 9 6 15"/></svg>
+            </div>
+            <div className="mt-2 space-y-2">
+              {holdCalls.map((call) => (
+                <div
+                  key={call.id}
+                  className="flex items-center justify-between bg-[#F8F0FF] rounded-lg px-3 py-2.5 hover:bg-[#F0E4FF] transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-[#001221]">{call.name}</span>
+                    <span className="text-xs text-[#7F888F]">{call.time}</span>
+                  </div>
+                  <button
+                    onClick={() => handlePickupHold(call.id)}
+                    className="w-7 h-7 rounded-full bg-[#2a1051] flex items-center justify-center hover:bg-[#3d1a6e] transition-colors active:scale-90"
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Phone input - same style as Talk DialPad */}
+        <div className="px-6 pt-4 pb-2">
           <input
             type="text"
-            placeholder="Enter a name or number"
             value={phoneInput}
             onChange={(e) => setPhoneInput(e.target.value)}
-            className="w-full text-center text-lg text-[#001221] placeholder:text-[#7F888F] outline-none"
+            placeholder="Enter a name or number"
+            className="w-full text-center text-base text-[#7F888F] pb-2 outline-none placeholder:text-[#7F888F]"
           />
         </div>
 
-        {/* Dial Pad */}
-        <div className="flex-1 flex flex-col items-center px-8 pb-4">
-          <div className="grid grid-cols-3 gap-x-6 gap-y-2">
+        {/* Dial Pad - same style as Talk page */}
+        <div className="flex-1 flex flex-col items-center px-6 pb-4">
+          <div className="grid grid-cols-3 gap-3 mb-6">
             {dialPadKeys.map((key) => (
               <button
                 key={key.digit}
-                className="w-16 h-16 rounded-full flex flex-col items-center justify-center hover:bg-[#F2F2F3] transition-colors"
+                onClick={() => setPhoneInput((prev) => prev + key.digit)}
+                className="flex flex-col items-center justify-center w-16 h-16 rounded-full border border-[#E5E6E8] hover:bg-[#F2F2F3] active:bg-[#E5E6E8] active:scale-95 transition-all"
               >
-                <span className="text-2xl font-light text-[#001221]">{key.digit}</span>
-                {key.sub && <span className="text-[9px] tracking-[2px] text-[#7F888F] font-medium">{key.sub}</span>}
+                <span className="text-2xl font-medium text-[#001221]">{key.digit}</span>
+                {key.sub && (
+                  <span className="text-[10px] font-medium text-[#7F888F] tracking-wider">{key.sub}</span>
+                )}
               </button>
             ))}
           </div>
-          {/* Call button */}
-          <button className="w-16 h-16 rounded-full bg-[#34C759] flex items-center justify-center mt-2 hover:bg-[#2CAD43] transition-colors">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-              <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
-            </svg>
+          {/* Call button - same as Talk */}
+          <button className="w-14 h-14 rounded-full bg-[#2CAD43] hover:bg-[#259c3a] active:scale-90 flex items-center justify-center transition-all shadow-lg">
+            <Image src="/icons/call-button.svg" alt="Call" width={22} height={23} />
           </button>
         </div>
       </div>
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-full bg-white overflow-hidden">
-        {/* Tabs */}
-        <div className="flex items-center border-b border-[#E5E6E8] h-[70px]">
+        {/* Tabs - increased height and padding for breathing room */}
+        <div className="flex items-center border-b border-[#E5E6E8]">
           {[
             { label: "Contacts", icon: (
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
@@ -187,7 +208,7 @@ export default function OperatorConsolePage() {
             <button
               key={tab.label}
               onClick={() => setActiveTab(tab.label)}
-              className={`flex items-center gap-2 px-6 h-full text-sm font-medium transition-colors relative ${
+              className={`flex items-center gap-2 px-6 py-5 text-sm font-medium transition-colors relative ${
                 activeTab === tab.label
                   ? "text-[#2a1051]"
                   : "text-[#7F888F] hover:text-[#4C5863]"
@@ -196,7 +217,7 @@ export default function OperatorConsolePage() {
               <span className={activeTab === tab.label ? "text-[#2a1051]" : "text-[#7F888F]"}>{tab.icon}</span>
               {tab.label}
               {activeTab === tab.label && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#2a1051]" />
+                <div className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#2a1051] transition-all" />
               )}
             </button>
           ))}
@@ -209,9 +230,9 @@ export default function OperatorConsolePage() {
               <button
                 key={chip}
                 onClick={() => setActiveFilter(chip)}
-                className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors ${
+                className={`px-3 py-1 rounded-full text-xs font-semibold transition-all active:scale-95 ${
                   activeFilter === chip
-                    ? "bg-[#2a1051] text-white"
+                    ? "bg-[#2a1051] text-white shadow-sm"
                     : "bg-[#F2F2F3] text-[#4C5863] hover:bg-[#E5E6E8]"
                 }`}
               >
@@ -222,29 +243,29 @@ export default function OperatorConsolePage() {
               </button>
             ))}
           </div>
-          <button className="text-xs font-semibold text-[#001221] tracking-wider">EDIT GROUPS</button>
+          <button className="text-xs font-semibold text-[#001221] tracking-wider hover:text-[#2a1051] transition-colors">EDIT GROUPS</button>
         </div>
 
         {/* Search & View Toggle */}
         <div className="flex items-center gap-3 px-4 py-3">
-          <div className="flex-1 flex items-center gap-2 border border-[#E5E6E8] rounded-lg px-3 py-2.5">
+          <div className="flex-1 flex items-center gap-2 border border-[#E5E6E8] rounded-lg px-3 py-2.5 focus-within:border-[#2a1051] focus-within:ring-1 focus-within:ring-[#2a1051]/20 transition-all">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <input type="text" placeholder="Search contact" className="flex-1 outline-none text-sm text-[#001221] placeholder:text-[#7F888F]" />
           </div>
-          <div className="flex items-center gap-1">
-            <span className="text-sm text-[#4C5863] mr-1">All Contacts</span>
+          <button className="flex items-center gap-1 hover:text-[#2a1051] transition-colors">
+            <span className="text-sm text-[#4C5863]">All Contacts</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
+          </button>
           <div className="flex items-center border border-[#E5E6E8] rounded-lg overflow-hidden ml-2">
             <button
               onClick={() => setGridView(false)}
-              className={`p-2 ${!gridView ? "bg-[#F2F2F3]" : ""}`}
+              className={`p-2 transition-colors ${!gridView ? "bg-[#F2F2F3]" : "hover:bg-[#F9F9FA]"}`}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={!gridView ? "#001221" : "#7F888F"} strokeWidth="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
             </button>
             <button
               onClick={() => setGridView(true)}
-              className={`p-2 ${gridView ? "bg-[#F2F2F3]" : ""}`}
+              className={`p-2 transition-colors ${gridView ? "bg-[#F2F2F3]" : "hover:bg-[#F9F9FA]"}`}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={gridView ? "#001221" : "#7F888F"} strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
             </button>
@@ -265,20 +286,31 @@ export default function OperatorConsolePage() {
 }
 
 function ContactCard({ contact }: { contact: Contact }) {
+  const [hovered, setHovered] = useState(false);
+
   return (
-    <div className="rounded-lg hover:bg-[#F9F9FA] transition-colors">
+    <div
+      className="rounded-lg hover:bg-[#F9F9FA] transition-all duration-200 hover:shadow-sm"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       {/* Main row */}
       <div className="flex items-center gap-3 px-4 py-2">
         {/* Star */}
-        <svg width="16" height="16" viewBox="0 0 24 24" fill={contact.favorite ? "#F59E0B" : "none"} stroke={contact.favorite ? "#F59E0B" : "#CCCFD2"} strokeWidth="1.5">
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-        </svg>
+        <button className="transition-transform hover:scale-110 active:scale-90">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill={contact.favorite ? "#F59E0B" : "none"} stroke={contact.favorite ? "#F59E0B" : "#CCCFD2"} strokeWidth="1.5">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </button>
 
         {/* Avatar */}
         <div className="relative shrink-0">
           <div
-            className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-semibold"
-            style={{ backgroundColor: contact.avatarColor }}
+            className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-semibold transition-transform duration-200"
+            style={{
+              backgroundColor: contact.avatarColor,
+              transform: hovered ? "scale(1.05)" : "scale(1)",
+            }}
           >
             {contact.initials}
           </div>
@@ -302,7 +334,10 @@ function ContactCard({ contact }: { contact: Contact }) {
         </div>
 
         {/* Phone icon */}
-        <button className="p-1 shrink-0">
+        <button
+          className="p-1.5 shrink-0 rounded-full hover:bg-[#E5E6E8] transition-all active:scale-90"
+          style={{ opacity: hovered ? 1 : 0.6 }}
+        >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="1.5">
             <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
           </svg>
@@ -315,15 +350,16 @@ function ContactCard({ contact }: { contact: Contact }) {
           <span className="text-[10px] text-[#7F888F] font-medium">Incoming Calls</span>
           <div className="flex flex-wrap gap-1.5 mt-1">
             {contact.incomingCalls.map((call, i) => (
-              <span
+              <button
                 key={i}
-                className="inline-flex items-center gap-1.5 bg-[#34C759] text-white text-xs font-medium px-3 py-1 rounded-full"
+                className="inline-flex items-center gap-1.5 bg-[#34C759] text-white text-xs font-medium px-3 py-1 rounded-full hover:bg-[#2CAD43] active:scale-95 transition-all shadow-sm hover:shadow-md"
               >
                 {call}
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="white">
-                  <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="11" fill="white" fillOpacity="0.25"/>
+                  <path d="M16.01 13.38c-.73 0-1.42-.12-2.03-.33a.577.577 0 00-.61.14l-1.17 1.47c-1.83-.85-3.48-2.4-4.39-4.33l1.45-1.26c.17-.18.25-.47.14-.62-.27-.71-.36-1.5-.36-2.33 0-.34-.25-.59-.59-.59H6.19C5.65 5.53 5.2 5.77 5.2 6.19c0 5.79 4.73 10.51 10.51 10.51.42 0 .69-.43.69-.98v-1.75c0-.34-.25-.59-.59-.59z" fill="white" transform="translate(1,1) scale(0.85)"/>
                 </svg>
-              </span>
+              </button>
             ))}
           </div>
         </div>
