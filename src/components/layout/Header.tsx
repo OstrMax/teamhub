@@ -27,11 +27,11 @@ export default function Header() {
 
       <div className="flex-1" />
 
-      {/* Search bar */}
-      <div className="flex items-center h-8 w-[365px] bg-white/90 rounded-lg shadow-[0_1px_2px_rgba(0,0,0,0.08)] px-4">
-        <Image src="/icons/search.svg" alt="Search" width={16} height={16} />
-        <span className="ml-2 text-sm text-[#4C5863]">Search</span>
-      </div>
+      {/* Search bar - 80% opacity default, 100% on hover/focus */}
+      <button className="flex items-center h-8 w-[365px] bg-white/80 hover:bg-white focus:bg-white rounded-lg shadow-[0_1px_2px_rgba(0,0,0,0.08)] px-4 transition-all duration-200 group">
+        <Image src="/icons/search.svg" alt="Search" width={16} height={16} className="opacity-70 group-hover:opacity-100 transition-opacity" />
+        <span className="ml-2 text-sm text-[#4C5863] group-hover:text-[#001221] transition-colors">Search</span>
+      </button>
 
       <div className="flex-1" />
 

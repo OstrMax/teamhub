@@ -8,7 +8,7 @@ const navItems = [
   { icon: "/icons/home.svg", label: "Home", href: "/", iconSize: 24 },
   { icon: "/icons/chats.svg", label: "Chats", href: "/chats", iconSize: 24 },
   { icon: "/icons/talk.svg", label: "Talk", href: "/talk", iconSize: 28 },
-  { icon: "/icons/operator-console.svg", label: "Operator\nConsole", href: "/operator", iconSize: 32 },
+  { icon: "/icons/operator-console.svg", label: "Operator\nConsole", href: "/operator", iconSize: 32, extraPy: true },
   { icon: "/icons/meet.svg", label: "Meet", href: "/meet", iconSize: 24 },
   { icon: "/icons/sms.svg", label: "SMS", href: "/sms", iconSize: 24 },
   { icon: "/icons/files.svg", label: "Files", href: "/files", iconSize: 24 },
@@ -27,11 +27,14 @@ export default function Sidebar() {
 
       {navItems.map((item) => {
         const isActive = pathname.startsWith(item.href) && (item.href !== "/" || pathname === "/");
+        const extraPy = "extraPy" in item && item.extraPy;
         return (
           <Link
             key={item.href}
             href={item.href}
-            className={`flex flex-col items-center justify-center gap-1 w-14 h-14 rounded-lg relative no-underline transition-colors ${
+            className={`flex flex-col items-center justify-center gap-1 w-14 rounded-lg relative no-underline transition-colors ${
+              extraPy ? "py-1.5 my-1" : "h-14"
+            } ${
               isActive ? "bg-[#783a9b]" : "hover:bg-white/10"
             }`}
           >
@@ -51,7 +54,7 @@ export default function Sidebar() {
             >
               {item.label}
             </span>
-            {item.badge && (
+            {"badge" in item && item.badge && (
               <span className="absolute top-[6px] right-[10px] w-2.5 h-2.5 bg-[#fcc624] border-2 border-[#831ab1] rounded-full" />
             )}
           </Link>
