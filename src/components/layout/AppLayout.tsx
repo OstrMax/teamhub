@@ -5,6 +5,7 @@ import Image from "next/image";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import AIAssistPanel from "@/components/ai/AIAssistPanel";
+import WalkthroughBubbles from "@/components/walkthrough/WalkthroughBubbles";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [aiPanelOpen, setAiPanelOpen] = useState(false);
@@ -39,6 +40,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </div>
+
+      {/* Walkthrough tooltips */}
+      <WalkthroughBubbles />
     </div>
   );
 }

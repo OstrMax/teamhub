@@ -98,46 +98,13 @@ function EventsContent({
     <>
       {/* Header */}
       <div className="px-6 pt-5 pb-4">
-        <div className="flex items-center justify-between mb-4">
+        {/* Row 1: Title + status + controls */}
+        <div className="flex items-center justify-between mb-1">
           <div className="flex items-center gap-3">
             <h1 className="text-[22px] font-semibold text-[#001221]">Events</h1>
-            <div className="flex items-center gap-2 text-[13px]">
-              <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#2CAD43]" />
-                <span className="text-[#4C5863]">Today 2 events done</span>
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#3B82F6]" />
-                <span className="text-[#4C5863]">3 scheduled</span>
-              </span>
-            </div>
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Events toggle */}
-            <div className="flex items-center bg-[#F2F2F3] rounded-full p-0.5">
-              <button
-                onClick={() => setEventsTab("upcoming")}
-                className={`px-4 py-1.5 rounded-full text-[13px] font-medium transition-all ${
-                  eventsTab === "upcoming"
-                    ? "bg-white text-[#001221] shadow-sm"
-                    : "text-[#7F888F] hover:text-[#4C5863]"
-                }`}
-              >
-                Upcoming
-              </button>
-              <button
-                onClick={() => setEventsTab("past")}
-                className={`px-4 py-1.5 rounded-full text-[13px] font-medium transition-all ${
-                  eventsTab === "past"
-                    ? "bg-white text-[#001221] shadow-sm"
-                    : "text-[#7F888F] hover:text-[#4C5863]"
-                }`}
-              >
-                Past events
-              </button>
-            </div>
-
             {/* All events dropdown */}
             <button className="flex items-center gap-1.5 text-[13px] text-[#4C5863] hover:text-[#001221] transition-colors">
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
@@ -162,35 +129,74 @@ function EventsContent({
           </div>
         </div>
 
-        {/* Action buttons */}
-        <div className="flex items-center gap-4">
-          <button className="flex flex-col items-center gap-2 group">
-            <div className="w-14 h-14 rounded-2xl bg-[#FEE2E2] flex items-center justify-center group-hover:shadow-md group-active:scale-95 transition-all">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="6" width="13" height="10" rx="1.5" stroke="#DC2626" strokeWidth="1.5"/>
-                <path d="M16 10l4-3v10l-4-3" stroke="#DC2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <circle cx="9" cy="11" r="2" fill="#DC2626" opacity="0.6"/>
+        {/* Status badges */}
+        <div className="flex items-center gap-3 text-[13px] mb-4">
+          <span className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-[#2CAD43]" />
+            <span className="text-[#4C5863]">Today 2 events done</span>
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-[#3B82F6]" />
+            <span className="text-[#4C5863]">3 scheduled</span>
+          </span>
+        </div>
+
+        {/* Row 2: Centered Upcoming/Past toggle */}
+        <div className="flex items-center justify-center mb-6">
+          <div className="flex items-center bg-[#F2F2F3] rounded-full p-0.5">
+            <button
+              onClick={() => setEventsTab("upcoming")}
+              className={`px-5 py-2 rounded-full text-[13px] font-semibold transition-all ${
+                eventsTab === "upcoming"
+                  ? "bg-white text-[#001221] shadow-sm"
+                  : "text-[#7F888F] hover:text-[#4C5863]"
+              }`}
+            >
+              Upcoming
+            </button>
+            <button
+              onClick={() => setEventsTab("past")}
+              className={`px-5 py-2 rounded-full text-[13px] font-semibold transition-all ${
+                eventsTab === "past"
+                  ? "bg-white text-[#001221] shadow-sm"
+                  : "text-[#7F888F] hover:text-[#4C5863]"
+              }`}
+            >
+              Past events
+            </button>
+          </div>
+        </div>
+
+        {/* Row 3: Centered action buttons matching Figma exactly */}
+        <div className="flex items-center justify-center gap-10 mb-2">
+          {/* New meeting - coral/red circle with white video icon + red dot */}
+          <button className="flex flex-col items-center gap-2.5 group">
+            <div className="w-14 h-14 rounded-full bg-[#E85D56] flex items-center justify-center group-hover:shadow-lg group-hover:shadow-[#E85D56]/30 group-active:scale-95 transition-all relative">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M15 8v8H5V8h10m1-2H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4V7c0-.55-.45-1-1-1z" fill="white"/>
               </svg>
+              {/* Red recording dot */}
+              <span className="absolute top-2.5 right-2.5 w-2.5 h-2.5 bg-[#DC2626] rounded-full border border-white" />
             </div>
             <span className="text-[12px] font-medium text-[#001221]">New meeting</span>
           </button>
 
-          <button className="flex flex-col items-center gap-2 group">
-            <div className="w-14 h-14 rounded-2xl bg-[#DBEAFE] flex items-center justify-center group-hover:shadow-md group-active:scale-95 transition-all">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M12 5v14M5 12h14" stroke="#2563EB" strokeWidth="2" strokeLinecap="round"/>
+          {/* Join - dark navy circle with white + icon */}
+          <button className="flex flex-col items-center gap-2.5 group">
+            <div className="w-14 h-14 rounded-full bg-[#1D3E77] flex items-center justify-center group-hover:shadow-lg group-hover:shadow-[#1D3E77]/30 group-active:scale-95 transition-all">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M12 5v14M5 12h14" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
               </svg>
             </div>
             <span className="text-[12px] font-medium text-[#001221]">Join</span>
           </button>
 
-          <button className="flex flex-col items-center gap-2 group">
-            <div className="w-14 h-14 rounded-2xl bg-[#E0E7FF] flex items-center justify-center group-hover:shadow-md group-active:scale-95 transition-all">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="4" width="18" height="18" rx="2" stroke="#4F46E5" strokeWidth="1.5"/>
-                <path d="M3 9h18" stroke="#4F46E5" strokeWidth="1.5"/>
-                <path d="M8 2v4M16 2v4" stroke="#4F46E5" strokeWidth="1.5" strokeLinecap="round"/>
-                <rect x="7" y="13" width="3" height="3" rx="0.5" fill="#4F46E5" opacity="0.5"/>
+          {/* Schedule - dark navy circle with white calendar icon */}
+          <button className="flex flex-col items-center gap-2.5 group">
+            <div className="w-14 h-14 rounded-full bg-[#1D3E77] flex items-center justify-center group-hover:shadow-lg group-hover:shadow-[#1D3E77]/30 group-active:scale-95 transition-all">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 002 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/>
+                <rect x="7" y="12" width="4" height="4" rx="0.5" opacity="0.7"/>
               </svg>
             </div>
             <span className="text-[12px] font-medium text-[#001221]">Schedule</span>
