@@ -3,8 +3,15 @@
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import ProfileDropdown from "@/components/profile/ProfileDropdown";
+import { PassiveAIIcon, ActiveAIIcon } from "@/components/ai/AIAssistPanel";
 
-export default function Header() {
+export default function Header({
+  aiPanelOpen,
+  onToggleAI,
+}: {
+  aiPanelOpen: boolean;
+  onToggleAI: () => void;
+}) {
   const [showProfile, setShowProfile] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
 
@@ -37,6 +44,23 @@ export default function Header() {
 
       {/* Right icons */}
       <div className="flex items-center gap-2">
+        {/* AI Assist toggle */}
+        <button
+          onClick={onToggleAI}
+          className={`p-1.5 rounded-full transition-all duration-200 ${
+            aiPanelOpen
+              ? "bg-white/20 hover:bg-white/30"
+              : "hover:bg-white/10"
+          }`}
+          title="AI Assist"
+        >
+          {aiPanelOpen ? (
+            <ActiveAIIcon />
+          ) : (
+            <PassiveAIIcon />
+          )}
+        </button>
+
         {/* Help */}
         <button className="p-1.5 rounded hover:bg-white/10 transition-colors">
           <Image src="/icons/help.svg" alt="Help" width={24} height={24} />

@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import Image from "next/image";
+import { useState, useEffect } from "react";
 
 type PanelView = "main" | "receptionist" | "tone";
 
@@ -38,7 +37,7 @@ function SparkleIcon() {
     <svg width="32" height="32" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M15.8645 11.3095L13.5196 10.2864C12.9525 10.0397 12.5008 9.58654 12.254 9.02087L11.2309 6.67592C11.1516 6.49409 10.8933 6.49409 10.8139 6.67592L9.79077 9.02087C9.54401 9.58798 9.09089 10.0397 8.52522 10.2864L6.17738 11.311C5.99556 11.3903 5.99556 11.6472 6.17738 11.7266L8.56562 12.7829C9.1313 13.0325 9.58153 13.4871 9.8254 14.0557L10.8153 16.3559C10.8933 16.5391 11.153 16.5391 11.2324 16.3559L12.254 14.0152C12.5008 13.4481 12.9539 12.9965 13.5196 12.7497L15.8645 11.7266C16.0464 11.6472 16.0464 11.3889 15.8645 11.3095Z" fill="#2E1055"/>
       <path d="M6.43189 9.78292L6.91098 8.68476C7.02643 8.41924 7.23855 8.20711 7.50407 8.09167L8.60367 7.61258C8.68881 7.57506 8.68881 7.45384 8.60367 7.41777L7.50407 6.93868C7.23855 6.82323 7.02643 6.6111 6.91098 6.34558L6.43189 5.24598C6.39437 5.16084 6.27316 5.16084 6.23708 5.24598L5.75799 6.34558C5.64255 6.6111 5.43042 6.82323 5.1649 6.93868L4.06385 7.41921C3.97872 7.45673 3.97872 7.5765 4.06385 7.61402L5.18366 8.10898C5.44918 8.22587 5.65986 8.43944 5.77386 8.70496L6.23852 9.78292C6.27604 9.86806 6.39726 9.8695 6.43333 9.78292H6.43189Z" fill="#2E1055"/>
-      <path d="M8.53992 4.79559L9.13445 5.05823C9.27587 5.12028 9.38699 5.23428 9.4476 5.37425L9.69436 5.94714C9.71456 5.99332 9.77805 5.99332 9.79826 5.94714L10.0522 5.36415C10.1143 5.22273 10.2268 5.11018 10.3668 5.04957L10.9498 4.79559C10.9945 4.77539 10.9945 4.7119 10.9498 4.69169L10.3668 4.43772C10.2254 4.37567 10.1128 4.26311 10.0522 4.12313L9.79826 3.54014C9.77805 3.49541 9.71456 3.49541 9.69436 3.54014L9.44038 4.12313C9.37833 6.26455 9.26577 4.37711 9.1258 4.43772L8.54136 4.69314C8.49663 4.71334 8.49663 4.77683 8.54136 4.79703L8.53992 4.79559Z" fill="#2E1055"/>
+      <path d="M8.53992 4.79559L9.13445 5.05823C9.27587 5.12028 9.38699 5.23428 9.4476 5.37425L9.69436 5.94714C9.71456 5.99332 9.77805 5.99332 9.79826 5.94714L10.0522 5.36415C10.1143 5.22273 10.2268 5.11018 10.3668 5.04957L10.9498 4.79559C10.9945 4.77539 10.9945 4.7119 10.9498 4.69169L10.3668 4.43772C10.2254 4.37567 10.1128 4.26311 10.0522 4.12313L9.79826 3.54014C9.77805 3.49541 9.71456 3.49541 9.69436 3.54014L9.44038 4.12313C9.37833 4.26455 9.26577 4.37711 9.1258 4.43772L8.54136 4.69314C8.49663 4.71334 8.49663 4.77683 8.54136 4.79703L8.53992 4.79559Z" fill="#2E1055"/>
     </svg>
   );
 }
@@ -50,7 +49,7 @@ export function PassiveAIIcon({ className }: { className?: string }) {
       <rect x="0.5" y="0.5" width="19" height="19" rx="9.5" stroke="white"/>
       <path d="M15.8645 11.3095L13.5196 10.2864C12.9525 10.0397 12.5008 9.58654 12.254 9.02087L11.2309 6.67592C11.1516 6.49409 10.8933 6.49409 10.8139 6.67592L9.79077 9.02087C9.54401 9.58798 9.09089 10.0397 8.52522 10.2864L6.17738 11.311C5.99556 11.3903 5.99556 11.6472 6.17738 11.7266L8.56562 12.7829C9.1313 13.0325 9.58153 13.4871 9.8254 14.0557L10.8153 16.3559C10.8933 16.5391 11.153 16.5391 11.2324 16.3559L12.254 14.0152C12.5008 13.4481 12.9539 12.9965 13.5196 12.7497L15.8645 11.7266C16.0464 11.6472 16.0464 11.3889 15.8645 11.3095Z" fill="white"/>
       <path d="M6.43189 9.78292L6.91098 8.68476C7.02643 8.41924 7.23855 8.20711 7.50407 8.09167L8.60367 7.61258C8.68881 7.57506 8.68881 7.45384 8.60367 7.41777L7.50407 6.93868C7.23855 6.82323 7.02643 6.6111 6.91098 6.34558L6.43189 5.24598C6.39437 5.16084 6.27316 5.16084 6.23708 5.24598L5.75799 6.34558C5.64255 6.6111 5.43042 6.82323 5.1649 6.93868L4.06385 7.41921C3.97872 7.45673 3.97872 7.5765 4.06385 7.61402L5.18366 8.10898C5.44918 8.22587 5.65986 8.43944 5.77386 8.70496L6.23852 9.78292C6.27604 9.86806 6.39726 9.8695 6.43333 9.78292H6.43189Z" fill="white"/>
-      <path d="M8.53992 4.79559L9.13445 5.05823C9.27587 5.12028 9.38699 5.23428 9.4476 5.37425L9.69436 5.94714C9.71456 5.99332 9.77805 5.99332 9.79826 5.94714L10.0522 5.36415C10.1143 5.22273 10.2268 5.11018 10.3668 5.04957L10.9498 4.79559C10.9945 4.77539 10.9945 4.7119 10.9498 4.69169L10.3668 4.43772C10.2254 4.37567 10.1128 4.26311 10.0522 4.12313L9.79826 3.54014C9.77805 3.49541 9.71456 3.49541 9.69436 3.54014L9.44038 4.12313C9.37833 6.26455 9.26577 4.37711 9.1258 4.43772L8.54136 4.69314C8.49663 4.71334 8.49663 4.77683 8.54136 4.79703L8.53992 4.79559Z" fill="white"/>
+      <path d="M8.53992 4.79559L9.13445 5.05823C9.27587 5.12028 9.38699 5.23428 9.4476 5.37425L9.69436 5.94714C9.71456 5.99332 9.77805 5.99332 9.79826 5.94714L10.0522 5.36415C10.1143 5.22273 10.2268 5.11018 10.3668 5.04957L10.9498 4.79559C10.9945 4.77539 10.9945 4.7119 10.9498 4.69169L10.3668 4.43772C10.2254 4.37567 10.1128 4.26311 10.0522 4.12313L9.79826 3.54014C9.77805 3.49541 9.71456 3.49541 9.69436 3.54014L9.44038 4.12313C9.37833 4.26455 9.26577 4.37711 9.1258 4.43772L8.54136 4.69314C8.49663 4.71334 8.49663 4.77683 8.54136 4.79703L8.53992 4.79559Z" fill="white"/>
     </svg>
   );
 }
@@ -94,7 +93,7 @@ function ReceptionistBanner() {
             <span className="text-[#001221] font-medium">{sentiment}</span>
             <div className="flex-1 flex items-center gap-1 mx-1">
               <div className="w-3 h-3 rounded-full bg-[#2E1055]/10 flex items-center justify-center">
-                <span className="text-[6px]">▶</span>
+                <span className="text-[6px]">&#9654;</span>
               </div>
               <span className="text-[#7F888F]">00:0{i}</span>
               <div className="flex-1 h-0.5 bg-[#2E1055]/10 rounded-full relative mx-1">
@@ -111,7 +110,7 @@ function ReceptionistBanner() {
         <div className="absolute bottom-5 right-6 bg-[#001221] text-white text-[9px] rounded-xl rounded-bl-sm px-3 py-2 max-w-[170px] shadow-lg">
           <div className="flex items-center gap-1.5 mb-0.5">
             <div className="w-4 h-4 rounded-full bg-gradient-to-br from-[#783a9b] to-[#2E1055] flex items-center justify-center">
-              <span className="text-[6px]">✦</span>
+              <span className="text-[6px] text-white">&#10022;</span>
             </div>
           </div>
           Welcome to Restaurant! My name is Laura, AI-reception assistant. How can I help you?
@@ -121,6 +120,7 @@ function ReceptionistBanner() {
   );
 }
 
+/* ── Main AI Assist Panel (inline, not popup) ── */
 export default function AIAssistPanel({
   isOpen,
   onClose,
@@ -131,7 +131,6 @@ export default function AIAssistPanel({
   const [view, setView] = useState<PanelView>("main");
   const [expandedStep, setExpandedStep] = useState<number | null>(null);
   const [selectedPersona, setSelectedPersona] = useState<string>("Stacy");
-  const panelRef = useRef<HTMLDivElement>(null);
 
   // Reset view when panel opens
   useEffect(() => {
@@ -141,6 +140,8 @@ export default function AIAssistPanel({
     }
   }, [isOpen]);
 
+  if (!isOpen) return null;
+
   const handleActionClick = (action: string) => {
     if (action === "Add your AI receptionist") {
       setView("receptionist");
@@ -149,7 +150,6 @@ export default function AIAssistPanel({
 
   const handleStepToggle = (index: number) => {
     if (index === 0) {
-      // Tone and personality → go to tone view
       if (expandedStep === 0) {
         setExpandedStep(null);
       } else {
@@ -171,12 +171,7 @@ export default function AIAssistPanel({
   };
 
   return (
-    <div
-      ref={panelRef}
-      className={`fixed top-0 right-0 h-full w-[390px] bg-[#F9F9FA] shadow-[-4px_0_24px_rgba(0,0,0,0.12)] z-50 flex flex-col transition-transform duration-300 ease-out ${
-        isOpen ? "translate-x-0" : "translate-x-full"
-      }`}
-    >
+    <div className="w-[390px] shrink-0 bg-[#F9F9FA] border-l border-[#E5E6E8] flex flex-col overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between px-5 h-14 shrink-0 border-b border-[#E5E6E8]">
         <div className="flex items-center gap-2">
@@ -304,7 +299,7 @@ function ReceptionistView({
                   height="20"
                   viewBox="0 0 20 20"
                   fill="none"
-                  className={`transition-transform duration-200 ${expandedStep === i ? "rotate-0" : ""}`}
+                  className="transition-transform duration-200"
                 >
                   {expandedStep === i ? (
                     <path d="M4 10H16" stroke="#001221" strokeWidth="1.5" strokeLinecap="round"/>
