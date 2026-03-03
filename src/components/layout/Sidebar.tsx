@@ -11,8 +11,9 @@ const navItems = [
   { icon: "/icons/operator-console.svg", label: "Operator\nConsole", href: "/operator", iconSize: 32, extraPy: true },
   { icon: "/icons/meet.svg", label: "Meet", href: "/meet", iconSize: 24 },
   { icon: "/icons/sms.svg", label: "SMS", href: "/sms", iconSize: 24 },
+  { icon: "/icons/calendar.svg", label: "Calendar", href: "/calendar", iconSize: 24 },
   { icon: "/icons/files.svg", label: "Files", href: "/files", iconSize: 24 },
-  { icon: "/icons/contact-center.svg", label: "Contact\nCenter", href: "/contact-center", iconSize: 24, badge: true },
+  { icon: "/icons/contact-center.svg", label: "CX", href: "/contact-center", iconSize: 24, badge: true },
 ];
 
 export default function Sidebar() {
