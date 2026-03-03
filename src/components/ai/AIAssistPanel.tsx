@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-type PanelView = "main" | "receptionist" | "tone";
+type PanelView = "main" | "receptionist" | "tone" | "meeting" | "sms" | "recording" | "autoresponse";
 
 const personas = [
   { name: "John", img: "https://i.pravatar.cc/128?img=11" },
@@ -32,20 +32,20 @@ const receptionistSteps = [
   "Greeting",
 ];
 
-/* ── Action button icons ── */
+/* ── Action button icons (outline style) ── */
 function ActionIcon({ type }: { type: string }) {
   const cls = "shrink-0";
   switch (type) {
     case "meeting":
-      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z" fill="#2E1055"/></svg>;
+      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><rect x="3" y="6" width="14" height="12" rx="1.5" stroke="#2E1055" strokeWidth="1.5"/><path d="M17 10l4-3v10l-4-3" stroke="#2E1055" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>;
     case "sms":
-      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" fill="#2E1055"/><rect x="7" y="9" width="2" height="2" rx="0.5" fill="#2E1055"/><rect x="11" y="9" width="2" height="2" rx="0.5" fill="#2E1055"/><rect x="15" y="9" width="2" height="2" rx="0.5" fill="#2E1055"/></svg>;
+      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H6l-4 4V6c0-1.1.9-2 2-2z" stroke="#2E1055" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><circle cx="8" cy="12" r="1" fill="#2E1055"/><circle cx="12" cy="12" r="1" fill="#2E1055"/><circle cx="16" cy="12" r="1" fill="#2E1055"/></svg>;
     case "receptionist":
-      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="#2E1055"/></svg>;
+      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><circle cx="12" cy="8" r="4" stroke="#2E1055" strokeWidth="1.5"/><path d="M4 20c0-2.67 5.33-4 8-4s8 1.33 8 4" stroke="#2E1055" strokeWidth="1.5" strokeLinecap="round"/></svg>;
     case "recording":
-      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V5zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" fill="#2E1055"/></svg>;
+      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><rect x="9" y="2" width="6" height="12" rx="3" stroke="#2E1055" strokeWidth="1.5"/><path d="M5 11a7 7 0 0014 0" stroke="#2E1055" strokeWidth="1.5" strokeLinecap="round"/><path d="M12 18v3m-3 0h6" stroke="#2E1055" strokeWidth="1.5" strokeLinecap="round"/></svg>;
     case "auto":
-      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#2E1055"/></svg>;
+      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><circle cx="12" cy="12" r="9" stroke="#2E1055" strokeWidth="1.5"/><path d="M8 12l3 3 5-5" stroke="#2E1055" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>;
     default:
       return null;
   }
@@ -289,6 +289,14 @@ export default function AIAssistPanel({
   const handleActionClick = (action: string) => {
     if (action === "Add your AI receptionist") {
       setView("receptionist");
+    } else if (action === "Catch up on meeting") {
+      setView("meeting");
+    } else if (action === "Help me write a text message") {
+      setView("sms");
+    } else if (action === "Help to find recordings") {
+      setView("recording");
+    } else if (action === "Create auto-response") {
+      setView("autoresponse");
     }
   };
 
@@ -314,6 +322,16 @@ export default function AIAssistPanel({
     }
   };
 
+  const viewTitles: Record<PanelView, string> = {
+    main: "AI Assist",
+    receptionist: "AI receptionist",
+    tone: "AI receptionist",
+    meeting: "Meeting Catch-up",
+    sms: "Write a Message",
+    recording: "Find Recordings",
+    autoresponse: "Auto-response",
+  };
+
   return (
     <div className={`w-[390px] shrink-0 bg-white border-l border-[#E5E6E8] flex flex-col overflow-hidden ${animating ? "animate-[slideInRight_0.3s_ease-out]" : ""}`}>
       {/* Header */}
@@ -330,7 +348,7 @@ export default function AIAssistPanel({
             </button>
           )}
           <span className="text-[15px] font-semibold text-[#001221]">
-            {view === "main" ? "AI Assist" : "AI receptionist"}
+            {viewTitles[view]}
           </span>
         </div>
         <button
@@ -368,6 +386,10 @@ export default function AIAssistPanel({
               }}
             />
           )}
+          {view === "meeting" && <MeetingView />}
+          {view === "sms" && <SMSView />}
+          {view === "recording" && <RecordingView />}
+          {view === "autoresponse" && <AutoResponseView />}
         </div>
       </div>
     </div>
@@ -580,6 +602,380 @@ function ToneView({
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+/* ── Meeting Catch-up View ── */
+function MeetingView() {
+  const [selectedMeeting, setSelectedMeeting] = useState(0);
+
+  const meetings = [
+    { title: "Product Roadmap Review", date: "Today, 10:00 AM", duration: "45 min", attendees: ["Sarah Chen", "Mike Ross", "Laura Kim", "David Park"] },
+    { title: "Sprint Planning — Q2", date: "Yesterday, 2:30 PM", duration: "60 min", attendees: ["Tom Blake", "Ava Singh", "Chris Lee"] },
+    { title: "Design Sync", date: "Mar 1, 9:00 AM", duration: "30 min", attendees: ["Laura Kim", "Ava Singh"] },
+  ];
+
+  const summaries = [
+    {
+      keyTopics: ["Launch timeline moved to April 15", "New AI features prioritized for v3.2", "Mobile app redesign approved"],
+      actionItems: [
+        { task: "Prepare updated project timeline", assignee: "Sarah Chen", due: "Mar 5" },
+        { task: "Draft AI feature specifications", assignee: "Mike Ross", due: "Mar 7" },
+        { task: "Share mobile mockups with dev team", assignee: "Laura Kim", due: "Mar 4" },
+      ],
+      decisions: "Team agreed to postpone the analytics dashboard to Q3 to focus on core AI features.",
+    },
+    {
+      keyTopics: ["Backlog grooming completed", "14 story points allocated", "Testing automation plan reviewed"],
+      actionItems: [
+        { task: "Create Jira tickets for sprint items", assignee: "Tom Blake", due: "Mar 3" },
+        { task: "Set up CI/CD pipeline for staging", assignee: "Chris Lee", due: "Mar 6" },
+      ],
+      decisions: "Sprint duration extended to 3 weeks for the transition period.",
+    },
+    {
+      keyTopics: ["Component library v2 updates", "Dark mode implementation", "Accessibility audit results"],
+      actionItems: [
+        { task: "Update Button component variants", assignee: "Laura Kim", due: "Mar 5" },
+        { task: "Fix contrast issues from audit", assignee: "Ava Singh", due: "Mar 6" },
+      ],
+      decisions: "Dark mode will ship as an experimental feature first.",
+    },
+  ];
+
+  const meeting = meetings[selectedMeeting];
+  const summary = summaries[selectedMeeting];
+
+  return (
+    <div className="px-5 pt-6 pb-8">
+      {/* Meeting selector */}
+      <div className="mb-5">
+        <label className="block text-[12px] font-medium text-[#4C5863] mb-2">Select a recent meeting</label>
+        <div className="flex flex-col gap-2">
+          {meetings.map((m, i) => (
+            <button
+              key={i}
+              onClick={() => setSelectedMeeting(i)}
+              className={`w-full px-4 py-3 rounded-xl border text-left transition-all duration-150 active:scale-[0.98] ${
+                selectedMeeting === i
+                  ? "border-[#2E1055] bg-[#F8F5FB] shadow-sm"
+                  : "border-[#E5E6E8] bg-white hover:border-[#C5C7CA] hover:shadow-sm"
+              }`}
+              style={{ animation: `fadeIn 0.25s ease-out ${0.05 * i}s both` }}
+            >
+              <div className="text-[13px] font-semibold text-[#001221]">{m.title}</div>
+              <div className="text-[11px] text-[#7F888F] mt-0.5">{m.date} · {m.duration}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Meeting Summary */}
+      <div className="animate-[fadeIn_0.25s_ease-out]" key={selectedMeeting}>
+        {/* Attendees */}
+        <div className="mb-4">
+          <span className="text-[12px] font-medium text-[#4C5863]">Attendees</span>
+          <div className="flex flex-wrap gap-1.5 mt-1.5">
+            {meeting.attendees.map((a) => (
+              <span key={a} className="px-2.5 py-1 bg-[#F2F0F5] text-[11px] font-medium text-[#2E1055] rounded-full">{a}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* Key Topics */}
+        <div className="mb-4">
+          <span className="text-[12px] font-medium text-[#4C5863]">Key Topics</span>
+          <ul className="mt-1.5 space-y-1.5">
+            {summary.keyTopics.map((topic, i) => (
+              <li key={i} className="flex items-start gap-2 text-[13px] text-[#001221]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#2E1055] shrink-0 mt-[7px]" />
+                {topic}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Action Items */}
+        <div className="mb-4">
+          <span className="text-[12px] font-medium text-[#4C5863]">Action Items</span>
+          <div className="mt-1.5 space-y-2">
+            {summary.actionItems.map((item, i) => (
+              <div key={i} className="flex items-start gap-2.5 px-3 py-2.5 bg-[#F9F9FA] rounded-lg">
+                <div className="w-4 h-4 rounded border-2 border-[#CCCFD2] shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <div className="text-[12px] text-[#001221] font-medium">{item.task}</div>
+                  <div className="text-[11px] text-[#7F888F] mt-0.5">{item.assignee} · Due {item.due}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Key Decisions */}
+        <div className="mb-5">
+          <span className="text-[12px] font-medium text-[#4C5863]">Key Decision</span>
+          <div className="mt-1.5 px-3 py-2.5 bg-[#FFFDE7] border border-[#FCC624]/30 rounded-lg text-[12px] text-[#001221] leading-relaxed">
+            {summary.decisions}
+          </div>
+        </div>
+
+        <button className="w-full py-3 bg-[#001221] text-white text-[12px] font-bold tracking-wider uppercase rounded-full hover:bg-[#0a2540] active:scale-[0.98] transition-all">
+          Share Summary
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ── SMS / Text Message View ── */
+function SMSView() {
+  const [tone, setTone] = useState("Professional");
+  const tones = ["Professional", "Casual", "Friendly", "Urgent"];
+
+  return (
+    <div className="px-5 pt-6 pb-8">
+      <p className="text-[13px] text-[#4C5863] leading-[1.5] mb-5">
+        Tell us who you&apos;re writing to and what you want to say. AI will draft a polished message for you.
+      </p>
+
+      {/* Recipient */}
+      <div className="mb-4">
+        <label className="block text-[12px] font-medium text-[#4C5863] mb-1.5">Recipient</label>
+        <input type="text" defaultValue="Sarah Chen" className="w-full px-3 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors" placeholder="Enter name or number" />
+      </div>
+
+      {/* Tone selector */}
+      <div className="mb-4">
+        <label className="block text-[12px] font-medium text-[#4C5863] mb-1.5">Tone</label>
+        <div className="flex gap-2 flex-wrap">
+          {tones.map((t) => (
+            <button
+              key={t}
+              onClick={() => setTone(t)}
+              className={`px-3 py-1.5 rounded-full text-[12px] font-medium border transition-all duration-150 active:scale-95 ${
+                tone === t
+                  ? "bg-[#2E1055] text-white border-[#2E1055]"
+                  : "bg-white text-[#4C5863] border-[#E5E6E8] hover:border-[#C5C7CA]"
+              }`}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Topic / purpose */}
+      <div className="mb-4">
+        <label className="block text-[12px] font-medium text-[#4C5863] mb-1.5">What do you want to say?</label>
+        <textarea rows={3} defaultValue="Remind about tomorrow's meeting at 2 PM and ask to bring the Q2 report" className="w-full px-3 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors resize-none" placeholder="Describe your message purpose..." />
+      </div>
+
+      {/* Generated message preview */}
+      <div className="mb-5">
+        <label className="block text-[12px] font-medium text-[#4C5863] mb-1.5">AI-generated draft</label>
+        <div className="px-4 py-3.5 bg-[#F8F5FB] border border-[#E5E6E8] rounded-xl">
+          <p className="text-[13px] text-[#001221] leading-relaxed">
+            Hi Sarah, just a quick reminder about our meeting tomorrow at 2:00 PM. Could you please bring the Q2 report along? Looking forward to catching up. Thanks!
+          </p>
+          <div className="flex items-center gap-1.5 mt-3 pt-2.5 border-t border-[#E5E6E8]">
+            <span className="text-[10px] text-[#7F888F] uppercase tracking-wider">Tone: {tone}</span>
+            <span className="text-[10px] text-[#7F888F]">·</span>
+            <span className="text-[10px] text-[#7F888F]">142 characters</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex gap-2.5">
+        <button className="flex-1 py-3 bg-white text-[#001221] text-[12px] font-bold tracking-wider uppercase rounded-full border border-[#E5E6E8] hover:bg-[#F9F9FA] active:scale-[0.98] transition-all">
+          Regenerate
+        </button>
+        <button className="flex-1 py-3 bg-[#001221] text-white text-[12px] font-bold tracking-wider uppercase rounded-full hover:bg-[#0a2540] active:scale-[0.98] transition-all">
+          Copy & Send
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ── Recording Finder View ── */
+function RecordingView() {
+  const recordings = [
+    { caller: "John Smith", number: "+1 (416) 555-0123", date: "Today, 11:32 AM", duration: "4:23", sentiment: "Good", sentColor: "bg-green-500" },
+    { caller: "Maria Garcia", number: "+1 (905) 555-0456", date: "Today, 9:15 AM", duration: "12:07", sentiment: "Neutral", sentColor: "bg-yellow-400" },
+    { caller: "David Park", number: "+1 (647) 555-0789", date: "Yesterday, 3:48 PM", duration: "7:45", sentiment: "Good", sentColor: "bg-green-500" },
+    { caller: "Lisa Thompson", number: "+1 (416) 555-0321", date: "Yesterday, 1:22 PM", duration: "2:15", sentiment: "Poor", sentColor: "bg-red-400" },
+    { caller: "Robert Chen", number: "+1 (905) 555-0654", date: "Mar 1, 4:50 PM", duration: "18:30", sentiment: "Good", sentColor: "bg-green-500" },
+  ];
+
+  return (
+    <div className="px-5 pt-6 pb-8">
+      <p className="text-[13px] text-[#4C5863] leading-[1.5] mb-5">
+        Search and filter your call recordings by caller, date, or keyword.
+      </p>
+
+      {/* Search */}
+      <div className="mb-4">
+        <div className="relative">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="absolute left-3 top-1/2 -translate-y-1/2">
+            <circle cx="7" cy="7" r="5" stroke="#7F888F" strokeWidth="1.5"/>
+            <path d="M11 11L14 14" stroke="#7F888F" strokeWidth="1.5" strokeLinecap="round"/>
+          </svg>
+          <input type="text" placeholder="Search by name, number, or keyword..." className="w-full pl-9 pr-3 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors" />
+        </div>
+      </div>
+
+      {/* Date filter */}
+      <div className="flex gap-2 mb-5">
+        <div className="flex-1">
+          <label className="block text-[11px] font-medium text-[#4C5863] mb-1">From</label>
+          <input type="date" defaultValue="2026-03-01" className="w-full px-2.5 py-2 text-[12px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors" />
+        </div>
+        <div className="flex-1">
+          <label className="block text-[11px] font-medium text-[#4C5863] mb-1">To</label>
+          <input type="date" defaultValue="2026-03-03" className="w-full px-2.5 py-2 text-[12px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors" />
+        </div>
+      </div>
+
+      {/* Results count */}
+      <div className="text-[12px] text-[#7F888F] mb-3">{recordings.length} recordings found</div>
+
+      {/* Recording results */}
+      <div className="flex flex-col gap-2">
+        {recordings.map((rec, i) => (
+          <div
+            key={i}
+            className="px-4 py-3 border border-[#E5E6E8] rounded-xl hover:border-[#C5C7CA] hover:shadow-sm transition-all duration-150 cursor-pointer active:scale-[0.99]"
+            style={{ animation: `fadeIn 0.25s ease-out ${0.04 * i}s both` }}
+          >
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[13px] font-semibold text-[#001221]">{rec.caller}</span>
+              <div className="flex items-center gap-1.5">
+                <span className={`w-2 h-2 rounded-full ${rec.sentColor}`} />
+                <span className="text-[10px] text-[#7F888F]">{rec.sentiment}</span>
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] text-[#7F888F]">{rec.number}</span>
+              <span className="text-[11px] text-[#7F888F]">{rec.duration}</span>
+            </div>
+            <div className="flex items-center justify-between mt-1.5">
+              <span className="text-[11px] text-[#7F888F]">{rec.date}</span>
+              <div className="flex items-center gap-1">
+                <button className="p-1 hover:bg-[#F2F0F5] rounded transition-colors active:scale-90">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 3v10l8-5-8-5z" stroke="#2E1055" strokeWidth="1.2" strokeLinejoin="round"/></svg>
+                </button>
+                <button className="p-1 hover:bg-[#F2F0F5] rounded transition-colors active:scale-90">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 14V3h10v11l-5-3-5 3z" stroke="#2E1055" strokeWidth="1.2" strokeLinejoin="round"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── Auto-Response View ── */
+function AutoResponseView() {
+  const [enabled, setEnabled] = useState(true);
+  const [activeRule, setActiveRule] = useState(0);
+
+  const rules = [
+    { name: "After hours", trigger: "Calls received outside business hours", status: true },
+    { name: "Busy / On call", trigger: "When status is set to Busy or On a Call", status: true },
+    { name: "Holiday", trigger: "During configured holiday dates", status: false },
+  ];
+
+  return (
+    <div className="px-5 pt-6 pb-8">
+      <p className="text-[13px] text-[#4C5863] leading-[1.5] mb-5">
+        Set up automatic responses for missed calls, voicemails, and text messages based on your availability.
+      </p>
+
+      {/* Master toggle */}
+      <div className="flex items-center justify-between py-3 px-4 bg-[#F9F9FA] rounded-xl mb-5">
+        <div>
+          <span className="text-[13px] font-semibold text-[#001221]">Auto-response</span>
+          <p className="text-[11px] text-[#7F888F] mt-0.5">{enabled ? "Active — responding automatically" : "Disabled"}</p>
+        </div>
+        <button
+          onClick={() => setEnabled(!enabled)}
+          className={`w-11 h-6.5 rounded-full relative transition-colors duration-200 ${enabled ? "bg-[#2E1055]" : "bg-[#CCCFD2]"}`}
+        >
+          <div className={`absolute top-[3px] w-[18px] h-[18px] bg-white rounded-full shadow-sm transition-all duration-200 ${enabled ? "right-[3px]" : "left-[3px]"}`} />
+        </button>
+      </div>
+
+      {/* Response rules */}
+      <div className="mb-5">
+        <label className="block text-[12px] font-medium text-[#4C5863] mb-2">Response rules</label>
+        <div className="flex flex-col gap-2">
+          {rules.map((rule, i) => (
+            <button
+              key={i}
+              onClick={() => setActiveRule(i)}
+              className={`w-full px-4 py-3 rounded-xl border text-left transition-all duration-150 active:scale-[0.98] ${
+                activeRule === i
+                  ? "border-[#2E1055] bg-[#F8F5FB]"
+                  : "border-[#E5E6E8] bg-white hover:border-[#C5C7CA]"
+              }`}
+              style={{ animation: `fadeIn 0.25s ease-out ${0.05 * i}s both` }}
+            >
+              <div className="flex items-center justify-between mb-0.5">
+                <span className="text-[13px] font-medium text-[#001221]">{rule.name}</span>
+                <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${rule.status ? "bg-[#E8F5E9] text-[#2CAD43]" : "bg-[#F2F2F3] text-[#7F888F]"}`}>
+                  {rule.status ? "Active" : "Inactive"}
+                </span>
+              </div>
+              <span className="text-[11px] text-[#7F888F]">{rule.trigger}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Response template for selected rule */}
+      <div className="mb-4 animate-[fadeIn_0.2s_ease-out]" key={activeRule}>
+        <label className="block text-[12px] font-medium text-[#4C5863] mb-1.5">
+          Response message — {rules[activeRule].name}
+        </label>
+        <textarea
+          rows={4}
+          defaultValue={
+            activeRule === 0
+              ? "Thank you for your call. Our office is currently closed. Business hours are Mon–Fri, 9 AM to 5 PM EST. We'll return your call on the next business day."
+              : activeRule === 1
+                ? "I'm currently on another call. I'll get back to you as soon as I'm available. If this is urgent, please press 1 to be transferred to the front desk."
+                : "Our office is closed for the holiday. We will reopen on January 2nd. For emergencies, please contact our on-call team at (416) 555-0199."
+          }
+          className="w-full px-3 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors resize-none"
+        />
+      </div>
+
+      {/* Response channels */}
+      <div className="mb-5">
+        <label className="block text-[12px] font-medium text-[#4C5863] mb-2">Respond via</label>
+        <div className="flex flex-col gap-2">
+          {[
+            { label: "SMS", desc: "Send text message reply", checked: true },
+            { label: "Voicemail greeting", desc: "Play custom voicemail", checked: true },
+            { label: "Email notification", desc: "Send email to caller (if known)", checked: false },
+          ].map((ch) => (
+            <label key={ch.label} className="flex items-center gap-3 px-3 py-2.5 border border-[#E5E6E8] rounded-lg cursor-pointer hover:border-[#C5C7CA] transition-colors">
+              <input type="checkbox" defaultChecked={ch.checked} className="w-4 h-4 rounded border-[#CCCFD2] text-[#2E1055] focus:ring-[#2E1055] accent-[#2E1055]" />
+              <div>
+                <div className="text-[12px] font-medium text-[#001221]">{ch.label}</div>
+                <div className="text-[11px] text-[#7F888F]">{ch.desc}</div>
+              </div>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <button className="w-full py-3 bg-[#001221] text-white text-[12px] font-bold tracking-wider uppercase rounded-full hover:bg-[#0a2540] active:scale-[0.98] transition-all">
+        Save Auto-Response Rules
+      </button>
     </div>
   );
 }
