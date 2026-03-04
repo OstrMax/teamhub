@@ -157,7 +157,7 @@ export default function WalkthroughBubbles() {
                 />
               ))}
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3 ml-3">
               <button
                 onClick={handleSkip}
                 className="text-[11px] text-white/50 hover:text-white/80 transition-colors"

@@ -192,11 +192,11 @@ function DashboardView() {
                       <button className="p-1.5 rounded-lg hover:bg-[#FEF3C7] transition-colors active:scale-90" title="Hold">
                         <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="4" y="3" width="2.5" height="10" rx="1" fill="#F59E0B"/><rect x="9.5" y="3" width="2.5" height="10" rx="1" fill="#F59E0B"/></svg>
                       </button>
-                      <button className="p-1.5 rounded-lg hover:bg-[#FEE2E2] transition-colors active:scale-90" title="End">
-                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round"/></svg>
-                      </button>
                       <button className="p-1.5 rounded-lg hover:bg-[#DBEAFE] transition-colors active:scale-90" title="Transfer">
                         <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M5 8h8m0 0l-3-3m3 3l-3 3M3 3v10" stroke="#3B82F6" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      </button>
+                      <button className="p-1.5 rounded-lg hover:bg-[#FEE2E2] transition-colors active:scale-90" title="End">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round"/></svg>
                       </button>
                     </div>
                   </td>
@@ -249,7 +249,7 @@ function DashboardView() {
         </div>
       </div>
 
-      {/* Calls per Hour - line chart with gradient like home page */}
+      {/* Calls per Hour - bar chart with black + gradient opacity */}
       <div className="bg-white border border-[#E5E6E8] rounded-xl p-5">
         <div className="flex items-center justify-between mb-1">
           <div className="flex items-center gap-2">
@@ -267,57 +267,47 @@ function DashboardView() {
           </div>
           <div className="h-6 w-px bg-[#E5E6E8]" />
           <div className="text-[13px] text-[#7F888F]">
-            <span className="font-medium text-[#2a1051]">{hourlyData.reduce((a, d) => a + d.inbound, 0)}</span> inbound
+            <span className="font-medium text-[#001221]">{hourlyData.reduce((a, d) => a + d.inbound, 0)}</span> inbound
           </div>
           <div className="text-[13px] text-[#7F888F]">
-            <span className="font-medium text-[#B882D4]">{hourlyData.reduce((a, d) => a + d.outbound, 0)}</span> outbound
+            <span className="font-medium" style={{ color: "rgba(0,18,33,0.6)" }}>{hourlyData.reduce((a, d) => a + d.outbound, 0)}</span> outbound
           </div>
           <div className="text-[13px] text-[#7F888F]">
             <span className="font-medium text-[#EF4444]">{hourlyData.reduce((a, d) => a + d.missed, 0)}</span> missed
           </div>
         </div>
 
-        {/* Line chart with gradient fill — same style as home page */}
-        <div className="relative h-44">
+        {/* Bar chart with black bars + opacity gradient */}
+        <div className="relative">
           {/* Y-axis labels */}
           <div className="absolute left-0 top-0 bottom-6 flex flex-col justify-between text-[10px] text-[#7F888F] w-6 pointer-events-none">
-            <span>{maxTotal}</span><span>{Math.round(maxTotal * 0.75)}</span><span>{Math.round(maxTotal * 0.5)}</span><span>{Math.round(maxTotal * 0.25)}</span><span>0</span>
+            <span>{maxTotal}</span><span>{Math.round(maxTotal * 0.66)}</span><span>{Math.round(maxTotal * 0.33)}</span><span>0</span>
           </div>
           {/* Grid lines */}
-          <svg className="absolute left-8 right-0 top-0 bottom-6" viewBox="0 0 500 140" preserveAspectRatio="none">
-            <line x1="0" y1="0" x2="500" y2="0" stroke="#F2F2F3" strokeWidth="1"/>
-            <line x1="0" y1="35" x2="500" y2="35" stroke="#F2F2F3" strokeWidth="1"/>
-            <line x1="0" y1="70" x2="500" y2="70" stroke="#F2F2F3" strokeWidth="1"/>
-            <line x1="0" y1="105" x2="500" y2="105" stroke="#F2F2F3" strokeWidth="1"/>
-            <line x1="0" y1="140" x2="500" y2="140" stroke="#F2F2F3" strokeWidth="1"/>
-          </svg>
-          {/* Area + Line */}
-          <svg className="absolute left-8 right-0 top-0 bottom-6" viewBox="0 0 500 140" preserveAspectRatio="none">
-            <path d={`M0,${140 - (hourlyData[0].inbound + hourlyData[0].outbound) / maxTotal * 140} ${hourlyData.map((d, i) => `L${(i / (hourlyData.length - 1)) * 500},${140 - (d.inbound + d.outbound) / maxTotal * 140}`).join(' ')} L500,140 L0,140Z`} fill="url(#cxChartGradient)" />
-            <polyline points={hourlyData.map((d, i) => `${(i / (hourlyData.length - 1)) * 500},${140 - (d.inbound + d.outbound) / maxTotal * 140}`).join(' ')} fill="none" stroke="#2a1051" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-            <defs>
-              <linearGradient id="cxChartGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#2a1051" stopOpacity="0.15"/>
-                <stop offset="100%" stopColor="#2a1051" stopOpacity="0.01"/>
-              </linearGradient>
-            </defs>
-          </svg>
-          {/* Data points */}
-          <svg className="absolute left-8 right-0 top-0 bottom-6" viewBox="0 0 500 140">
-            {hourlyData.map((d, i) => {
-              const x = (i / (hourlyData.length - 1)) * 500;
-              const y = 140 - (d.inbound + d.outbound) / maxTotal * 140;
-              return (
-                <g key={i}>
-                  <circle cx={x} cy={y} r="4" fill="#2a1051"/>
-                  <circle cx={x} cy={y} r="8" fill="transparent" className="cursor-pointer"/>
-                </g>
-              );
-            })}
-          </svg>
-        </div>
-        <div className="flex justify-between pl-8 mt-1 text-[10px] text-[#7F888F]">
-          {hourlyData.map((d) => <span key={d.hour}>{d.hour > 12 ? d.hour - 12 : d.hour}{d.hour >= 12 ? "pm" : "am"}</span>)}
+          <div className="ml-8 relative">
+            {[0, 1, 2, 3].map(i => (
+              <div key={i} className="border-t border-[#F2F2F3]" style={{ height: i < 3 ? 40 : 0 }} />
+            ))}
+            {/* Bars */}
+            <div className="absolute inset-0 flex items-end gap-1.5 pb-0">
+              {hourlyData.map((d, i) => {
+                const inH = (d.inbound / maxTotal) * 120;
+                const outH = (d.outbound / maxTotal) * 120;
+                return (
+                  <div key={i} className="flex-1 flex flex-col items-stretch gap-px">
+                    <div className="w-full rounded-t-sm transition-all" style={{ height: `${outH}px`, background: "rgba(0,18,33,0.6)" }} />
+                    <div className="w-full rounded-b-sm transition-all" style={{ height: `${inH}px`, background: "rgba(0,18,33,0.8)" }} />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          {/* X-axis */}
+          <div className="flex ml-8 mt-1">
+            {hourlyData.map((d, i) => (
+              <div key={i} className="flex-1 text-center text-[10px] text-[#7F888F]">{d.hour > 12 ? d.hour - 12 : d.hour}{d.hour >= 12 ? "p" : "a"}</div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

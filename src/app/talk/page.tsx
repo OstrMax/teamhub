@@ -65,49 +65,49 @@ export default function TalkPage() {
 }
 
 function ContactsIcon({ active }: { active: boolean }) {
+  const c = active ? "#1D2B3E" : "#7F888F";
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={active ? "#2a1051" : "#7F888F"} strokeWidth="1.5">
-      <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-      <circle cx="9" cy="7" r="4"/>
-      <path d="M23 21v-2a4 4 0 00-3-3.87"/>
-      <path d="M16 3.13a4 4 0 010 7.75"/>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill={c}>
+      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+      <path d="M20 9v-3h-2v3h-3v2h3v3h2v-3h3v-2z"/>
     </svg>
   );
 }
 
 function CallLogIcon({ active }: { active: boolean }) {
+  const c = active ? "#1D2B3E" : "#7F888F";
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={active ? "#2a1051" : "#7F888F"} strokeWidth="1.5">
-      <circle cx="12" cy="12" r="10"/>
-      <polyline points="12 6 12 12 16 14"/>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill={c}>
+      <path d="M13 3a9 9 0 00-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0013 21a9 9 0 000-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
     </svg>
   );
 }
 
 function VoicemailIcon({ active }: { active: boolean }) {
+  const c = active ? "#1D2B3E" : "#7F888F";
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={active ? "#2a1051" : "#7F888F"} strokeWidth="1.5">
-      <circle cx="5.5" cy="11.5" r="4.5"/>
-      <circle cx="18.5" cy="11.5" r="4.5"/>
-      <line x1="5.5" y1="16" x2="18.5" y2="16"/>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill={c}>
+      <path d="M18.5 6C15.46 6 13 8.46 13 11.5c0 1.33.47 2.55 1.26 3.5H9.74c.79-.95 1.26-2.17 1.26-3.5C11 8.46 8.54 6 5.5 6S0 8.46 0 11.5 2.46 17 5.5 17h13c3.04 0 5.5-2.46 5.5-5.5S21.54 6 18.5 6zm-13 9C3.57 15 2 13.43 2 11.5S3.57 8 5.5 8 9 9.57 9 11.5 7.43 15 5.5 15zm13 0c-1.93 0-3.5-1.57-3.5-3.5S16.57 8 18.5 8 22 9.57 22 11.5 20.43 15 18.5 15z"/>
     </svg>
   );
 }
 
 function RecordingsIcon({ active }: { active: boolean }) {
+  const c = active ? "#1D2B3E" : "#7F888F";
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={active ? "#2a1051" : "#7F888F"} strokeWidth="1.5">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill={c}>
       <circle cx="12" cy="12" r="10"/>
-      <circle cx="12" cy="12" r="3"/>
+      <circle cx="12" cy="12" r="3" fill="white"/>
     </svg>
   );
 }
 
 function ParkedIcon({ active }: { active: boolean }) {
+  const c = active ? "#1D2B3E" : "#7F888F";
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={active ? "#2a1051" : "#7F888F"} strokeWidth="1.5">
-      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-      <path d="M9 17V7h4a3 3 0 010 6H9"/>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill={c}>
+      <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4 8c0 1.66-1.34 3-3 3H9v4H7V7h5c1.66 0 3 1.34 3 3v1z"/>
+      <path d="M12 9H9v3h3c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1z" fill="white"/>
     </svg>
   );
 }

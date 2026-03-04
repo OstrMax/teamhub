@@ -141,14 +141,14 @@ function EventsContent({
           </span>
         </div>
 
-        {/* Row 2: Centered Upcoming/Past toggle */}
+        {/* Row 2: Centered Upcoming/Past toggle — dark navy capsule style */}
         <div className="flex items-center justify-center mb-6">
-          <div className="flex items-center bg-[#F2F2F3] rounded-full p-0.5">
+          <div className="flex items-center gap-0">
             <button
               onClick={() => setEventsTab("upcoming")}
               className={`px-5 py-2 rounded-full text-[13px] font-semibold transition-all ${
                 eventsTab === "upcoming"
-                  ? "bg-white text-[#001221] shadow-sm"
+                  ? "bg-[#001221] text-white"
                   : "text-[#7F888F] hover:text-[#4C5863]"
               }`}
             >
@@ -158,7 +158,7 @@ function EventsContent({
               onClick={() => setEventsTab("past")}
               className={`px-5 py-2 rounded-full text-[13px] font-semibold transition-all ${
                 eventsTab === "past"
-                  ? "bg-white text-[#001221] shadow-sm"
+                  ? "bg-[#001221] text-white"
                   : "text-[#7F888F] hover:text-[#4C5863]"
               }`}
             >
