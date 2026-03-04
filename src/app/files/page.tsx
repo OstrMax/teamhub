@@ -4,8 +4,8 @@ import { useState } from "react";
 
 const folders = [
   { name: "Recordings", items: 24, icon: "folder", color: "#7C3AED" },
-  { name: "Voicemails", items: 12, icon: "folder", color: "#3B82F6" },
-  { name: "Meeting Notes", items: 8, icon: "folder", color: "#F59E0B" },
+  { name: "Voicemails", items: 12, icon: "folder", color: "#1D3E77" },
+  { name: "Meeting Notes", items: 8, icon: "folder", color: "#7C2870" },
   { name: "Shared with me", items: 15, icon: "shared", color: "#2CAD43" },
 ];
 
@@ -21,10 +21,10 @@ const files = [
 ];
 
 function FileTypeIcon({ type }: { type: string }) {
-  const colors: Record<string, string> = { pdf: "#EF4444", xlsx: "#22C55E", docx: "#3B82F6", audio: "#7C3AED", video: "#F59E0B", image: "#EC4899" };
+  const colors: Record<string, string> = { pdf: "#EF4444", xlsx: "#2CAD43", docx: "#1D3E77", audio: "#7C3AED", video: "#7C2870", image: "#3B82F6" };
   const labels: Record<string, string> = { pdf: "PDF", xlsx: "XLS", docx: "DOC", audio: "MP3", video: "MP4", image: "JPG" };
   return (
-    <div className="w-10 h-10 rounded-lg flex items-center justify-center text-[10px] font-bold text-white shrink-0" style={{ background: colors[type] || "#7F888F" }}>
+    <div className="w-10 h-10 rounded-lg flex items-center justify-center text-[10px] font-bold shrink-0" style={{ background: `${colors[type] || "#7F888F"}1A`, color: colors[type] || "#7F888F" }}>
       {labels[type] || "FILE"}
     </div>
   );
@@ -71,7 +71,7 @@ export default function FilesPage() {
           </div>
 
           {/* Upload */}
-          <button className="flex items-center gap-1.5 px-4 py-1.5 bg-[#001221] text-white text-[13px] font-medium rounded-lg hover:bg-[#0a2540] active:scale-[0.98] transition-all">
+          <button className="flex items-center gap-1.5 px-4 py-1.5 bg-[#2a1051] text-white text-[13px] font-medium rounded-lg hover:bg-[#3d1a6e] active:scale-[0.98] transition-all">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 11V3m0 0L5 6m3-3l3 3M3 13h10" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
             Upload
           </button>

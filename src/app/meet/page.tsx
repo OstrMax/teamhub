@@ -168,38 +168,49 @@ function EventsContent({
         </div>
 
         {/* Row 3: Centered action buttons matching Figma exactly */}
-        <div className="flex items-center justify-center gap-10 mb-2">
-          {/* New meeting - coral/red circle with white video icon + red dot */}
+        <div className="flex items-center justify-center gap-8 mb-2">
+          {/* New meeting - large rounded square, light lavender bg, dark purple camera icon */}
           <button className="flex flex-col items-center gap-2.5 group">
-            <div className="w-14 h-14 rounded-full bg-[#E85D56] flex items-center justify-center group-hover:shadow-lg group-hover:shadow-[#E85D56]/30 group-active:scale-95 transition-all relative">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <path d="M15 8v8H5V8h10m1-2H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4V7c0-.55-.45-1-1-1z" fill="white"/>
+            <div className="w-[76px] h-[76px] rounded-[20px] bg-[#F2EBF5] flex items-center justify-center group-hover:shadow-lg group-hover:shadow-[#7C2870]/10 group-active:scale-95 transition-all relative">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <path d="M20 11v10H7V11h13m1-2H6c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h15c.55 0 1-.45 1-1v-4.5l5 5V12.5l-5 5V10c0-.55-.45-1-1-1z" fill="#7C2870"/>
               </svg>
-              {/* Red recording dot */}
-              <span className="absolute top-2.5 right-2.5 w-2.5 h-2.5 bg-[#DC2626] rounded-full border border-white" />
+              {/* Antenna dot */}
+              <span className="absolute top-3 right-3 w-2.5 h-2.5 bg-[#7C2870] rounded-full" />
             </div>
-            <span className="text-[12px] font-medium text-[#001221]">New meeting</span>
+            <span className="text-[13px] font-medium text-[#7C2870]">New meeting</span>
           </button>
 
-          {/* Join - dark navy circle with white + icon */}
+          {/* Join - large rounded square, light grey bg, small dark navy square with white + */}
           <button className="flex flex-col items-center gap-2.5 group">
-            <div className="w-14 h-14 rounded-full bg-[#1D3E77] flex items-center justify-center group-hover:shadow-lg group-hover:shadow-[#1D3E77]/30 group-active:scale-95 transition-all">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <path d="M12 5v14M5 12h14" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
-              </svg>
+            <div className="w-[76px] h-[76px] rounded-[20px] bg-[#F2F2F3] flex items-center justify-center group-hover:shadow-lg group-hover:shadow-[#1D3E77]/10 group-active:scale-95 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-[#1D3E77] flex items-center justify-center">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 5v14M5 12h14" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+                </svg>
+              </div>
             </div>
-            <span className="text-[12px] font-medium text-[#001221]">Join</span>
+            <span className="text-[13px] font-medium text-[#1D3E77]">Join</span>
           </button>
 
-          {/* Schedule - dark navy circle with white calendar icon */}
+          {/* Schedule - large rounded square, light grey bg, dark navy calendar grid icon */}
           <button className="flex flex-col items-center gap-2.5 group">
-            <div className="w-14 h-14 rounded-full bg-[#1D3E77] flex items-center justify-center group-hover:shadow-lg group-hover:shadow-[#1D3E77]/30 group-active:scale-95 transition-all">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
-                <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 002 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/>
-                <rect x="7" y="12" width="4" height="4" rx="0.5" opacity="0.7"/>
+            <div className="w-[76px] h-[76px] rounded-[20px] bg-[#F2F2F3] flex items-center justify-center group-hover:shadow-lg group-hover:shadow-[#1D3E77]/10 group-active:scale-95 transition-all">
+              <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+                {/* Calendar grid */}
+                <rect x="4" y="6" width="22" height="20" rx="3" stroke="#1D3E77" strokeWidth="1.8"/>
+                <path d="M4 12h22" stroke="#1D3E77" strokeWidth="1.8"/>
+                <path d="M10 6V3M20 6V3" stroke="#1D3E77" strokeWidth="1.8" strokeLinecap="round"/>
+                {/* Dots grid */}
+                <circle cx="9.5" cy="16.5" r="1.3" fill="#1D3E77"/>
+                <circle cx="15" cy="16.5" r="1.3" fill="#1D3E77"/>
+                <circle cx="20.5" cy="16.5" r="1.3" fill="#1D3E77"/>
+                <circle cx="9.5" cy="21.5" r="1.3" fill="#1D3E77"/>
+                <circle cx="15" cy="21.5" r="1.3" fill="#1D3E77"/>
+                <circle cx="20.5" cy="21.5" r="1.3" fill="#1D3E77"/>
               </svg>
             </div>
-            <span className="text-[12px] font-medium text-[#001221]">Schedule</span>
+            <span className="text-[13px] font-medium text-[#1D3E77]">Schedule</span>
           </button>
         </div>
       </div>
