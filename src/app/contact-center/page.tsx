@@ -56,37 +56,60 @@ export default function CXPage() {
   const [tab, setTab] = useState<"dashboard" | "agents" | "calls">("dashboard");
 
   return (
-    <div className="flex flex-col h-full">
-      {/* Header */}
-      <div className="flex items-center gap-6 px-6 py-3 border-b border-[#E5E6E8]">
-        <h1 className="text-lg font-semibold text-[#001221]">CX</h1>
-        <div className="flex items-center gap-1">
-          {(["dashboard", "agents", "calls"] as const).map((t) => (
+    <div className="flex h-full">
+      {/* Left sidebar — same pattern as Meet page */}
+      <div className="w-[220px] shrink-0 border-r border-[#E5E6E8] bg-white flex flex-col">
+        <div className="px-4 pt-5 pb-3">
+          {([
+            { key: "dashboard" as const, label: "Dashboard", icon: (active: boolean) => (
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <rect x="2" y="2" width="5" height="5" rx="1.5" stroke={active ? "#2E1055" : "#7F888F"} strokeWidth="1.3"/>
+                <rect x="9" y="2" width="5" height="5" rx="1.5" stroke={active ? "#2E1055" : "#7F888F"} strokeWidth="1.3"/>
+                <rect x="2" y="9" width="5" height="5" rx="1.5" stroke={active ? "#2E1055" : "#7F888F"} strokeWidth="1.3"/>
+                <rect x="9" y="9" width="5" height="5" rx="1.5" stroke={active ? "#2E1055" : "#7F888F"} strokeWidth="1.3"/>
+              </svg>
+            )},
+            { key: "agents" as const, label: "Agents", icon: (active: boolean) => (
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="5.5" r="2.5" stroke={active ? "#2E1055" : "#7F888F"} strokeWidth="1.3"/>
+                <path d="M3 13.5c0-2 3.33-3 5-3s5 1 5 3" stroke={active ? "#2E1055" : "#7F888F"} strokeWidth="1.3" strokeLinecap="round"/>
+              </svg>
+            )},
+            { key: "calls" as const, label: "Active Calls", icon: (active: boolean) => (
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M14 10.67v1.66a1.11 1.11 0 01-1.21 1.11 11 11 0 01-4.8-1.7 10.83 10.83 0 01-3.33-3.33A11 11 0 012.96 3.6 1.11 1.11 0 014.07 2.4h1.66a1.11 1.11 0 011.11.96c.07.53.2 1.05.39 1.56a1.11 1.11 0 01-.25 1.17l-.7.7a8.89 8.89 0 003.33 3.33l.7-.7a1.11 1.11 0 011.17-.25c.51.19 1.03.32 1.56.39a1.11 1.11 0 01.96 1.11z" stroke={active ? "#2E1055" : "#7F888F"} strokeWidth="1.3"/>
+              </svg>
+            )},
+          ]).map((item) => (
             <button
-              key={t}
-              onClick={() => setTab(t)}
-              className={`px-3 py-2 text-sm font-medium transition-colors capitalize ${
-                tab === t ? "text-[#2a1051]" : "text-[#7F888F] hover:text-[#4C5863]"
+              key={item.key}
+              onClick={() => setTab(item.key)}
+              className={`flex items-center gap-2.5 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all mt-1 first:mt-0 ${
+                tab === item.key
+                  ? "bg-[#F2F0F5] text-[#2E1055]"
+                  : "text-[#4C5863] hover:bg-[#F9F9FA]"
               }`}
-              style={tab === t ? { boxShadow: "inset 0 -2px 0 0 #2a1051" } : undefined}
             >
-              {t === "calls" ? "Active Calls" : t.charAt(0).toUpperCase() + t.slice(1)}
+              {item.icon(tab === item.key)}
+              {item.label}
             </button>
           ))}
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto">
-        {tab === "dashboard" && <DashboardView />}
-        {tab === "agents" && <AgentsView />}
-        {tab === "calls" && <CallsView />}
+      {/* Main content */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 overflow-y-auto">
+          {tab === "dashboard" && <DashboardView />}
+          {tab === "agents" && <AgentsView />}
+          {tab === "calls" && <CallsView />}
+        </div>
       </div>
     </div>
   );
 }
 
 function DashboardView() {
-  const [hoveredBar, setHoveredBar] = useState<number | null>(null);
   return (
     <div className="px-6 py-5 space-y-5">
       {/* Stats row */}
@@ -226,24 +249,14 @@ function DashboardView() {
         </div>
       </div>
 
-      {/* Calls per Hour - improved chart */}
+      {/* Calls per Hour - line chart with gradient like home page */}
       <div className="bg-white border border-[#E5E6E8] rounded-xl p-5">
         <div className="flex items-center justify-between mb-1">
-          <h2 className="text-base font-semibold text-[#001221]">Calls per Hour</h2>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-sm" style={{ background: "linear-gradient(to top, #2a1051, #783a9b)" }} />
-              <span className="text-[11px] text-[#7F888F]">Inbound</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-sm bg-[#B882D4]" />
-              <span className="text-[11px] text-[#7F888F]">Outbound</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-sm bg-[#EF4444]" />
-              <span className="text-[11px] text-[#7F888F]">Missed</span>
-            </div>
+          <div className="flex items-center gap-2">
+            <h2 className="text-base font-semibold text-[#001221]">Calls per Hour</h2>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#001221" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
+          <button className="text-sm text-[#7F888F] flex items-center gap-1 hover:text-[#001221] transition-colors">Learn more →</button>
         </div>
 
         {/* Totals */}
@@ -264,55 +277,47 @@ function DashboardView() {
           </div>
         </div>
 
-        {/* Chart */}
-        <div className="relative">
+        {/* Line chart with gradient fill — same style as home page */}
+        <div className="relative h-44">
           {/* Y-axis labels */}
           <div className="absolute left-0 top-0 bottom-6 flex flex-col justify-between text-[10px] text-[#7F888F] w-6 pointer-events-none">
-            <span>{maxTotal}</span><span>{Math.round(maxTotal * 0.66)}</span><span>{Math.round(maxTotal * 0.33)}</span><span>0</span>
+            <span>{maxTotal}</span><span>{Math.round(maxTotal * 0.75)}</span><span>{Math.round(maxTotal * 0.5)}</span><span>{Math.round(maxTotal * 0.25)}</span><span>0</span>
           </div>
           {/* Grid lines */}
-          <div className="ml-8 relative">
-            {[0, 1, 2, 3].map(i => (
-              <div key={i} className="border-t border-[#F2F2F3]" style={{ height: i < 3 ? 40 : 0 }} />
-            ))}
-            {/* Bars */}
-            <div className="absolute inset-0 flex items-end gap-1.5 pb-0">
-              {hourlyData.map((d, i) => {
-                const total = d.inbound + d.outbound;
-                const inH = (d.inbound / maxTotal) * 120;
-                const outH = (d.outbound / maxTotal) * 120;
-                const missedH = (d.missed / maxTotal) * 120;
-                return (
-                  <div
-                    key={i}
-                    className="flex-1 flex flex-col items-center relative cursor-pointer group"
-                    onMouseEnter={() => setHoveredBar(i)}
-                    onMouseLeave={() => setHoveredBar(null)}
-                  >
-                    {/* Tooltip */}
-                    {hoveredBar === i && (
-                      <div className="absolute -top-14 left-1/2 -translate-x-1/2 bg-[#001221] text-white text-[10px] rounded-lg px-2.5 py-1.5 whitespace-nowrap z-10 shadow-lg">
-                        <div className="font-semibold">{d.hour > 12 ? d.hour - 12 : d.hour}{d.hour >= 12 ? "PM" : "AM"}</div>
-                        <div>In: {d.inbound} · Out: {d.outbound} · Miss: {d.missed}</div>
-                        <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-[#001221]" />
-                      </div>
-                    )}
-                    <div className="w-full flex flex-col items-stretch gap-px">
-                      {d.missed > 0 && <div className="w-full rounded-t-sm bg-[#EF4444] transition-all" style={{ height: `${missedH}px` }} />}
-                      <div className="w-full bg-[#B882D4] transition-all" style={{ height: `${outH}px`, borderRadius: d.missed > 0 ? 0 : "2px 2px 0 0" }} />
-                      <div className="w-full rounded-b-sm transition-all" style={{ height: `${inH}px`, background: "linear-gradient(to top, #2a1051, #783a9b)" }} />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          {/* X-axis */}
-          <div className="flex ml-8 mt-1">
-            {hourlyData.map((d, i) => (
-              <div key={i} className="flex-1 text-center text-[10px] text-[#7F888F]">{d.hour > 12 ? d.hour - 12 : d.hour}{d.hour >= 12 ? "p" : "a"}</div>
-            ))}
-          </div>
+          <svg className="absolute left-8 right-0 top-0 bottom-6" viewBox="0 0 500 140" preserveAspectRatio="none">
+            <line x1="0" y1="0" x2="500" y2="0" stroke="#F2F2F3" strokeWidth="1"/>
+            <line x1="0" y1="35" x2="500" y2="35" stroke="#F2F2F3" strokeWidth="1"/>
+            <line x1="0" y1="70" x2="500" y2="70" stroke="#F2F2F3" strokeWidth="1"/>
+            <line x1="0" y1="105" x2="500" y2="105" stroke="#F2F2F3" strokeWidth="1"/>
+            <line x1="0" y1="140" x2="500" y2="140" stroke="#F2F2F3" strokeWidth="1"/>
+          </svg>
+          {/* Area + Line */}
+          <svg className="absolute left-8 right-0 top-0 bottom-6" viewBox="0 0 500 140" preserveAspectRatio="none">
+            <path d={`M0,${140 - (hourlyData[0].inbound + hourlyData[0].outbound) / maxTotal * 140} ${hourlyData.map((d, i) => `L${(i / (hourlyData.length - 1)) * 500},${140 - (d.inbound + d.outbound) / maxTotal * 140}`).join(' ')} L500,140 L0,140Z`} fill="url(#cxChartGradient)" />
+            <polyline points={hourlyData.map((d, i) => `${(i / (hourlyData.length - 1)) * 500},${140 - (d.inbound + d.outbound) / maxTotal * 140}`).join(' ')} fill="none" stroke="#2a1051" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <defs>
+              <linearGradient id="cxChartGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#2a1051" stopOpacity="0.15"/>
+                <stop offset="100%" stopColor="#2a1051" stopOpacity="0.01"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          {/* Data points */}
+          <svg className="absolute left-8 right-0 top-0 bottom-6" viewBox="0 0 500 140">
+            {hourlyData.map((d, i) => {
+              const x = (i / (hourlyData.length - 1)) * 500;
+              const y = 140 - (d.inbound + d.outbound) / maxTotal * 140;
+              return (
+                <g key={i}>
+                  <circle cx={x} cy={y} r="4" fill="#2a1051"/>
+                  <circle cx={x} cy={y} r="8" fill="transparent" className="cursor-pointer"/>
+                </g>
+              );
+            })}
+          </svg>
+        </div>
+        <div className="flex justify-between pl-8 mt-1 text-[10px] text-[#7F888F]">
+          {hourlyData.map((d) => <span key={d.hour}>{d.hour > 12 ? d.hour - 12 : d.hour}{d.hour >= 12 ? "pm" : "am"}</span>)}
         </div>
       </div>
     </div>

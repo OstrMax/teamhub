@@ -4,40 +4,82 @@ import { useState, useEffect } from "react";
 
 interface WalkthroughTip {
   id: string;
+  title: string;
   text: string;
-  target: string; // CSS selector or description
   position: { top?: string; bottom?: string; left?: string; right?: string };
   arrowDirection: "up" | "down" | "left" | "right";
 }
 
 const tips: WalkthroughTip[] = [
   {
+    id: "chats",
+    title: "Chats",
+    text: "Text with your colleagues in real time. Send messages, share files, and stay connected across teams.",
+    position: { top: "130px", left: "68px" },
+    arrowDirection: "left",
+  },
+  {
+    id: "talk",
+    title: "Talk",
+    text: "Make phone calls, transfer to other agents, or put callers on hold — all from one place.",
+    position: { top: "178px", left: "68px" },
+    arrowDirection: "left",
+  },
+  {
     id: "ai-assist",
-    text: "Click here to open AI Assistant",
-    target: "ai-button",
+    title: "AI Assistant",
+    text: "Your AI-powered helper! Get smart receptionist, tone analysis, meeting summaries, auto-responses and more.",
     position: { top: "52px", right: "140px" },
     arrowDirection: "up",
   },
   {
-    id: "sidebar-meet",
-    text: "Join or schedule meetings",
-    target: "meet-link",
-    position: { top: "210px", left: "68px" },
+    id: "operator",
+    title: "Operator Console",
+    text: "Manage incoming calls, see caller details, transfer between departments, and monitor live queue activity.",
+    position: { top: "270px", left: "68px" },
     arrowDirection: "left",
   },
   {
-    id: "sidebar-calendar",
-    text: "View your calendar",
-    target: "calendar-link",
-    position: { top: "315px", left: "68px" },
+    id: "meet",
+    title: "Meet",
+    text: "Start or join a video conference call. Use New Meeting, Join with a code, or Schedule for later.",
+    position: { top: "224px", left: "68px" },
     arrowDirection: "left",
   },
   {
-    id: "quick-actions",
-    text: "Use quick actions to call, chat or meet instantly",
-    target: "quick-actions",
-    position: { top: "140px", right: "50px" },
-    arrowDirection: "up",
+    id: "sms",
+    title: "SMS",
+    text: "Send and receive SMS messages. Create new conversations, manage campaigns, and reach customers directly.",
+    position: { top: "316px", left: "68px" },
+    arrowDirection: "left",
+  },
+  {
+    id: "calendar",
+    title: "Calendar",
+    text: "Plan your schedule with day, week, month & agenda views. Add new events and never miss a meeting.",
+    position: { top: "374px", left: "68px" },
+    arrowDirection: "left",
+  },
+  {
+    id: "calendar-event",
+    title: "Add Events",
+    text: "Click any time slot to create a new event. Set reminders, invite colleagues, and sync across devices.",
+    position: { top: "374px", left: "68px" },
+    arrowDirection: "left",
+  },
+  {
+    id: "files",
+    title: "Files",
+    text: "Upload, organize and share files. Browse recordings, voicemails, meeting notes, and all shared documents.",
+    position: { top: "422px", left: "68px" },
+    arrowDirection: "left",
+  },
+  {
+    id: "cx",
+    title: "Contact Center (CX)",
+    text: "Monitor agents, active calls, queues and performance. See real-time stats and manage your contact center.",
+    position: { top: "478px", left: "68px" },
+    arrowDirection: "left",
   },
 ];
 
@@ -47,7 +89,6 @@ export default function WalkthroughBubbles() {
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
-    // Show walkthrough after a short delay
     const t = setTimeout(() => setVisible(true), 1500);
     return () => clearTimeout(t);
   }, []);
@@ -65,6 +106,12 @@ export default function WalkthroughBubbles() {
     }
   };
 
+  const handlePrev = () => {
+    if (currentTip > 0) {
+      setCurrentTip(currentTip - 1);
+    }
+  };
+
   const handleSkip = () => {
     setDismissed(true);
   };
@@ -78,31 +125,34 @@ export default function WalkthroughBubbles() {
 
   return (
     <>
-      {/* Subtle backdrop pulse */}
+      {/* Subtle backdrop */}
       <div className="fixed inset-0 z-[998] pointer-events-none" />
 
       {/* Tooltip bubble */}
       <div
         className="fixed z-[999] animate-[fadeIn_0.3s_ease-out]"
-        style={{
-          ...tip.position,
-        }}
+        style={{ ...tip.position }}
+        key={tip.id}
       >
-        <div className="relative bg-[#001221] text-white rounded-xl px-4 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.3)] max-w-[240px]">
+        <div className="relative bg-[#001221] text-white rounded-xl px-4 py-3.5 shadow-[0_8px_30px_rgba(0,0,0,0.3)] max-w-[260px]">
           {/* Arrow */}
           <div className={`absolute w-0 h-0 ${arrowStyles[tip.arrowDirection]}`} />
 
+          {/* Title */}
+          <p className="text-[14px] font-semibold mb-1">{tip.title}</p>
+
           {/* Content */}
-          <p className="text-[13px] leading-[1.4] font-medium mb-3">{tip.text}</p>
+          <p className="text-[12px] leading-[1.5] text-white/80 mb-3">{tip.text}</p>
 
           {/* Controls */}
           <div className="flex items-center justify-between">
+            {/* Progress dots */}
             <div className="flex items-center gap-1">
               {tips.map((_, i) => (
                 <span
                   key={i}
-                  className={`w-1.5 h-1.5 rounded-full transition-all ${
-                    i === currentTip ? "bg-white" : "bg-white/30"
+                  className={`rounded-full transition-all ${
+                    i === currentTip ? "w-4 h-1.5 bg-white" : "w-1.5 h-1.5 bg-white/30"
                   }`}
                 />
               ))}
@@ -110,10 +160,18 @@ export default function WalkthroughBubbles() {
             <div className="flex items-center gap-2">
               <button
                 onClick={handleSkip}
-                className="text-[11px] text-white/60 hover:text-white/90 transition-colors"
+                className="text-[11px] text-white/50 hover:text-white/80 transition-colors"
               >
                 Skip
               </button>
+              {currentTip > 0 && (
+                <button
+                  onClick={handlePrev}
+                  className="px-2.5 py-1 text-white/70 text-[11px] font-medium rounded-full hover:text-white hover:bg-white/10 transition-all"
+                >
+                  Back
+                </button>
+              )}
               <button
                 onClick={handleNext}
                 className="px-3 py-1 bg-white text-[#001221] text-[11px] font-semibold rounded-full hover:bg-white/90 active:scale-95 transition-all"
@@ -124,7 +182,7 @@ export default function WalkthroughBubbles() {
           </div>
 
           {/* Step counter */}
-          <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#7C3AED] flex items-center justify-center text-[10px] font-bold text-white">
+          <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[#7C3AED] flex items-center justify-center text-[10px] font-bold text-white shadow-md">
             {currentTip + 1}
           </div>
         </div>
