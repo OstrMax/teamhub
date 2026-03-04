@@ -196,13 +196,13 @@ export default function OperatorConsolePage() {
         <div className="flex items-center border-b border-[#E5E6E8]">
           {[
             { label: "Contacts", icon: (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="9" cy="8" r="4"/><path d="M1 20c0-2.5 3.5-4 8-4s8 1.5 8 4" strokeLinecap="round"/><path d="M19 8a4 4 0 010 7.75" strokeLinecap="round"/><path d="M21 20c0-1.5-1.5-2.7-3.5-3.5" strokeLinecap="round"/></svg>
             )},
             { label: "Unattended calls", icon: (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 1l22 22"/><path d="M9 9v6l5 3"/><circle cx="12" cy="12" r="10"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6" strokeLinecap="round"/></svg>
             )},
             { label: "Parked", icon: (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 17V7h4a3 3 0 010 6H9"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 17V7h4a3 3 0 010 6H9"/></svg>
             )},
           ].map((tab) => (
             <button
