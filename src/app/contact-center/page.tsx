@@ -110,6 +110,8 @@ export default function CXPage() {
 }
 
 function DashboardView() {
+  const [hoveredBar, setHoveredBar] = useState<number | null>(null);
+
   return (
     <div className="px-6 py-5 space-y-5">
       {/* Stats row */}
@@ -294,9 +296,52 @@ function DashboardView() {
                 const inH = (d.inbound / maxTotal) * 120;
                 const outH = (d.outbound / maxTotal) * 120;
                 return (
-                  <div key={i} className="flex-1 flex flex-col items-stretch gap-px">
-                    <div className="w-full rounded-t-sm transition-all" style={{ height: `${outH}px`, background: "rgba(0,18,33,0.6)" }} />
-                    <div className="w-full rounded-b-sm transition-all" style={{ height: `${inH}px`, background: "rgba(0,18,33,0.8)" }} />
+                  <div
+                    key={i}
+                    className="flex-1 flex flex-col items-stretch gap-px relative cursor-pointer"
+                    onMouseEnter={() => setHoveredBar(i)}
+                    onMouseLeave={() => setHoveredBar(null)}
+                  >
+                    {/* Tooltip */}
+                    {hoveredBar === i && (
+                      <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 z-20 pointer-events-none"
+                        style={{ animation: "fadeIn 0.15s ease-out" }}
+                      >
+                        <div className="bg-[#001221] text-white rounded-lg px-3 py-2.5 shadow-lg whitespace-nowrap text-left min-w-[130px]">
+                          <div className="text-[11px] font-semibold mb-1.5 text-white/60">{d.hour > 12 ? d.hour - 12 : d.hour}:00 {d.hour >= 12 ? "PM" : "AM"}</div>
+                          <div className="flex items-center gap-2 text-[12px] mb-1">
+                            <span className="w-2 h-2 rounded-sm" style={{ background: "rgba(255,255,255,0.85)" }} />
+                            <span className="text-white/70">Inbound</span>
+                            <span className="ml-auto font-semibold">{d.inbound}</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-[12px] mb-1">
+                            <span className="w-2 h-2 rounded-sm" style={{ background: "rgba(255,255,255,0.5)" }} />
+                            <span className="text-white/70">Outbound</span>
+                            <span className="ml-auto font-semibold">{d.outbound}</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-[12px]">
+                            <span className="w-2 h-2 rounded-sm bg-[#EF4444]" />
+                            <span className="text-white/70">Missed</span>
+                            <span className="ml-auto font-semibold">{d.missed}</span>
+                          </div>
+                        </div>
+                        <div className="w-2 h-2 bg-[#001221] rotate-45 mx-auto -mt-1" />
+                      </div>
+                    )}
+                    <div
+                      className="w-full rounded-t-sm transition-all"
+                      style={{
+                        height: `${outH}px`,
+                        background: hoveredBar === i ? "rgba(0,18,33,0.75)" : "rgba(0,18,33,0.6)",
+                      }}
+                    />
+                    <div
+                      className="w-full rounded-b-sm transition-all"
+                      style={{
+                        height: `${inH}px`,
+                        background: hoveredBar === i ? "rgba(0,18,33,0.95)" : "rgba(0,18,33,0.8)",
+                      }}
+                    />
                   </div>
                 );
               })}

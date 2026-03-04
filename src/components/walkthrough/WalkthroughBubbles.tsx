@@ -134,17 +134,17 @@ export default function WalkthroughBubbles() {
         style={{ ...tip.position }}
         key={tip.id}
       >
-        <div className="relative bg-[#001221] text-white rounded-xl px-4 py-3.5 shadow-[0_8px_30px_rgba(0,0,0,0.3)] max-w-[260px]">
+        <div className="relative bg-[#001221] text-white rounded-2xl px-5 py-4 shadow-[0_8px_30px_rgba(0,0,0,0.3)] min-w-[300px] max-w-[320px]">
           {/* Arrow */}
           <div className={`absolute w-0 h-0 ${arrowStyles[tip.arrowDirection]}`} />
 
           {/* Title */}
-          <p className="text-[14px] font-semibold mb-1">{tip.title}</p>
+          <p className="text-[15px] font-semibold mb-1.5">{tip.title}</p>
 
           {/* Content */}
-          <p className="text-[12px] leading-[1.5] text-white/80 mb-3">{tip.text}</p>
+          <p className="text-[13px] leading-[1.6] text-white/80 mb-4">{tip.text}</p>
 
-          {/* Controls */}
+          {/* Controls — all inside the box */}
           <div className="flex items-center justify-between">
             {/* Progress dots */}
             <div className="flex items-center gap-1">
@@ -157,33 +157,28 @@ export default function WalkthroughBubbles() {
                 />
               ))}
             </div>
-            <div className="flex items-center gap-3 ml-3">
+            <div className="flex items-center gap-3 ml-4">
               <button
                 onClick={handleSkip}
-                className="text-[11px] text-white/50 hover:text-white/80 transition-colors"
+                className="text-[12px] text-white/50 hover:text-white/80 transition-colors"
               >
                 Skip
               </button>
               {currentTip > 0 && (
                 <button
                   onClick={handlePrev}
-                  className="px-2.5 py-1 text-white/70 text-[11px] font-medium rounded-full hover:text-white hover:bg-white/10 transition-all"
+                  className="px-3 py-1.5 text-white/70 text-[12px] font-medium rounded-full hover:text-white hover:bg-white/10 transition-all"
                 >
                   Back
                 </button>
               )}
               <button
                 onClick={handleNext}
-                className="px-3 py-1 bg-white text-[#001221] text-[11px] font-semibold rounded-full hover:bg-white/90 active:scale-95 transition-all"
+                className="px-4 py-1.5 bg-white text-[#001221] text-[12px] font-semibold rounded-full hover:bg-white/90 active:scale-95 transition-all"
               >
                 {isLast ? "Got it!" : "Next"}
               </button>
             </div>
-          </div>
-
-          {/* Step counter */}
-          <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[#7C3AED] flex items-center justify-center text-[10px] font-bold text-white shadow-md">
-            {currentTip + 1}
           </div>
         </div>
       </div>
