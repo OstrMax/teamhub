@@ -60,13 +60,13 @@ export default function ChatArea() {
         </div>
         <div className="flex items-center gap-2">
           <button className="p-2 rounded hover:bg-[#F2F2F3] transition-colors">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="#0B182E" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="2" width="14" height="16" rx="2" fill="#0B182E"/><polygon points="21 7 17 10.5 17 13.5 21 17" fill="#0B182E"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="1.5"><rect x="2" y="4" width="14" height="13" rx="2"/><path d="M16 9l5-3v12l-5-3"/></svg>
           </button>
           <button className="p-2 rounded hover:bg-[#F2F2F3] transition-colors">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="#0B182E" xmlns="http://www.w3.org/2000/svg"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
           </button>
           <button className="p-2 rounded hover:bg-[#F2F2F3] transition-colors">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="#0B182E" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
           </button>
         </div>
       </div>
@@ -123,9 +123,9 @@ export default function ChatArea() {
             className="flex-1 outline-none text-sm text-[#001221] placeholder:text-[#7F888F]"
           />
           <button className="w-9 h-9 rounded-full bg-[#2a1051] flex items-center justify-center hover:bg-[#3d1870] transition-colors shrink-0">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="22" y1="2" x2="11" y2="13"/>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="12" y1="19" x2="12" y2="5"/>
+              <polyline points="5 12 12 5 19 12"/>
             </svg>
           </button>
         </div>

@@ -36,6 +36,7 @@ export default function MeetPage() {
   const [sideTab, setSideTab] = useState<"events" | "recordings">("events");
   const [eventsTab, setEventsTab] = useState<"upcoming" | "past">("upcoming");
   const [meetingActive, setMeetingActive] = useState(false);
+  const [meetingMinimized, setMeetingMinimized] = useState(false);
   const [meetingTitle, setMeetingTitle] = useState("");
   const [showSchedule, setShowSchedule] = useState(false);
 
@@ -46,15 +47,52 @@ export default function MeetPage() {
 
   const handleEndMeeting = () => {
     setMeetingActive(false);
+    setMeetingMinimized(false);
     setMeetingTitle("");
   };
 
-  if (meetingActive) {
-    return <MeetingView title={meetingTitle} onEnd={handleEndMeeting} />;
+  if (meetingActive && !meetingMinimized) {
+    return <MeetingView title={meetingTitle} onEnd={handleEndMeeting} onMinimize={() => setMeetingMinimized(true)} />;
   }
 
   return (
-    <div className="flex h-full">
+    <div className="flex h-full relative">
+      {/* Minimized meeting floating card */}
+      {meetingActive && meetingMinimized && (
+        <div className="fixed bottom-6 right-6 z-50 bg-[#1a0a2e] rounded-2xl shadow-2xl shadow-black/30 overflow-hidden transition-all duration-300" style={{ width: 320, animation: "slideIn 0.25s ease-out" }}>
+          <div className="px-4 py-3">
+            <div className="flex items-center justify-between mb-2">
+              <div>
+                <div className="text-white text-[14px] font-medium">{meetingTitle}</div>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <span className="w-2 h-2 rounded-full bg-[#EF4444] animate-pulse" />
+                  <span className="text-white/50 text-[12px]">In progress</span>
+                </div>
+              </div>
+              <div className="flex -space-x-1.5">
+                {[5, 12, 33].map((id) => (
+                  <Image key={id} src={`https://i.pravatar.cc/64?img=${id}`} alt="" width={24} height={24} className="w-6 h-6 rounded-full border-2 border-[#1a0a2e] object-cover" unoptimized />
+                ))}
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setMeetingMinimized(false)}
+                className="flex-1 py-2 rounded-lg bg-white/10 text-white text-xs font-medium hover:bg-white/20 transition-colors active:scale-95"
+              >
+                Expand
+              </button>
+              <button
+                onClick={handleEndMeeting}
+                className="flex-1 py-2 rounded-lg bg-[#EF4444] text-white text-xs font-medium hover:bg-[#DC2626] transition-colors active:scale-95"
+              >
+                Leave
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Left sidebar */}
       <div className="w-[220px] shrink-0 border-r border-[#E5E6E8] bg-white flex flex-col">
         <div className="px-4 pt-5 pb-3">
@@ -100,7 +138,7 @@ export default function MeetPage() {
 }
 
 /* ── Video Meeting with REAL camera ── */
-function MeetingView({ title, onEnd }: { title: string; onEnd: () => void }) {
+function MeetingView({ title, onEnd, onMinimize }: { title: string; onEnd: () => void; onMinimize?: () => void }) {
   const [timer, setTimer] = useState(0);
   const [micOn, setMicOn] = useState(true);
   const [camOn, setCamOn] = useState(true);
@@ -150,6 +188,11 @@ function MeetingView({ title, onEnd }: { title: string; onEnd: () => void }) {
               <Image key={id} src={`https://i.pravatar.cc/64?img=${id}`} alt="" width={24} height={24} className="w-6 h-6 rounded-full border-2 border-[#1a0a2e] object-cover" unoptimized />
             ))}
           </div>
+          {onMinimize && (
+            <button onClick={onMinimize} className="ml-2 p-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition-colors active:scale-90" title="Minimize">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M10 14l-7 7"/></svg>
+            </button>
+          )}
         </div>
       </div>
 

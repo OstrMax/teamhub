@@ -30,20 +30,22 @@ export default function TalkPage() {
           </button>
         </div>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 border-b border-[#E5E6E8] -mb-px">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-1.5 px-3 py-2 text-sm font-medium transition-colors relative ${
+              className={`relative flex items-center gap-1.5 px-4 py-3 text-sm font-medium transition-colors ${
                 activeTab === tab.id
                   ? "text-[#2a1051]"
                   : "text-[#7F888F] hover:text-[#4C5863]"
               }`}
-              style={activeTab === tab.id ? { boxShadow: "inset 0 -2px 0 0 #2a1051" } : undefined}
             >
               <tab.icon active={activeTab === tab.id} />
               {tab.label}
+              {activeTab === tab.id && (
+                <div className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#2a1051]" />
+              )}
             </button>
           ))}
         </div>

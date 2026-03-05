@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import CallPopup from "@/components/talk/CallPopup";
 
 type ContactStatus = "available" | "busy" | "ringing" | "away" | "offline";
 
@@ -61,6 +62,8 @@ export default function OperatorConsolePage() {
   const [phoneInput, setPhoneInput] = useState("");
   const [gridView, setGridView] = useState(true);
   const [showOngoingCall, setShowOngoingCall] = useState(true);
+  const [calling, setCalling] = useState(false);
+  const [callingName, setCallingName] = useState("");
   const [holdCalls, setHoldCalls] = useState([
     { id: 1, name: "(416) 7638098", time: "00:00:02" },
     { id: 2, name: "Terry Lowlance", time: "00:01:01" },
@@ -184,7 +187,13 @@ export default function OperatorConsolePage() {
             ))}
           </div>
           {/* Call button - same as Talk */}
-          <button className="w-14 h-14 rounded-full bg-[#2CAD43] hover:bg-[#259c3a] active:scale-90 flex items-center justify-center transition-all shadow-lg">
+          <button
+            onClick={() => {
+              setCallingName(phoneInput || "Unknown");
+              setCalling(true);
+            }}
+            className="w-14 h-14 rounded-full bg-[#2CAD43] hover:bg-[#259c3a] active:scale-90 flex items-center justify-center transition-all shadow-lg"
+          >
             <Image src="/icons/call-button.svg" alt="Call" width={22} height={23} />
           </button>
         </div>
@@ -281,6 +290,8 @@ export default function OperatorConsolePage() {
           </div>
         </div>
       </div>
+
+      {calling && <CallPopup name={callingName || "Unknown"} initials="#" onEnd={() => setCalling(false)} />}
     </div>
   );
 }

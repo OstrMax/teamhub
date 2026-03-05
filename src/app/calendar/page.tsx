@@ -191,13 +191,11 @@ export default function CalendarPage() {
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top bar */}
         <div className="flex items-center justify-between px-5 py-3 border-b border-[#E5E6E8]">
-          <div className="flex items-center gap-3">
-            {/* Add event */}
+          {/* Left: nav + date */}
+          <div className="flex items-center gap-3 shrink-0">
             <button className="w-8 h-8 rounded-lg bg-[#2E1055] flex items-center justify-center hover:bg-[#3d1670] active:scale-95 transition-all">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="white" strokeWidth="1.5" strokeLinecap="round"/></svg>
             </button>
-
-            {/* Nav arrows */}
             <button onClick={handlePrevDay} className="p-1.5 rounded-lg hover:bg-[#F2F2F3] active:scale-90 transition-all">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="#001221" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
@@ -210,17 +208,13 @@ export default function CalendarPage() {
             <button onClick={handleNextDay} className="p-1.5 rounded-lg hover:bg-[#F2F2F3] active:scale-90 transition-all">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#001221" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
-
-            {/* Date */}
             <h2 className="text-[16px] font-semibold text-[#001221] ml-1">
               {MONTH_NAMES[currentDate.getMonth()]} {currentDate.getDate()}, {currentDate.getFullYear()}
             </h2>
           </div>
 
-          {/* Centered view mode tabs */}
-
-          <div className="flex items-center gap-3">
-            {/* View mode tabs — dark capsule, matching Meet switch */}
+          {/* Center: view mode tabs */}
+          <div className="flex-1 flex items-center justify-center">
             <div className="flex items-center bg-[#F2F2F3] rounded-lg p-0.5" style={{ height: 28 }}>
               {(["Day", "Week", "Month", "Agenda"] as ViewMode[]).map((mode) => (
                 <button
@@ -236,8 +230,10 @@ export default function CalendarPage() {
                 </button>
               ))}
             </div>
+          </div>
 
-            {/* Search */}
+          {/* Right: search */}
+          <div className="shrink-0">
             <div className="relative">
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="absolute left-2.5 top-1/2 -translate-y-1/2">
                 <circle cx="7" cy="7" r="4.5" stroke="#7F888F" strokeWidth="1.3"/>

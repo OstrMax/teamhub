@@ -42,9 +42,9 @@ const recentCalls = [
 ];
 
 const news = [
-  { date: "12 Jul 2025", title: "Enhance conversational IVR", desc: "New AI-transcription, visualisation, talk and much more" },
-  { date: "11 Jul 2025", title: "Conversational IVR updates", desc: "New AI-transcription, visualisation, talk and much more" },
-  { date: "10 Jul 2025", title: "Talk and Chat together", desc: "New AI-transcription, visualisation, talk and much more" },
+  { date: "12 Jul 2025", title: "Enhance conversational IVR", desc: "New AI-transcription, visualisation, talk and much more", img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=128&h=96&fit=crop" },
+  { date: "11 Jul 2025", title: "Conversational IVR updates", desc: "New AI-transcription, visualisation, talk and much more", img: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=128&h=96&fit=crop" },
+  { date: "10 Jul 2025", title: "Talk and Chat together", desc: "New AI-transcription, visualisation, talk and much more", img: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=128&h=96&fit=crop" },
 ];
 
 const avatarColors: Record<string, string> = {
@@ -56,7 +56,7 @@ const dateRanges = ["Today", "Last 7 days", "Last 14 days", "Last 21 days", "Mon
 // More icon component - 20x20 with hover
 function MoreIcon({ className = "" }: { className?: string }) {
   return (
-    <button className={`w-6 h-6 flex items-center justify-center rounded-md hover:bg-[#F2F2F3] active:bg-[#E5E6E8] transition-colors ${className}`}>
+    <button className={`w-7 h-7 flex items-center justify-center rounded-md cursor-pointer hover:bg-[#E5E6E8] active:bg-[#D5D6D8] active:scale-95 transition-all ${className}`}>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="#7F888F">
         <circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/>
       </svg>
@@ -195,7 +195,7 @@ export default function Home() {
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-[rgba(29,62,119,0.04)] rounded-2xl p-5">
+        <div className="bg-[rgba(29,62,119,0.04)] rounded-2xl px-6 py-5">
           <div className="flex items-center justify-between mb-5">
             <h2 className="text-lg font-semibold text-[#001221]">Quick actions</h2>
             <MoreIcon />
@@ -205,26 +205,26 @@ export default function Home() {
               {
                 label: "Create new\ntask",
                 iconBg: "border border-[#E5E6E8] bg-white",
-                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
+                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
               },
               {
                 label: "Send SMS",
                 iconBg: "bg-[#DCF1E0]",
-                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" fill="#066A18"/><rect x="7" y="9" width="2" height="2" rx="0.5" fill="#066A18"/><rect x="11" y="9" width="2" height="2" rx="0.5" fill="#066A18"/><rect x="15" y="9" width="2" height="2" rx="0.5" fill="#066A18"/></svg>,
+                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" fill="#066A18"/><rect x="7" y="9" width="2" height="2" rx="0.5" fill="#066A18"/><rect x="11" y="9" width="2" height="2" rx="0.5" fill="#066A18"/><rect x="15" y="9" width="2" height="2" rx="0.5" fill="#066A18"/></svg>,
               },
               {
                 label: "Make a call",
                 iconBg: "bg-[#d1daeb]",
-                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="#1D3E77"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>,
+                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="#1D3E77"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>,
               },
               {
                 label: "Start video\nmeeting",
                 iconBg: "bg-[#ebd6e8]",
-                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="#7C3AED"><path d="M15 8v8H5V8h10m1-2H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4V7c0-.55-.45-1-1-1z"/></svg>,
+                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="#7C3AED"><path d="M15 8v8H5V8h10m1-2H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4V7c0-.55-.45-1-1-1z"/></svg>,
               },
             ].map((action) => (
-              <button key={action.label} className="flex items-center gap-3 px-3 py-3 rounded-xl bg-white shadow-[0_1px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_2px_16px_rgba(0,0,0,0.08)] active:scale-[0.98] transition-all">
-                <span className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 ${action.iconBg}`}>{action.icon}</span>
+              <button key={action.label} className="flex items-center gap-3 px-4 rounded-xl bg-white border border-[#E5E6E8] hover:border-[#CCCFD2] hover:shadow-[0_2px_12px_rgba(0,0,0,0.06)] active:scale-[0.98] transition-all" style={{ height: 52 }}>
+                <span className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${action.iconBg}`}>{action.icon}</span>
                 <span className="text-[13px] font-medium text-[#001221] text-left whitespace-pre-wrap leading-[1.3]">{action.label}</span>
               </button>
             ))}
@@ -368,6 +368,10 @@ export default function Home() {
               { label: "Unread SMS", value: "22", color: "#3B82F6" },
               { label: "Chat mentioned", value: "8", color: "#7C3AED" },
               { label: "Upcoming meeting", value: "4", color: "#2CAD43" },
+              { label: "Active calls", value: "1", color: "#0097A7" },
+              { label: "Total calls today", value: "47", color: "#1D3E77" },
+              { label: "Avg call duration", value: "3:42", color: "#F97316" },
+              { label: "Transfer rate", value: "12%", color: "#6366F1" },
             ].map((stat) => (
               <button key={stat.label} className="text-left group hover:bg-[#F9F9FA] rounded-lg p-2 -m-2 transition-colors">
                 <p className="text-xs text-[#7F888F]">{stat.label}</p>
@@ -447,7 +451,8 @@ export default function Home() {
                   <p className="text-sm font-medium text-[#001221]">{item.title}</p>
                   <p className="text-xs text-[#7F888F]">{item.desc}</p>
                 </div>
-                <div className="w-16 h-12 bg-[#F2F2F3] rounded-lg shrink-0" />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={item.img} alt={item.title} className="w-16 h-12 rounded-lg shrink-0 object-cover" />
               </div>
             ))}
           </div>

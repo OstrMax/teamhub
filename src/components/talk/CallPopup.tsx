@@ -8,10 +8,23 @@ interface CallPopupProps {
   onEnd: () => void;
 }
 
+const posClasses: Record<string, string> = {
+  br: "bottom-6 right-6",
+  bl: "bottom-6 left-6",
+  tl: "top-6 left-6",
+  tr: "top-6 right-6",
+};
+
 export default function CallPopup({ name, initials, onEnd }: CallPopupProps) {
   const [callState, setCallState] = useState<"calling" | "connected">("calling");
   const [timer, setTimer] = useState(0);
   const [minimized, setMinimized] = useState(false);
+  const [position, setPosition] = useState<"br" | "bl" | "tl" | "tr">("br");
+
+  const cyclePosition = () => {
+    const order: ("br" | "bl" | "tl" | "tr")[] = ["br", "bl", "tl", "tr"];
+    setPosition(order[(order.indexOf(position) + 1) % 4]);
+  };
 
   const formatTime = useCallback((seconds: number) => {
     const m = Math.floor(seconds / 60);
@@ -36,7 +49,7 @@ export default function CallPopup({ name, initials, onEnd }: CallPopupProps) {
   if (minimized) {
     return (
       <div
-        className="fixed bottom-6 right-6 z-50 bg-[#1a0a2e] rounded-2xl shadow-2xl shadow-black/30 overflow-hidden"
+        className={`fixed ${posClasses[position]} z-50 bg-[#1a0a2e] rounded-2xl shadow-2xl shadow-black/30 overflow-hidden transition-all duration-300`}
         style={{ width: 320, animation: "slideIn 0.25s ease-out" }}
       >
         <div className="px-4 py-3">
@@ -62,6 +75,13 @@ export default function CallPopup({ name, initials, onEnd }: CallPopupProps) {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
             </button>
             <button
+              onClick={cyclePosition}
+              className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors active:scale-95"
+              title="Move window"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+            </button>
+            <button
               onClick={() => setMinimized(false)}
               className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors active:scale-95"
             >
@@ -82,7 +102,7 @@ export default function CallPopup({ name, initials, onEnd }: CallPopupProps) {
   /* ── Expanded: floating card, not full screen ── */
   return (
     <div
-      className="fixed bottom-6 right-6 z-50 bg-[#1a0a2e] rounded-2xl shadow-2xl shadow-black/30 overflow-hidden"
+      className={`fixed ${posClasses[position]} z-50 bg-[#1a0a2e] rounded-2xl shadow-2xl shadow-black/30 overflow-hidden transition-all duration-300`}
       style={{ width: 340, animation: "slideIn 0.25s ease-out" }}
     >
       {/* Content */}
@@ -129,6 +149,13 @@ export default function CallPopup({ name, initials, onEnd }: CallPopupProps) {
         </button>
         <button className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors active:scale-90">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <button
+          onClick={cyclePosition}
+          className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors active:scale-90"
+          title="Move window"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
         </button>
         <button
           onClick={() => setMinimized(true)}
