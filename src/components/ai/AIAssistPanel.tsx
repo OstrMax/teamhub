@@ -335,7 +335,7 @@ export default function AIAssistPanel({
   return (
     <div className={`w-[390px] shrink-0 bg-white border-l border-[#E5E6E8] flex flex-col overflow-hidden ${animating ? "animate-[slideInRight_0.3s_ease-out]" : ""}`}>
       {/* Header */}
-      <div className="flex items-center justify-between px-5 h-14 shrink-0 border-b border-[#E5E6E8]">
+      <div className="flex items-center justify-between px-5 h-14 shrink-0">
         <div className="flex items-center gap-2">
           {view !== "main" && (
             <button

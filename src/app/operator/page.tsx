@@ -232,23 +232,23 @@ export default function OperatorConsolePage() {
           ))}
         </div>
 
-        {/* Filters */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-[#E5E6E8]">
-          <div className="flex items-center gap-2">
+        {/* Filters — tab/underline style (same as Talk tabs) */}
+        <div className="flex items-center justify-between px-4 border-b border-[#E5E6E8]">
+          <div className="flex items-center">
             {filterChips.map((chip) => (
               <button
                 key={chip}
                 onClick={() => setActiveFilter(chip)}
-                className={`px-3 py-1 rounded-full text-xs font-semibold transition-all active:scale-95 ${
+                className={`relative px-4 py-3 text-xs font-semibold transition-all ${
                   activeFilter === chip
-                    ? "bg-[#2a1051] text-white shadow-sm"
-                    : "bg-[#F2F2F3] text-[#4C5863] hover:bg-[#E5E6E8]"
+                    ? "text-[#2a1051]"
+                    : "text-[#7F888F] hover:text-[#4C5863]"
                 }`}
               >
-                {activeFilter === chip && chip === "ALL" && (
-                  <span className="mr-1">✓</span>
-                )}
                 {chip}
+                {activeFilter === chip && (
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#2a1051]" />
+                )}
               </button>
             ))}
           </div>

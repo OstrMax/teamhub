@@ -18,49 +18,55 @@ export default function TalkPage() {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Page header */}
-      <div className="flex items-center gap-6 px-6 py-3 border-b border-[#E5E6E8]">
-        <div className="flex items-center gap-3">
-          <h1 className="text-lg font-semibold text-[#001221]">Talk</h1>
-          <button className="flex items-center gap-1 text-sm text-[#001221]">
-            +12063127805
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#001221" strokeWidth="2">
-              <polyline points="6 9 12 15 18 9"/>
-            </svg>
-          </button>
-        </div>
-
-        <div className="flex items-center gap-1 border-b border-[#E5E6E8] -mb-px">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`relative flex items-center gap-1.5 px-4 py-3 text-sm font-medium transition-colors ${
-                activeTab === tab.id
-                  ? "text-[#2a1051]"
-                  : "text-[#7F888F] hover:text-[#4C5863]"
-              }`}
-            >
-              <tab.icon active={activeTab === tab.id} />
-              {tab.label}
-              {activeTab === tab.id && (
-                <div className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#2a1051]" />
-              )}
-            </button>
-          ))}
-        </div>
+      {/* Page header — title + phone only */}
+      <div className="flex items-center gap-3 px-6 py-3 border-b border-[#E5E6E8]">
+        <h1 className="text-lg font-semibold text-[#001221]">Talk</h1>
+        <button className="flex items-center gap-1 text-sm text-[#001221]">
+          +12063127805
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#001221" strokeWidth="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
       </div>
 
-      {/* Content */}
+      {/* Content — DialPad left | Tabs + Content right */}
       <div className="flex flex-1 overflow-hidden">
         <DialPad />
-        {activeTab === "contacts" && <ContactsList />}
-        {activeTab === "call-log" && <CallLog />}
-        {activeTab !== "contacts" && activeTab !== "call-log" && (
-          <div className="flex-1 flex items-center justify-center text-[#7F888F] text-sm">
-            {tabs.find(t => t.id === activeTab)?.label} - Coming soon
+
+        {/* Right panel — tabs sit at top, content below (same as operator console) */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {/* Tabs row — underline starts at the divider */}
+          <div className="flex items-center gap-1 border-b border-[#E5E6E8]">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`relative flex items-center gap-1.5 px-4 py-3 text-sm font-medium transition-colors ${
+                  activeTab === tab.id
+                    ? "text-[#2a1051]"
+                    : "text-[#7F888F] hover:text-[#4C5863]"
+                }`}
+              >
+                <tab.icon active={activeTab === tab.id} />
+                {tab.label}
+                {activeTab === tab.id && (
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#2a1051]" />
+                )}
+              </button>
+            ))}
           </div>
-        )}
+
+          {/* Tab content */}
+          <div className="flex-1 overflow-hidden">
+            {activeTab === "contacts" && <ContactsList />}
+            {activeTab === "call-log" && <CallLog />}
+            {activeTab !== "contacts" && activeTab !== "call-log" && (
+              <div className="flex-1 flex items-center justify-center text-[#7F888F] text-sm h-full">
+                {tabs.find(t => t.id === activeTab)?.label} - Coming soon
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

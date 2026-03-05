@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 interface CallPopupProps {
   name: string;
@@ -8,23 +8,16 @@ interface CallPopupProps {
   onEnd: () => void;
 }
 
-const posClasses: Record<string, string> = {
-  br: "bottom-6 right-6",
-  bl: "bottom-6 left-6",
-  tl: "top-6 left-6",
-  tr: "top-6 right-6",
-};
-
 export default function CallPopup({ name, initials, onEnd }: CallPopupProps) {
   const [callState, setCallState] = useState<"calling" | "connected">("calling");
   const [timer, setTimer] = useState(0);
   const [minimized, setMinimized] = useState(false);
-  const [position, setPosition] = useState<"br" | "bl" | "tl" | "tr">("br");
 
-  const cyclePosition = () => {
-    const order: ("br" | "bl" | "tl" | "tr")[] = ["br", "bl", "tl", "tr"];
-    setPosition(order[(order.indexOf(position) + 1) % 4]);
-  };
+  /* ── Drag state ── */
+  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
+  const isDragging = useRef(false);
+  const hasDragged = useRef(false);
+  const dragStart = useRef({ mx: 0, my: 0, px: 0, py: 0 });
 
   const formatTime = useCallback((seconds: number) => {
     const m = Math.floor(seconds / 60);
@@ -32,6 +25,7 @@ export default function CallPopup({ name, initials, onEnd }: CallPopupProps) {
     return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
   }, []);
 
+  /* ── Timers ── */
   useEffect(() => {
     if (callState === "calling") {
       const timeout = setTimeout(() => setCallState("connected"), 2500);
@@ -43,14 +37,69 @@ export default function CallPopup({ name, initials, onEnd }: CallPopupProps) {
     }
   }, [callState]);
 
+  /* ── Default position (bottom-right) ── */
+  useEffect(() => {
+    if (pos === null) {
+      const w = minimized ? 320 : 340;
+      setPos({
+        x: window.innerWidth - w - 24,
+        y: window.innerHeight - (minimized ? 140 : 380) - 24,
+      });
+    }
+  }, [pos, minimized]);
+
+  /* ── Drag handlers ── */
+  const handlePointerDown = useCallback(
+    (e: React.PointerEvent) => {
+      // Don't drag if clicking a button
+      if ((e.target as HTMLElement).closest("button")) return;
+      e.preventDefault();
+      e.currentTarget.setPointerCapture(e.pointerId);
+      isDragging.current = true;
+      hasDragged.current = false;
+      dragStart.current = {
+        mx: e.clientX,
+        my: e.clientY,
+        px: pos?.x ?? 0,
+        py: pos?.y ?? 0,
+      };
+    },
+    [pos]
+  );
+
+  const handlePointerMove = useCallback((e: React.PointerEvent) => {
+    if (!isDragging.current) return;
+    const dx = e.clientX - dragStart.current.mx;
+    const dy = e.clientY - dragStart.current.my;
+    if (Math.abs(dx) > 3 || Math.abs(dy) > 3) hasDragged.current = true;
+    const w = 340;
+    const h = 140;
+    setPos({
+      x: Math.max(0, Math.min(window.innerWidth - w, dragStart.current.px + dx)),
+      y: Math.max(0, Math.min(window.innerHeight - h, dragStart.current.py + dy)),
+    });
+  }, []);
+
+  const handlePointerUp = useCallback((e: React.PointerEvent) => {
+    isDragging.current = false;
+    e.currentTarget.releasePointerCapture(e.pointerId);
+  }, []);
+
   const letters = initials || name.split(" ").map(n => n[0]).join("").slice(0, 2);
 
-  /* ── Minimized: small corner card (like Figma 3104-9826) ── */
+  const style: React.CSSProperties = pos
+    ? { left: pos.x, top: pos.y, width: minimized ? 320 : 340, animation: hasDragged.current ? undefined : "slideIn 0.25s ease-out" }
+    : { right: 24, bottom: 24, width: minimized ? 320 : 340, animation: "slideIn 0.25s ease-out" };
+
+  /* ── Minimized: small corner card ── */
   if (minimized) {
     return (
       <div
-        className={`fixed ${posClasses[position]} z-50 bg-[#1a0a2e] rounded-2xl shadow-2xl shadow-black/30 overflow-hidden transition-all duration-300`}
-        style={{ width: 320, animation: "slideIn 0.25s ease-out" }}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        className="fixed z-50 bg-[#1a0a2e] rounded-2xl shadow-2xl shadow-black/30 overflow-hidden select-none touch-none"
+        style={{ ...style, cursor: isDragging.current ? "grabbing" : "grab" }}
       >
         <div className="px-4 py-3">
           <div className="flex items-center justify-between">
@@ -75,13 +124,6 @@ export default function CallPopup({ name, initials, onEnd }: CallPopupProps) {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
             </button>
             <button
-              onClick={cyclePosition}
-              className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors active:scale-95"
-              title="Move window"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
-            </button>
-            <button
               onClick={() => setMinimized(false)}
               className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors active:scale-95"
             >
@@ -99,11 +141,14 @@ export default function CallPopup({ name, initials, onEnd }: CallPopupProps) {
     );
   }
 
-  /* ── Expanded: floating card, not full screen ── */
+  /* ── Expanded: floating card ── */
   return (
     <div
-      className={`fixed ${posClasses[position]} z-50 bg-[#1a0a2e] rounded-2xl shadow-2xl shadow-black/30 overflow-hidden transition-all duration-300`}
-      style={{ width: 340, animation: "slideIn 0.25s ease-out" }}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      className="fixed z-50 bg-[#1a0a2e] rounded-2xl shadow-2xl shadow-black/30 overflow-hidden select-none touch-none"
+      style={{ ...style, cursor: isDragging.current ? "grabbing" : "grab" }}
     >
       {/* Content */}
       <div className="flex flex-col items-center pt-8 pb-4 px-6">
@@ -149,13 +194,6 @@ export default function CallPopup({ name, initials, onEnd }: CallPopupProps) {
         </button>
         <button className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors active:scale-90">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-        <button
-          onClick={cyclePosition}
-          className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors active:scale-90"
-          title="Move window"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
         </button>
         <button
           onClick={() => setMinimized(true)}

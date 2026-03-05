@@ -198,8 +198,8 @@ function MeetingView({ title, onEnd, onMinimize }: { title: string; onEnd: () =>
 
       {/* Video grid */}
       <div className="flex-1 flex items-center justify-center p-6 gap-4">
-        {/* Main video (self — real camera) */}
-        <div className="flex-1 max-w-[600px] aspect-video bg-gradient-to-br from-[#2E1055] to-[#1a0a2e] rounded-2xl flex flex-col items-center justify-center relative overflow-hidden">
+        {/* Main video (self — real camera, primary active view) */}
+        <div className="flex-1 aspect-video bg-gradient-to-br from-[#2E1055] to-[#1a0a2e] rounded-2xl flex flex-col items-center justify-center relative overflow-hidden">
           {camOn ? (
             <>
               <video ref={videoRef} autoPlay playsInline muted className="absolute inset-0 w-full h-full object-cover rounded-2xl" style={{ transform: "scaleX(-1)" }} />
