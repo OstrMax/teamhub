@@ -221,12 +221,12 @@ export default function CalendarPage() {
 
           <div className="flex items-center gap-3">
             {/* View mode tabs — dark capsule, matching Meet switch */}
-            <div className="flex items-center bg-[#F2F2F3] rounded-full p-0.5">
+            <div className="flex items-center bg-[#F2F2F3] rounded-lg p-0.5" style={{ height: 28 }}>
               {(["Day", "Week", "Month", "Agenda"] as ViewMode[]).map((mode) => (
                 <button
                   key={mode}
                   onClick={() => setViewMode(mode)}
-                  className={`px-3.5 py-1.5 rounded-full text-[13px] font-semibold transition-all ${
+                  className={`px-3.5 h-full rounded-lg text-[13px] font-semibold transition-all ${
                     viewMode === mode
                       ? "bg-[#001221] text-white"
                       : "text-[#7F888F] hover:text-[#4C5863]"
