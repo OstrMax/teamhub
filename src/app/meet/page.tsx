@@ -143,12 +143,11 @@ export default function MeetPage() {
   );
 }
 
-/* ── Video Meeting with REAL camera ── */
+/* ── Video Meeting — opens in fake browser chrome ── */
 function MeetingView({ title, onEnd, onMinimize }: { title: string; onEnd: () => void; onMinimize?: () => void }) {
   const [timer, setTimer] = useState(0);
   const [micOn, setMicOn] = useState(true);
   const [camOn, setCamOn] = useState(true);
-  const [screenShare, setScreenShare] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
@@ -159,7 +158,6 @@ function MeetingView({ title, onEnd, onMinimize }: { title: string; onEnd: () =>
     return () => clearInterval(interval);
   }, []);
 
-  /* Request camera */
   useEffect(() => {
     let cancelled = false;
     async function startCam() {
@@ -168,131 +166,205 @@ function MeetingView({ title, onEnd, onMinimize }: { title: string; onEnd: () =>
         if (cancelled) { stream.getTracks().forEach(t => t.stop()); return; }
         streamRef.current = stream;
         if (videoRef.current) { videoRef.current.srcObject = stream; }
-      } catch { /* camera denied — show fallback */ }
+      } catch { /* camera denied */ }
     }
     if (camOn) startCam();
-    return () => {
-      cancelled = true;
-      streamRef.current?.getTracks().forEach(t => t.stop());
-      streamRef.current = null;
-    };
+    return () => { cancelled = true; streamRef.current?.getTracks().forEach(t => t.stop()); streamRef.current = null; };
   }, [camOn]);
 
+  const participants = [
+    { initials: "AB", name: "Alex B.", colors: ["#6B21A8", "#2E1055"] },
+    { initials: "TB", name: "Terry B.", colors: ["#581C87", "#1a0a2e"] },
+    { initials: "RN", name: "Riley N.", colors: ["#7C3AED", "#3B0764"] },
+  ];
+
   return (
-    <div className="flex flex-col h-full bg-[#0d0518]" style={{ animation: "fadeIn 0.4s ease-out" }}>
-      {/* Top bar */}
-      <div className="flex items-center justify-between px-5 py-3 bg-[#1a0a2e]/80 backdrop-blur-sm">
-        <div className="flex items-center gap-3">
-          <span className="w-2 h-2 rounded-full bg-[#EF4444] animate-pulse" />
-          <span className="text-white/70 text-xs font-medium">{formatTime(timer)}</span>
-          <span className="text-white text-sm font-semibold">{title}</span>
+    <div className="flex flex-col h-full bg-[#1e1e1e]" style={{ animation: "fadeIn 0.4s ease-out" }}>
+      {/* ── Fake browser chrome ── */}
+      {/* Title bar with traffic lights + tabs */}
+      <div className="flex items-center bg-[#202124] pl-3 pr-2" style={{ height: 38 }}>
+        {/* Traffic lights */}
+        <div className="flex items-center gap-2 mr-4 shrink-0">
+          <span className="w-3 h-3 rounded-full bg-[#FF5F57]" />
+          <span className="w-3 h-3 rounded-full bg-[#FEBC2E]" />
+          <span className="w-3 h-3 rounded-full bg-[#28C840]" />
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-white/50 text-xs">3 participants</span>
-          <div className="flex -space-x-1.5">
-            {[5, 12, 33].map((id) => (
-              <Image key={id} src={`https://i.pravatar.cc/64?img=${id}`} alt="" width={24} height={24} className="w-6 h-6 rounded-full border-2 border-[#1a0a2e] object-cover" unoptimized />
+        {/* Tabs */}
+        <div className="flex items-end gap-0.5 flex-1 pt-1.5">
+          {/* Active tab */}
+          <div className="flex items-center gap-2 bg-[#35363A] rounded-t-lg px-4 py-1.5 max-w-[200px]">
+            <svg width="14" height="14" viewBox="0 0 31 32" fill="none"><path d="M24.8047 12.3957C24.5345 11.8045 23.8725 11.4548 23.2419 11.6123C22.7634 11.7317 22.2509 12.0093 21.715 12.3704C21.4735 12.5332 21.3667 12.8295 21.4434 13.1104C21.9673 15.0343 21.9673 16.9655 21.4434 18.8894C21.3667 19.1703 21.4735 19.4673 21.715 19.6295C22.2516 19.9905 22.7641 20.2681 23.2425 20.3875C23.8732 20.545 24.5351 20.1947 24.8054 19.6034C25.7316 17.5748 25.7316 14.425 24.8047 12.3957ZM7.45775 10.5913C11.1527 9.19191 14.8477 9.19191 18.5426 10.5913C18.8689 10.7147 19.1485 10.9643 19.3107 11.2846C20.8969 14.4284 20.8969 17.5721 19.3107 20.7152C19.1492 21.0355 18.8696 21.2851 18.5426 21.4085C14.8477 22.8079 11.1527 22.8079 7.45775 21.4085C7.13143 21.2851 6.85182 21.0355 6.68966 20.7152C5.10345 17.5714 5.10345 14.4284 6.68966 11.2846C6.85182 10.9643 7.13143 10.7147 7.45775 10.5913Z" fill="#8AB4F8"/></svg>
+            <span className="text-[12px] text-[#E8EAED] truncate">Sangoma Meet</span>
+            <button className="ml-auto p-0.5 rounded hover:bg-white/10">
+              <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="#9AA0A6" strokeWidth="1.5" strokeLinecap="round"/></svg>
+            </button>
+          </div>
+          {/* Inactive tabs */}
+          <div className="flex items-center gap-2 bg-transparent rounded-t-lg px-4 py-1.5 max-w-[140px] hover:bg-[#35363A]/50 transition-colors cursor-pointer">
+            <span className="text-[12px] text-[#9AA0A6] truncate">Reddit</span>
+          </div>
+          <div className="flex items-center gap-2 bg-transparent rounded-t-lg px-4 py-1.5 hover:bg-[#35363A]/50 transition-colors cursor-pointer">
+            <span className="text-[12px] text-[#9AA0A6]">+</span>
+          </div>
+        </div>
+        {/* Minimize button */}
+        {onMinimize && (
+          <button onClick={onMinimize} className="p-1.5 rounded hover:bg-white/10 transition-colors ml-2" title="Minimize">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0A6" strokeWidth="1.5"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M10 14l-7 7"/></svg>
+          </button>
+        )}
+      </div>
+
+      {/* URL bar */}
+      <div className="flex items-center bg-[#35363A] px-3 gap-3" style={{ height: 36 }}>
+        <div className="flex items-center gap-2 shrink-0">
+          <button className="p-1 rounded hover:bg-white/10 transition-colors">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0A6" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button className="p-1 rounded hover:bg-white/10 transition-colors">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0A6" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <button className="p-1 rounded hover:bg-white/10 transition-colors">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0A6" strokeWidth="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+          </button>
+        </div>
+        <div className="flex-1 flex items-center bg-[#202124] rounded-full px-4 py-1.5">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" className="mr-2 shrink-0"><path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" fill="#28C840"/><path d="M10 16l-3-3 1.41-1.41L10 13.17l5.59-5.59L17 9l-7 7z" fill="white"/></svg>
+          <span className="text-[13px] text-[#E8EAED]">meet.sangoma.com/102772284951</span>
+        </div>
+        <div className="flex items-center gap-1 shrink-0">
+          <button className="p-1.5 rounded hover:bg-white/10 transition-colors">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0A6" strokeWidth="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </button>
+        </div>
+      </div>
+
+      {/* ── Meeting content area ── */}
+      <div className="flex-1 flex flex-col bg-black rounded-b-lg overflow-hidden relative">
+        {/* Sangoma logo overlay */}
+        <div className="absolute top-4 left-5 z-20 flex items-center gap-2">
+          <svg width="24" height="24" viewBox="0 0 31 32" fill="none"><path d="M24.8047 12.3957C24.5345 11.8045 23.8725 11.4548 23.2419 11.6123C22.7634 11.7317 22.2509 12.0093 21.715 12.3704C21.4735 12.5332 21.3667 12.8295 21.4434 13.1104C21.9673 15.0343 21.9673 16.9655 21.4434 18.8894C21.3667 19.1703 21.4735 19.4673 21.715 19.6295C22.2516 19.9905 22.7641 20.2681 23.2425 20.3875C23.8732 20.545 24.5351 20.1947 24.8054 19.6034C25.7316 17.5748 25.7316 14.425 24.8047 12.3957ZM7.45775 10.5913C11.1527 9.19191 14.8477 9.19191 18.5426 10.5913C18.8689 10.7147 19.1485 10.9643 19.3107 11.2846C20.8969 14.4284 20.8969 17.5721 19.3107 20.7152C19.1492 21.0355 18.8696 21.2851 18.5426 21.4085C14.8477 22.8079 11.1527 22.8079 7.45775 21.4085C7.13143 21.2851 6.85182 21.0355 6.68966 20.7152C5.10345 17.5714 5.10345 14.4284 6.68966 11.2846C6.85182 10.9643 7.13143 10.7147 7.45775 10.5913Z" fill="white"/></svg>
+          <span className="text-white/80 text-[13px] font-medium">Sangoma Meet</span>
+        </div>
+
+        {/* Main content: video + participants column */}
+        <div className="flex-1 flex gap-3 p-3">
+          {/* Main video area */}
+          <div className="flex-1 relative rounded-[20px] overflow-hidden bg-gradient-to-br from-[#2E1055] to-[#1a0a2e]">
+            {camOn ? (
+              <>
+                <video ref={videoRef} autoPlay playsInline muted className="absolute inset-0 w-full h-full object-cover" style={{ transform: "scaleX(-1)" }} />
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  {!streamRef.current && (
+                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#7C3AED] to-[#2E1055] flex items-center justify-center">
+                      <span className="text-white text-3xl font-semibold">You</span>
+                    </div>
+                  )}
+                </div>
+              </>
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#7C3AED] to-[#2E1055] flex items-center justify-center">
+                  <span className="text-white text-3xl font-semibold">You</span>
+                </div>
+              </div>
+            )}
+
+            {/* Info pill overlay — bottom left */}
+            <div className="absolute bottom-4 left-4 flex items-center gap-2 z-10">
+              <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm rounded-full px-3 py-1.5">
+                <span className="text-white/90 text-[12px] font-medium">{title}</span>
+                <span className="text-white/50 text-[12px]">{formatTime(timer)}</span>
+              </div>
+              <div className="flex items-center bg-black/40 backdrop-blur-sm rounded-full px-2.5 py-1.5">
+                <span className="text-[#60A5FA] text-[11px] font-semibold">HD</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Participant tiles — right column */}
+          <div className="flex flex-col gap-2" style={{ width: 130 }}>
+            {participants.map((p, i) => (
+              <div key={i} className="flex-1 rounded-2xl relative overflow-hidden flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${p.colors[0]}, ${p.colors[1]})`, animation: `fadeIn 0.3s ease-out ${0.1 * i}s both` }}>
+                <div className="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center">
+                  <span className="text-white text-lg font-semibold">{p.initials}</span>
+                </div>
+                {/* Bottom icon bar */}
+                <div className="absolute bottom-2 left-0 right-0 flex items-center justify-center gap-2">
+                  {i === 0 && <span className="w-5 h-5 rounded-full bg-black/30 flex items-center justify-center"><svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></span>}
+                  <span className="w-5 h-5 rounded-full bg-black/30 flex items-center justify-center">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/><line x1="1" y1="1" x2="23" y2="23" stroke="#EF4444"/></svg>
+                  </span>
+                  <span className="w-5 h-5 rounded-full bg-black/30 flex items-center justify-center">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 9v3a3 3 0 005.12 2.12M15 9.34V4a3 3 0 00-5.94-.6"/></svg>
+                  </span>
+                </div>
+                {/* Name */}
+                <div className="absolute top-2 left-2.5 text-white/70 text-[10px] font-medium">{p.name}</div>
+              </div>
             ))}
           </div>
-          {onMinimize && (
-            <button onClick={onMinimize} className="ml-2 p-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition-colors active:scale-90" title="Minimize">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M10 14l-7 7"/></svg>
+        </div>
+
+        {/* ── Bottom toolbar — floating dark pill ── */}
+        <div className="flex items-center justify-center pb-4 pt-1">
+          <div className="flex items-center gap-2 bg-[rgba(0,0,0,0.50)] backdrop-blur-md rounded-full px-4 py-2">
+            {/* Mic */}
+            <button onClick={() => setMicOn(!micOn)} className={`w-[44px] h-[44px] rounded-full flex items-center justify-center transition-all active:scale-90 ${micOn ? "bg-white/10 hover:bg-white/20" : "bg-[#EF4444] hover:bg-[#DC2626]"}`} title={micOn ? "Mute" : "Unmute"}>
+              {micOn ? (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 9v3a3 3 0 005.12 2.12M15 9.34V4a3 3 0 00-5.94-.6"/></svg>
+              )}
             </button>
-          )}
-        </div>
-      </div>
+            {/* Camera */}
+            <button onClick={() => setCamOn(!camOn)} className={`w-[44px] h-[44px] rounded-full flex items-center justify-center transition-all active:scale-90 ${camOn ? "bg-white/10 hover:bg-white/20" : "bg-[#EF4444] hover:bg-[#DC2626]"}`} title={camOn ? "Camera off" : "Camera on"}>
+              {camOn ? (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M16 16v1a2 2 0 01-2 2H3a2 2 0 01-2-2V7a2 2 0 012-2h2m5.66 0H14a2 2 0 012 2v3.34l1 1L23 7v10"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+              )}
+            </button>
 
-      {/* Video grid */}
-      <div className="flex-1 flex items-center justify-center p-6 gap-4">
-        {/* Main video (self — real camera, primary active view) */}
-        <div className="flex-1 aspect-video bg-gradient-to-br from-[#2E1055] to-[#1a0a2e] rounded-2xl flex flex-col items-center justify-center relative overflow-hidden">
-          {camOn ? (
-            <>
-              <video ref={videoRef} autoPlay playsInline muted className="absolute inset-0 w-full h-full object-cover rounded-2xl" style={{ transform: "scaleX(-1)" }} />
-              {/* Fallback if camera didn't start yet */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                {!streamRef.current && (
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#7C3AED] to-[#2E1055] flex items-center justify-center">
-                    <span className="text-white text-2xl font-semibold">You</span>
-                  </div>
-                )}
-              </div>
-              <div className="absolute bottom-3 left-3 bg-black/40 backdrop-blur-sm rounded-lg px-2.5 py-1 text-white text-xs font-medium flex items-center gap-1.5 z-10">
-                {!micOn && <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 9v3a3 3 0 005.12 2.12M15 9.34V4a3 3 0 00-5.94-.6"/></svg>}
-                You
-              </div>
-            </>
-          ) : (
-            <div className="flex flex-col items-center">
-              <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-2">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5"><path d="M16 16v1a2 2 0 01-2 2H3a2 2 0 01-2-2V7a2 2 0 012-2h2m5.66 0H14a2 2 0 012 2v3.34l1 1L23 7v10"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
-              </div>
-              <span className="text-white/40 text-xs">Camera off</span>
-            </div>
-          )}
-        </div>
+            <div className="w-px h-6 bg-white/10" />
 
-        {/* Participants */}
-        <div className="flex flex-col gap-3 w-48">
-          {[{ name: "Maksym O.", img: 12 }, { name: "Seti K.", img: 5 }, { name: "Terry C.", img: 33 }].map((p, i) => (
-            <div key={i} className="aspect-video bg-gradient-to-br from-[#1D2B3E] to-[#0d1520] rounded-xl flex items-center justify-center relative overflow-hidden"
-              style={{ animation: `fadeIn 0.3s ease-out ${0.1 * i}s both` }}>
-              <Image src={`https://i.pravatar.cc/128?img=${p.img}`} alt="" width={40} height={40} className="w-10 h-10 rounded-full object-cover" unoptimized />
-              <div className="absolute bottom-1.5 left-2 text-white/70 text-[10px] font-medium">{p.name}</div>
-            </div>
-          ))}
-        </div>
-      </div>
+            {/* Subtitles / CC */}
+            <button className="w-[44px] h-[44px] rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90" title="Subtitles">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 12h2m4 0h4M7 16h10"/></svg>
+            </button>
+            {/* Record */}
+            <button className="w-[44px] h-[44px] rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90" title="Record">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white" strokeWidth="1.5"/><circle cx="12" cy="12" r="4" fill="#EF4444"/></svg>
+            </button>
+            {/* Screen share */}
+            <button className="w-[44px] h-[44px] rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90" title="Share screen">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </button>
+            {/* Chat */}
+            <button className="w-[44px] h-[44px] rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90" title="Chat">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            </button>
+            {/* Raise hand */}
+            <button className="w-[44px] h-[44px] rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90" title="Raise hand">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M18 11V6a1 1 0 00-2 0M14 10V4a1 1 0 00-2 0v6M10 9.5V5a1 1 0 00-2 0v9"/><path d="M18 11a4 4 0 014 4v1a8 8 0 01-8 8h-2c-2.5 0-4.5-1-6.2-2.7L2 17.5"/></svg>
+            </button>
+            {/* Conference / participants */}
+            <button className="w-[44px] h-[44px] rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90" title="Participants">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
+            </button>
+            {/* More */}
+            <button className="w-[44px] h-[44px] rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90" title="More">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+            </button>
 
-      {/* Controls */}
-      <div className="flex items-center justify-center gap-3 py-4 bg-[#1a0a2e]/60 backdrop-blur-sm">
-        <button onClick={() => setMicOn(!micOn)} className={`w-12 h-12 rounded-full flex items-center justify-center transition-all active:scale-90 ${micOn ? "bg-white/10 hover:bg-white/20" : "bg-[#EF4444] hover:bg-[#DC2626]"}`} title={micOn ? "Mute" : "Unmute"}>
-          {micOn ? (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-          ) : (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 9v3a3 3 0 005.12 2.12M15 9.34V4a3 3 0 00-5.94-.6"/><path d="M17 16.95A7 7 0 015 12v-2m14 0v2c0 .76-.13 1.5-.35 2.18"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
-          )}
-        </button>
-        <button onClick={() => setCamOn(!camOn)} className={`w-12 h-12 rounded-full flex items-center justify-center transition-all active:scale-90 ${camOn ? "bg-white/10 hover:bg-white/20" : "bg-[#EF4444] hover:bg-[#DC2626]"}`} title={camOn ? "Turn off camera" : "Turn on camera"}>
-          {camOn ? (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-          ) : (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M16 16v1a2 2 0 01-2 2H3a2 2 0 01-2-2V7a2 2 0 012-2h2m5.66 0H14a2 2 0 012 2v3.34l1 1L23 7v10"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
-          )}
-        </button>
-        <button onClick={() => setScreenShare(!screenShare)} className={`w-12 h-12 rounded-full flex items-center justify-center transition-all active:scale-90 ${screenShare ? "bg-[#2CAD43]" : "bg-white/10 hover:bg-white/20"}`} title="Share screen">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-        </button>
-        <div className="w-px h-8 bg-white/10 mx-1" />
-        {/* Transcription */}
-        <button className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90" title="Transcription">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M4 7h16M4 12h10M4 17h12"/><path d="M20 12v5a2 2 0 01-2 2h-1"/></svg>
-        </button>
-        {/* Add participant */}
-        <button className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90" title="Add participant">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-        </button>
-        {/* Reactions */}
-        <button className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90" title="Reactions">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-        </button>
-        {/* Raise hand */}
-        <button className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90" title="Raise hand">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M18 11V6a1 1 0 00-2 0M14 10V4a1 1 0 00-2 0v6M10 9.5V5a1 1 0 00-2 0v9"/><path d="M18 11a4 4 0 014 4v1a8 8 0 01-8 8h-2c-2.5 0-4.5-1-6.2-2.7L2 17.5"/></svg>
-        </button>
-        {/* Chat */}
-        <button className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90" title="Chat">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-        </button>
-        {/* Settings */}
-        <button className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90" title="Settings">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-        </button>
-        <div className="w-px h-8 bg-white/10 mx-1" />
-        <button onClick={onEnd} className="px-6 h-12 rounded-full bg-[#EF4444] hover:bg-[#DC2626] flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-[#EF4444]/20">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M23.71 16.67C20.66 13.78 16.54 12 12 12 7.46 12 3.34 13.78.29 16.67c-.18.18-.29.43-.29.71 0 .28.11.53.29.71l2.48 2.48c.18.18.43.29.71.29.27 0 .52-.11.7-.28.79-.74 1.69-1.36 2.66-1.85.33-.16.56-.5.56-.9v-3.1C8.69 14.25 10.32 14 12 14s3.31.25 4.9.72v3.1c0 .39.23.74.56.9.98.49 1.87 1.12 2.67 1.85.18.18.43.28.7.28.28 0 .53-.11.71-.29l2.48-2.48c.18-.18.29-.43.29-.71 0-.27-.11-.52-.29-.7z"/></svg>
-          <span className="text-white text-sm font-semibold">Leave</span>
-        </button>
+            <div className="w-px h-6 bg-white/10" />
+
+            {/* End call */}
+            <button onClick={onEnd} className="w-[44px] h-[44px] rounded-full bg-[#c70816] hover:bg-[#a90612] flex items-center justify-center transition-all active:scale-90" title="End call">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M23.71 16.67C20.66 13.78 16.54 12 12 12 7.46 12 3.34 13.78.29 16.67c-.18.18-.29.43-.29.71 0 .28.11.53.29.71l2.48 2.48c.18.18.43.29.71.29.27 0 .52-.11.7-.28.79-.74 1.69-1.36 2.66-1.85.33-.16.56-.5.56-.9v-3.1C8.69 14.25 10.32 14 12 14s3.31.25 4.9.72v3.1c0 .39.23.74.56.9.98.49 1.87 1.12 2.67 1.85.18.18.43.28.7.28.28 0 .53-.11.71-.29l2.48-2.48c.18-.18.29-.43.29-.71 0-.27-.11-.52-.29-.7z"/></svg>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
