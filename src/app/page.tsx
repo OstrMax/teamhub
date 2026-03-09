@@ -53,6 +53,19 @@ const avatarColors: Record<string, string> = {
 
 const dateRanges = ["Today", "Last 7 days", "Last 14 days", "Last 21 days", "Month", "2 Months", "3 Months", "6 Months", "12 Months", "Custom"];
 
+const chartPoints = [
+  { x: 0, y: 98, time: "10am", calls: 24 },
+  { x: 55, y: 70, time: "11am", calls: 40 },
+  { x: 110, y: 84, time: "12pm", calls: 32 },
+  { x: 165, y: 56, time: "1pm", calls: 48 },
+  { x: 220, y: 42, time: "2pm", calls: 56 },
+  { x: 275, y: 63, time: "3pm", calls: 44 },
+  { x: 330, y: 77, time: "4pm", calls: 36 },
+  { x: 385, y: 49, time: "5pm", calls: 52 },
+  { x: 440, y: 35, time: "6pm", calls: 60 },
+  { x: 500, y: 56, time: "7pm", calls: 48 },
+];
+
 // More icon component - 20x20 with hover
 function MoreIcon({ className = "" }: { className?: string }) {
   return (
@@ -72,6 +85,7 @@ export default function Home() {
   const [selectedRange, setSelectedRange] = useState("Today");
   const [showAllMeetings, setShowAllMeetings] = useState(false);
   const [showAllApps, setShowAllApps] = useState(false);
+  const [hoveredPoint, setHoveredPoint] = useState<number | null>(null);
   const newTaskRef = useRef<HTMLInputElement>(null);
   const dateDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -195,7 +209,7 @@ export default function Home() {
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-[rgba(29,62,119,0.04)] rounded-2xl px-6 py-5">
+        <div className="bg-[rgba(29,62,119,0.04)] rounded-[16px] p-[23px]">
           <div className="flex items-center justify-between mb-5">
             <h2 className="text-lg font-semibold text-[#001221]">Quick actions</h2>
             <MoreIcon />
@@ -205,27 +219,27 @@ export default function Home() {
               {
                 label: "Create new\ntask",
                 iconBg: "border border-[#E5E6E8] bg-white",
-                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
+                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
               },
               {
                 label: "Send SMS",
                 iconBg: "bg-[#DCF1E0]",
-                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" fill="#066A18"/><rect x="7" y="9" width="2" height="2" rx="0.5" fill="#066A18"/><rect x="11" y="9" width="2" height="2" rx="0.5" fill="#066A18"/><rect x="15" y="9" width="2" height="2" rx="0.5" fill="#066A18"/></svg>,
+                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" fill="#066A18"/><rect x="7" y="9" width="2" height="2" rx="0.5" fill="#066A18"/><rect x="11" y="9" width="2" height="2" rx="0.5" fill="#066A18"/><rect x="15" y="9" width="2" height="2" rx="0.5" fill="#066A18"/></svg>,
               },
               {
                 label: "Make a call",
                 iconBg: "bg-[#d1daeb]",
-                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="#1D3E77"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>,
+                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="#1D3E77"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>,
               },
               {
                 label: "Start video\nmeeting",
                 iconBg: "bg-[#ebd6e8]",
-                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="#7C3AED"><path d="M15 8v8H5V8h10m1-2H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4V7c0-.55-.45-1-1-1z"/></svg>,
+                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="#7C3AED"><path d="M15 8v8H5V8h10m1-2H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4V7c0-.55-.45-1-1-1z"/></svg>,
               },
             ].map((action) => (
-              <button key={action.label} className="flex items-center gap-3 px-4 rounded-xl bg-white border border-[#E5E6E8] hover:border-[#CCCFD2] hover:shadow-[0_2px_12px_rgba(0,0,0,0.06)] active:scale-[0.98] transition-all" style={{ height: 52 }}>
-                <span className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${action.iconBg}`}>{action.icon}</span>
-                <span className="text-[13px] font-medium text-[#001221] text-left whitespace-pre-wrap leading-[1.3]">{action.label}</span>
+              <button key={action.label} className="flex items-center gap-4 p-3 rounded-[12px] bg-white shadow-[0px_1px_12px_0px_rgba(0,0,0,0.04)] hover:shadow-[0_2px_16px_rgba(0,0,0,0.08)] active:scale-[0.98] transition-all" style={{ height: 74 }}>
+                <span className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${action.iconBg}`}>{action.icon}</span>
+                <span className="text-[14px] font-medium text-[#001221] text-left whitespace-pre-wrap leading-[1.3]">{action.label}</span>
               </button>
             ))}
           </div>
@@ -406,32 +420,34 @@ export default function Home() {
               <line x1="0" y1="105" x2="500" y2="105" stroke="#F2F2F3" strokeWidth="1"/>
               <line x1="0" y1="140" x2="500" y2="140" stroke="#F2F2F3" strokeWidth="1"/>
             </svg>
-            {/* Chart area + line */}
+            {/* Chart line */}
             <svg className="absolute left-8 right-0 top-0 bottom-6" viewBox="0 0 500 140" preserveAspectRatio="none">
-              {/* Area fill */}
-              <path d="M0,98 L55,70 L110,84 L165,56 L220,42 L275,63 L330,77 L385,49 L440,35 L500,56 L500,140 L0,140Z" fill="url(#chartGradient)" />
-              {/* Line */}
               <polyline points="0,98 55,70 110,84 165,56 220,42 275,63 330,77 385,49 440,35 500,56" fill="none" stroke="#2a1051" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <defs>
-                <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#2a1051" stopOpacity="0.15"/>
-                  <stop offset="100%" stopColor="#2a1051" stopOpacity="0.01"/>
-                </linearGradient>
-              </defs>
             </svg>
             {/* Data points */}
             <svg className="absolute left-8 right-0 top-0 bottom-6" viewBox="0 0 500 140">
-              {[
-                { x: 0, y: 98 }, { x: 55, y: 70 }, { x: 110, y: 84 }, { x: 165, y: 56 },
-                { x: 220, y: 42 }, { x: 275, y: 63 }, { x: 330, y: 77 }, { x: 385, y: 49 },
-                { x: 440, y: 35 }, { x: 500, y: 56 },
-              ].map((p, i) => (
-                <g key={i}>
-                  <circle cx={p.x} cy={p.y} r="4" fill="#2a1051" className="hover:r-6 transition-all"/>
-                  <circle cx={p.x} cy={p.y} r="8" fill="transparent" className="cursor-pointer"/>
+              {chartPoints.map((p, i) => (
+                <g key={i} onMouseEnter={() => setHoveredPoint(i)} onMouseLeave={() => setHoveredPoint(null)}>
+                  <circle cx={p.x} cy={p.y} r={hoveredPoint === i ? 6 : 4} fill="#2a1051" className="transition-all duration-150"/>
+                  <circle cx={p.x} cy={p.y} r="12" fill="transparent" className="cursor-pointer"/>
                 </g>
               ))}
             </svg>
+            {/* Tooltip */}
+            {hoveredPoint !== null && (
+              <div className="absolute left-8 right-0 top-0 bottom-6 pointer-events-none z-10">
+                <div
+                  className="absolute bg-[#001221] text-white text-xs rounded-lg px-3 py-2 shadow-lg -translate-x-1/2 -translate-y-full -mt-2"
+                  style={{
+                    left: `${(chartPoints[hoveredPoint].x / 500) * 100}%`,
+                    top: `${(chartPoints[hoveredPoint].y / 140) * 100}%`,
+                  }}
+                >
+                  <div className="font-semibold">{chartPoints[hoveredPoint].calls} calls</div>
+                  <div className="text-white/60">{chartPoints[hoveredPoint].time}</div>
+                </div>
+              </div>
+            )}
           </div>
           <div className="flex justify-between pl-8 mt-1 text-[10px] text-[#7F888F]">
             {["10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm"].map((t) => <span key={t}>{t}</span>)}

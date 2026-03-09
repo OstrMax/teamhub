@@ -60,19 +60,25 @@ export default function MeetPage() {
       {/* Minimized meeting floating card */}
       {meetingActive && meetingMinimized && (
         <div className="fixed bottom-6 right-6 z-50 bg-[#1a0a2e] rounded-2xl shadow-2xl shadow-black/30 overflow-hidden transition-all duration-300" style={{ width: 320, animation: "slideIn 0.25s ease-out" }}>
+          {/* Camera preview / avatar strip */}
+          <div className="relative h-[100px] bg-gradient-to-br from-[#2E1055] to-[#1a0a2e] flex items-center justify-center">
+            <div className="flex items-center gap-2">
+              {[5, 12, 33].map((id) => (
+                <Image key={id} src={`https://i.pravatar.cc/128?img=${id}`} alt="" width={48} height={48} className="w-12 h-12 rounded-full border-2 border-white/20 object-cover" unoptimized />
+              ))}
+            </div>
+            <div className="absolute top-2 left-3 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#EF4444] animate-pulse" />
+              <span className="text-white/60 text-[11px] font-medium">LIVE</span>
+            </div>
+          </div>
           <div className="px-4 py-3">
             <div className="flex items-center justify-between mb-2">
               <div>
                 <div className="text-white text-[14px] font-medium">{meetingTitle}</div>
                 <div className="flex items-center gap-1.5 mt-0.5">
-                  <span className="w-2 h-2 rounded-full bg-[#EF4444] animate-pulse" />
-                  <span className="text-white/50 text-[12px]">In progress</span>
+                  <span className="text-white/50 text-[12px]">3 participants</span>
                 </div>
-              </div>
-              <div className="flex -space-x-1.5">
-                {[5, 12, 33].map((id) => (
-                  <Image key={id} src={`https://i.pravatar.cc/64?img=${id}`} alt="" width={24} height={24} className="w-6 h-6 rounded-full border-2 border-[#1a0a2e] object-cover" unoptimized />
-                ))}
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -240,25 +246,47 @@ function MeetingView({ title, onEnd, onMinimize }: { title: string; onEnd: () =>
 
       {/* Controls */}
       <div className="flex items-center justify-center gap-3 py-4 bg-[#1a0a2e]/60 backdrop-blur-sm">
-        <button onClick={() => setMicOn(!micOn)} className={`w-12 h-12 rounded-full flex items-center justify-center transition-all active:scale-90 ${micOn ? "bg-white/10 hover:bg-white/20" : "bg-[#EF4444] hover:bg-[#DC2626]"}`}>
+        <button onClick={() => setMicOn(!micOn)} className={`w-12 h-12 rounded-full flex items-center justify-center transition-all active:scale-90 ${micOn ? "bg-white/10 hover:bg-white/20" : "bg-[#EF4444] hover:bg-[#DC2626]"}`} title={micOn ? "Mute" : "Unmute"}>
           {micOn ? (
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
           ) : (
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 9v3a3 3 0 005.12 2.12M15 9.34V4a3 3 0 00-5.94-.6"/><path d="M17 16.95A7 7 0 015 12v-2m14 0v2c0 .76-.13 1.5-.35 2.18"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
           )}
         </button>
-        <button onClick={() => setCamOn(!camOn)} className={`w-12 h-12 rounded-full flex items-center justify-center transition-all active:scale-90 ${camOn ? "bg-white/10 hover:bg-white/20" : "bg-[#EF4444] hover:bg-[#DC2626]"}`}>
+        <button onClick={() => setCamOn(!camOn)} className={`w-12 h-12 rounded-full flex items-center justify-center transition-all active:scale-90 ${camOn ? "bg-white/10 hover:bg-white/20" : "bg-[#EF4444] hover:bg-[#DC2626]"}`} title={camOn ? "Turn off camera" : "Turn on camera"}>
           {camOn ? (
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
           ) : (
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M16 16v1a2 2 0 01-2 2H3a2 2 0 01-2-2V7a2 2 0 012-2h2m5.66 0H14a2 2 0 012 2v3.34l1 1L23 7v10"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
           )}
         </button>
-        <button onClick={() => setScreenShare(!screenShare)} className={`w-12 h-12 rounded-full flex items-center justify-center transition-all active:scale-90 ${screenShare ? "bg-[#2CAD43]" : "bg-white/10 hover:bg-white/20"}`}>
+        <button onClick={() => setScreenShare(!screenShare)} className={`w-12 h-12 rounded-full flex items-center justify-center transition-all active:scale-90 ${screenShare ? "bg-[#2CAD43]" : "bg-white/10 hover:bg-white/20"}`} title="Share screen">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
         </button>
-        <button className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90">
+        <div className="w-px h-8 bg-white/10 mx-1" />
+        {/* Transcription */}
+        <button className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90" title="Transcription">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M4 7h16M4 12h10M4 17h12"/><path d="M20 12v5a2 2 0 01-2 2h-1"/></svg>
+        </button>
+        {/* Add participant */}
+        <button className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90" title="Add participant">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+        </button>
+        {/* Reactions */}
+        <button className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90" title="Reactions">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </button>
+        {/* Raise hand */}
+        <button className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90" title="Raise hand">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M18 11V6a1 1 0 00-2 0M14 10V4a1 1 0 00-2 0v6M10 9.5V5a1 1 0 00-2 0v9"/><path d="M18 11a4 4 0 014 4v1a8 8 0 01-8 8h-2c-2.5 0-4.5-1-6.2-2.7L2 17.5"/></svg>
+        </button>
+        {/* Chat */}
+        <button className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90" title="Chat">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </button>
+        {/* Settings */}
+        <button className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-90" title="Settings">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
         </button>
         <div className="w-px h-8 bg-white/10 mx-1" />
         <button onClick={onEnd} className="px-6 h-12 rounded-full bg-[#EF4444] hover:bg-[#DC2626] flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-[#EF4444]/20">
