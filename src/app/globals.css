@@ -26,6 +26,69 @@
   --font-manrope: "Manrope", sans-serif;
 }
 
+/* Theme CSS variables */
+:root {
+  --th-bg: #ffffff;
+  --th-bg-elevated: #ffffff;
+  --th-bg-card: #ffffff;
+  --th-bg-hover: #F2F2F3;
+  --th-bg-input: #ffffff;
+  --th-border: #E5E6E8;
+  --th-border-light: #F2F2F3;
+  --th-divider: #E5E6E8;
+  --th-text-primary: #001221;
+  --th-text-secondary: #4C5863;
+  --th-text-muted: #7F888F;
+  --th-search-bg: rgba(255,255,255,0.8);
+  --th-search-bg-hover: #ffffff;
+  --th-search-border: transparent;
+  --th-dropdown-bg: #ffffff;
+  --th-dropdown-border: #E5E6E8;
+  --th-dropdown-divider: #E5E6E8;
+  --th-dropdown-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  --th-scrollbar-thumb: #CCCFD2;
+  --th-tab-active: #2a1051;
+  --th-message-bg: #F2F2F3;
+  --th-message-own-bg: #E8EDF5;
+  --th-message-border: transparent;
+  --th-badge-bg: #F2F2F3;
+  --th-active-conv-bg: #E8EDF5;
+  --th-active-conv-border: #2a1051;
+  --th-icon-fill: #112547;
+  --th-quick-actions-bg: rgba(29,62,119,0.04);
+}
+
+[data-theme="dark"] {
+  --th-bg: #001221;
+  --th-bg-elevated: #0B182E;
+  --th-bg-card: #0B182E;
+  --th-bg-hover: rgba(255,255,255,0.06);
+  --th-bg-input: #001221;
+  --th-border: #112547;
+  --th-border-light: #142B53;
+  --th-divider: #142B53;
+  --th-text-primary: #ffffff;
+  --th-text-secondary: #4C5863;
+  --th-text-muted: #7F888F;
+  --th-search-bg: #001221;
+  --th-search-bg-hover: #0B182E;
+  --th-search-border: #112547;
+  --th-dropdown-bg: #0B182E;
+  --th-dropdown-border: #112547;
+  --th-dropdown-divider: #142B53;
+  --th-dropdown-shadow: 0 1px 12px rgba(0,0,0,0.16);
+  --th-scrollbar-thumb: #142B53;
+  --th-tab-active: #ffffff;
+  --th-message-bg: transparent;
+  --th-message-own-bg: #0B182E;
+  --th-message-border: #112547;
+  --th-badge-bg: #0B182E;
+  --th-active-conv-bg: #0B182E;
+  --th-active-conv-border: #112547;
+  --th-icon-fill: #ffffff;
+  --th-quick-actions-bg: rgba(29,62,119,0.12);
+}
+
 body {
   background: var(--color-background);
   color: var(--color-foreground);
@@ -47,7 +110,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-black-200);
+  background: var(--th-scrollbar-thumb);
   border-radius: 3px;
 }
 

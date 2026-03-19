@@ -49,7 +49,10 @@ export default function ContactsList() {
       )}
       <div className="flex flex-col flex-1 overflow-hidden">
         {/* Filter tabs */}
-        <div className="flex items-center gap-4 px-6 py-3 border-b border-[#E5E6E8]">
+        <div
+          className="flex items-center gap-4 px-6 py-3 border-b"
+          style={{ borderColor: 'var(--th-border)' }}
+        >
           <div className="flex items-center gap-4 flex-1">
             {filterTabs.map((tab) => (
               <button
@@ -57,12 +60,13 @@ export default function ContactsList() {
                 onClick={() => setActiveFilter(tab)}
                 className={`text-xs font-semibold tracking-wider transition-colors flex items-center gap-1 ${
                   activeFilter === tab
-                    ? "text-[#001221]"
+                    ? ""
                     : "text-[#7F888F] hover:text-[#4C5863]"
                 }`}
+                style={activeFilter === tab ? { color: 'var(--th-text-primary)' } : undefined}
               >
                 {activeFilter === tab && (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#001221" strokeWidth="2.5">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <polyline points="20 6 9 17 4 12"/>
                   </svg>
                 )}
@@ -70,14 +74,17 @@ export default function ContactsList() {
               </button>
             ))}
           </div>
-          <button className="text-xs font-semibold text-[#2a1051] tracking-wider hover:text-[#783a9b]">
+          <button className="text-xs font-semibold tracking-wider hover:opacity-80" style={{ color: 'var(--th-tab-active)' }}>
             + ADD CONTACT
           </button>
         </div>
 
         {/* Search */}
         <div className="px-6 py-3">
-          <div className="flex items-center gap-2 px-4 py-2 bg-[#F2F2F3] rounded-lg">
+          <div
+            className="flex items-center gap-2 px-4 py-2 rounded-lg"
+            style={{ backgroundColor: 'var(--th-search-bg)' }}
+          >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="8"/>
               <line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -87,7 +94,8 @@ export default function ContactsList() {
               placeholder="Search contacts"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="flex-1 bg-transparent outline-none text-sm text-[#001221] placeholder:text-[#7F888F]"
+              className="flex-1 bg-transparent outline-none text-sm placeholder:text-[#7F888F]"
+              style={{ color: 'var(--th-text-primary)' }}
             />
           </div>
         </div>
@@ -97,7 +105,9 @@ export default function ContactsList() {
           {filtered.map((contact) => (
             <div
               key={contact.id}
-              className="flex items-center gap-3 px-6 py-3 hover:bg-[#F2F2F3] transition-colors cursor-pointer group"
+              className="flex items-center gap-3 px-6 py-3 transition-colors cursor-pointer group"
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
             >
               {/* Favorite star */}
               <button className="shrink-0">
@@ -107,7 +117,10 @@ export default function ContactsList() {
               </button>
 
               {/* Avatar */}
-              <div className="w-10 h-10 rounded-full shrink-0 overflow-hidden bg-[#E5E6E8] flex items-center justify-center">
+              <div
+                className="w-10 h-10 rounded-full shrink-0 overflow-hidden flex items-center justify-center"
+                style={{ backgroundColor: 'var(--th-border)' }}
+              >
                 {contact.isUnknown ? (
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2">
                     <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
@@ -124,19 +137,24 @@ export default function ContactsList() {
 
               {/* Info */}
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-[#001221] truncate">{contact.name}</p>
+                <p className="text-sm font-medium truncate" style={{ color: 'var(--th-text-primary)' }}>{contact.name}</p>
                 <p className="text-xs text-[#7F888F]">{contact.phone || contact.type}</p>
               </div>
 
               {/* Extension badge */}
-              <span className="text-xs text-[#4C5863] bg-[#F2F2F3] px-2 py-0.5 rounded border border-[#E5E6E8]">
+              <span
+                className="text-xs text-[#4C5863] px-2 py-0.5 rounded border"
+                style={{ backgroundColor: 'var(--th-badge-bg)', borderColor: 'var(--th-border)' }}
+              >
                 {contact.extension}
               </span>
 
               {/* Call button */}
               <button
                 onClick={(e) => { e.stopPropagation(); setCallingContact(contact); }}
-                className="p-1.5 rounded hover:bg-[#E5E6E8] transition-colors active:scale-90"
+                className="p-1.5 rounded transition-colors active:scale-90"
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
@@ -144,7 +162,11 @@ export default function ContactsList() {
               </button>
 
               {/* More */}
-              <button className="p-1 rounded hover:bg-[#E5E6E8] transition-colors opacity-0 group-hover:opacity-100">
+              <button
+                className="p-1 rounded transition-colors opacity-0 group-hover:opacity-100"
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+              >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="#4C5863">
                   <circle cx="12" cy="5" r="1.5"/>
                   <circle cx="12" cy="12" r="1.5"/>

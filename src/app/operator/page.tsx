@@ -80,12 +80,15 @@ export default function OperatorConsolePage() {
   return (
     <div className="flex h-full overflow-hidden">
       {/* Left Panel - Dial Pad & Active Calls */}
-      <div className="w-[300px] shrink-0 border-r border-[#E5E6E8] flex flex-col h-full bg-white overflow-y-auto">
+      <div
+        className="w-[300px] shrink-0 flex flex-col h-full overflow-y-auto"
+        style={{ backgroundColor: 'var(--th-bg)', borderRight: '1px solid var(--th-border)' }}
+      >
         {/* Operator Header */}
         <div className="px-4 pt-4 pb-2">
           <div className="flex items-center gap-3">
-            <h1 className="text-lg font-semibold text-[#001221]">Operator</h1>
-            <button className="flex items-center gap-1 text-sm text-[#4C5863] hover:text-[#001221] transition-colors">
+            <h1 className="text-lg font-semibold" style={{ color: 'var(--th-text-primary)' }}>Operator</h1>
+            <button className="flex items-center gap-1 text-sm transition-colors" style={{ color: 'var(--th-text-secondary)' }}>
               <span>+12063127805</span>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
@@ -95,7 +98,7 @@ export default function OperatorConsolePage() {
         {/* Ongoing Call */}
         {showOngoingCall && (
           <div className="px-4 py-2 animate-[fadeIn_0.3s_ease-out]">
-            <span className="text-xs font-semibold text-[#001221]">Ongoing call</span>
+            <span className="text-xs font-semibold" style={{ color: 'var(--th-text-primary)' }}>Ongoing call</span>
             <div className="mt-2 bg-[#1a0a2e] rounded-xl p-3 transition-all duration-300">
               <div className="flex items-center justify-between">
                 <div>
@@ -134,18 +137,19 @@ export default function OperatorConsolePage() {
         {holdCalls.length > 0 && (
           <div className="px-4 py-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-[#001221]">On Hold</span>
+              <span className="text-xs font-semibold" style={{ color: 'var(--th-text-primary)' }}>On Hold</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2"><polyline points="18 15 12 9 6 15"/></svg>
             </div>
             <div className="mt-2 space-y-2">
               {holdCalls.map((call) => (
                 <div
                   key={call.id}
-                  className="flex items-center justify-between bg-[#F8F0FF] rounded-lg px-3 py-2.5 hover:bg-[#F0E4FF] transition-colors"
+                  className="flex items-center justify-between rounded-lg px-3 py-2.5 transition-colors"
+                  style={{ backgroundColor: 'var(--th-bg-elevated)' }}
                 >
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-[#001221]">{call.name}</span>
-                    <span className="text-xs text-[#7F888F]">{call.time}</span>
+                    <span className="text-sm" style={{ color: 'var(--th-text-primary)' }}>{call.name}</span>
+                    <span className="text-xs" style={{ color: 'var(--th-text-muted)' }}>{call.time}</span>
                   </div>
                   <button
                     onClick={() => handlePickupHold(call.id)}
@@ -166,7 +170,8 @@ export default function OperatorConsolePage() {
             value={phoneInput}
             onChange={(e) => setPhoneInput(e.target.value)}
             placeholder="Enter a name or number"
-            className="w-full text-center text-base text-[#7F888F] pb-2 outline-none placeholder:text-[#7F888F]"
+            className="w-full text-center text-base pb-2 outline-none bg-transparent"
+            style={{ color: 'var(--th-text-muted)' }}
           />
         </div>
 
@@ -177,11 +182,12 @@ export default function OperatorConsolePage() {
               <button
                 key={key.digit}
                 onClick={() => setPhoneInput((prev) => prev + key.digit)}
-                className="flex flex-col items-center justify-center w-16 h-16 rounded-full border border-[#E5E6E8] hover:bg-[#F2F2F3] active:bg-[#E5E6E8] active:scale-95 transition-all"
+                className="flex flex-col items-center justify-center w-16 h-16 rounded-full active:scale-95 transition-all"
+                style={{ border: '1px solid var(--th-border)', color: 'var(--th-text-primary)' }}
               >
-                <span className="text-2xl font-medium text-[#001221]">{key.digit}</span>
+                <span className="text-2xl font-medium">{key.digit}</span>
                 {key.sub && (
-                  <span className="text-[10px] font-medium text-[#7F888F] tracking-wider">{key.sub}</span>
+                  <span className="text-[10px] font-medium tracking-wider" style={{ color: 'var(--th-text-muted)' }}>{key.sub}</span>
                 )}
               </button>
             ))}
@@ -200,9 +206,9 @@ export default function OperatorConsolePage() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col h-full bg-white overflow-hidden">
+      <div className="flex-1 flex flex-col h-full overflow-hidden" style={{ backgroundColor: 'var(--th-bg)' }}>
         {/* Tabs - increased height and padding for breathing room */}
-        <div className="flex items-center border-b border-[#E5E6E8]">
+        <div className="flex items-center" style={{ borderBottom: '1px solid var(--th-border)' }}>
           {[
             { label: "Contacts", icon: (
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="9" cy="8" r="4"/><path d="M1 20c0-2.5 3.5-4 8-4s8 1.5 8 4" strokeLinecap="round"/><path d="M19 8a4 4 0 010 7.75" strokeLinecap="round"/><path d="M21 20c0-1.5-1.5-2.7-3.5-3.5" strokeLinecap="round"/></svg>
@@ -217,66 +223,79 @@ export default function OperatorConsolePage() {
             <button
               key={tab.label}
               onClick={() => setActiveTab(tab.label)}
-              className={`flex items-center gap-2 px-6 py-5 text-sm font-medium transition-colors relative ${
-                activeTab === tab.label
-                  ? "text-[#2a1051]"
-                  : "text-[#7F888F] hover:text-[#4C5863]"
-              }`}
+              className="flex items-center gap-2 px-6 py-5 text-sm font-medium transition-colors relative"
+              style={{
+                color: activeTab === tab.label ? 'var(--th-tab-active)' : 'var(--th-text-muted)',
+              }}
             >
-              <span className={activeTab === tab.label ? "text-[#2a1051]" : "text-[#7F888F]"}>{tab.icon}</span>
+              <span style={{ color: activeTab === tab.label ? 'var(--th-tab-active)' : 'var(--th-text-muted)' }}>{tab.icon}</span>
               {tab.label}
               {activeTab === tab.label && (
-                <div className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#2a1051] transition-all" />
+                <div className="absolute bottom-0 left-2 right-2 h-0.5 transition-all" style={{ backgroundColor: 'var(--th-tab-active)' }} />
               )}
             </button>
           ))}
         </div>
 
-        {/* Filters — tab/underline style (same as Talk tabs) */}
-        <div className="flex items-center justify-between px-4 border-b border-[#E5E6E8]">
+        {/* Filters -- tab/underline style (same as Talk tabs) */}
+        <div className="flex items-center justify-between px-4" style={{ borderBottom: '1px solid var(--th-border)' }}>
           <div className="flex items-center">
             {filterChips.map((chip) => (
               <button
                 key={chip}
                 onClick={() => setActiveFilter(chip)}
-                className={`relative px-4 py-3 text-xs font-semibold transition-all ${
-                  activeFilter === chip
-                    ? "text-[#2a1051]"
-                    : "text-[#7F888F] hover:text-[#4C5863]"
-                }`}
+                className="relative px-4 py-3 text-xs font-semibold transition-all"
+                style={{
+                  color: activeFilter === chip ? 'var(--th-tab-active)' : 'var(--th-text-muted)',
+                }}
               >
                 {chip}
                 {activeFilter === chip && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#2a1051]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5" style={{ backgroundColor: 'var(--th-tab-active)' }} />
                 )}
               </button>
             ))}
           </div>
-          <button className="text-xs font-semibold text-[#001221] tracking-wider hover:text-[#2a1051] transition-colors">EDIT GROUPS</button>
+          <button
+            className="text-xs font-semibold tracking-wider transition-colors"
+            style={{ color: 'var(--th-text-primary)' }}
+          >
+            EDIT GROUPS
+          </button>
         </div>
 
         {/* Search & View Toggle */}
         <div className="flex items-center gap-3 px-4 py-3">
-          <div className="flex-1 flex items-center gap-2 border border-[#E5E6E8] rounded-lg px-3 py-2.5 focus-within:border-[#2a1051] focus-within:ring-1 focus-within:ring-[#2a1051]/20 transition-all">
+          <div
+            className="flex-1 flex items-center gap-2 rounded-lg px-3 py-2.5 transition-all"
+            style={{ border: '1px solid var(--th-border)', backgroundColor: 'var(--th-bg)' }}
+          >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" placeholder="Search contact" className="flex-1 outline-none text-sm text-[#001221] placeholder:text-[#7F888F]" />
+            <input
+              type="text"
+              placeholder="Search contact"
+              className="flex-1 outline-none text-sm bg-transparent"
+              style={{ color: 'var(--th-text-primary)' }}
+            />
           </div>
-          <button className="flex items-center gap-1 hover:text-[#2a1051] transition-colors">
-            <span className="text-sm text-[#4C5863]">All Contacts</span>
+          <button className="flex items-center gap-1 transition-colors">
+            <span className="text-sm" style={{ color: 'var(--th-text-secondary)' }}>All Contacts</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
-          <div className="flex items-center border border-[#E5E6E8] rounded-lg overflow-hidden ml-2">
+          <div className="flex items-center rounded-lg overflow-hidden ml-2" style={{ border: '1px solid var(--th-border)' }}>
             <button
               onClick={() => setGridView(false)}
-              className={`p-2 transition-colors ${!gridView ? "bg-[#F2F2F3]" : "hover:bg-[#F9F9FA]"}`}
+              className="p-2 transition-colors"
+              style={{ backgroundColor: !gridView ? 'var(--th-bg-hover)' : 'transparent' }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={!gridView ? "#001221" : "#7F888F"} strokeWidth="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={!gridView ? "var(--th-text-primary)" : "#7F888F"} strokeWidth="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
             </button>
             <button
               onClick={() => setGridView(true)}
-              className={`p-2 transition-colors ${gridView ? "bg-[#F2F2F3]" : "hover:bg-[#F9F9FA]"}`}
+              className="p-2 transition-colors"
+              style={{ backgroundColor: gridView ? 'var(--th-bg-hover)' : 'transparent' }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={gridView ? "#001221" : "#7F888F"} strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={gridView ? "var(--th-text-primary)" : "#7F888F"} strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
             </button>
           </div>
         </div>
@@ -301,7 +320,8 @@ function ContactCard({ contact }: { contact: Contact }) {
 
   return (
     <div
-      className="rounded-lg hover:bg-[#F9F9FA] transition-all duration-200 hover:shadow-sm"
+      className="rounded-lg transition-all duration-200 hover:shadow-sm"
+      style={{ backgroundColor: hovered ? 'var(--th-bg-hover)' : 'transparent' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -326,27 +346,27 @@ function ContactCard({ contact }: { contact: Contact }) {
             {contact.initials}
           </div>
           <span
-            className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white"
-            style={{ backgroundColor: statusColors[contact.status] }}
+            className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full"
+            style={{ backgroundColor: statusColors[contact.status], border: '2px solid var(--th-bg)' }}
           />
         </div>
 
         {/* Name & Status */}
         <div className="flex-1 min-w-0">
-          <span className="text-sm font-medium text-[#001221] truncate block">{contact.name}</span>
+          <span className="text-sm font-medium truncate block" style={{ color: 'var(--th-text-primary)' }}>{contact.name}</span>
           {contact.callWith && (
             <div className="flex items-center gap-1 mt-0.5">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="#EF4444">
                 <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
               </svg>
-              <span className="text-[11px] text-[#7F888F] truncate">{contact.callWith}</span>
+              <span className="text-[11px] truncate" style={{ color: 'var(--th-text-muted)' }}>{contact.callWith}</span>
             </div>
           )}
         </div>
 
         {/* Phone icon */}
         <button
-          className="p-1.5 shrink-0 rounded-full hover:bg-[#E5E6E8] transition-all active:scale-90"
+          className="p-1.5 shrink-0 rounded-full transition-all active:scale-90"
           style={{ opacity: hovered ? 1 : 0.6 }}
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="1.5">
@@ -358,7 +378,7 @@ function ContactCard({ contact }: { contact: Contact }) {
       {/* Incoming Calls */}
       {contact.incomingCalls && contact.incomingCalls.length > 0 && (
         <div className="px-4 pb-3">
-          <span className="text-[10px] text-[#7F888F] font-medium">Incoming Calls</span>
+          <span className="text-[10px] font-medium" style={{ color: 'var(--th-text-muted)' }}>Incoming Calls</span>
           <div className="flex flex-wrap gap-1.5 mt-1">
             {contact.incomingCalls.map((call, i) => (
               <button

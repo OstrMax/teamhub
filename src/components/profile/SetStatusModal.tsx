@@ -26,14 +26,23 @@ export default function SetStatusModal({ onClose }: { onClose: () => void }) {
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100]" onClick={onClose}>
       <div
-        className="bg-white rounded-xl w-[500px] shadow-[0_16px_48px_rgba(0,0,0,0.18)]"
+        className="rounded-xl w-[500px]"
+        style={{
+          backgroundColor: "var(--th-dropdown-bg)",
+          boxShadow: "0 16px 48px rgba(0,0,0,0.18)",
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-6 pt-5 pb-3">
-          <h2 className="text-lg font-semibold text-[#001221]">Set a status</h2>
-          <button onClick={onClose} className="p-1 rounded hover:bg-[#F2F2F3] transition-colors">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <h2 className="text-lg font-semibold" style={{ color: "var(--th-text-primary)" }}>Set a status</h2>
+          <button
+            onClick={onClose}
+            className="p-1 rounded transition-colors"
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-secondary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"/>
               <line x1="6" y1="6" x2="18" y2="18"/>
             </svg>
@@ -42,9 +51,12 @@ export default function SetStatusModal({ onClose }: { onClose: () => void }) {
 
         {/* Input */}
         <div className="px-6 pb-4">
-          <div className="flex items-center gap-2 border border-[#E5E6E8] rounded-lg px-3 py-2.5">
+          <div
+            className="flex items-center gap-2 rounded-lg px-3 py-2.5"
+            style={{ border: "1px solid var(--th-border)" }}
+          >
             <button className="shrink-0">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10"/>
                 <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
                 <line x1="9" y1="9" x2="9.01" y2="9"/>
@@ -56,45 +68,50 @@ export default function SetStatusModal({ onClose }: { onClose: () => void }) {
               placeholder="Write your status here"
               value={statusText}
               onChange={(e) => setStatusText(e.target.value)}
-              className="flex-1 outline-none text-sm text-[#001221] placeholder:text-[#7F888F]"
+              className="flex-1 outline-none text-sm bg-transparent"
+              style={{ color: "var(--th-text-primary)" }}
             />
           </div>
         </div>
 
         {/* Recent */}
         <div className="px-6 pb-3">
-          <p className="text-xs font-semibold text-[#7F888F] tracking-wider mb-2">RECENT</p>
+          <p className="text-xs font-semibold tracking-wider mb-2" style={{ color: "var(--th-text-muted)" }}>RECENT</p>
           {recentStatuses.map((status, i) => (
             <button
               key={i}
               onClick={() => setStatusText(status.text)}
-              className="w-full flex items-center gap-2 py-2 hover:bg-[#F2F2F3] rounded px-1 transition-colors text-left"
+              className="w-full flex items-center gap-2 py-2 rounded px-1 transition-colors text-left"
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
             >
               <span className="text-base">{status.emoji}</span>
-              <span className="text-sm font-medium text-[#001221]">{status.text}</span>
-              <span className="text-xs text-[#7F888F]">{status.duration}</span>
+              <span className="text-sm font-medium" style={{ color: "var(--th-text-primary)" }}>{status.text}</span>
+              <span className="text-xs" style={{ color: "var(--th-text-muted)" }}>{status.duration}</span>
             </button>
           ))}
         </div>
 
         {/* Suggestions */}
         <div className="px-6 pb-4">
-          <p className="text-xs font-semibold text-[#7F888F] tracking-wider mb-2">SUGGESTIONS</p>
+          <p className="text-xs font-semibold tracking-wider mb-2" style={{ color: "var(--th-text-muted)" }}>SUGGESTIONS</p>
           {suggestions.map((status, i) => (
             <button
               key={i}
               onClick={() => setStatusText(status.text)}
-              className="w-full flex items-center gap-2 py-2 hover:bg-[#F2F2F3] rounded px-1 transition-colors text-left"
+              className="w-full flex items-center gap-2 py-2 rounded px-1 transition-colors text-left"
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
             >
               <span className="text-base">{status.emoji}</span>
-              <span className="text-sm font-medium text-[#001221]">{status.text}</span>
-              <span className="text-xs text-[#7F888F]">{status.duration}</span>
+              <span className="text-sm font-medium" style={{ color: "var(--th-text-primary)" }}>{status.text}</span>
+              <span className="text-xs" style={{ color: "var(--th-text-muted)" }}>{status.duration}</span>
             </button>
           ))}
         </div>
 
         {/* Footer */}
-        <div className="flex justify-end px-6 py-4 border-t border-[#E5E6E8]">
+        <div className="flex justify-end px-6 py-4" style={{ borderTop: "1px solid var(--th-dropdown-divider)" }}>
           <button className="px-6 py-2.5 bg-[#0B182E] text-white text-sm font-semibold rounded-lg hover:bg-[#1a2b40] transition-colors">
             SET STATUS
           </button>

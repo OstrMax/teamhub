@@ -31,11 +31,14 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <Header aiPanelOpen={aiPanelOpen} onToggleAI={() => setAiPanelOpen(!aiPanelOpen)} />
           <div className="flex flex-1 overflow-hidden">
             {/* Main content */}
-            <div className="flex-1 bg-white overflow-hidden transition-all duration-300 rounded-tl-xl">
+            <div
+              className="flex-1 overflow-hidden transition-all duration-300 rounded-tl-xl"
+              style={{ backgroundColor: "var(--th-bg)" }}
+            >
               {children}
             </div>
 
-            {/* AI Assist Panel – inline, part of the layout */}
+            {/* AI Assist Panel */}
             <AIAssistPanel isOpen={aiPanelOpen} onClose={() => setAiPanelOpen(false)} />
           </div>
         </div>

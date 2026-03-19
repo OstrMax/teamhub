@@ -69,7 +69,12 @@ const chartPoints = [
 // More icon component - 20x20 with hover
 function MoreIcon({ className = "" }: { className?: string }) {
   return (
-    <button className={`w-7 h-7 flex items-center justify-center rounded-md cursor-pointer hover:bg-[#E5E6E8] active:bg-[#D5D6D8] active:scale-95 transition-all ${className}`}>
+    <button
+      className={`w-7 h-7 flex items-center justify-center rounded-md cursor-pointer active:scale-95 transition-all ${className}`}
+      style={{ backgroundColor: 'transparent' }}
+      onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'; }}
+      onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
+    >
       <svg width="20" height="20" viewBox="0 0 24 24" fill="#7F888F">
         <circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/>
       </svg>
@@ -138,22 +143,35 @@ export default function Home() {
     <div className="flex flex-col h-full overflow-y-auto px-6 py-5 gap-5">
       {/* Greeting */}
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-normal text-[#001221]">Good day, Lora Benedict!</h1>
+        <h1 className="text-2xl font-normal" style={{ color: 'var(--th-text-primary)' }}>Good day, Lora Benedict!</h1>
         <div className="relative" ref={dateDropdownRef}>
           <button
             onClick={() => setShowDateDropdown(!showDateDropdown)}
-            className="flex items-center gap-2 px-4 py-2 border border-[#E5E6E8] rounded-lg text-sm text-[#001221] hover:bg-[#F9F9FA] hover:border-[#CCCFD2] active:bg-[#F2F2F3] transition-all"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition-all"
+            style={{ borderWidth: 1, borderStyle: 'solid', borderColor: 'var(--th-border)', color: 'var(--th-text-primary)', backgroundColor: 'var(--th-bg-card)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'var(--th-bg-card)'; }}
           >
             {selectedRange}
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#001221" strokeWidth="2" className={`transition-transform ${showDateDropdown ? "rotate-180" : ""}`}><polyline points="6 9 12 15 18 9"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={`transition-transform ${showDateDropdown ? "rotate-180" : ""}`}><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           {showDateDropdown && (
-            <div className="absolute right-0 top-full mt-1 w-48 bg-white border border-[#E5E6E8] rounded-xl shadow-lg z-50 py-1 animate-[fadeIn_0.15s_ease-out]">
+            <div
+              className="absolute right-0 top-full mt-1 w-48 rounded-xl shadow-lg z-50 py-1 animate-[fadeIn_0.15s_ease-out]"
+              style={{ backgroundColor: 'var(--th-dropdown-bg, var(--th-bg-card))', borderWidth: 1, borderStyle: 'solid', borderColor: 'var(--th-dropdown-border, var(--th-border))', boxShadow: 'var(--th-dropdown-shadow, 0 10px 15px -3px rgba(0,0,0,0.1))' }}
+            >
               {dateRanges.map((range) => (
                 <button
                   key={range}
                   onClick={() => { setSelectedRange(range); setShowDateDropdown(false); }}
-                  className={`w-full text-left px-4 py-2 text-sm transition-colors ${selectedRange === range ? "bg-[#F2F2F3] text-[#001221] font-medium" : "text-[#4C5863] hover:bg-[#F9F9FA]"}`}
+                  className="w-full text-left px-4 py-2 text-sm transition-colors"
+                  style={{
+                    backgroundColor: selectedRange === range ? 'var(--th-bg-hover)' : 'transparent',
+                    color: selectedRange === range ? 'var(--th-text-primary)' : 'var(--th-text-secondary)',
+                    fontWeight: selectedRange === range ? 500 : 400,
+                  }}
+                  onMouseEnter={(e) => { if (selectedRange !== range) e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'; }}
+                  onMouseLeave={(e) => { if (selectedRange !== range) e.currentTarget.style.backgroundColor = 'transparent'; }}
                 >
                   {range}
                 </button>
@@ -165,17 +183,28 @@ export default function Home() {
 
       {/* Top row: To-do + Quick actions */}
       <div className="grid grid-cols-3 gap-5">
-        <div className="col-span-2 bg-white border border-[#E5E6E8] rounded-xl p-5">
+        <div className="col-span-2 rounded-xl p-5" style={{ backgroundColor: 'var(--th-bg-card)', borderWidth: 1, borderStyle: 'solid', borderColor: 'var(--th-border)' }}>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-base font-semibold text-[#001221]">To-do for today</h2>
-            <button onClick={handleAddTask} className="text-sm text-[#7F888F] flex items-center gap-1 hover:text-[#001221] transition-colors">+ New task</button>
+            <h2 className="text-base font-semibold" style={{ color: 'var(--th-text-primary)' }}>To-do for today</h2>
+            <button onClick={handleAddTask} className="text-sm flex items-center gap-1 transition-colors" style={{ color: 'var(--th-text-muted)' }}>+ New task</button>
           </div>
           <div className="flex flex-col gap-3">
             {todos.map((todo) => (
-              <div key={todo.id} className="flex items-start gap-3 group hover:bg-[#F9F9FA] rounded-lg px-1 py-1 -mx-1 transition-colors cursor-pointer">
+              <div
+                key={todo.id}
+                className="flex items-start gap-3 group rounded-lg px-1 py-1 -mx-1 transition-colors cursor-pointer"
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
+              >
                 <button
                   onClick={() => handleToggleTodo(todo.id)}
-                  className={`w-5 h-5 mt-0.5 rounded border flex items-center justify-center shrink-0 transition-all active:scale-90 ${todo.done ? "bg-[#001221] border-[#001221]" : "border-[#CCCFD2] hover:border-[#001221]"}`}
+                  className="w-5 h-5 mt-0.5 rounded flex items-center justify-center shrink-0 transition-all active:scale-90"
+                  style={{
+                    borderWidth: 1,
+                    borderStyle: 'solid',
+                    backgroundColor: todo.done ? 'var(--th-text-primary)' : 'transparent',
+                    borderColor: todo.done ? 'var(--th-text-primary)' : 'var(--th-border)',
+                  }}
                 >
                   {todo.done && <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg>}
                 </button>
@@ -189,29 +218,30 @@ export default function Home() {
                       onBlur={handleFinishEdit}
                       onKeyDown={(e) => e.key === "Enter" && handleFinishEdit()}
                       placeholder="Type task name..."
-                      className="text-sm font-medium text-[#001221] outline-none w-full bg-transparent border-b border-[#2a1051] pb-0.5"
+                      className="text-sm font-medium outline-none w-full bg-transparent pb-0.5"
+                      style={{ color: 'var(--th-text-primary)', borderBottomWidth: 1, borderBottomStyle: 'solid', borderBottomColor: 'var(--th-tab-active)' }}
                     />
                   ) : (
                     <>
-                      <p className={`text-sm font-medium ${todo.done ? "text-[#7F888F] line-through" : "text-[#001221]"}`}>{todo.text}</p>
-                      {todo.sub && <p className="text-xs text-[#7F888F] truncate">{todo.sub}</p>}
+                      <p className="text-sm font-medium" style={{ color: todo.done ? 'var(--th-text-muted)' : 'var(--th-text-primary)', textDecoration: todo.done ? 'line-through' : 'none' }}>{todo.text}</p>
+                      {todo.sub && <p className="text-xs" style={{ color: 'var(--th-text-muted)' }}>{todo.sub}</p>}
                     </>
                   )}
                 </div>
                 <div className="text-right shrink-0">
-                  <p className="text-xs text-[#7F888F]">{todo.date}</p>
-                  <p className="text-xs text-[#7F888F]">{todo.time}</p>
+                  <p className="text-xs" style={{ color: 'var(--th-text-muted)' }}>{todo.date}</p>
+                  <p className="text-xs" style={{ color: 'var(--th-text-muted)' }}>{todo.time}</p>
                 </div>
               </div>
             ))}
           </div>
-          <button onClick={handleAddTask} className="flex items-center gap-1 mt-4 text-sm text-[#7F888F] hover:text-[#001221] transition-colors">+ New task</button>
+          <button onClick={handleAddTask} className="flex items-center gap-1 mt-4 text-sm transition-colors" style={{ color: 'var(--th-text-muted)' }}>+ New task</button>
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-[rgba(29,62,119,0.04)] rounded-[16px] p-[23px]">
+        <div className="rounded-[16px] p-[23px]" style={{ backgroundColor: 'var(--th-quick-actions-bg, rgba(29,62,119,0.04))' }}>
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-lg font-semibold text-[#001221]">Quick actions</h2>
+            <h2 className="text-lg font-semibold" style={{ color: 'var(--th-text-primary)' }}>Quick actions</h2>
             <MoreIcon />
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -237,9 +267,13 @@ export default function Home() {
                 icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="#7C3AED"><path d="M15 8v8H5V8h10m1-2H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4V7c0-.55-.45-1-1-1z"/></svg>,
               },
             ].map((action) => (
-              <button key={action.label} className="flex items-center gap-4 p-3 rounded-[12px] bg-white shadow-[0px_1px_12px_0px_rgba(0,0,0,0.04)] hover:shadow-[0_2px_16px_rgba(0,0,0,0.08)] active:scale-[0.98] transition-all" style={{ height: 74 }}>
+              <button
+                key={action.label}
+                className="flex items-center gap-4 p-3 rounded-[12px] shadow-[0px_1px_12px_0px_rgba(0,0,0,0.04)] hover:shadow-[0_2px_16px_rgba(0,0,0,0.08)] active:scale-[0.98] transition-all"
+                style={{ height: 74, backgroundColor: 'var(--th-bg-card)' }}
+              >
                 <span className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${action.iconBg}`}>{action.icon}</span>
-                <span className="text-[14px] font-medium text-[#001221] text-left whitespace-pre-wrap leading-[1.3]">{action.label}</span>
+                <span className="text-[14px] font-medium text-left whitespace-pre-wrap leading-[1.3]" style={{ color: 'var(--th-text-primary)' }}>{action.label}</span>
               </button>
             ))}
           </div>
@@ -248,49 +282,59 @@ export default function Home() {
 
       {/* Middle row: Upcoming meeting + Apps - equal height */}
       <div className="grid grid-cols-3 gap-5">
-        <div className="col-span-2 bg-white border border-[#E5E6E8] rounded-xl p-5">
+        <div className="col-span-2 rounded-xl p-5" style={{ backgroundColor: 'var(--th-bg-card)', borderWidth: 1, borderStyle: 'solid', borderColor: 'var(--th-border)' }}>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-base font-semibold text-[#001221]">Upcoming meeting</h2>
-            <button className="text-sm text-[#7F888F] flex items-center gap-1 hover:text-[#001221] transition-colors">View all →</button>
+            <h2 className="text-base font-semibold" style={{ color: 'var(--th-text-primary)' }}>Upcoming meeting</h2>
+            <button className="text-sm flex items-center gap-1 transition-colors" style={{ color: 'var(--th-text-muted)' }}>View all &rarr;</button>
           </div>
           <div className="flex flex-col gap-1">
             {visibleMeetings.map((meeting, i) => (
-              <div key={i} className="flex items-center gap-3 py-1.5 hover:bg-[#F9F9FA] rounded-lg px-1 -mx-1 transition-colors cursor-pointer group">
+              <div
+                key={i}
+                className="flex items-center gap-3 py-1.5 rounded-lg px-1 -mx-1 transition-colors cursor-pointer group"
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
+              >
                 {i === 0 && (
                   <div className="flex flex-col items-center w-10 shrink-0">
-                    <span className="text-[10px] text-[#7F888F] uppercase">{meeting.day}</span>
-                    <span className="text-xl font-semibold text-[#001221]">{meeting.date}</span>
+                    <span className="text-[10px] uppercase" style={{ color: 'var(--th-text-muted)' }}>{meeting.day}</span>
+                    <span className="text-xl font-semibold" style={{ color: 'var(--th-text-primary)' }}>{meeting.date}</span>
                   </div>
                 )}
                 {i !== 0 && <div className="w-10 shrink-0" />}
                 <div className={`flex-1 p-3 rounded-lg transition-colors ${i === 1 ? "bg-[#F0EBFF] group-hover:bg-[#E8E0FF]" : i === 2 ? "bg-[#FFF3CD] group-hover:bg-[#FFEDAC]" : "group-hover:bg-[#F2F2F3]"}`}>
-                  <p className="text-sm font-medium text-[#001221]">{meeting.title}</p>
-                  <p className="text-xs text-[#7F888F]">{meeting.time}</p>
+                  <p className="text-sm font-medium" style={{ color: 'var(--th-text-primary)' }}>{meeting.title}</p>
+                  <p className="text-xs" style={{ color: 'var(--th-text-muted)' }}>{meeting.time}</p>
                 </div>
                 <div className="flex items-center -space-x-2">
                   {meeting.avatars.map((a) => (
-                    <div key={a} className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-medium text-white border-2 border-white" style={{ background: avatarColors[a] || "#7C3AED" }}>{a}</div>
+                    <div key={a} className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-medium text-white" style={{ background: avatarColors[a] || "#7C3AED", borderWidth: 2, borderStyle: 'solid', borderColor: 'var(--th-bg-card)' }}>{a}</div>
                   ))}
                 </div>
-                {meeting.more && <span className="text-xs text-[#7F888F] whitespace-nowrap">{meeting.more}</span>}
+                {meeting.more && <span className="text-xs whitespace-nowrap" style={{ color: 'var(--th-text-muted)' }}>{meeting.more}</span>}
               </div>
             ))}
           </div>
           {allMeetings.length > 4 && (
-            <button onClick={() => setShowAllMeetings(!showAllMeetings)} className="flex items-center gap-1 mt-3 text-sm text-[#7F888F] hover:text-[#001221] transition-colors">
-              {showAllMeetings ? "Show less" : `Show more (${allMeetings.length - 4})`} →
+            <button onClick={() => setShowAllMeetings(!showAllMeetings)} className="flex items-center gap-1 mt-3 text-sm transition-colors" style={{ color: 'var(--th-text-muted)' }}>
+              {showAllMeetings ? "Show less" : `Show more (${allMeetings.length - 4})`} &rarr;
             </button>
           )}
         </div>
 
-        <div className="bg-white border border-[#E5E6E8] rounded-xl p-5">
+        <div className="rounded-xl p-5" style={{ backgroundColor: 'var(--th-bg-card)', borderWidth: 1, borderStyle: 'solid', borderColor: 'var(--th-border)' }}>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-base font-semibold text-[#001221]">Apps</h2>
-            <button className="text-sm text-[#7F888F] flex items-center gap-1 hover:text-[#001221] transition-colors">View all →</button>
+            <h2 className="text-base font-semibold" style={{ color: 'var(--th-text-primary)' }}>Apps</h2>
+            <button className="text-sm flex items-center gap-1 transition-colors" style={{ color: 'var(--th-text-muted)' }}>View all &rarr;</button>
           </div>
           <div className="flex flex-col gap-3">
             {visibleApps.map((app) => (
-              <div key={app.name} className="flex items-center gap-3 hover:bg-[#F9F9FA] rounded-lg px-1 py-1 -mx-1 transition-colors cursor-pointer">
+              <div
+                key={app.name}
+                className="flex items-center gap-3 rounded-lg px-1 py-1 -mx-1 transition-colors cursor-pointer"
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
+              >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: `${app.color}1A` }}>
                   {/* apps.svg - 3x3 dot grid */}
                   {app.iconType === "apps" && <svg width="18" height="18" viewBox="0 0 24 24" fill={app.color}><path d="M5.6 3.2C4.964 3.2 4.353 3.453 3.903 3.903C3.453 4.353 3.2 4.963 3.2 5.6C3.2 6.236 3.453 6.847 3.903 7.297C4.353 7.747 4.964 8 5.6 8C6.237 8 6.847 7.747 7.297 7.297C7.747 6.847 8 6.236 8 5.6C8 4.963 7.747 4.353 7.297 3.903C6.847 3.453 6.237 3.2 5.6 3.2ZM12 3.2C11.364 3.2 10.753 3.453 10.303 3.903C9.853 4.353 9.6 4.963 9.6 5.6C9.6 6.236 9.853 6.847 10.303 7.297C10.753 7.747 11.364 8 12 8C12.637 8 13.247 7.747 13.697 7.297C14.147 6.847 14.4 6.236 14.4 5.6C14.4 4.963 14.147 4.353 13.697 3.903C13.247 3.453 12.637 3.2 12 3.2ZM18.4 3.2C17.764 3.2 17.153 3.453 16.703 3.903C16.253 4.353 16 4.963 16 5.6C16 6.236 16.253 6.847 16.703 7.297C17.153 7.747 17.764 8 18.4 8C19.037 8 19.647 7.747 20.097 7.297C20.547 6.847 20.8 6.236 20.8 5.6C20.8 4.963 20.547 4.353 20.097 3.903C19.647 3.453 19.037 3.2 18.4 3.2ZM5.6 9.6C4.964 9.6 4.353 9.853 3.903 10.303C3.453 10.753 3.2 11.363 3.2 12C3.2 12.636 3.453 13.247 3.903 13.697C4.353 14.147 4.964 14.4 5.6 14.4C6.237 14.4 6.847 14.147 7.297 13.697C7.747 13.247 8 12.636 8 12C8 11.363 7.747 10.753 7.297 10.303C6.847 9.853 6.237 9.6 5.6 9.6ZM12 9.6C11.364 9.6 10.753 9.853 10.303 10.303C9.853 10.753 9.6 11.363 9.6 12C9.6 12.636 9.853 13.247 10.303 13.697C10.753 14.147 11.364 14.4 12 14.4C12.637 14.4 13.247 14.147 13.697 13.697C14.147 13.247 14.4 12.636 14.4 12C14.4 11.363 14.147 10.753 13.697 10.303C13.247 9.853 12.637 9.6 12 9.6ZM18.4 9.6C17.764 9.6 17.153 9.853 16.703 10.303C16.253 10.753 16 11.363 16 12C16 12.636 16.253 13.247 16.703 13.697C17.153 14.147 17.764 14.4 18.4 14.4C19.037 14.4 19.647 14.147 20.097 13.697C20.547 13.247 20.8 12.636 20.8 12C20.8 11.363 20.547 10.753 20.097 10.303C19.647 9.853 19.037 9.6 18.4 9.6ZM5.6 16C4.964 16 4.353 16.253 3.903 16.703C3.453 17.153 3.2 17.763 3.2 18.4C3.2 19.036 3.453 19.647 3.903 20.097C4.353 20.547 4.964 20.8 5.6 20.8C6.237 20.8 6.847 20.547 7.297 20.097C7.747 19.647 8 19.036 8 18.4C8 17.763 7.747 17.153 7.297 16.703C6.847 16.253 6.237 16 5.6 16ZM12 16C11.364 16 10.753 16.253 10.303 16.703C9.853 17.153 9.6 17.763 9.6 18.4C9.6 19.036 9.853 19.647 10.303 20.097C10.753 20.547 11.364 20.8 12 20.8C12.637 20.8 13.247 20.547 13.697 20.097C14.147 19.647 14.4 19.036 14.4 18.4C14.4 17.763 14.147 17.153 13.697 16.703C13.247 16.253 12.637 16 12 16ZM18.4 16C17.764 16 17.153 16.253 16.703 16.703C16.253 17.153 16 17.763 16 18.4C16 19.036 16.253 19.647 16.703 20.097C17.153 20.547 17.764 20.8 18.4 20.8C19.037 20.8 19.647 20.547 20.097 20.097C20.547 19.647 20.8 19.036 20.8 18.4C20.8 17.763 20.547 17.153 20.097 16.703C19.647 16.253 19.037 16 18.4 16Z"/></svg>}
@@ -300,16 +344,21 @@ export default function Home() {
                   {app.iconType === "sms-campaign" && <svg width="18" height="18" viewBox="0 0 24 24" fill={app.color}><path d="M19.688 3.81C17.724 3.788 11.318 4.051 6.138 8.062C6.014 8.158 5.922 8.293 5.877 8.443C5.647 9.211 5.288 10.63 5.288 12C5.288 13.486 5.706 14.987 5.873 15.549C5.918 15.702 6.01 15.836 6.136 15.935C6.64 16.326 7.158 16.673 7.68 16.997C7.17 19.062 8.331 20.952 10.046 21.53C11.783 22.116 13.825 21.385 14.703 19.69C16.765 20.104 18.517 20.197 19.478 20.197C19.553 20.197 19.628 20.197 19.688 20.19C20.31 20.19 20.881 19.875 21.226 19.358C21.983 18.195 23.25 15.697 23.25 12C23.25 8.302 21.983 5.805 21.226 4.642C20.881 4.125 20.31 3.81 19.688 3.81ZM3.171 8.279C2.815 8.283 2.485 8.364 2.183 8.527C1.53 8.879 0.75 9.765 0.75 12C0.75 14.235 1.53 15.12 2.183 15.472C2.581 15.688 3.034 15.763 3.536 15.697C3.96 15.642 4.221 15.205 4.126 14.788C3.943 13.978 3.788 12.989 3.788 12C3.788 11.011 3.943 10.021 4.126 9.211C4.221 8.795 3.961 8.357 3.538 8.301C3.412 8.285 3.29 8.278 3.171 8.279ZM9.056 17.779C10.448 18.487 11.851 18.986 13.175 19.343C12.572 20.171 11.487 20.432 10.525 20.108C9.614 19.801 8.922 18.953 9.056 17.779Z"/></svg>}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-[#001221]">{app.name}</p>
-                  <p className="text-xs text-[#7F888F] line-clamp-2">{app.desc}</p>
+                  <p className="text-sm font-medium" style={{ color: 'var(--th-text-primary)' }}>{app.name}</p>
+                  <p className="text-xs line-clamp-2" style={{ color: 'var(--th-text-muted)' }}>{app.desc}</p>
                 </div>
-                <button className="px-3 py-1 border border-[#E5E6E8] rounded text-xs font-medium text-[#001221] shrink-0 hover:bg-[#F2F2F3] active:bg-[#E5E6E8] transition-colors">{app.action}</button>
+                <button
+                  className="px-3 py-1 rounded text-xs font-medium shrink-0 transition-colors"
+                  style={{ borderWidth: 1, borderStyle: 'solid', borderColor: 'var(--th-border)', color: 'var(--th-text-primary)', backgroundColor: 'var(--th-bg-card)' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'var(--th-bg-card)'; }}
+                >{app.action}</button>
               </div>
             ))}
           </div>
           {allApps.length > 4 && (
-            <button onClick={() => setShowAllApps(!showAllApps)} className="flex items-center gap-1 mt-3 text-sm text-[#7F888F] hover:text-[#001221] transition-colors">
-              {showAllApps ? "Show less" : `Show more (${allApps.length - 4})`} →
+            <button onClick={() => setShowAllApps(!showAllApps)} className="flex items-center gap-1 mt-3 text-sm transition-colors" style={{ color: 'var(--th-text-muted)' }}>
+              {showAllApps ? "Show less" : `Show more (${allApps.length - 4})`} &rarr;
             </button>
           )}
         </div>
@@ -317,22 +366,28 @@ export default function Home() {
 
       {/* Bottom row: Recent calls + Stats */}
       <div className="grid grid-cols-3 gap-5">
-        <div className="col-span-2 bg-white border border-[#E5E6E8] rounded-xl p-5">
+        <div className="col-span-2 rounded-xl p-5" style={{ backgroundColor: 'var(--th-bg-card)', borderWidth: 1, borderStyle: 'solid', borderColor: 'var(--th-border)' }}>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-base font-semibold text-[#001221]">Recent calls</h2>
+            <h2 className="text-base font-semibold" style={{ color: 'var(--th-text-primary)' }}>Recent calls</h2>
             <div className="flex items-center gap-1">
               {["All", "Missed", "Recorded"].map((f) => (
                 <button
                   key={f}
                   onClick={() => setCallFilter(f)}
-                  className={`px-3 py-1 rounded-full text-xs font-medium transition-all active:scale-95 ${callFilter === f ? "bg-[#001221] text-white" : "text-[#7F888F] hover:bg-[#F2F2F3]"}`}
+                  className="px-3 py-1 rounded-full text-xs font-medium transition-all active:scale-95"
+                  style={{
+                    backgroundColor: callFilter === f ? 'var(--th-text-primary)' : 'transparent',
+                    color: callFilter === f ? 'var(--th-bg-card)' : 'var(--th-text-muted)',
+                  }}
+                  onMouseEnter={(e) => { if (callFilter !== f) e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'; }}
+                  onMouseLeave={(e) => { if (callFilter !== f) e.currentTarget.style.backgroundColor = 'transparent'; }}
                 >{f}</button>
               ))}
             </div>
           </div>
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-xs text-[#7F888F]">
+              <tr className="text-xs" style={{ color: 'var(--th-text-muted)' }}>
                 <th className="text-left font-medium pb-2">To / From</th>
                 <th className="text-left font-medium pb-2">Type</th>
                 <th className="text-left font-medium pb-2">Duration</th>
@@ -345,19 +400,30 @@ export default function Home() {
                 const isMissedFilter = callFilter === "Missed";
                 const iconColor = isMissedFilter ? "#EF4444" : (call.direction === "missed" ? "#EF4444" : "#2CAD43");
                 return (
-                  <tr key={i} className="border-t border-[#F2F2F3] hover:bg-[#F9F9FA] transition-colors cursor-pointer">
+                  <tr
+                    key={i}
+                    className="transition-colors cursor-pointer"
+                    style={{ borderTopWidth: 1, borderTopStyle: 'solid', borderTopColor: 'var(--th-border-light)' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
+                  >
                     <td className="py-2.5 flex items-center gap-2">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={iconColor} strokeWidth="2">
                         {(isMissedFilter || call.direction === "missed") ? <><line x1="18" y1="6" x2="6" y2="18"/><polyline points="8 6 18 6 18 16"/></> : <><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></>}
                       </svg>
-                      <span className="text-[#001221]">{call.name}</span>
+                      <span style={{ color: 'var(--th-text-primary)' }}>{call.name}</span>
                     </td>
-                    <td className="py-2.5 text-[#7F888F]">{call.type}</td>
-                    <td className="py-2.5 text-[#7F888F]">{call.duration}</td>
-                    <td className="py-2.5 text-[#7F888F]">{call.time}</td>
+                    <td className="py-2.5" style={{ color: 'var(--th-text-muted)' }}>{call.type}</td>
+                    <td className="py-2.5" style={{ color: 'var(--th-text-muted)' }}>{call.duration}</td>
+                    <td className="py-2.5" style={{ color: 'var(--th-text-muted)' }}>{call.time}</td>
                     <td className="py-2.5">
                       <div className="flex items-center gap-2">
-                        <button className="p-1 rounded hover:bg-[#F2F2F3] text-[#7F888F] hover:text-[#001221] transition-colors">
+                        <button
+                          className="p-1 rounded transition-colors"
+                          style={{ color: 'var(--th-text-muted)' }}
+                          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'; e.currentTarget.style.color = 'var(--th-text-primary)'; }}
+                          onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = 'var(--th-text-muted)'; }}
+                        >
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
                         </button>
                         <MoreIcon />
@@ -370,9 +436,9 @@ export default function Home() {
           </table>
         </div>
 
-        <div className="bg-white border border-[#E5E6E8] rounded-xl p-5">
+        <div className="rounded-xl p-5" style={{ backgroundColor: 'var(--th-bg-card)', borderWidth: 1, borderStyle: 'solid', borderColor: 'var(--th-border)' }}>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-base font-semibold text-[#001221]">Stats</h2>
+            <h2 className="text-base font-semibold" style={{ color: 'var(--th-text-primary)' }}>Stats</h2>
             <MoreIcon />
           </div>
           <div className="grid grid-cols-3 gap-4">
@@ -387,9 +453,14 @@ export default function Home() {
               { label: "Avg call duration", value: "3:42", color: "#F97316" },
               { label: "Transfer rate", value: "12%", color: "#6366F1" },
             ].map((stat) => (
-              <button key={stat.label} className="text-left group hover:bg-[#F9F9FA] rounded-lg p-2 -m-2 transition-colors">
-                <p className="text-xs text-[#7F888F]">{stat.label}</p>
-                <p className="text-2xl font-semibold text-[#001221] group-hover:text-[#2a1051] transition-colors">{stat.value}</p>
+              <button
+                key={stat.label}
+                className="text-left group rounded-lg p-2 -m-2 transition-colors"
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
+              >
+                <p className="text-xs" style={{ color: 'var(--th-text-muted)' }}>{stat.label}</p>
+                <p className="text-2xl font-semibold transition-colors" style={{ color: 'var(--th-text-primary)' }}>{stat.value}</p>
               </button>
             ))}
           </div>
@@ -398,27 +469,27 @@ export default function Home() {
 
       {/* Last row: Calls chart + News */}
       <div className="grid grid-cols-3 gap-5">
-        <div className="col-span-2 bg-white border border-[#E5E6E8] rounded-xl p-5">
+        <div className="col-span-2 rounded-xl p-5" style={{ backgroundColor: 'var(--th-bg-card)', borderWidth: 1, borderStyle: 'solid', borderColor: 'var(--th-border)' }}>
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <h2 className="text-base font-semibold text-[#001221]">Calls</h2>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#001221" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
+              <h2 className="text-base font-semibold" style={{ color: 'var(--th-text-primary)' }}>Calls</h2>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: 'var(--th-text-primary)' }}><polyline points="6 9 12 15 18 9"/></svg>
             </div>
-            <button className="text-sm text-[#7F888F] flex items-center gap-1 hover:text-[#001221] transition-colors">Learn more →</button>
+            <button className="text-sm flex items-center gap-1 transition-colors" style={{ color: 'var(--th-text-muted)' }}>Learn more &rarr;</button>
           </div>
           {/* Accurate chart */}
           <div className="relative h-44">
             {/* Y-axis labels */}
-            <div className="absolute left-0 top-0 bottom-6 flex flex-col justify-between text-[10px] text-[#7F888F] w-6 pointer-events-none">
+            <div className="absolute left-0 top-0 bottom-6 flex flex-col justify-between text-[10px] w-6 pointer-events-none" style={{ color: 'var(--th-text-muted)' }}>
               <span>80</span><span>60</span><span>40</span><span>20</span><span>0</span>
             </div>
             {/* Grid lines */}
             <svg className="absolute left-8 right-0 top-0 bottom-6" viewBox="0 0 500 140" preserveAspectRatio="none">
-              <line x1="0" y1="0" x2="500" y2="0" stroke="#F2F2F3" strokeWidth="1"/>
-              <line x1="0" y1="35" x2="500" y2="35" stroke="#F2F2F3" strokeWidth="1"/>
-              <line x1="0" y1="70" x2="500" y2="70" stroke="#F2F2F3" strokeWidth="1"/>
-              <line x1="0" y1="105" x2="500" y2="105" stroke="#F2F2F3" strokeWidth="1"/>
-              <line x1="0" y1="140" x2="500" y2="140" stroke="#F2F2F3" strokeWidth="1"/>
+              <line x1="0" y1="0" x2="500" y2="0" stroke="var(--th-border-light)" strokeWidth="1"/>
+              <line x1="0" y1="35" x2="500" y2="35" stroke="var(--th-border-light)" strokeWidth="1"/>
+              <line x1="0" y1="70" x2="500" y2="70" stroke="var(--th-border-light)" strokeWidth="1"/>
+              <line x1="0" y1="105" x2="500" y2="105" stroke="var(--th-border-light)" strokeWidth="1"/>
+              <line x1="0" y1="140" x2="500" y2="140" stroke="var(--th-border-light)" strokeWidth="1"/>
             </svg>
             {/* Chart line */}
             <svg className="absolute left-8 right-0 top-0 bottom-6" viewBox="0 0 500 140" preserveAspectRatio="none">
@@ -449,23 +520,28 @@ export default function Home() {
               </div>
             )}
           </div>
-          <div className="flex justify-between pl-8 mt-1 text-[10px] text-[#7F888F]">
+          <div className="flex justify-between pl-8 mt-1 text-[10px]" style={{ color: 'var(--th-text-muted)' }}>
             {["10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm"].map((t) => <span key={t}>{t}</span>)}
           </div>
         </div>
 
-        <div className="bg-white border border-[#E5E6E8] rounded-xl p-5">
+        <div className="rounded-xl p-5" style={{ backgroundColor: 'var(--th-bg-card)', borderWidth: 1, borderStyle: 'solid', borderColor: 'var(--th-border)' }}>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-base font-semibold text-[#001221]">News</h2>
-            <button className="text-sm text-[#7F888F] flex items-center gap-1 hover:text-[#001221] transition-colors">View all →</button>
+            <h2 className="text-base font-semibold" style={{ color: 'var(--th-text-primary)' }}>News</h2>
+            <button className="text-sm flex items-center gap-1 transition-colors" style={{ color: 'var(--th-text-muted)' }}>View all &rarr;</button>
           </div>
           <div className="flex flex-col gap-4">
             {news.map((item, i) => (
-              <div key={i} className="flex gap-3 hover:bg-[#F9F9FA] rounded-lg px-1 py-1 -mx-1 transition-colors cursor-pointer">
+              <div
+                key={i}
+                className="flex gap-3 rounded-lg px-1 py-1 -mx-1 transition-colors cursor-pointer"
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
+              >
                 <div className="flex-1 min-w-0">
-                  <p className="text-[10px] text-[#7F888F]">{item.date}</p>
-                  <p className="text-sm font-medium text-[#001221]">{item.title}</p>
-                  <p className="text-xs text-[#7F888F]">{item.desc}</p>
+                  <p className="text-[10px]" style={{ color: 'var(--th-text-muted)' }}>{item.date}</p>
+                  <p className="text-sm font-medium" style={{ color: 'var(--th-text-primary)' }}>{item.title}</p>
+                  <p className="text-xs" style={{ color: 'var(--th-text-muted)' }}>{item.desc}</p>
                 </div>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={item.img} alt={item.title} className="w-16 h-12 rounded-lg shrink-0 object-cover" />

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import AppLayout from "@/components/layout/AppLayout";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 export const metadata: Metadata = {
   title: "TeamHub",
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <AppLayout>{children}</AppLayout>
+        <ThemeProvider>
+          <AppLayout>{children}</AppLayout>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import ProfileDropdown from "@/components/profile/ProfileDropdown";
+import SettingsDropdown from "@/components/layout/SettingsDropdown";
 import { PassiveAIIcon, ActiveAIIcon } from "@/components/ai/AIAssistPanel";
 
 export default function Header({
@@ -13,12 +14,17 @@ export default function Header({
   onToggleAI: () => void;
 }) {
   const [showProfile, setShowProfile] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
+  const settingsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
         setShowProfile(false);
+      }
+      if (settingsRef.current && !settingsRef.current.contains(e.target as Node)) {
+        setShowSettings(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -34,10 +40,17 @@ export default function Header({
 
       <div className="flex-1" />
 
-      {/* Search bar - 80% opacity default, 100% on hover/focus */}
-      <button className="flex items-center h-8 w-[365px] bg-white/80 hover:bg-white focus:bg-white rounded-lg shadow-[0_1px_2px_rgba(0,0,0,0.08)] px-4 transition-all duration-200 group">
+      {/* Search bar */}
+      <button
+        className="flex items-center h-8 w-[365px] rounded-lg px-4 transition-all duration-200 group"
+        style={{
+          backgroundColor: "var(--th-search-bg)",
+          border: "1px solid var(--th-search-border)",
+          boxShadow: "0 1px 2px rgba(0,0,0,0.08)",
+        }}
+      >
         <Image src="/icons/search.svg" alt="Search" width={16} height={16} className="opacity-70 group-hover:opacity-100 transition-opacity" />
-        <span className="ml-2 text-sm text-[#4C5863] group-hover:text-[#001221] transition-colors">Search</span>
+        <span className="ml-2 text-sm" style={{ color: "var(--th-text-muted)" }}>Search</span>
       </button>
 
       <div className="flex-1" />
@@ -77,9 +90,17 @@ export default function Header({
         </button>
 
         {/* Settings */}
-        <button className="p-1.5 rounded hover:bg-white/10 transition-colors">
-          <Image src="/icons/settings.svg" alt="Settings" width={24} height={24} />
-        </button>
+        <div className="relative" ref={settingsRef}>
+          <button
+            onClick={() => setShowSettings(!showSettings)}
+            className="p-1.5 rounded hover:bg-white/10 transition-colors"
+          >
+            <Image src="/icons/settings.svg" alt="Settings" width={24} height={24} />
+          </button>
+          {showSettings && (
+            <SettingsDropdown onClose={() => setShowSettings(false)} />
+          )}
+        </div>
 
         {/* Profile Avatar */}
         <div className="relative" ref={profileRef}>

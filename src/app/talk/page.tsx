@@ -42,11 +42,14 @@ export default function TalkPage() {
   return (
     <div className="flex flex-col h-full">
       {/* Page header — title + phone only */}
-      <div className="flex items-center gap-3 px-6 py-3 border-b border-[#E5E6E8]">
-        <h1 className="text-lg font-semibold text-[#001221]">Talk</h1>
-        <button className="flex items-center gap-1 text-sm text-[#001221]">
+      <div
+        className="flex items-center gap-3 px-6 py-3 border-b"
+        style={{ borderColor: 'var(--th-border)' }}
+      >
+        <h1 className="text-lg font-semibold" style={{ color: 'var(--th-text-primary)' }}>Talk</h1>
+        <button className="flex items-center gap-1 text-sm" style={{ color: 'var(--th-text-primary)' }}>
           +12063127805
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#001221" strokeWidth="2">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <polyline points="6 9 12 15 18 9"/>
           </svg>
         </button>
@@ -55,11 +58,14 @@ export default function TalkPage() {
       {/* Content — Left panel (call card + dial pad) | Tabs + Content right */}
       <div className="flex flex-1 overflow-hidden">
         {/* Left panel */}
-        <div className="w-[300px] shrink-0 border-r border-[#E5E6E8] flex flex-col h-full bg-white overflow-y-auto">
+        <div
+          className="w-[300px] shrink-0 border-r flex flex-col h-full overflow-y-auto"
+          style={{ backgroundColor: 'var(--th-bg)', borderColor: 'var(--th-border)' }}
+        >
           {/* Active call card */}
           {showActiveCall && (
             <div className="px-4 py-3" style={{ animation: "fadeIn 0.3s ease-out" }}>
-              <span className="text-xs font-semibold text-[#001221]">Ongoing call</span>
+              <span className="text-xs font-semibold" style={{ color: 'var(--th-text-primary)' }}>Ongoing call</span>
               <div className="mt-2 bg-[#001221] rounded-[12px] p-2">
                 {/* Header row: phone number + External badge */}
                 <div className="flex items-center justify-between mb-1">
@@ -115,6 +121,7 @@ export default function TalkPage() {
               onChange={(e) => setPhoneInput(e.target.value)}
               placeholder="Enter a name or number"
               className="w-full text-center text-base text-[#7F888F] mb-6 pb-2 outline-none placeholder:text-[#7F888F]"
+              style={{ backgroundColor: 'transparent' }}
             />
 
             <div className="grid grid-cols-3 gap-3 mb-6">
@@ -122,9 +129,12 @@ export default function TalkPage() {
                 <button
                   key={key.digit}
                   onClick={() => setPhoneInput((prev) => prev + key.digit)}
-                  className="flex flex-col items-center justify-center w-16 h-16 rounded-full border border-[#E5E6E8] hover:bg-[#F2F2F3] active:bg-[#E5E6E8] active:scale-95 transition-all"
+                  className="flex flex-col items-center justify-center w-16 h-16 rounded-full border active:scale-95 transition-all"
+                  style={{ borderColor: 'var(--th-border)', backgroundColor: 'var(--th-bg)' }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg)'}
                 >
-                  <span className="text-2xl font-medium text-[#001221]">{key.digit}</span>
+                  <span className="text-2xl font-medium" style={{ color: 'var(--th-text-primary)' }}>{key.digit}</span>
                   {key.sub && (
                     <span className="text-[10px] font-medium text-[#7F888F] tracking-wider">{key.sub}</span>
                   )}
@@ -144,21 +154,22 @@ export default function TalkPage() {
         {/* Right panel — tabs sit at top, content below */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Tabs row */}
-          <div className="flex items-center gap-1 border-b border-[#E5E6E8]">
+          <div className="flex items-center gap-1 border-b" style={{ borderColor: 'var(--th-border)' }}>
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`relative flex items-center gap-1.5 px-4 py-3 text-sm font-medium transition-colors ${
                   activeTab === tab.id
-                    ? "text-[#2a1051]"
+                    ? ""
                     : "text-[#7F888F] hover:text-[#4C5863]"
                 }`}
+                style={activeTab === tab.id ? { color: 'var(--th-tab-active)' } : undefined}
               >
                 <tab.icon active={activeTab === tab.id} />
                 {tab.label}
                 {activeTab === tab.id && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#2a1051]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5" style={{ backgroundColor: 'var(--th-tab-active)' }} />
                 )}
               </button>
             ))}
@@ -183,9 +194,8 @@ export default function TalkPage() {
 }
 
 function ContactsIcon({ active }: { active: boolean }) {
-  const c = active ? "#1D2B3E" : "#7F888F";
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.8">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={active ? "var(--th-tab-active)" : "#7F888F"} strokeWidth="1.8">
       <circle cx="12" cy="8" r="4"/>
       <path d="M4 20c0-2.5 3.5-4 8-4s8 1.5 8 4" strokeLinecap="round"/>
       <path d="M19 8h3M20.5 6.5v3" strokeLinecap="round"/>
@@ -194,9 +204,8 @@ function ContactsIcon({ active }: { active: boolean }) {
 }
 
 function CallLogIcon({ active }: { active: boolean }) {
-  const c = active ? "#1D2B3E" : "#7F888F";
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.8">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={active ? "var(--th-tab-active)" : "#7F888F"} strokeWidth="1.8">
       <circle cx="12" cy="12" r="9"/>
       <path d="M12 7v5l3.5 2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
@@ -204,9 +213,8 @@ function CallLogIcon({ active }: { active: boolean }) {
 }
 
 function VoicemailIcon({ active }: { active: boolean }) {
-  const c = active ? "#1D2B3E" : "#7F888F";
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.8">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={active ? "var(--th-tab-active)" : "#7F888F"} strokeWidth="1.8">
       <circle cx="6" cy="12" r="4"/>
       <circle cx="18" cy="12" r="4"/>
       <path d="M6 16h12"/>
@@ -215,9 +223,8 @@ function VoicemailIcon({ active }: { active: boolean }) {
 }
 
 function RecordingsIcon({ active }: { active: boolean }) {
-  const c = active ? "#1D2B3E" : "#7F888F";
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.8">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={active ? "var(--th-tab-active)" : "#7F888F"} strokeWidth="1.8">
       <circle cx="12" cy="12" r="10"/>
       <circle cx="12" cy="12" r="3"/>
     </svg>
@@ -225,9 +232,8 @@ function RecordingsIcon({ active }: { active: boolean }) {
 }
 
 function ParkedIcon({ active }: { active: boolean }) {
-  const c = active ? "#1D2B3E" : "#7F888F";
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.8">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={active ? "var(--th-tab-active)" : "#7F888F"} strokeWidth="1.8">
       <rect x="3" y="3" width="18" height="18" rx="3"/>
       <path d="M9 17V7h4a3 3 0 010 6H9"/>
     </svg>

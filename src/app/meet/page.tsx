@@ -3,32 +3,32 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 
-/* ── Fake event data ── */
+/* -- Fake event data -- */
 const events = [
   { day: "WED", date: "12", items: [
-    { title: "Weekly 1:1 (Maksym & Seti)", time: "11 – 11:30", url: "https://meet.sangoma.com/9", avatars: [5, 12], more: null, highlight: false },
-    { title: "CPO Terry Microsoft Company", time: "12 – 13:30", url: "https://meet.sangoma.com/4", avatars: [33, 53], more: null, highlight: false },
+    { title: "Weekly 1:1 (Maksym & Seti)", time: "11 -- 11:30", url: "https://meet.sangoma.com/9", avatars: [5, 12], more: null, highlight: false },
+    { title: "CPO Terry Microsoft Company", time: "12 -- 13:30", url: "https://meet.sangoma.com/4", avatars: [33, 53], more: null, highlight: false },
   ]},
   { day: "THU", date: "13", items: [
-    { title: "Weekly Design Team Meeting", time: "11 – 11:30", url: "https://meet.sangoma.com/2", avatars: [9, 32], more: null, highlight: false },
-    { title: "Daniel / Maksym status update", time: "9:15 – 9:45", url: "https://meet.sangoma.com/22321", avatars: [11, 12, 68], more: "+ 17 more", highlight: true },
-    { title: "Daniel / Maksym status update", time: "9:15 – 9:45", url: "https://meet.sangoma.com/22321", avatars: [], more: null, highlight: false },
+    { title: "Weekly Design Team Meeting", time: "11 -- 11:30", url: "https://meet.sangoma.com/2", avatars: [9, 32], more: null, highlight: false },
+    { title: "Daniel / Maksym status update", time: "9:15 -- 9:45", url: "https://meet.sangoma.com/22321", avatars: [11, 12, 68], more: "+ 17 more", highlight: true },
+    { title: "Daniel / Maksym status update", time: "9:15 -- 9:45", url: "https://meet.sangoma.com/22321", avatars: [], more: null, highlight: false },
   ]},
   { day: "FRI", date: "14", items: [
-    { title: "Meet POST meet notes", time: "11 – 11:30", url: "https://meet.sangoma.com/2", avatars: [5], more: null, highlight: false },
-    { title: "Sync up: Control Panel Project", time: "9:15 – 9:45", url: "https://meet.sangoma.com/45553", avatars: [], more: null, highlight: false },
+    { title: "Meet POST meet notes", time: "11 -- 11:30", url: "https://meet.sangoma.com/2", avatars: [5], more: null, highlight: false },
+    { title: "Sync up: Control Panel Project", time: "9:15 -- 9:45", url: "https://meet.sangoma.com/45553", avatars: [], more: null, highlight: false },
   ]},
   { day: "SAT", date: "15", items: [
-    { title: "Weekly 1:1 (Maksym & Seti)", time: "11 – 11:30", url: "https://meet.sangoma.com/9", avatars: [5, 12], more: null, highlight: false },
-    { title: "CPO Terry Microsoft Company", time: "12 – 13:30", url: "https://meet.sangoma.com/4", avatars: [33, 53], more: null, highlight: false },
+    { title: "Weekly 1:1 (Maksym & Seti)", time: "11 -- 11:30", url: "https://meet.sangoma.com/9", avatars: [5, 12], more: null, highlight: false },
+    { title: "CPO Terry Microsoft Company", time: "12 -- 13:30", url: "https://meet.sangoma.com/4", avatars: [33, 53], more: null, highlight: false },
   ]},
 ];
 
 const recordings = [
   { title: "Sprint Review Recording", date: "Mar 3, 2026", duration: "47:12", size: "128 MB" },
-  { title: "Design Sync — Feb 28", date: "Feb 28, 2026", duration: "31:05", size: "84 MB" },
+  { title: "Design Sync -- Feb 28", date: "Feb 28, 2026", duration: "31:05", size: "84 MB" },
   { title: "All-Hands Q1 Wrap-up", date: "Feb 25, 2026", duration: "1:02:30", size: "256 MB" },
-  { title: "Client Demo — Acme Corp", date: "Feb 20, 2026", duration: "22:18", size: "62 MB" },
+  { title: "Client Demo -- Acme Corp", date: "Feb 20, 2026", duration: "22:18", size: "62 MB" },
   { title: "Product Roadmap Discussion", date: "Feb 18, 2026", duration: "55:40", size: "148 MB" },
 ];
 
@@ -100,13 +100,22 @@ export default function MeetPage() {
       )}
 
       {/* Left sidebar */}
-      <div className="w-[220px] shrink-0 border-r border-[#E5E6E8] bg-white flex flex-col">
+      <div
+        className="w-[220px] shrink-0 flex flex-col"
+        style={{
+          backgroundColor: "var(--th-bg)",
+          borderRight: "1px solid var(--th-border)",
+        }}
+      >
         <div className="px-4 pt-5 pb-3">
           <button
             onClick={() => setSideTab("events")}
             className={`flex items-center gap-2.5 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all ${
-              sideTab === "events" ? "bg-[#F2F0F5] text-[#2E1055]" : "text-[#4C5863] hover:bg-[#F9F9FA]"
+              sideTab === "events" ? "bg-[#F2F0F5] text-[#2E1055]" : ""
             }`}
+            style={sideTab !== "events" ? { color: "var(--th-text-secondary)" } : undefined}
+            onMouseEnter={(e) => { if (sideTab !== "events") e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"; }}
+            onMouseLeave={(e) => { if (sideTab !== "events") e.currentTarget.style.backgroundColor = "transparent"; }}
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <rect x="2" y="2" width="12" height="12" rx="2" stroke={sideTab === "events" ? "#2E1055" : "#7F888F"} strokeWidth="1.3"/>
@@ -119,8 +128,11 @@ export default function MeetPage() {
           <button
             onClick={() => setSideTab("recordings")}
             className={`flex items-center gap-2.5 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all mt-1 ${
-              sideTab === "recordings" ? "bg-[#F2F0F5] text-[#2E1055]" : "text-[#4C5863] hover:bg-[#F9F9FA]"
+              sideTab === "recordings" ? "bg-[#F2F0F5] text-[#2E1055]" : ""
             }`}
+            style={sideTab !== "recordings" ? { color: "var(--th-text-secondary)" } : undefined}
+            onMouseEnter={(e) => { if (sideTab !== "recordings") e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"; }}
+            onMouseLeave={(e) => { if (sideTab !== "recordings") e.currentTarget.style.backgroundColor = "transparent"; }}
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <circle cx="8" cy="8" r="6" stroke={sideTab === "recordings" ? "#2E1055" : "#7F888F"} strokeWidth="1.3"/>
@@ -143,7 +155,7 @@ export default function MeetPage() {
   );
 }
 
-/* ── Video Meeting — opens in fake browser chrome ── */
+/* -- Video Meeting -- opens in fake browser chrome -- */
 function MeetingView({ title, onEnd, onMinimize }: { title: string; onEnd: () => void; onMinimize?: () => void }) {
   const [timer, setTimer] = useState(0);
   const [micOn, setMicOn] = useState(true);
@@ -180,7 +192,7 @@ function MeetingView({ title, onEnd, onMinimize }: { title: string; onEnd: () =>
 
   return (
     <div className="flex flex-col h-full bg-[#1e1e1e]" style={{ animation: "fadeIn 0.4s ease-out" }}>
-      {/* ── Fake browser chrome ── */}
+      {/* -- Fake browser chrome -- */}
       {/* Title bar with traffic lights + tabs */}
       <div className="flex items-center bg-[#202124] pl-3 pr-2" style={{ height: 38 }}>
         {/* Traffic lights */}
@@ -239,7 +251,7 @@ function MeetingView({ title, onEnd, onMinimize }: { title: string; onEnd: () =>
         </div>
       </div>
 
-      {/* ── Meeting content area ── */}
+      {/* -- Meeting content area -- */}
       <div className="flex-1 flex flex-col bg-black rounded-b-lg overflow-hidden relative">
         {/* Sangoma logo overlay */}
         <div className="absolute top-4 left-5 z-20 flex items-center gap-2">
@@ -270,7 +282,7 @@ function MeetingView({ title, onEnd, onMinimize }: { title: string; onEnd: () =>
               </div>
             )}
 
-            {/* Info pill overlay — bottom left */}
+            {/* Info pill overlay -- bottom left */}
             <div className="absolute bottom-4 left-4 flex items-center gap-2 z-10">
               <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm rounded-full px-3 py-1.5">
                 <span className="text-white/90 text-[12px] font-medium">{title}</span>
@@ -282,7 +294,7 @@ function MeetingView({ title, onEnd, onMinimize }: { title: string; onEnd: () =>
             </div>
           </div>
 
-          {/* Participant tiles — right column */}
+          {/* Participant tiles -- right column */}
           <div className="flex flex-col gap-2" style={{ width: 130 }}>
             {participants.map((p, i) => (
               <div key={i} className="flex-1 rounded-2xl relative overflow-hidden flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${p.colors[0]}, ${p.colors[1]})`, animation: `fadeIn 0.3s ease-out ${0.1 * i}s both` }}>
@@ -306,7 +318,7 @@ function MeetingView({ title, onEnd, onMinimize }: { title: string; onEnd: () =>
           </div>
         </div>
 
-        {/* ── Bottom toolbar — floating dark pill ── */}
+        {/* -- Bottom toolbar -- floating dark pill -- */}
         <div className="flex items-center justify-center pb-4 pt-1">
           <div className="flex items-center gap-2 bg-[rgba(0,0,0,0.50)] backdrop-blur-md rounded-full px-4 py-2">
             {/* Mic */}
@@ -370,7 +382,7 @@ function MeetingView({ title, onEnd, onMinimize }: { title: string; onEnd: () =>
   );
 }
 
-/* ── Schedule Meeting Popup ── */
+/* -- Schedule Meeting Popup -- */
 function SchedulePopup({ onClose }: { onClose: () => void }) {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("2026-03-10");
@@ -380,44 +392,125 @@ function SchedulePopup({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={onClose} style={{ animation: "fadeIn 0.2s ease-out" }}>
-      <div className="bg-white rounded-2xl shadow-2xl w-[480px] max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()} style={{ animation: "slideIn 0.25s ease-out" }}>
+      <div
+        className="rounded-2xl shadow-2xl w-[480px] max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          backgroundColor: "var(--th-dropdown-bg)",
+          animation: "slideIn 0.25s ease-out",
+        }}
+      >
         <div className="flex items-center justify-between px-6 pt-5 pb-3">
-          <h2 className="text-[18px] font-semibold text-[#001221]">Schedule Meeting</h2>
-          <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-[#F2F2F3] transition-colors active:scale-90">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="#7F888F" strokeWidth="1.5" strokeLinecap="round"/></svg>
+          <h2 className="text-[18px] font-semibold" style={{ color: "var(--th-text-primary)" }}>Schedule Meeting</h2>
+          <button
+            onClick={onClose}
+            className="p-1.5 rounded-lg transition-colors active:scale-90"
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="var(--th-text-muted)" strokeWidth="1.5" strokeLinecap="round"/></svg>
           </button>
         </div>
         <div className="px-6 pb-6 space-y-4">
           <div>
-            <label className="block text-[12px] font-semibold text-[#7F888F] uppercase tracking-wider mb-1.5">Meeting title</label>
-            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Enter meeting name" className="w-full px-3.5 py-2.5 text-[14px] text-[#001221] border border-[#E5E6E8] rounded-xl bg-white focus:outline-none focus:border-[#2E1055] focus:ring-1 focus:ring-[#2E1055]/20 transition-all placeholder:text-[#CCCFD2]" />
+            <label className="block text-[12px] font-semibold uppercase tracking-wider mb-1.5" style={{ color: "var(--th-text-muted)" }}>Meeting title</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Enter meeting name"
+              className="w-full px-3.5 py-2.5 text-[14px] rounded-xl bg-transparent focus:outline-none focus:ring-1 focus:ring-[#2E1055]/20 transition-all placeholder:text-[#CCCFD2]"
+              style={{
+                color: "var(--th-text-primary)",
+                border: "1px solid var(--th-border)",
+              }}
+            />
           </div>
           <div className="grid grid-cols-3 gap-3">
-            <div><label className="block text-[12px] font-semibold text-[#7F888F] uppercase tracking-wider mb-1.5">Date</label><input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="w-full px-3.5 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-xl bg-white focus:outline-none focus:border-[#2E1055] transition-all" /></div>
-            <div><label className="block text-[12px] font-semibold text-[#7F888F] uppercase tracking-wider mb-1.5">Start</label><input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} className="w-full px-3.5 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-xl bg-white focus:outline-none focus:border-[#2E1055] transition-all" /></div>
-            <div><label className="block text-[12px] font-semibold text-[#7F888F] uppercase tracking-wider mb-1.5">End</label><input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} className="w-full px-3.5 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-xl bg-white focus:outline-none focus:border-[#2E1055] transition-all" /></div>
-          </div>
-          <div>
-            <label className="block text-[12px] font-semibold text-[#7F888F] uppercase tracking-wider mb-1.5">Participants</label>
-            <div className="flex items-center gap-2 px-3.5 py-2 border border-[#E5E6E8] rounded-xl">
-              <div className="flex -space-x-1.5">{[5, 12].map((id) => (<Image key={id} src={`https://i.pravatar.cc/64?img=${id}`} alt="" width={24} height={24} className="w-6 h-6 rounded-full border-2 border-white object-cover" unoptimized />))}</div>
-              <input type="text" placeholder="Add participants..." className="flex-1 outline-none text-[13px] text-[#001221] placeholder:text-[#CCCFD2]" />
+            <div>
+              <label className="block text-[12px] font-semibold uppercase tracking-wider mb-1.5" style={{ color: "var(--th-text-muted)" }}>Date</label>
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="w-full px-3.5 py-2.5 text-[13px] rounded-xl bg-transparent focus:outline-none transition-all"
+                style={{ color: "var(--th-text-primary)", border: "1px solid var(--th-border)" }}
+              />
+            </div>
+            <div>
+              <label className="block text-[12px] font-semibold uppercase tracking-wider mb-1.5" style={{ color: "var(--th-text-muted)" }}>Start</label>
+              <input
+                type="time"
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+                className="w-full px-3.5 py-2.5 text-[13px] rounded-xl bg-transparent focus:outline-none transition-all"
+                style={{ color: "var(--th-text-primary)", border: "1px solid var(--th-border)" }}
+              />
+            </div>
+            <div>
+              <label className="block text-[12px] font-semibold uppercase tracking-wider mb-1.5" style={{ color: "var(--th-text-muted)" }}>End</label>
+              <input
+                type="time"
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+                className="w-full px-3.5 py-2.5 text-[13px] rounded-xl bg-transparent focus:outline-none transition-all"
+                style={{ color: "var(--th-text-primary)", border: "1px solid var(--th-border)" }}
+              />
             </div>
           </div>
           <div>
-            <label className="block text-[12px] font-semibold text-[#7F888F] uppercase tracking-wider mb-1.5">Meeting link</label>
-            <div className="flex items-center gap-2 px-3.5 py-2.5 bg-[#F9F9FA] border border-[#E5E6E8] rounded-xl">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="1.5"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
-              <span className="text-[13px] text-[#7F888F] flex-1 truncate">https://meet.sangoma.com/new-{Math.random().toString(36).slice(2, 7)}</span>
+            <label className="block text-[12px] font-semibold uppercase tracking-wider mb-1.5" style={{ color: "var(--th-text-muted)" }}>Participants</label>
+            <div
+              className="flex items-center gap-2 px-3.5 py-2 rounded-xl"
+              style={{ border: "1px solid var(--th-border)" }}
+            >
+              <div className="flex -space-x-1.5">{[5, 12].map((id) => (<Image key={id} src={`https://i.pravatar.cc/64?img=${id}`} alt="" width={24} height={24} className="w-6 h-6 rounded-full border-2 border-white object-cover" unoptimized />))}</div>
+              <input
+                type="text"
+                placeholder="Add participants..."
+                className="flex-1 outline-none text-[13px] bg-transparent placeholder:text-[#CCCFD2]"
+                style={{ color: "var(--th-text-primary)" }}
+              />
+            </div>
+          </div>
+          <div>
+            <label className="block text-[12px] font-semibold uppercase tracking-wider mb-1.5" style={{ color: "var(--th-text-muted)" }}>Meeting link</label>
+            <div
+              className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl"
+              style={{
+                backgroundColor: "var(--th-bg-hover)",
+                border: "1px solid var(--th-border)",
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-muted)" strokeWidth="1.5"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+              <span className="text-[13px] flex-1 truncate" style={{ color: "var(--th-text-muted)" }}>https://meet.sangoma.com/new-{Math.random().toString(36).slice(2, 7)}</span>
               <button className="text-[12px] text-[#2E1055] font-medium hover:underline">Copy</button>
             </div>
           </div>
           <div>
-            <label className="block text-[12px] font-semibold text-[#7F888F] uppercase tracking-wider mb-1.5">Description</label>
-            <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Add a description or agenda..." rows={3} className="w-full px-3.5 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-xl bg-white focus:outline-none focus:border-[#2E1055] focus:ring-1 focus:ring-[#2E1055]/20 transition-all placeholder:text-[#CCCFD2] resize-none" />
+            <label className="block text-[12px] font-semibold uppercase tracking-wider mb-1.5" style={{ color: "var(--th-text-muted)" }}>Description</label>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Add a description or agenda..."
+              rows={3}
+              className="w-full px-3.5 py-2.5 text-[13px] rounded-xl bg-transparent focus:outline-none focus:ring-1 focus:ring-[#2E1055]/20 transition-all placeholder:text-[#CCCFD2] resize-none"
+              style={{
+                color: "var(--th-text-primary)",
+                border: "1px solid var(--th-border)",
+              }}
+            />
           </div>
           <div className="flex items-center justify-end gap-3 pt-2">
-            <button onClick={onClose} className="px-5 py-2.5 text-[13px] text-[#4C5863] font-medium rounded-xl hover:bg-[#F2F2F3] transition-colors">Cancel</button>
+            <button
+              onClick={onClose}
+              className="px-5 py-2.5 text-[13px] font-medium rounded-xl transition-colors"
+              style={{ color: "var(--th-text-secondary)" }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+            >
+              Cancel
+            </button>
             <button onClick={onClose} className="px-5 py-2.5 text-[13px] text-white font-semibold rounded-xl bg-[#2E1055] hover:bg-[#3d1670] transition-colors active:scale-95">Schedule</button>
           </div>
         </div>
@@ -426,7 +519,7 @@ function SchedulePopup({ onClose }: { onClose: () => void }) {
   );
 }
 
-/* ── Events content ── */
+/* -- Events content -- */
 function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, setShowSchedule }: {
   eventsTab: "upcoming" | "past"; setEventsTab: (t: "upcoming" | "past") => void;
   onJoinMeeting: (title?: string) => void; showSchedule: boolean; setShowSchedule: (v: boolean) => void;
@@ -435,39 +528,44 @@ function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, s
     <>
       {showSchedule && <SchedulePopup onClose={() => setShowSchedule(false)} />}
 
-      {/* Header — matches Figma 2466-16690 exactly */}
-      <div className="px-4 pt-3 pb-4 border-b border-[#E5E6E8]">
+      {/* Header */}
+      <div className="px-4 pt-3 pb-4" style={{ borderBottom: "1px solid var(--th-border)" }}>
         {/* Single row: left info | center toggle | right controls */}
         <div className="flex items-center gap-2">
           {/* Left: Title + status */}
           <div className="shrink-0">
-            <h1 className="text-[18px] font-semibold text-[#18181B] leading-none mb-1">Events</h1>
+            <h1 className="text-[18px] font-semibold leading-none mb-1" style={{ color: "var(--th-text-primary)" }}>Events</h1>
             <div className="flex items-center gap-1 text-[12px]">
               <span className="flex items-center gap-1">
                 <span className="w-[13px] h-[13px] rounded-full bg-[#099F24] flex items-center justify-center">
                   <svg width="8" height="8" viewBox="0 0 12 12" fill="none"><path d="M3 6l2 2 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </span>
-                <span className="text-[#18181B]">Today <b>2</b> events done</span>
+                <span style={{ color: "var(--th-text-primary)" }}>Today <b>2</b> events done</span>
               </span>
-              <span className="text-[#E5E6E8] mx-0.5">|</span>
+              <span style={{ color: "var(--th-border)" }} className="mx-0.5">|</span>
               <span className="flex items-center gap-0.5">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#7F888F" strokeWidth="1.5"/><path d="M12 7v5l3 3" stroke="#7F888F" strokeWidth="1.5" strokeLinecap="round"/></svg>
-                <span className="text-[#18181B]"><b>3</b> scheduled</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="var(--th-text-muted)" strokeWidth="1.5"/><path d="M12 7v5l3 3" stroke="var(--th-text-muted)" strokeWidth="1.5" strokeLinecap="round"/></svg>
+                <span style={{ color: "var(--th-text-primary)" }}><b>3</b> scheduled</span>
               </span>
             </div>
           </div>
 
-          {/* Center: Upcoming/Past toggle — 28px height, rounded-lg, centered */}
+          {/* Center: Upcoming/Past toggle */}
           <div className="flex-1 flex items-center justify-center">
             <div className="flex items-center">
               <button
                 onClick={() => setEventsTab("upcoming")}
                 className={`px-4 py-1 rounded-lg text-[14px] font-medium transition-all ${
                   eventsTab === "upcoming"
-                    ? "bg-[#001221] text-white"
-                    : "text-[#18181B] hover:text-[#4C5863]"
+                    ? "text-white"
+                    : ""
                 }`}
-                style={{ height: 28 }}
+                style={{
+                  height: 28,
+                  ...(eventsTab === "upcoming"
+                    ? { backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }
+                    : { color: "var(--th-text-primary)" }),
+                }}
               >
                 Upcoming
               </button>
@@ -475,10 +573,15 @@ function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, s
                 onClick={() => setEventsTab("past")}
                 className={`px-4 py-1 rounded-lg text-[14px] font-medium transition-all ${
                   eventsTab === "past"
-                    ? "bg-[#001221] text-white"
-                    : "text-[#18181B] hover:text-[#4C5863]"
+                    ? "text-white"
+                    : ""
                 }`}
-                style={{ height: 28 }}
+                style={{
+                  height: 28,
+                  ...(eventsTab === "past"
+                    ? { backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }
+                    : { color: "var(--th-text-primary)" }),
+                }}
               >
                 Past events
               </button>
@@ -487,22 +590,30 @@ function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, s
 
           {/* Right: All events + Search */}
           <div className="flex items-center gap-2 shrink-0">
-            <button className="flex items-center gap-1 text-[12px] text-[#18181B] hover:text-[#001221] transition-colors">
+            <button className="flex items-center gap-1 text-[12px] transition-colors" style={{ color: "var(--th-text-primary)" }}>
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>
               All events
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div className="relative">
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="absolute left-2 top-1/2 -translate-y-1/2">
-                <circle cx="7" cy="7" r="4.5" stroke="#7F888F" strokeWidth="1.3"/><path d="M10.5 10.5L13.5 13.5" stroke="#7F888F" strokeWidth="1.3" strokeLinecap="round"/>
+                <circle cx="7" cy="7" r="4.5" stroke="var(--th-text-muted)" strokeWidth="1.3"/><path d="M10.5 10.5L13.5 13.5" stroke="var(--th-text-muted)" strokeWidth="1.3" strokeLinecap="round"/>
               </svg>
-              <input type="text" placeholder="Search" className="pl-7 pr-3 py-1 w-[184px] text-[12px] text-[#001221] bg-[#F4F4F5] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#2E1055]/20 transition-colors" />
+              <input
+                type="text"
+                placeholder="Search"
+                className="pl-7 pr-3 py-1 w-[184px] text-[12px] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#2E1055]/20 transition-colors"
+                style={{
+                  color: "var(--th-text-primary)",
+                  backgroundColor: "var(--th-bg-hover)",
+                }}
+              />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Action buttons — Figma 2466-16738: 64x63px, rounded-[20px], 24px icons, gap 64px */}
+      {/* Action buttons */}
       <div className="flex items-center justify-center gap-16 py-4">
         {/* New meeting */}
         <button onClick={() => onJoinMeeting("New Meeting")} className="flex flex-col items-center gap-2 group">
@@ -514,7 +625,7 @@ function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, s
           <span className="text-[13px] font-medium text-[#5b074e] tracking-[0.25px]">New meeting</span>
         </button>
 
-        {/* Join — exact Figma filled icon */}
+        {/* Join */}
         <button onClick={() => onJoinMeeting("Meeting Room")} className="flex flex-col items-center gap-2 group">
           <div className="w-16 h-[63px] rounded-[20px] flex items-center justify-center group-hover:shadow-lg group-active:scale-95 transition-all" style={{ background: "rgba(36,76,145,0.04)" }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -524,7 +635,7 @@ function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, s
           <span className="text-[13px] font-medium text-[#244c91] tracking-[0.25px]">Join</span>
         </button>
 
-        {/* Schedule — exact Figma filled calendar icon */}
+        {/* Schedule */}
         <button onClick={() => setShowSchedule(true)} className="flex flex-col items-center gap-2 group">
           <div className="w-16 h-[63px] rounded-[20px] flex items-center justify-center group-hover:shadow-lg group-active:scale-95 transition-all" style={{ background: "rgba(36,76,145,0.04)" }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -540,20 +651,41 @@ function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, s
         {events.map((group, gi) => (
           <div key={gi} className="mb-1">
             {group.items.map((event, ei) => (
-              <div key={ei} onClick={() => onJoinMeeting(event.title)} className={`flex items-center gap-4 py-3 border-b border-[#F2F2F3] hover:bg-[#F9F9FA] transition-colors cursor-pointer group ${event.highlight ? "bg-[#FFF8E1] hover:bg-[#FFF3CD]" : ""}`} style={{ animation: `fadeIn 0.2s ease-out ${0.03 * (gi * 3 + ei)}s both` }}>
+              <div
+                key={ei}
+                onClick={() => onJoinMeeting(event.title)}
+                className="flex items-center gap-4 py-3 transition-colors cursor-pointer group"
+                style={{
+                  borderBottom: "1px solid var(--th-border-light, var(--th-border))",
+                  ...(event.highlight ? { backgroundColor: "rgba(255,248,225,0.06)" } : {}),
+                  animation: `fadeIn 0.2s ease-out ${0.03 * (gi * 3 + ei)}s both`,
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = event.highlight ? "var(--th-bg-hover)" : "var(--th-bg-hover)"}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = event.highlight ? "rgba(255,248,225,0.06)" : "transparent"}
+              >
                 <div className="w-12 shrink-0 text-center">
-                  {ei === 0 && (<><div className="text-[11px] text-[#7F888F] uppercase tracking-wider font-medium">{group.day}</div><div className="text-[24px] font-semibold text-[#001221] leading-none mt-0.5">{group.date}</div></>)}
+                  {ei === 0 && (
+                    <>
+                      <div className="text-[11px] uppercase tracking-wider font-medium" style={{ color: "var(--th-text-muted)" }}>{group.day}</div>
+                      <div className="text-[24px] font-semibold leading-none mt-0.5" style={{ color: "var(--th-text-primary)" }}>{group.date}</div>
+                    </>
+                  )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-[14px] font-medium text-[#001221]">{event.title}</div>
-                  <div className="text-[12px] text-[#7F888F] mt-0.5">{event.time} at {event.url}</div>
+                  <div className="text-[14px] font-medium" style={{ color: "var(--th-text-primary)" }}>{event.title}</div>
+                  <div className="text-[12px] mt-0.5" style={{ color: "var(--th-text-muted)" }}>{event.time} at {event.url}</div>
                 </div>
                 <div className="flex items-center -space-x-2 shrink-0">
-                  {event.avatars.map((id) => (<Image key={id} src={`https://i.pravatar.cc/64?img=${id}`} alt="" width={28} height={28} className="w-7 h-7 rounded-full border-2 border-white object-cover" unoptimized />))}
+                  {event.avatars.map((id) => (<Image key={id} src={`https://i.pravatar.cc/64?img=${id}`} alt="" width={28} height={28} className="w-7 h-7 rounded-full border-2 object-cover" style={{ borderColor: "var(--th-bg)" }} unoptimized />))}
                 </div>
-                {event.more && <span className="text-[12px] text-[#7F888F] shrink-0">{event.more}</span>}
-                <button onClick={(e) => e.stopPropagation()} className="p-1.5 rounded-lg hover:bg-[#F2F2F3] opacity-0 group-hover:opacity-100 transition-all active:scale-90 shrink-0">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M11.333 2a1.886 1.886 0 012.667 2.667l-8.167 8.166L2.5 13.5l.667-3.333L11.333 2z" stroke="#7F888F" strokeWidth="1.2" strokeLinejoin="round"/></svg>
+                {event.more && <span className="text-[12px] shrink-0" style={{ color: "var(--th-text-muted)" }}>{event.more}</span>}
+                <button
+                  onClick={(e) => e.stopPropagation()}
+                  className="p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all active:scale-90 shrink-0"
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M11.333 2a1.886 1.886 0 012.667 2.667l-8.167 8.166L2.5 13.5l.667-3.333L11.333 2z" stroke="var(--th-text-muted)" strokeWidth="1.2" strokeLinejoin="round"/></svg>
                 </button>
               </div>
             ))}
@@ -564,27 +696,61 @@ function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, s
   );
 }
 
-/* ── Recordings content ── */
+/* -- Recordings content -- */
 function RecordingsContent() {
   return (
     <div className="flex-1 flex flex-col">
       <div className="px-6 pt-5 pb-4">
-        <h1 className="text-[22px] font-semibold text-[#001221] mb-4">My Recordings</h1>
+        <h1 className="text-[22px] font-semibold mb-4" style={{ color: "var(--th-text-primary)" }}>My Recordings</h1>
         <div className="relative mb-4">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="absolute left-3 top-1/2 -translate-y-1/2"><circle cx="7" cy="7" r="4.5" stroke="#7F888F" strokeWidth="1.3"/><path d="M10.5 10.5L13.5 13.5" stroke="#7F888F" strokeWidth="1.3" strokeLinecap="round"/></svg>
-          <input type="text" placeholder="Search recordings..." className="pl-9 pr-3 py-2 w-full max-w-md text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors" />
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="absolute left-3 top-1/2 -translate-y-1/2"><circle cx="7" cy="7" r="4.5" stroke="var(--th-text-muted)" strokeWidth="1.3"/><path d="M10.5 10.5L13.5 13.5" stroke="var(--th-text-muted)" strokeWidth="1.3" strokeLinecap="round"/></svg>
+          <input
+            type="text"
+            placeholder="Search recordings..."
+            className="pl-9 pr-3 py-2 w-full max-w-md text-[13px] rounded-lg bg-transparent focus:outline-none transition-colors"
+            style={{
+              color: "var(--th-text-primary)",
+              border: "1px solid var(--th-border)",
+            }}
+          />
         </div>
       </div>
       <div className="flex-1 overflow-y-auto px-6 pb-6">
         <div className="flex flex-col">
           {recordings.map((rec, i) => (
-            <div key={i} className="flex items-center gap-4 py-3.5 border-b border-[#F2F2F3] hover:bg-[#F9F9FA] transition-colors cursor-pointer group" style={{ animation: `fadeIn 0.2s ease-out ${0.05 * i}s both` }}>
+            <div
+              key={i}
+              className="flex items-center gap-4 py-3.5 transition-colors cursor-pointer group"
+              style={{
+                borderBottom: "1px solid var(--th-border-light, var(--th-border))",
+                animation: `fadeIn 0.2s ease-out ${0.05 * i}s both`,
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+            >
               <button className="w-9 h-9 rounded-full bg-[#F2F0F5] flex items-center justify-center shrink-0 hover:bg-[#E8E0FF] active:scale-90 transition-all"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M5 3v10l8-5-8-5z" fill="#2E1055"/></svg></button>
-              <div className="flex-1 min-w-0"><div className="text-[14px] font-medium text-[#001221]">{rec.title}</div><div className="text-[12px] text-[#7F888F] mt-0.5">{rec.date} · {rec.duration}</div></div>
-              <span className="text-[12px] text-[#7F888F] shrink-0">{rec.size}</span>
+              <div className="flex-1 min-w-0">
+                <div className="text-[14px] font-medium" style={{ color: "var(--th-text-primary)" }}>{rec.title}</div>
+                <div className="text-[12px] mt-0.5" style={{ color: "var(--th-text-muted)" }}>{rec.date} · {rec.duration}</div>
+              </div>
+              <span className="text-[12px] shrink-0" style={{ color: "var(--th-text-muted)" }}>{rec.size}</span>
               <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button className="p-1.5 rounded-lg hover:bg-[#F2F2F3] active:scale-90 transition-all" title="Download"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v9m0 0l-3-3m3 3l3-3M3 13h10" stroke="#7F888F" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
-                <button className="p-1.5 rounded-lg hover:bg-[#F2F2F3] active:scale-90 transition-all" title="Delete"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 5h8l-.667 8H4.667L4 5zM6 3h4M3 5h10" stroke="#7F888F" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
+                <button
+                  className="p-1.5 rounded-lg active:scale-90 transition-all"
+                  title="Download"
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v9m0 0l-3-3m3 3l3-3M3 13h10" stroke="var(--th-text-muted)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </button>
+                <button
+                  className="p-1.5 rounded-lg active:scale-90 transition-all"
+                  title="Delete"
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 5h8l-.667 8H4.667L4 5zM6 3h4M3 5h10" stroke="var(--th-text-muted)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </button>
               </div>
             </div>
           ))}
