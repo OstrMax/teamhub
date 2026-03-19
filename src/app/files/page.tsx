@@ -35,10 +35,10 @@ export default function FilesPage() {
   const [sortBy, setSortBy] = useState("date");
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-[var(--th-bg)]">
       {/* Header */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-[#E5E6E8]">
-        <h1 className="text-lg font-semibold text-[#001221]">Files</h1>
+      <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--th-border)]">
+        <h1 className="text-lg font-semibold text-[var(--th-text-primary)]">Files</h1>
         <div className="flex items-center gap-3">
           {/* Search */}
           <div className="relative">
@@ -46,14 +46,14 @@ export default function FilesPage() {
               <circle cx="7" cy="7" r="4.5" stroke="#7F888F" strokeWidth="1.3"/>
               <path d="M10.5 10.5L13.5 13.5" stroke="#7F888F" strokeWidth="1.3" strokeLinecap="round"/>
             </svg>
-            <input type="text" placeholder="Search files..." className="pl-8 pr-3 py-1.5 w-52 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors" />
+            <input type="text" placeholder="Search files..." className="pl-8 pr-3 py-1.5 w-52 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-lg bg-[var(--th-bg)] focus:outline-none focus:border-[#2E1055] transition-colors" />
           </div>
 
           {/* Sort */}
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="px-3 py-1.5 text-[13px] text-[#4C5863] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none appearance-none cursor-pointer"
+            className="px-3 py-1.5 text-[13px] text-[var(--th-text-secondary)] border border-[var(--th-border)] rounded-lg bg-[var(--th-bg)] focus:outline-none appearance-none cursor-pointer"
           >
             <option value="date">Sort by date</option>
             <option value="name">Sort by name</option>
@@ -61,11 +61,11 @@ export default function FilesPage() {
           </select>
 
           {/* View toggle */}
-          <div className="flex items-center bg-[#F2F2F3] rounded-lg p-0.5">
-            <button onClick={() => setView("list")} className={`p-1.5 rounded-md transition-all ${view === "list" ? "bg-white shadow-sm" : ""}`}>
+          <div className="flex items-center bg-[var(--th-bg-hover)] rounded-lg p-0.5">
+            <button onClick={() => setView("list")} className={`p-1.5 rounded-md transition-all ${view === "list" ? "bg-[var(--th-bg)] shadow-sm" : ""}`}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h12" stroke={view === "list" ? "#001221" : "#7F888F"} strokeWidth="1.3" strokeLinecap="round"/></svg>
             </button>
-            <button onClick={() => setView("grid")} className={`p-1.5 rounded-md transition-all ${view === "grid" ? "bg-white shadow-sm" : ""}`}>
+            <button onClick={() => setView("grid")} className={`p-1.5 rounded-md transition-all ${view === "grid" ? "bg-[var(--th-bg)] shadow-sm" : ""}`}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke={view === "grid" ? "#001221" : "#7F888F"} strokeWidth="1.3"/><rect x="9" y="2" width="5" height="5" rx="1" stroke={view === "grid" ? "#001221" : "#7F888F"} strokeWidth="1.3"/><rect x="2" y="9" width="5" height="5" rx="1" stroke={view === "grid" ? "#001221" : "#7F888F"} strokeWidth="1.3"/><rect x="9" y="9" width="5" height="5" rx="1" stroke={view === "grid" ? "#001221" : "#7F888F"} strokeWidth="1.3"/></svg>
             </button>
           </div>
@@ -80,12 +80,12 @@ export default function FilesPage() {
 
       <div className="flex-1 overflow-y-auto px-6 py-5">
         {/* Folders */}
-        <h2 className="text-[13px] font-semibold text-[#7F888F] uppercase tracking-wider mb-3">Folders</h2>
+        <h2 className="text-[13px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider mb-3">Folders</h2>
         <div className="grid grid-cols-4 gap-3 mb-8">
           {folders.map((folder, i) => (
             <button
               key={folder.name}
-              className="flex items-center gap-3 px-4 py-3.5 bg-white border border-[#E5E6E8] rounded-xl hover:border-[#C5C7CA] hover:shadow-sm active:scale-[0.98] transition-all text-left"
+              className="flex items-center gap-3 px-4 py-3.5 bg-[var(--th-bg)] border border-[var(--th-border)] rounded-xl hover:border-[#C5C7CA] hover:shadow-sm active:scale-[0.98] transition-all text-left"
               style={{ animation: `fadeIn 0.2s ease-out ${0.04 * i}s both` }}
             >
               <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: `${folder.color}15` }}>
@@ -94,47 +94,47 @@ export default function FilesPage() {
                 </svg>
               </div>
               <div>
-                <div className="text-[13px] font-medium text-[#001221]">{folder.name}</div>
-                <div className="text-[11px] text-[#7F888F]">{folder.items} items</div>
+                <div className="text-[13px] font-medium text-[var(--th-text-primary)]">{folder.name}</div>
+                <div className="text-[11px] text-[var(--th-text-muted)]">{folder.items} items</div>
               </div>
             </button>
           ))}
         </div>
 
         {/* Files */}
-        <h2 className="text-[13px] font-semibold text-[#7F888F] uppercase tracking-wider mb-3">Recent Files</h2>
+        <h2 className="text-[13px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider mb-3">Recent Files</h2>
         {view === "list" ? (
-          <div className="bg-white border border-[#E5E6E8] rounded-xl overflow-hidden">
+          <div className="bg-[var(--th-bg)] border border-[var(--th-border)] rounded-xl overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-[#E5E6E8] bg-[#F9F9FA]">
-                  <th className="text-left text-[11px] font-semibold text-[#7F888F] uppercase tracking-wider px-4 py-2.5">Name</th>
-                  <th className="text-left text-[11px] font-semibold text-[#7F888F] uppercase tracking-wider px-4 py-2.5">Size</th>
-                  <th className="text-left text-[11px] font-semibold text-[#7F888F] uppercase tracking-wider px-4 py-2.5">Modified</th>
-                  <th className="text-left text-[11px] font-semibold text-[#7F888F] uppercase tracking-wider px-4 py-2.5">Shared with</th>
-                  <th className="text-right text-[11px] font-semibold text-[#7F888F] uppercase tracking-wider px-4 py-2.5 w-20">Actions</th>
+                <tr className="border-b border-[var(--th-border)] bg-[var(--th-bg-hover)]">
+                  <th className="text-left text-[11px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider px-4 py-2.5">Name</th>
+                  <th className="text-left text-[11px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider px-4 py-2.5">Size</th>
+                  <th className="text-left text-[11px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider px-4 py-2.5">Modified</th>
+                  <th className="text-left text-[11px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider px-4 py-2.5">Shared with</th>
+                  <th className="text-right text-[11px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider px-4 py-2.5 w-20">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {files.map((file, i) => (
                   <tr
                     key={file.name}
-                    className="border-b border-[#F2F2F3] last:border-0 hover:bg-[#F9F9FA] transition-colors cursor-pointer group"
+                    className="border-b border-[var(--th-border-light)] last:border-0 hover:bg-[var(--th-bg-hover)] transition-colors cursor-pointer group"
                     style={{ animation: `fadeIn 0.2s ease-out ${0.03 * i}s both` }}
                   >
                     <td className="px-4 py-3 flex items-center gap-3">
                       <FileTypeIcon type={file.type} />
-                      <span className="text-[13px] font-medium text-[#001221]">{file.name}</span>
+                      <span className="text-[13px] font-medium text-[var(--th-text-primary)]">{file.name}</span>
                     </td>
-                    <td className="px-4 py-3 text-[12px] text-[#7F888F]">{file.size}</td>
-                    <td className="px-4 py-3 text-[12px] text-[#7F888F]">{file.date}</td>
-                    <td className="px-4 py-3 text-[12px] text-[#7F888F]">{file.shared.length > 0 ? file.shared.join(", ") : "—"}</td>
+                    <td className="px-4 py-3 text-[12px] text-[var(--th-text-muted)]">{file.size}</td>
+                    <td className="px-4 py-3 text-[12px] text-[var(--th-text-muted)]">{file.date}</td>
+                    <td className="px-4 py-3 text-[12px] text-[var(--th-text-muted)]">{file.shared.length > 0 ? file.shared.join(", ") : "—"}</td>
                     <td className="px-4 py-3 text-right">
                       <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button className="p-1 rounded hover:bg-[#F2F2F3] transition-colors active:scale-90">
+                        <button className="p-1 rounded hover:bg-[var(--th-bg-hover)] transition-colors active:scale-90">
                           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 11V3m0 8l-3-3m3 3l3-3M3 13h10" stroke="#7F888F" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" transform="rotate(180 8 8)"/></svg>
                         </button>
-                        <button className="p-1 rounded hover:bg-[#F2F2F3] transition-colors active:scale-90">
+                        <button className="p-1 rounded hover:bg-[var(--th-bg-hover)] transition-colors active:scale-90">
                           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="4" r="1" fill="#7F888F"/><circle cx="8" cy="8" r="1" fill="#7F888F"/><circle cx="8" cy="12" r="1" fill="#7F888F"/></svg>
                         </button>
                       </div>
@@ -149,12 +149,12 @@ export default function FilesPage() {
             {files.map((file, i) => (
               <button
                 key={file.name}
-                className="flex flex-col items-center gap-2 p-4 bg-white border border-[#E5E6E8] rounded-xl hover:border-[#C5C7CA] hover:shadow-sm active:scale-[0.98] transition-all text-center"
+                className="flex flex-col items-center gap-2 p-4 bg-[var(--th-bg)] border border-[var(--th-border)] rounded-xl hover:border-[#C5C7CA] hover:shadow-sm active:scale-[0.98] transition-all text-center"
                 style={{ animation: `fadeIn 0.2s ease-out ${0.03 * i}s both` }}
               >
                 <FileTypeIcon type={file.type} />
-                <div className="text-[12px] font-medium text-[#001221] line-clamp-2 leading-tight">{file.name}</div>
-                <div className="text-[11px] text-[#7F888F]">{file.size} · {file.date}</div>
+                <div className="text-[12px] font-medium text-[var(--th-text-primary)] line-clamp-2 leading-tight">{file.name}</div>
+                <div className="text-[11px] text-[var(--th-text-muted)]">{file.size} · {file.date}</div>
               </button>
             ))}
           </div>
