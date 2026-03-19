@@ -56,6 +56,12 @@
   --th-active-conv-border: #2a1051;
   --th-icon-fill: #112547;
   --th-quick-actions-bg: rgba(29,62,119,0.04);
+  --th-topbar-bg: #2a1051;
+  --th-topbar-border: rgba(255,255,255,0.1);
+  --th-shell-bg: linear-gradient(180deg, rgb(41, 15, 79) 0%, rgb(112, 22, 156) 33%, rgb(132, 25, 178) 64.5%, rgb(180, 10, 131) 100%);
+  --th-sidebar-active: #783a9b;
+  --th-sidebar-badge-border: #831ab1;
+  --th-status-dot-border: #2a1051;
 }
 
 [data-theme="dark"] {
@@ -87,6 +93,12 @@
   --th-active-conv-border: #112547;
   --th-icon-fill: #ffffff;
   --th-quick-actions-bg: rgba(29,62,119,0.12);
+  --th-topbar-bg: #0B182E;
+  --th-topbar-border: #112547;
+  --th-shell-bg: #0B182E;
+  --th-sidebar-active: #142B53;
+  --th-sidebar-badge-border: #0B182E;
+  --th-status-dot-border: #001221;
 }
 
 body {

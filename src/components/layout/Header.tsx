@@ -111,7 +111,7 @@ export default function Header({
             <div className="w-full h-full rounded-full overflow-hidden border-2 border-white/30 hover:border-white/60 transition-colors bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white text-sm font-semibold">
               BH
             </div>
-            <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-[#34C759] border-[2.5px] border-[#2a1051] rounded-full z-10" />
+            <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-[#34C759] rounded-full z-10" style={{ border: "2.5px solid var(--th-status-dot-border)" }} />
           </button>
           {showProfile && (
             <ProfileDropdown onClose={() => setShowProfile(false)} />

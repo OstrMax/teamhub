@@ -36,8 +36,9 @@ export default function Sidebar() {
             className={`flex flex-col items-center justify-center gap-1 w-14 rounded-lg relative no-underline transition-colors ${
               extraPy ? "py-1.5 my-1" : "h-14"
             } ${
-              isActive ? "bg-[#783a9b]" : "hover:bg-white/10"
+              !isActive ? "hover:bg-white/10" : ""
             }`}
+            style={isActive ? { backgroundColor: "var(--th-sidebar-active)" } : undefined}
           >
             <Image
               src={item.icon}
@@ -56,7 +57,10 @@ export default function Sidebar() {
               {item.label}
             </span>
             {"badge" in item && item.badge && (
-              <span className="absolute top-[6px] right-[10px] w-2.5 h-2.5 bg-[#fcc624] border-2 border-[#831ab1] rounded-full" />
+              <span
+                className="absolute top-[6px] right-[10px] w-2.5 h-2.5 bg-[#fcc624] rounded-full"
+                style={{ border: "2px solid var(--th-sidebar-badge-border)" }}
+              />
             )}
           </Link>
         );
