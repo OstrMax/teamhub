@@ -137,8 +137,8 @@ export default function OperatorConsolePage() {
               <button
                 key={key.digit}
                 onClick={() => setPhoneInput((prev) => prev + key.digit)}
-                className="flex flex-col items-center justify-center w-16 h-16 rounded-full active:scale-95 transition-all"
-                style={{ backgroundColor: "rgba(44,173,67,0.15)", color: "var(--th-text-primary)" }}
+                className="flex flex-col items-center justify-center w-16 h-16 rounded-full active:scale-95 transition-all hover:bg-[var(--th-bg-hover)]"
+                style={{ backgroundColor: "transparent", border: "1px solid var(--th-border)", color: "var(--th-text-primary)" }}
               >
                 <span className="text-2xl font-normal">{key.digit}</span>
                 {key.sub && (
@@ -405,7 +405,7 @@ function ContactCard({ contact }: { contact: Contact }) {
               <button
                 key={i}
                 className="inline-flex items-center justify-between gap-2 text-xs px-3 py-1 rounded-lg hover:opacity-90 active:scale-95 transition-all"
-                style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}
+                style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-text-primary)" }}
               >
                 <span>{call}</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="#34C759">

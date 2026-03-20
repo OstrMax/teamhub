@@ -22,9 +22,9 @@ export default function Sidebar() {
   return (
     <div className="flex flex-col items-center gap-1 w-16 h-full pb-2 shrink-0">
       {/* Logo */}
-      <div className="flex items-center justify-center w-full h-12 pt-4 pb-3.5 overflow-hidden">
+      <Link href="/" className="flex items-center justify-center w-full h-12 pt-4 pb-3.5 overflow-hidden">
         <Image src="/icons/logo.png" alt="TeamHub" width={36} height={24} priority />
-      </div>
+      </Link>
 
       {navItems.map((item) => {
         const isActive = pathname.startsWith(item.href) && (item.href !== "/" || pathname === "/");

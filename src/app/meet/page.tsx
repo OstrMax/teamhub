@@ -84,16 +84,6 @@ const events = [
   ]},
   { day: "THU", date: "13", items: [
     { title: "Weekly Design Team Meeting", time: "11 – 11:30", url: "https://meet.sangoma.com/2", avatars: [9, 32], more: null, highlight: false, color: "#2CAD43" },
-    { title: "Daniel / Maksym status update", time: "9:15 – 9:45", url: "https://meet.sangoma.com/22321", avatars: [11, 12, 68], more: "+ 17 more", highlight: true, color: "#7C3AED" },
-    { title: "Daniel / Maksym status update", time: "9:15 – 9:45", url: "https://meet.sangoma.com/22321", avatars: [], more: null, highlight: false, color: "#1D3E77" },
-  ]},
-  { day: "FRI", date: "14", items: [
-    { title: "Meet POST meet notes", time: "11 – 11:30", url: "https://meet.sangoma.com/2", avatars: [5], more: null, highlight: false, color: "#2CAD43" },
-    { title: "Sync up: Control Panel Project", time: "9:15 – 9:45", url: "https://meet.sangoma.com/45553", avatars: [], more: null, highlight: false, color: "#7C3AED" },
-  ]},
-  { day: "SAT", date: "15", items: [
-    { title: "Weekly 1:1 (Maksym & Seti)", time: "11 – 11:30", url: "https://meet.sangoma.com/9", avatars: [5, 12], more: null, highlight: false, color: "#1D3E77" },
-    { title: "CPO Terry Microsoft Company", time: "12 – 13:30", url: "https://meet.sangoma.com/4", avatars: [33, 53], more: null, highlight: false, color: "#2CAD43" },
   ]},
 ];
 
@@ -603,7 +593,7 @@ function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, s
           <span className="text-[13px] font-medium tracking-[0.25px]" style={{ color: 'var(--th-text-primary)' }}>New meeting</span>
         </button>
         <button onClick={() => onJoinMeeting("Meeting Room")} className="flex flex-col items-center gap-2 group">
-          <div className="w-16 h-[63px] rounded-[20px] flex items-center justify-center group-hover:shadow-lg group-active:scale-95 transition-all" style={{ background: "var(--th-bg-card)", border: "1px solid var(--th-border)" }}>
+          <div className="w-16 h-[63px] rounded-[20px] flex items-center justify-center group-hover:shadow-lg group-active:scale-95 transition-all" style={{ background: "#ffffff", border: "1px solid var(--th-border)" }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21.1332 19.2927C20.9191 20.1968 20.1966 20.9192 19.2926 21.1333C16.8728 21.7074 14.4364 21.9949 12 21.9949C9.56359 21.9949 7.12717 21.7074 4.70743 21.1333C3.80335 20.9192 3.08093 20.1968 2.86679 19.2918C1.71774 14.4532 1.71774 9.54703 2.86679 4.70753C3.08093 3.80346 3.80335 3.08103 4.70826 2.86689C9.54692 1.71784 14.4522 1.71784 19.2926 2.86689C20.1966 3.08103 20.9191 3.80346 21.1332 4.70836C22.2823 9.54703 22.2823 14.4532 21.1332 19.2927ZM16.1662 11.1669H12.8332V7.83387C12.8332 7.37308 12.4608 7.00062 12 7.00062C11.5392 7.00062 11.1668 7.37308 11.1668 7.83387V11.1669H7.83377C7.37298 11.1669 7.00052 11.5393 7.00052 12.0001C7.00052 12.4609 7.37298 12.8333 7.83377 12.8333H11.1668V16.1663C11.1668 16.6271 11.5392 16.9996 12 16.9996C12.4608 16.9996 12.8332 16.6271 12.8332 16.1663V12.8333H16.1662C16.627 12.8333 16.9995 12.4609 16.9995 12.0001C16.9995 11.5393 16.627 11.1669 16.1662 11.1669Z" fill="#244C91"/></svg>
           </div>
           <span className="text-[13px] font-medium tracking-[0.25px]" style={{ color: 'var(--th-text-primary)' }}>Join</span>
