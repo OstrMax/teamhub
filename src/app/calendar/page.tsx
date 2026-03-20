@@ -17,6 +17,14 @@ interface CalendarEvent {
   icon?: string;
 }
 
+/* ── Hex to RGBA helper ── */
+function hexToRgba(hex: string, alpha: number): string {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
 /* ── Fake events for the selected day ── */
 const dayEvents: CalendarEvent[] = [
   { title: "All-Team kickoff", startHour: 9, startMin: 0, endHour: 10, endMin: 0, color: "#F3F0FF", borderColor: "#7C3AED", url: "https://meet.sangoma.com/9", icon: "team" },
@@ -131,20 +139,20 @@ export default function CalendarPage() {
   const timeIndicatorTop = (nowHour - 7) * 64 + (nowMin / 60) * 64;
 
   return (
-    <div className="flex h-full">
+    <div className="flex h-full bg-[var(--th-bg)]">
       {/* Left sidebar - Mini calendar */}
-      <div className="w-[260px] shrink-0 border-r border-[#E5E6E8] bg-white flex flex-col p-4">
+      <div className="w-[260px] shrink-0 border-r border-[var(--th-border)] bg-[var(--th-bg)] flex flex-col p-4">
         {/* Month navigation */}
         <div className="flex items-center justify-between mb-3">
-          <span className="text-[14px] font-semibold text-[#001221]">
+          <span className="text-[14px] font-semibold text-[var(--th-text-primary)]">
             {MONTH_NAMES[calMonth]}, {calYear}
           </span>
           <div className="flex items-center gap-1">
-            <button onClick={handlePrevMonth} className="p-1 rounded hover:bg-[#F2F2F3] active:scale-90 transition-all">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M8.5 3.5L5 7l3.5 3.5" stroke="#001221" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <button onClick={handlePrevMonth} className="p-1 rounded hover:bg-[var(--th-bg-hover)] active:scale-90 transition-all">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M8.5 3.5L5 7l3.5 3.5" stroke="var(--th-text-primary)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
-            <button onClick={handleNextMonth} className="p-1 rounded hover:bg-[#F2F2F3] active:scale-90 transition-all">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5.5 3.5L9 7l-3.5 3.5" stroke="#001221" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <button onClick={handleNextMonth} className="p-1 rounded hover:bg-[var(--th-bg-hover)] active:scale-90 transition-all">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5.5 3.5L9 7l-3.5 3.5" stroke="var(--th-text-primary)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
           </div>
         </div>
@@ -152,7 +160,7 @@ export default function CalendarPage() {
         {/* Day headers */}
         <div className="grid grid-cols-7 gap-0 mb-1">
           {DAY_NAMES.map((d) => (
-            <div key={d} className="text-[10px] font-semibold text-[#7F888F] text-center py-1">{d}</div>
+            <div key={d} className="text-[10px] font-semibold text-[var(--th-text-muted)] text-center py-1">{d}</div>
           ))}
         </div>
 
@@ -167,10 +175,10 @@ export default function CalendarPage() {
                 onClick={() => cell.currentMonth && handleSelectDay(cell.day)}
                 className={`relative flex flex-col items-center justify-center h-9 text-[12px] font-medium rounded-full transition-all ${
                   !cell.currentMonth
-                    ? "text-[#CCCFD2]"
+                    ? "text-[var(--th-text-disabled)]"
                     : isSelected
                       ? "bg-[#2E1055] text-white"
-                      : "text-[#001221] hover:bg-[#F2F2F3]"
+                      : "text-[var(--th-text-primary)] hover:bg-[var(--th-bg-hover)]"
                 }`}
               >
                 {cell.day}
@@ -190,40 +198,40 @@ export default function CalendarPage() {
       {/* Main calendar content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top bar */}
-        <div className="flex items-center justify-between px-5 py-3 border-b border-[#E5E6E8]">
+        <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--th-border)]">
           {/* Left: nav + date */}
           <div className="flex items-center gap-3 shrink-0">
-            <button className="w-8 h-8 rounded-lg bg-[#2E1055] flex items-center justify-center hover:bg-[#3d1670] active:scale-95 transition-all">
+            <button className="w-8 h-8 rounded-lg bg-[#2a1051] flex items-center justify-center hover:bg-[#3d1a6e] active:scale-95 transition-all">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="white" strokeWidth="1.5" strokeLinecap="round"/></svg>
             </button>
-            <button onClick={handlePrevDay} className="p-1.5 rounded-lg hover:bg-[#F2F2F3] active:scale-90 transition-all">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="#001221" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <button onClick={handlePrevDay} className="p-1.5 rounded-lg hover:bg-[var(--th-bg-hover)] active:scale-90 transition-all">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="var(--th-text-primary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
-            <button onClick={handleToday} className="p-1.5 rounded-lg hover:bg-[#F2F2F3] active:scale-90 transition-all" title="Today">
+            <button onClick={handleToday} className="p-1.5 rounded-lg hover:bg-[var(--th-bg-hover)] active:scale-90 transition-all" title="Today">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <rect x="2" y="2" width="12" height="12" rx="2" stroke="#001221" strokeWidth="1.3"/>
-                <path d="M2 6h12" stroke="#001221" strokeWidth="1.3"/>
+                <rect x="2" y="2" width="12" height="12" rx="2" stroke="var(--th-text-primary)" strokeWidth="1.3"/>
+                <path d="M2 6h12" stroke="var(--th-text-primary)" strokeWidth="1.3"/>
               </svg>
             </button>
-            <button onClick={handleNextDay} className="p-1.5 rounded-lg hover:bg-[#F2F2F3] active:scale-90 transition-all">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#001221" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <button onClick={handleNextDay} className="p-1.5 rounded-lg hover:bg-[var(--th-bg-hover)] active:scale-90 transition-all">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="var(--th-text-primary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
-            <h2 className="text-[16px] font-semibold text-[#001221] ml-1">
+            <h2 className="text-[16px] font-semibold text-[var(--th-text-primary)] ml-1">
               {MONTH_NAMES[currentDate.getMonth()]} {currentDate.getDate()}, {currentDate.getFullYear()}
             </h2>
           </div>
 
           {/* Center: view mode tabs */}
           <div className="flex-1 flex items-center justify-center">
-            <div className="flex items-center bg-[#F2F2F3] rounded-lg p-0.5" style={{ height: 28 }}>
+            <div className="flex items-center bg-[var(--th-bg-hover)] rounded-lg p-0.5" style={{ height: 28 }}>
               {(["Day", "Week", "Month", "Agenda"] as ViewMode[]).map((mode) => (
                 <button
                   key={mode}
                   onClick={() => setViewMode(mode)}
                   className={`px-3.5 h-full rounded-lg text-[13px] font-semibold transition-all ${
                     viewMode === mode
-                      ? "bg-[#001221] text-white"
-                      : "text-[#7F888F] hover:text-[#4C5863]"
+                      ? "bg-[var(--th-text-primary)] text-[var(--th-bg)]"
+                      : "text-[var(--th-text-muted)] hover:text-[var(--th-text-secondary)]"
                   }`}
                 >
                   {mode}
@@ -242,7 +250,7 @@ export default function CalendarPage() {
               <input
                 type="text"
                 placeholder="Search"
-                className="pl-8 pr-3 py-1.5 w-40 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors"
+                className="pl-8 pr-3 py-1.5 w-40 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-lg bg-[var(--th-bg-input)] focus:outline-none focus:border-[#2E1055] transition-colors"
               />
             </div>
           </div>
@@ -265,13 +273,13 @@ function DayView({ dayOfWeek, selectedDay, dayEvents: events, timeIndicatorTop }
   return (
     <>
       <div className="px-5 pt-4 pb-2 text-center">
-        <div className="text-[11px] text-[#7F888F] uppercase tracking-wider font-medium">{dayOfWeek}</div>
-        <div className="text-[28px] font-semibold text-[#001221] leading-none mt-0.5">{selectedDay}</div>
+        <div className="text-[11px] text-[var(--th-text-muted)] uppercase tracking-wider font-medium">{dayOfWeek}</div>
+        <div className="text-[28px] font-semibold text-[var(--th-text-primary)] leading-none mt-0.5">{selectedDay}</div>
       </div>
       <div className="relative px-5 pb-10">
         {Array.from({ length: 11 }, (_, i) => i + 7).map((hour) => (
-          <div key={hour} className="flex items-start h-16 border-t border-[#F2F2F3]">
-            <span className="text-[11px] text-[#7F888F] w-14 shrink-0 -mt-[7px] font-medium">
+          <div key={hour} className="flex items-start h-16 border-t border-[var(--th-border-light)]">
+            <span className="text-[11px] text-[var(--th-text-muted)] w-14 shrink-0 -mt-[7px] font-medium">
               {hour === 12 ? "12 PM" : hour > 12 ? `${hour - 12} PM` : `${hour} AM`}
             </span>
             <div className="flex-1 relative" />
@@ -284,13 +292,13 @@ function DayView({ dayOfWeek, selectedDay, dayEvents: events, timeIndicatorTop }
             const startStr = `${event.startHour > 12 ? event.startHour - 12 : event.startHour}:${String(event.startMin).padStart(2, "0")} ${event.startHour >= 12 ? "PM" : "AM"}`;
             const endStr = `${event.endHour > 12 ? event.endHour - 12 : event.endHour}:${String(event.endMin).padStart(2, "0")} ${event.endHour >= 12 ? "PM" : "AM"}`;
             return (
-              <div key={i} className="absolute left-0 right-0 rounded-lg px-3 py-2 cursor-pointer hover:shadow-md transition-shadow" style={{ top: `${top}px`, height: `${height}px`, backgroundColor: event.color, borderLeft: `3px solid ${event.borderColor}`, animation: `fadeIn 0.25s ease-out ${0.05 * i}s both` }}>
+              <div key={i} className="absolute left-0 right-0 rounded-lg px-3 py-2 cursor-pointer hover:shadow-md transition-shadow" style={{ top: `${top}px`, height: `${height}px`, backgroundColor: hexToRgba(event.borderColor, 0.15), borderLeft: `3px solid ${event.borderColor}`, animation: `fadeIn 0.25s ease-out ${0.05 * i}s both` }}>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[13px] font-medium text-[#001221]">{event.title}</span>
+                  <span className="text-[13px] font-medium text-[var(--th-text-primary)]">{event.title}</span>
                   {event.icon === "team" && <svg width="14" height="14" viewBox="0 0 14 14" fill={event.borderColor}><circle cx="7" cy="7" r="5"/><path d="M5 7l1.5 1.5L9 5.5" stroke="white" strokeWidth="1.2"/></svg>}
                   {event.icon === "star" && <span className="text-[13px]">&#9733;</span>}
                 </div>
-                <div className="text-[11px] text-[#7F888F] mt-0.5">{startStr} - {endStr} at {event.url}</div>
+                <div className="text-[11px] text-[var(--th-text-muted)] mt-0.5">{startStr} - {endStr} at {event.url}</div>
               </div>
             );
           })}
@@ -326,8 +334,8 @@ function WeekView({ currentDate }: { currentDate: Date }) {
           const isToday = d.getDate() === currentDate.getDate();
           return (
             <div key={dayName} className="text-center">
-              <div className="text-[10px] text-[#7F888F] uppercase tracking-wider font-medium">{dayName}</div>
-              <div className={`text-[20px] font-semibold leading-none mt-1 w-9 h-9 mx-auto flex items-center justify-center rounded-full ${isToday ? "bg-[#2E1055] text-white" : "text-[#001221]"}`}>
+              <div className="text-[10px] text-[var(--th-text-muted)] uppercase tracking-wider font-medium">{dayName}</div>
+              <div className={`text-[20px] font-semibold leading-none mt-1 w-9 h-9 mx-auto flex items-center justify-center rounded-full ${isToday ? "bg-[#2E1055] text-white" : "text-[var(--th-text-primary)]"}`}>
                 {d.getDate()}
               </div>
             </div>
@@ -338,8 +346,8 @@ function WeekView({ currentDate }: { currentDate: Date }) {
       {/* Time grid with events */}
       <div className="relative">
         {Array.from({ length: 10 }, (_, i) => i + 8).map((hour) => (
-          <div key={hour} className="flex items-start border-t border-[#F2F2F3]" style={{ height: 52 }}>
-            <span className="text-[10px] text-[#7F888F] w-12 shrink-0 -mt-[6px] font-medium">
+          <div key={hour} className="flex items-start border-t border-[var(--th-border-light)]" style={{ height: 52 }}>
+            <span className="text-[10px] text-[var(--th-text-muted)] w-12 shrink-0 -mt-[6px] font-medium">
               {hour === 12 ? "12 PM" : hour > 12 ? `${hour - 12} PM` : `${hour} AM`}
             </span>
             <div className="flex-1 grid grid-cols-7 gap-2">
@@ -353,9 +361,9 @@ function WeekView({ currentDate }: { currentDate: Date }) {
                 return (
                   <div key={dayIdx} className="relative">
                     {evts.map((evt, ei) => (
-                      <div key={ei} className="absolute inset-x-0 top-0 rounded px-1.5 py-1 text-[10px] font-medium cursor-pointer hover:shadow-sm transition-shadow overflow-hidden" style={{ backgroundColor: evt.color, borderLeft: `2px solid ${evt.borderColor}`, height: 44 }}>
-                        <div className="text-[#001221] truncate">{evt.title}</div>
-                        <div className="text-[#7F888F] text-[9px]">{evt.time}</div>
+                      <div key={ei} className="absolute inset-x-0 top-0 rounded px-1.5 py-1 text-[10px] font-medium cursor-pointer hover:shadow-sm transition-shadow overflow-hidden" style={{ backgroundColor: hexToRgba(evt.borderColor, 0.15), borderLeft: `2px solid ${evt.borderColor}`, height: 44 }}>
+                        <div className="text-[var(--th-text-primary)] truncate">{evt.title}</div>
+                        <div className="text-[var(--th-text-muted)] text-[9px]">{evt.time}</div>
                       </div>
                     ))}
                   </div>
@@ -398,28 +406,28 @@ function MonthView({ currentDate }: { currentDate: Date }) {
 
   return (
     <div className="px-5 pt-4 pb-6">
-      <div className="grid grid-cols-7 gap-px bg-[#E5E6E8] rounded-xl overflow-hidden">
+      <div className="grid grid-cols-7 gap-px bg-[var(--th-border)] rounded-xl overflow-hidden">
         {/* Day headers */}
         {DAY_NAMES.map((d) => (
-          <div key={d} className="bg-[#F9F9FA] text-center py-2 text-[10px] font-semibold text-[#7F888F] uppercase tracking-wider">{d}</div>
+          <div key={d} className="bg-[var(--th-bg-hover)] text-center py-2 text-[10px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider">{d}</div>
         ))}
         {/* Cells */}
         {cells.map((cell, i) => {
           const isToday = cell.current && cell.day === currentDate.getDate();
           const events = cell.current ? monthEventsMap[cell.day] : undefined;
           return (
-            <div key={i} className={`bg-white min-h-[90px] p-1.5 ${!cell.current ? "opacity-40" : ""}`}>
-              <div className={`text-[12px] font-medium mb-1 w-6 h-6 flex items-center justify-center rounded-full ${isToday ? "bg-[#2E1055] text-white" : "text-[#001221]"}`}>
+            <div key={i} className={`bg-[var(--th-bg)] min-h-[90px] p-1.5 ${!cell.current ? "opacity-40" : ""}`}>
+              <div className={`text-[12px] font-medium mb-1 w-6 h-6 flex items-center justify-center rounded-full ${isToday ? "bg-[#2E1055] text-white" : "text-[var(--th-text-primary)]"}`}>
                 {cell.day}
               </div>
               {events && events.slice(0, 3).map((evt, ei) => (
-                <div key={ei} className="flex items-center gap-1 mb-0.5 cursor-pointer hover:bg-[#F9F9FA] rounded px-1 py-0.5 transition-colors">
+                <div key={ei} className="flex items-center gap-1 mb-0.5 cursor-pointer hover:bg-[var(--th-bg-hover)] rounded px-1 py-0.5 transition-colors">
                   <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: evt.color }} />
-                  <span className="text-[10px] text-[#001221] truncate">{evt.title}</span>
+                  <span className="text-[10px] text-[var(--th-text-primary)] truncate">{evt.title}</span>
                 </div>
               ))}
               {events && events.length > 3 && (
-                <span className="text-[9px] text-[#7F888F] px-1">+{events.length - 3} more</span>
+                <span className="text-[9px] text-[var(--th-text-muted)] px-1">+{events.length - 3} more</span>
               )}
             </div>
           );
@@ -456,16 +464,16 @@ function AgendaView() {
     <div className="px-5 pt-4 pb-10">
       {agendaEvents.map((group, gi) => (
         <div key={gi} className="mb-6" style={{ animation: `fadeIn 0.2s ease-out ${0.05 * gi}s both` }}>
-          <div className="text-[13px] font-semibold text-[#001221] mb-2 sticky top-0 bg-white py-1">{group.date}</div>
+          <div className="text-[13px] font-semibold text-[var(--th-text-primary)] mb-2 sticky top-0 bg-[var(--th-bg)] py-1">{group.date}</div>
           <div className="space-y-2">
             {group.events.map((evt, ei) => (
-              <div key={ei} className="flex items-center gap-3 px-4 py-3 border border-[#E5E6E8] rounded-xl hover:border-[#C5C7CA] hover:shadow-sm transition-all cursor-pointer">
+              <div key={ei} className="flex items-center gap-3 px-4 py-3 border border-[var(--th-border)] rounded-xl hover:border-[#C5C7CA] hover:shadow-sm transition-all cursor-pointer">
                 <span className="w-1 h-10 rounded-full shrink-0" style={{ background: evt.color }} />
                 <div className="flex-1">
-                  <div className="text-[13px] font-medium text-[#001221]">{evt.title}</div>
-                  <div className="text-[11px] text-[#7F888F] mt-0.5">{evt.time} · {evt.url}</div>
+                  <div className="text-[13px] font-medium text-[var(--th-text-primary)]">{evt.title}</div>
+                  <div className="text-[11px] text-[var(--th-text-muted)] mt-0.5">{evt.time} · {evt.url}</div>
                 </div>
-                <button className="p-1.5 rounded-lg hover:bg-[#F2F2F3] transition-colors active:scale-90 opacity-0 group-hover:opacity-100">
+                <button className="p-1.5 rounded-lg hover:bg-[var(--th-bg-hover)] transition-colors active:scale-90 opacity-0 group-hover:opacity-100">
                   <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="4" r="1" fill="#7F888F"/><circle cx="8" cy="8" r="1" fill="#7F888F"/><circle cx="8" cy="12" r="1" fill="#7F888F"/></svg>
                 </button>
               </div>

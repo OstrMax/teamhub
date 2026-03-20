@@ -68,24 +68,32 @@ function ToolbarCaret() {
   );
 }
 
+/* ── hex→rgba helper ── */
+function hexToRgba(hex: string, alpha: number): string {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
 /* ── Fake event data ── */
 const events = [
   { day: "WED", date: "12", items: [
-    { title: "Weekly 1:1 (Maksym & Seti)", time: "11 – 11:30", url: "https://meet.sangoma.com/9", avatars: [5, 12], more: null, highlight: false },
-    { title: "CPO Terry Microsoft Company", time: "12 – 13:30", url: "https://meet.sangoma.com/4", avatars: [33, 53], more: null, highlight: false },
+    { title: "Weekly 1:1 (Maksym & Seti)", time: "11 – 11:30", url: "https://meet.sangoma.com/9", avatars: [5, 12], more: null, highlight: false, color: "#7C3AED" },
+    { title: "CPO Terry Microsoft Company", time: "12 – 13:30", url: "https://meet.sangoma.com/4", avatars: [33, 53], more: null, highlight: false, color: "#1D3E77" },
   ]},
   { day: "THU", date: "13", items: [
-    { title: "Weekly Design Team Meeting", time: "11 – 11:30", url: "https://meet.sangoma.com/2", avatars: [9, 32], more: null, highlight: false },
-    { title: "Daniel / Maksym status update", time: "9:15 – 9:45", url: "https://meet.sangoma.com/22321", avatars: [11, 12, 68], more: "+ 17 more", highlight: true },
-    { title: "Daniel / Maksym status update", time: "9:15 – 9:45", url: "https://meet.sangoma.com/22321", avatars: [], more: null, highlight: false },
+    { title: "Weekly Design Team Meeting", time: "11 – 11:30", url: "https://meet.sangoma.com/2", avatars: [9, 32], more: null, highlight: false, color: "#2CAD43" },
+    { title: "Daniel / Maksym status update", time: "9:15 – 9:45", url: "https://meet.sangoma.com/22321", avatars: [11, 12, 68], more: "+ 17 more", highlight: true, color: "#E5A100" },
+    { title: "Daniel / Maksym status update", time: "9:15 – 9:45", url: "https://meet.sangoma.com/22321", avatars: [], more: null, highlight: false, color: "#9C328C" },
   ]},
   { day: "FRI", date: "14", items: [
-    { title: "Meet POST meet notes", time: "11 – 11:30", url: "https://meet.sangoma.com/2", avatars: [5], more: null, highlight: false },
-    { title: "Sync up: Control Panel Project", time: "9:15 – 9:45", url: "https://meet.sangoma.com/45553", avatars: [], more: null, highlight: false },
+    { title: "Meet POST meet notes", time: "11 – 11:30", url: "https://meet.sangoma.com/2", avatars: [5], more: null, highlight: false, color: "#7C3AED" },
+    { title: "Sync up: Control Panel Project", time: "9:15 – 9:45", url: "https://meet.sangoma.com/45553", avatars: [], more: null, highlight: false, color: "#1D3E77" },
   ]},
   { day: "SAT", date: "15", items: [
-    { title: "Weekly 1:1 (Maksym & Seti)", time: "11 – 11:30", url: "https://meet.sangoma.com/9", avatars: [5, 12], more: null, highlight: false },
-    { title: "CPO Terry Microsoft Company", time: "12 – 13:30", url: "https://meet.sangoma.com/4", avatars: [33, 53], more: null, highlight: false },
+    { title: "Weekly 1:1 (Maksym & Seti)", time: "11 – 11:30", url: "https://meet.sangoma.com/9", avatars: [5, 12], more: null, highlight: false, color: "#2CAD43" },
+    { title: "CPO Terry Microsoft Company", time: "12 – 13:30", url: "https://meet.sangoma.com/4", avatars: [33, 53], more: null, highlight: false, color: "#9C328C" },
   ]},
 ];
 
@@ -522,7 +530,7 @@ function SchedulePopup({ onClose }: { onClose: () => void }) {
           <div>
             <label className="block text-[12px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider mb-1.5">Participants</label>
             <div className="flex items-center gap-2 px-3.5 py-2 border border-[var(--th-border)] rounded-xl">
-              <div className="flex -space-x-1.5">{[5, 12].map((id) => (<Image key={id} src={`https://i.pravatar.cc/64?img=${id}`} alt="" width={24} height={24} className="w-6 h-6 rounded-full border-2 border-white object-cover" unoptimized />))}</div>
+              <div className="flex -space-x-1.5">{[5, 12].map((id) => (<Image key={id} src={`https://i.pravatar.cc/64?img=${id}`} alt="" width={24} height={24} className="w-6 h-6 rounded-full border-2 object-cover" style={{ borderColor: 'var(--th-bg)' }} unoptimized />))}</div>
               <input type="text" placeholder="Add participants..." className="flex-1 outline-none text-[13px] text-[var(--th-text-primary)] bg-transparent placeholder:text-[var(--th-text-disabled)]" />
             </div>
           </div>
@@ -568,8 +576,8 @@ function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, s
           </div>
           <div className="flex-1 flex items-center justify-center">
             <div className="flex items-center">
-              <button onClick={() => setEventsTab("upcoming")} className={`px-4 py-1 rounded-lg text-[14px] font-medium transition-all ${eventsTab === "upcoming" ? "bg-[var(--th-text-primary)] text-white" : "text-[var(--th-text-primary)] hover:text-[var(--th-text-secondary)]"}`} style={{ height: 28 }}>Upcoming</button>
-              <button onClick={() => setEventsTab("past")} className={`px-4 py-1 rounded-lg text-[14px] font-medium transition-all ${eventsTab === "past" ? "bg-[var(--th-text-primary)] text-white" : "text-[var(--th-text-primary)] hover:text-[var(--th-text-secondary)]"}`} style={{ height: 28 }}>Past events</button>
+              <button onClick={() => setEventsTab("upcoming")} className={`px-4 py-1 rounded-lg text-[14px] font-medium transition-all`} style={{ height: 28, backgroundColor: eventsTab === "upcoming" ? 'var(--th-text-primary)' : 'transparent', color: eventsTab === "upcoming" ? 'var(--th-bg)' : 'var(--th-text-secondary)' }}>Upcoming</button>
+              <button onClick={() => setEventsTab("past")} className={`px-4 py-1 rounded-lg text-[14px] font-medium transition-all`} style={{ height: 28, backgroundColor: eventsTab === "past" ? 'var(--th-text-primary)' : 'transparent', color: eventsTab === "past" ? 'var(--th-bg)' : 'var(--th-text-secondary)' }}>Past events</button>
             </div>
           </div>
           <div className="flex items-center gap-2 shrink-0">
@@ -589,22 +597,22 @@ function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, s
       {/* Action buttons */}
       <div className="flex items-center justify-center gap-16 py-4">
         <button onClick={() => onJoinMeeting("New Meeting")} className="flex flex-col items-center gap-2 group">
-          <div className="w-16 h-[63px] rounded-[20px] flex items-center justify-center group-hover:shadow-lg group-active:scale-95 transition-all" style={{ background: "rgba(156,50,140,0.08)" }}>
+          <div className="w-16 h-[63px] rounded-[20px] flex items-center justify-center group-hover:shadow-lg group-active:scale-95 transition-all" style={{ background: "rgba(156,50,140,0.12)", border: "1px solid rgba(156,50,140,0.15)" }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M23.196 7.94925C22.8922 7.28475 22.1483 6.89175 21.4395 7.06875C20.9018 7.203 20.3257 7.515 19.7235 7.92075C19.452 8.10375 19.332 8.43675 19.4183 8.7525C20.007 10.9147 20.007 13.0852 19.4183 15.2475C19.332 15.5632 19.452 15.897 19.7235 16.0792C20.3265 16.485 20.9025 16.797 21.4402 16.9313C22.149 17.1083 22.893 16.7145 23.1968 16.05C24.2378 13.77 24.2377 10.23 23.196 7.94925ZM3.69975 5.92125C7.8525 4.3485 12.0053 4.3485 16.158 5.92125C16.5248 6.06 16.839 6.3405 17.0212 6.7005C18.804 10.2337 18.804 13.767 17.0212 17.2995C16.8397 17.6595 16.5255 17.94 16.158 18.0787C12.0053 19.6515 7.8525 19.6515 3.69975 18.0787C3.333 17.94 3.01875 17.6595 2.8365 17.2995C1.05375 13.7662 1.05375 10.2337 2.8365 6.7005C3.01875 6.3405 3.333 6.06 3.69975 5.92125Z" fill="#9C328C"/></svg>
           </div>
-          <span className="text-[13px] font-medium text-[#5b074e] tracking-[0.25px]">New meeting</span>
+          <span className="text-[13px] font-medium tracking-[0.25px]" style={{ color: 'var(--th-text-primary)' }}>New meeting</span>
         </button>
         <button onClick={() => onJoinMeeting("Meeting Room")} className="flex flex-col items-center gap-2 group">
-          <div className="w-16 h-[63px] rounded-[20px] flex items-center justify-center group-hover:shadow-lg group-active:scale-95 transition-all" style={{ background: "rgba(36,76,145,0.04)" }}>
+          <div className="w-16 h-[63px] rounded-[20px] flex items-center justify-center group-hover:shadow-lg group-active:scale-95 transition-all" style={{ background: "rgba(36,76,145,0.10)", border: "1px solid rgba(36,76,145,0.15)" }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21.1332 19.2927C20.9191 20.1968 20.1966 20.9192 19.2926 21.1333C16.8728 21.7074 14.4364 21.9949 12 21.9949C9.56359 21.9949 7.12717 21.7074 4.70743 21.1333C3.80335 20.9192 3.08093 20.1968 2.86679 19.2918C1.71774 14.4532 1.71774 9.54703 2.86679 4.70753C3.08093 3.80346 3.80335 3.08103 4.70826 2.86689C9.54692 1.71784 14.4522 1.71784 19.2926 2.86689C20.1966 3.08103 20.9191 3.80346 21.1332 4.70836C22.2823 9.54703 22.2823 14.4532 21.1332 19.2927ZM16.1662 11.1669H12.8332V7.83387C12.8332 7.37308 12.4608 7.00062 12 7.00062C11.5392 7.00062 11.1668 7.37308 11.1668 7.83387V11.1669H7.83377C7.37298 11.1669 7.00052 11.5393 7.00052 12.0001C7.00052 12.4609 7.37298 12.8333 7.83377 12.8333H11.1668V16.1663C11.1668 16.6271 11.5392 16.9996 12 16.9996C12.4608 16.9996 12.8332 16.6271 12.8332 16.1663V12.8333H16.1662C16.627 12.8333 16.9995 12.4609 16.9995 12.0001C16.9995 11.5393 16.627 11.1669 16.1662 11.1669Z" fill="#244C91"/></svg>
           </div>
-          <span className="text-[13px] font-medium text-[#244c91] tracking-[0.25px]">Join</span>
+          <span className="text-[13px] font-medium tracking-[0.25px]" style={{ color: 'var(--th-text-primary)' }}>Join</span>
         </button>
         <button onClick={() => setShowSchedule(true)} className="flex flex-col items-center gap-2 group">
-          <div className="w-16 h-[63px] rounded-[20px] flex items-center justify-center group-hover:shadow-lg group-active:scale-95 transition-all" style={{ background: "rgba(36,76,145,0.04)" }}>
+          <div className="w-16 h-[63px] rounded-[20px] flex items-center justify-center group-hover:shadow-lg group-active:scale-95 transition-all" style={{ background: "rgba(36,76,145,0.10)", border: "1px solid rgba(36,76,145,0.15)" }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21.3534 6.44325C21.1674 5.8605 20.6844 5.409 20.0927 5.25375C19.4784 5.09325 18.8642 4.95525 18.2499 4.836V5.577C18.2499 5.991 17.9147 6.327 17.4999 6.327C17.0852 6.327 16.7499 5.991 16.7499 5.577V3.75C16.7499 3.336 16.4147 3 15.9999 3C15.5852 3 15.2499 3.336 15.2499 3.75V4.425C13.7499 4.302 12.2499 4.305 10.7499 4.4295V5.577C10.7499 5.991 10.4147 6.327 9.99993 6.327C9.58518 6.327 9.24993 5.991 9.24993 5.577V3.75C9.24993 3.336 8.91468 3 8.49993 3C8.08518 3 7.74993 3.336 7.74993 3.75V4.842C7.13568 4.95975 6.52143 5.09325 5.90718 5.2545C5.31543 5.409 4.83243 5.8605 4.64643 6.44325C3.30243 10.6477 3.30243 14.8523 4.64643 19.056C4.83243 19.6388 5.31543 20.0903 5.90718 20.2455C10.6359 21.4852 15.3647 21.4852 20.0934 20.2455C20.6852 20.0903 21.1674 19.6388 21.3542 19.056C22.6974 14.8523 22.6974 10.6477 21.3534 6.44325ZM8.49993 17.25C8.08593 17.25 7.74993 16.914 7.74993 16.5C7.74993 16.086 8.08593 15.75 8.49993 15.75C8.91393 15.75 9.24993 16.086 9.24993 16.5C9.24993 16.914 8.91393 17.25 8.49993 17.25ZM8.49993 14.25C8.08593 14.25 7.74993 13.914 7.74993 13.5C7.74993 13.086 8.08593 12.75 8.49993 12.75C8.91393 12.75 9.24993 13.086 9.24993 13.5C9.24993 13.914 8.91393 14.25 8.49993 14.25ZM11.4999 17.25C11.0859 17.25 10.7499 16.914 10.7499 16.5C10.7499 16.086 11.0859 15.75 11.4999 15.75C11.9139 15.75 12.2499 16.086 12.2499 16.5C12.2499 16.914 11.9139 17.25 11.4999 17.25ZM11.4999 14.25C11.0859 14.25 10.7499 13.914 10.7499 13.5C10.7499 13.086 11.0859 12.75 11.4999 12.75C11.9139 12.75 12.2499 13.086 12.2499 13.5C12.2499 13.914 11.9139 14.25 11.4999 14.25ZM11.4999 11.25C11.0859 11.25 10.7499 10.914 10.7499 10.5C10.7499 10.086 11.0859 9.75 11.4999 9.75C11.9139 9.75 12.2499 10.086 12.2499 10.5C12.2499 10.914 11.9139 11.25 11.4999 11.25ZM14.4999 17.625C13.8789 17.625 13.3749 17.121 13.3749 16.5C13.3749 15.879 13.8789 15.375 14.4999 15.375C15.1209 15.375 15.6249 15.879 15.6249 16.5C15.6249 17.121 15.1209 17.625 14.4999 17.625ZM14.4999 14.25C14.0859 14.25 13.7499 13.914 13.7499 13.5C13.7499 13.086 14.0859 12.75 14.4999 12.75C14.9139 12.75 15.2499 13.086 15.2499 13.5C15.2499 13.914 14.9139 14.25 14.4999 14.25ZM14.4999 11.25C14.0859 11.25 13.7499 10.914 13.7499 10.5C13.7499 10.086 14.0859 9.75 14.4999 9.75C14.9139 9.75 15.2499 10.086 15.2499 10.5C15.2499 10.914 14.9139 11.25 14.4999 11.25ZM17.4999 14.25C17.0859 14.25 16.7499 13.914 16.7499 13.5C16.7499 13.086 17.0859 12.75 17.4999 12.75C17.9139 12.75 18.2499 13.086 18.2499 13.5C18.2499 13.914 17.9139 14.25 17.4999 14.25ZM17.4999 11.25C17.0859 11.25 16.7499 10.914 16.7499 10.5C16.7499 10.086 17.0859 9.75 17.4999 9.75C17.9139 9.75 18.2499 10.086 18.2499 10.5C18.2499 10.914 17.9139 11.25 17.4999 11.25Z" fill="#244C91"/></svg>
           </div>
-          <span className="text-[13px] font-medium text-[#244c91] tracking-[0.25px]">Schedule</span>
+          <span className="text-[13px] font-medium tracking-[0.25px]" style={{ color: 'var(--th-text-primary)' }}>Schedule</span>
         </button>
       </div>
 
@@ -613,7 +621,7 @@ function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, s
         {events.map((group, gi) => (
           <div key={gi} className="mb-1">
             {group.items.map((event, ei) => (
-              <div key={ei} className={`flex items-center gap-4 py-3 border-b border-[var(--th-border-light)] hover:bg-[var(--th-bg-hover)] transition-colors cursor-pointer group ${event.highlight ? "bg-[#FFF8E1] hover:bg-[#FFF3CD]" : ""}`} style={{ animation: `fadeIn 0.2s ease-out ${0.03 * (gi * 3 + ei)}s both` }}>
+              <div key={ei} className="flex items-center gap-4 py-3 border-b border-[var(--th-border-light)] hover:brightness-95 transition-all cursor-pointer group rounded-lg" style={{ animation: `fadeIn 0.2s ease-out ${0.03 * (gi * 3 + ei)}s both`, backgroundColor: hexToRgba(event.color, 0.08), borderLeft: `3px solid ${event.color}` }}>
                 <div className="w-12 shrink-0 text-center">
                   {ei === 0 && (<><div className="text-[11px] text-[var(--th-text-muted)] uppercase tracking-wider font-medium">{group.day}</div><div className="text-[24px] font-semibold text-[var(--th-text-primary)] leading-none mt-0.5">{group.date}</div></>)}
                 </div>
@@ -622,7 +630,7 @@ function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, s
                   <div className="text-[12px] text-[var(--th-text-muted)] mt-0.5">{event.time} at {event.url}</div>
                 </div>
                 <div className="flex items-center -space-x-2 shrink-0">
-                  {event.avatars.map((id) => (<Image key={id} src={`https://i.pravatar.cc/64?img=${id}`} alt="" width={28} height={28} className="w-7 h-7 rounded-full border-2 border-white object-cover" unoptimized />))}
+                  {event.avatars.map((id) => (<Image key={id} src={`https://i.pravatar.cc/64?img=${id}`} alt="" width={28} height={28} className="w-7 h-7 rounded-full border-2 object-cover" style={{ borderColor: 'var(--th-bg)' }} unoptimized />))}
                 </div>
                 {event.more && <span className="text-[12px] text-[var(--th-text-muted)] shrink-0">{event.more}</span>}
                 {/* Hover Join button */}
