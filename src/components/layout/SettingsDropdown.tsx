@@ -52,7 +52,7 @@ export default function SettingsDropdown({ onClose }: { onClose: () => void }) {
             onChange={(e) => setVolume(Number(e.target.value))}
             className="flex-1 h-[3px] rounded-full appearance-none cursor-pointer"
             style={{
-              background: `linear-gradient(to right, var(--th-text-muted) 0%, var(--th-text-muted) ${volume}%, var(--th-border) ${volume}%, var(--th-border) 100%)`,
+              background: `linear-gradient(to right, var(--th-text-primary) 0%, var(--th-text-primary) ${volume}%, var(--th-border) ${volume}%, var(--th-border) 100%)`,
             }}
           />
           <span className="text-[11px] font-medium tabular-nums w-7 text-right" style={{ color: "var(--th-text-muted)" }}>{volume}</span>

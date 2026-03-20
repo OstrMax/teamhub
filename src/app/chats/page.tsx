@@ -32,14 +32,26 @@ interface Message {
   mention?: string;
   reactions?: { emoji: string; count: number }[];
   dividerBefore?: string;
+  type?: "text" | "video-call" | "transcription" | "thread" | "document";
+  metadata?: {
+    duration?: string;
+    participants?: number;
+    fileName?: string;
+    fileSize?: string;
+    fileType?: string;
+    threadCount?: number;
+    callTitle?: string;
+  };
 }
 
 const messages: Message[] = [
   { id: 1, sender: "Jim Dowell", avatar: "JD", avatarColor: "#3B82F6", time: "3:25 PM", text: "Heads up, we might need to cancel the evening meeting.", reactions: [{ emoji: "💯", count: 1 }, { emoji: "😊", count: 0 }] },
-  { id: 2, sender: "Jim Dowell", avatar: "JD", avatarColor: "#3B82F6", time: "3:25 PM", text: "Heads up, we might need to cancel the evening meeting.", reactions: [{ emoji: "💯", count: 1 }, { emoji: "😊", count: 0 }], dividerBefore: "Yesterday" },
-  { id: 3, sender: "Cody Russell", avatar: "CR", avatarColor: "#7C3AED", time: "3:27 PM", text: "Alright. We can discuss the QA doc next week.", mention: "@Jim Dowel" },
-  { id: 4, sender: "Jim Dowell", avatar: "JD", avatarColor: "#3B82F6", time: "3:27 PM", text: "Cool." },
-  { id: 5, sender: "Cody Russell", avatar: "CR", avatarColor: "#7C3AED", time: "3:27 PM", text: "Hi Jim! Got time to discuss the doc?", reactions: [{ emoji: "👍", count: 2 }, { emoji: "💬", count: 2 }, { emoji: "💯", count: 1 }], dividerBefore: "Today" },
+  { id: 2, sender: "Jim Dowell", avatar: "JD", avatarColor: "#3B82F6", time: "3:25 PM", text: "", type: "video-call", metadata: { callTitle: "Quick Sync — Design Review", duration: "23:14", participants: 4 }, dividerBefore: "Yesterday" },
+  { id: 3, sender: "Cody Russell", avatar: "CR", avatarColor: "#7C3AED", time: "3:27 PM", text: "", type: "transcription", metadata: { callTitle: "Quick Sync — Design Review", duration: "23:14" } },
+  { id: 4, sender: "Jim Dowell", avatar: "JD", avatarColor: "#3B82F6", time: "3:30 PM", text: "", type: "document", metadata: { fileName: "Q2_Design_Specs.pdf", fileSize: "2.4 MB", fileType: "pdf" } },
+  { id: 5, sender: "Cody Russell", avatar: "CR", avatarColor: "#7C3AED", time: "3:27 PM", text: "Alright. We can discuss the QA doc next week.", mention: "@Jim Dowel", type: "thread", metadata: { threadCount: 3 } },
+  { id: 6, sender: "Jim Dowell", avatar: "JD", avatarColor: "#3B82F6", time: "3:27 PM", text: "Cool." },
+  { id: 7, sender: "Cody Russell", avatar: "CR", avatarColor: "#7C3AED", time: "3:27 PM", text: "Hi Jim! Got time to discuss the doc?", reactions: [{ emoji: "👍", count: 2 }, { emoji: "💬", count: 2 }, { emoji: "💯", count: 1 }], dividerBefore: "Today" },
 ];
 
 export default function ChatsPage() {
@@ -140,10 +152,69 @@ export default function ChatsPage() {
                     <span className="text-sm font-semibold" style={{ color: 'var(--th-text-primary)' }}>{msg.sender}</span>
                     <span className="text-xs text-[#7F888F]">{msg.time}</span>
                   </div>
-                  <p className="text-sm mt-0.5" style={{ color: 'var(--th-text-primary)' }}>
-                    {msg.mention && <span className="text-[#3B82F6] font-medium">{msg.mention} </span>}
-                    {msg.text}
-                  </p>
+
+                  {/* Video call card */}
+                  {msg.type === "video-call" && msg.metadata && (
+                    <div className="mt-2 rounded-lg p-3 flex items-center gap-3" style={{ backgroundColor: 'var(--th-bg-hover)', border: '1px solid var(--th-border)' }}>
+                      <div className="w-9 h-9 rounded-full bg-[#7C3AED] flex items-center justify-center shrink-0">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M15 8v8H5V8h10m1-2H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4V7c0-.55-.45-1-1-1z"/></svg>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium" style={{ color: 'var(--th-text-primary)' }}>{msg.metadata.callTitle}</p>
+                        <p className="text-xs" style={{ color: 'var(--th-text-muted)' }}>{msg.metadata.duration} · {msg.metadata.participants} participants</p>
+                      </div>
+                      <button className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all active:scale-95" style={{ backgroundColor: 'var(--th-text-primary)', color: 'var(--th-bg)' }}>Join</button>
+                    </div>
+                  )}
+
+                  {/* Transcription card */}
+                  {msg.type === "transcription" && msg.metadata && (
+                    <div className="mt-2 rounded-lg p-3" style={{ backgroundColor: 'var(--th-bg-hover)', border: '1px solid var(--th-border)' }}>
+                      <div className="flex items-center gap-2 mb-2">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-muted)" strokeWidth="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                        <span className="text-xs font-medium" style={{ color: 'var(--th-text-primary)' }}>Call Transcription</span>
+                      </div>
+                      <p className="text-xs" style={{ color: 'var(--th-text-secondary)' }}>Transcription for &quot;{msg.metadata.callTitle}&quot; ({msg.metadata.duration})</p>
+                      <button className="mt-2 text-xs font-medium" style={{ color: 'var(--th-tab-active)' }}>View full transcript →</button>
+                    </div>
+                  )}
+
+                  {/* Document preview */}
+                  {msg.type === "document" && msg.metadata && (
+                    <div className="mt-2 rounded-lg p-3 flex items-center gap-3 cursor-pointer transition-colors" style={{ backgroundColor: 'var(--th-bg-hover)', border: '1px solid var(--th-border)' }}>
+                      <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: '#EF4444' }}>
+                        <span className="text-white text-[10px] font-bold uppercase">{msg.metadata.fileType}</span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium truncate" style={{ color: 'var(--th-text-primary)' }}>{msg.metadata.fileName}</p>
+                        <p className="text-xs" style={{ color: 'var(--th-text-muted)' }}>{msg.metadata.fileSize}</p>
+                      </div>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-muted)" strokeWidth="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    </div>
+                  )}
+
+                  {/* Thread reply */}
+                  {msg.type === "thread" && msg.metadata && (
+                    <>
+                      <p className="text-sm mt-0.5" style={{ color: 'var(--th-text-primary)' }}>
+                        {msg.mention && <span className="text-[#3B82F6] font-medium">{msg.mention} </span>}
+                        {msg.text}
+                      </p>
+                      <button className="flex items-center gap-1.5 mt-1.5 text-xs font-medium" style={{ color: 'var(--th-tab-active)' }}>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                        {msg.metadata.threadCount} replies
+                      </button>
+                    </>
+                  )}
+
+                  {/* Regular text message */}
+                  {(!msg.type || msg.type === "text") && (
+                    <p className="text-sm mt-0.5" style={{ color: 'var(--th-text-primary)' }}>
+                      {msg.mention && <span className="text-[#3B82F6] font-medium">{msg.mention} </span>}
+                      {msg.text}
+                    </p>
+                  )}
+
                   {msg.reactions && msg.reactions.length > 0 && (
                     <div className="flex items-center gap-1.5 mt-1.5">
                       {msg.reactions.map((r, i) => (

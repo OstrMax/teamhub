@@ -137,11 +137,11 @@ export default function TalkPage() {
                 defaultValue={50}
                 className="flex-1 h-[3px] rounded-full appearance-none cursor-pointer"
                 style={{
-                  background: `linear-gradient(to right, var(--th-text-muted) 0%, var(--th-text-muted) 50%, var(--th-border) 50%, var(--th-border) 100%)`,
+                  background: `linear-gradient(to right, var(--th-text-primary) 0%, var(--th-text-primary) 50%, var(--th-border) 50%, var(--th-border) 100%)`,
                 }}
                 onChange={(e) => {
                   const v = Number(e.target.value);
-                  e.target.style.background = `linear-gradient(to right, var(--th-text-muted) 0%, var(--th-text-muted) ${v}%, var(--th-border) ${v}%, var(--th-border) 100%)`;
+                  e.target.style.background = `linear-gradient(to right, var(--th-text-primary) 0%, var(--th-text-primary) ${v}%, var(--th-border) ${v}%, var(--th-border) 100%)`;
                 }}
               />
               <button className="text-[11px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider whitespace-nowrap hover:text-[var(--th-text-primary)] transition-colors">
@@ -179,19 +179,19 @@ export default function TalkPage() {
         {/* Right panel — tabs sit at top, content below */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Tabs row */}
-          <div className="flex items-center gap-1 border-b" style={{ borderColor: 'var(--th-border)' }}>
+          <div className="flex items-center" style={{ borderBottom: '1px solid var(--th-border)' }}>
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`relative flex items-center gap-1.5 px-4 py-3 text-sm font-medium transition-colors ${
-                  activeTab === tab.id
-                    ? ""
-                    : "text-[#7F888F] hover:text-[#4C5863]"
-                }`}
-                style={activeTab === tab.id ? { color: 'var(--th-tab-active)' } : undefined}
+                className="flex items-center gap-2 px-5 py-5 text-sm font-semibold transition-colors relative"
+                style={{
+                  color: activeTab === tab.id ? 'var(--th-tab-active)' : 'var(--th-text-secondary)',
+                }}
               >
-                <tab.icon active={activeTab === tab.id} />
+                <span style={{ color: activeTab === tab.id ? 'var(--th-tab-active)' : 'var(--th-text-secondary)' }}>
+                  <tab.icon active={activeTab === tab.id} />
+                </span>
                 {tab.label}
                 {activeTab === tab.id && (
                   <div className="absolute bottom-0 left-0 right-0 h-0.5" style={{ backgroundColor: 'var(--th-tab-active)' }} />
