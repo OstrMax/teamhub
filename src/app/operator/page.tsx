@@ -89,16 +89,17 @@ export default function OperatorConsolePage() {
               <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" />
             </svg>
             {/* Volume slider */}
-            <div className="flex-1 h-1 rounded-full relative" style={{ backgroundColor: "var(--th-border)" }}>
-              <div
-                className="h-full rounded-full bg-black absolute left-0 top-0"
-                style={{ width: `${volume}%`, backgroundColor: "var(--th-text-primary)" }}
-              />
-              <div
-                className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full"
-                style={{ left: `${volume}%`, transform: `translateX(-50%) translateY(-50%)`, backgroundColor: "var(--th-text-primary)" }}
-              />
-            </div>
+            <input
+              type="range"
+              min={0}
+              max={100}
+              value={volume}
+              onChange={(e) => setVolume(Number(e.target.value))}
+              className="flex-1 h-[3px] rounded-full appearance-none cursor-pointer"
+              style={{
+                background: `linear-gradient(to right, var(--th-text-muted) 0%, var(--th-text-muted) ${volume}%, var(--th-border) ${volume}%, var(--th-border) 100%)`,
+              }}
+            />
           </div>
           <div className="flex items-center gap-1 ml-1">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: "var(--th-text-muted)" }}>
@@ -115,7 +116,7 @@ export default function OperatorConsolePage() {
             value={phoneInput}
             onChange={(e) => setPhoneInput(e.target.value)}
             placeholder="Enter a name or number"
-            className="w-full text-center text-2xl outline-none bg-transparent font-normal"
+            className="w-full text-center text-xl outline-none bg-transparent font-normal placeholder:text-[14px] placeholder:font-normal"
             style={{ color: "var(--th-text-primary)" }}
           />
           {phoneInput && (
@@ -137,7 +138,7 @@ export default function OperatorConsolePage() {
                 key={key.digit}
                 onClick={() => setPhoneInput((prev) => prev + key.digit)}
                 className="flex flex-col items-center justify-center w-16 h-16 rounded-full active:scale-95 transition-all"
-                style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-text-primary)" }}
+                style={{ backgroundColor: "rgba(44,173,67,0.15)", color: "var(--th-text-primary)" }}
               >
                 <span className="text-2xl font-normal">{key.digit}</span>
                 {key.sub && (

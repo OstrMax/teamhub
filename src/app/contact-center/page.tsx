@@ -52,6 +52,13 @@ const hourlyData = [
 
 const maxTotal = Math.max(...hourlyData.map(d => d.inbound + d.outbound));
 
+function hexToRgba(hex: string, alpha: number): string {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
 export default function CXPage() {
   const [tab, setTab] = useState<"dashboard" | "agents" | "calls">("dashboard");
 
@@ -125,7 +132,7 @@ function DashboardView() {
           <div
             key={stat.label}
             className="rounded-xl p-5 hover:shadow-sm transition-shadow"
-            style={{ animation: `fadeIn 0.2s ease-out ${0.05 * i}s both`, backgroundColor: "var(--th-bg-card)", border: "1px solid var(--th-border)" }}
+            style={{ animation: `fadeIn 0.2s ease-out ${0.05 * i}s both`, backgroundColor: hexToRgba(stat.color, 0.08), border: `1px solid ${hexToRgba(stat.color, 0.15)}`, borderLeft: `3px solid ${stat.color}` }}
           >
             <div className="flex items-center justify-between mb-2">
               <div className="text-[12px] font-medium" style={{ color: "var(--th-text-muted)" }}>{stat.label}</div>
