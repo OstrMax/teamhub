@@ -302,7 +302,7 @@ export default function Home() {
                   </div>
                 )}
                 {i !== 0 && <div className="w-10 shrink-0" />}
-                <div className={`flex-1 p-3 rounded-lg transition-colors ${i === 1 ? "bg-[#F0EBFF] group-hover:bg-[#E8E0FF]" : i === 2 ? "bg-[#FFF3CD] group-hover:bg-[#FFEDAC]" : "group-hover:bg-[#F2F2F3]"}`}>
+                <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium" style={{ color: 'var(--th-text-primary)' }}>{meeting.title}</p>
                   <p className="text-xs" style={{ color: 'var(--th-text-muted)' }}>{meeting.time}</p>
                 </div>
@@ -493,13 +493,13 @@ export default function Home() {
             </svg>
             {/* Chart line */}
             <svg className="absolute left-8 right-0 top-0 bottom-6" viewBox="0 0 500 140" preserveAspectRatio="none">
-              <polyline points="0,98 55,70 110,84 165,56 220,42 275,63 330,77 385,49 440,35 500,56" fill="none" stroke="#2a1051" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <polyline points="0,98 55,70 110,84 165,56 220,42 275,63 330,77 385,49 440,35 500,56" fill="none" stroke="var(--th-tab-active)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
             {/* Data points */}
             <svg className="absolute left-8 right-0 top-0 bottom-6" viewBox="0 0 500 140">
               {chartPoints.map((p, i) => (
                 <g key={i} onMouseEnter={() => setHoveredPoint(i)} onMouseLeave={() => setHoveredPoint(null)}>
-                  <circle cx={p.x} cy={p.y} r={hoveredPoint === i ? 6 : 4} fill="#2a1051" className="transition-all duration-150"/>
+                  <circle cx={p.x} cy={p.y} r={hoveredPoint === i ? 6 : 4} fill="var(--th-tab-active)" className="transition-all duration-150"/>
                   <circle cx={p.x} cy={p.y} r="12" fill="transparent" className="cursor-pointer"/>
                 </g>
               ))}

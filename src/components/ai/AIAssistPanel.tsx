@@ -37,15 +37,15 @@ function ActionIcon({ type }: { type: string }) {
   const cls = "shrink-0";
   switch (type) {
     case "meeting":
-      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><rect x="3" y="6" width="14" height="12" rx="1.5" stroke="#2E1055" strokeWidth="1.5"/><path d="M17 10l4-3v10l-4-3" stroke="#2E1055" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>;
+      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><rect x="3" y="6" width="14" height="12" rx="1.5" stroke="var(--th-text-primary)" strokeWidth="1.5"/><path d="M17 10l4-3v10l-4-3" stroke="var(--th-text-primary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>;
     case "sms":
-      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H6l-4 4V6c0-1.1.9-2 2-2z" stroke="#2E1055" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><circle cx="8" cy="12" r="1" fill="#2E1055"/><circle cx="12" cy="12" r="1" fill="#2E1055"/><circle cx="16" cy="12" r="1" fill="#2E1055"/></svg>;
+      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H6l-4 4V6c0-1.1.9-2 2-2z" stroke="var(--th-text-primary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><circle cx="8" cy="12" r="1" fill="var(--th-text-primary)"/><circle cx="12" cy="12" r="1" fill="var(--th-text-primary)"/><circle cx="16" cy="12" r="1" fill="var(--th-text-primary)"/></svg>;
     case "receptionist":
-      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><circle cx="12" cy="8" r="4" stroke="#2E1055" strokeWidth="1.5"/><path d="M4 20c0-2.67 5.33-4 8-4s8 1.33 8 4" stroke="#2E1055" strokeWidth="1.5" strokeLinecap="round"/></svg>;
+      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><circle cx="12" cy="8" r="4" stroke="var(--th-text-primary)" strokeWidth="1.5"/><path d="M4 20c0-2.67 5.33-4 8-4s8 1.33 8 4" stroke="var(--th-text-primary)" strokeWidth="1.5" strokeLinecap="round"/></svg>;
     case "recording":
-      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><rect x="9" y="2" width="6" height="12" rx="3" stroke="#2E1055" strokeWidth="1.5"/><path d="M5 11a7 7 0 0014 0" stroke="#2E1055" strokeWidth="1.5" strokeLinecap="round"/><path d="M12 18v3m-3 0h6" stroke="#2E1055" strokeWidth="1.5" strokeLinecap="round"/></svg>;
+      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><rect x="9" y="2" width="6" height="12" rx="3" stroke="var(--th-text-primary)" strokeWidth="1.5"/><path d="M5 11a7 7 0 0014 0" stroke="var(--th-text-primary)" strokeWidth="1.5" strokeLinecap="round"/><path d="M12 18v3m-3 0h6" stroke="var(--th-text-primary)" strokeWidth="1.5" strokeLinecap="round"/></svg>;
     case "auto":
-      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><circle cx="12" cy="12" r="9" stroke="#2E1055" strokeWidth="1.5"/><path d="M8 12l3 3 5-5" stroke="#2E1055" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>;
+      return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={cls}><circle cx="12" cy="12" r="9" stroke="var(--th-text-primary)" strokeWidth="1.5"/><path d="M8 12l3 3 5-5" stroke="var(--th-text-primary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>;
     default:
       return null;
   }
@@ -55,9 +55,9 @@ function ActionIcon({ type }: { type: string }) {
 function SparkleIcon() {
   return (
     <svg width="32" height="32" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M15.8645 11.3095L13.5196 10.2864C12.9525 10.0397 12.5008 9.58654 12.254 9.02087L11.2309 6.67592C11.1516 6.49409 10.8933 6.49409 10.8139 6.67592L9.79077 9.02087C9.54401 9.58798 9.09089 10.0397 8.52522 10.2864L6.17738 11.311C5.99556 11.3903 5.99556 11.6472 6.17738 11.7266L8.56562 12.7829C9.1313 13.0325 9.58153 13.4871 9.8254 14.0557L10.8153 16.3559C10.8933 16.5391 11.153 16.5391 11.2324 16.3559L12.254 14.0152C12.5008 13.4481 12.9539 12.9965 13.5196 12.7497L15.8645 11.7266C16.0464 11.6472 16.0464 11.3889 15.8645 11.3095Z" fill="#2E1055"/>
-      <path d="M6.43189 9.78292L6.91098 8.68476C7.02643 8.41924 7.23855 8.20711 7.50407 8.09167L8.60367 7.61258C8.68881 7.57506 8.68881 7.45384 8.60367 7.41777L7.50407 6.93868C7.23855 6.82323 7.02643 6.6111 6.91098 6.34558L6.43189 5.24598C6.39437 5.16084 6.27316 5.16084 6.23708 5.24598L5.75799 6.34558C5.64255 6.6111 5.43042 6.82323 5.1649 6.93868L4.06385 7.41921C3.97872 7.45673 3.97872 7.5765 4.06385 7.61402L5.18366 8.10898C5.44918 8.22587 5.65986 8.43944 5.77386 8.70496L6.23852 9.78292C6.27604 9.86806 6.39726 9.8695 6.43333 9.78292H6.43189Z" fill="#2E1055"/>
-      <path d="M8.53992 4.79559L9.13445 5.05823C9.27587 5.12028 9.38699 5.23428 9.4476 5.37425L9.69436 5.94714C9.71456 5.99332 9.77805 5.99332 9.79826 5.94714L10.0522 5.36415C10.1143 5.22273 10.2268 5.11018 10.3668 5.04957L10.9498 4.79559C10.9945 4.77539 10.9945 4.7119 10.9498 4.69169L10.3668 4.43772C10.2254 4.37567 10.1128 4.26311 10.0522 4.12313L9.79826 3.54014C9.77805 3.49541 9.71456 3.49541 9.69436 3.54014L9.44038 4.12313C9.37833 4.26455 9.26577 4.37711 9.1258 4.43772L8.54136 4.69314C8.49663 4.71334 8.49663 4.77683 8.54136 4.79703L8.53992 4.79559Z" fill="#2E1055"/>
+      <path d="M15.8645 11.3095L13.5196 10.2864C12.9525 10.0397 12.5008 9.58654 12.254 9.02087L11.2309 6.67592C11.1516 6.49409 10.8933 6.49409 10.8139 6.67592L9.79077 9.02087C9.54401 9.58798 9.09089 10.0397 8.52522 10.2864L6.17738 11.311C5.99556 11.3903 5.99556 11.6472 6.17738 11.7266L8.56562 12.7829C9.1313 13.0325 9.58153 13.4871 9.8254 14.0557L10.8153 16.3559C10.8933 16.5391 11.153 16.5391 11.2324 16.3559L12.254 14.0152C12.5008 13.4481 12.9539 12.9965 13.5196 12.7497L15.8645 11.7266C16.0464 11.6472 16.0464 11.3889 15.8645 11.3095Z" fill="var(--th-text-primary)"/>
+      <path d="M6.43189 9.78292L6.91098 8.68476C7.02643 8.41924 7.23855 8.20711 7.50407 8.09167L8.60367 7.61258C8.68881 7.57506 8.68881 7.45384 8.60367 7.41777L7.50407 6.93868C7.23855 6.82323 7.02643 6.6111 6.91098 6.34558L6.43189 5.24598C6.39437 5.16084 6.27316 5.16084 6.23708 5.24598L5.75799 6.34558C5.64255 6.6111 5.43042 6.82323 5.1649 6.93868L4.06385 7.41921C3.97872 7.45673 3.97872 7.5765 4.06385 7.61402L5.18366 8.10898C5.44918 8.22587 5.65986 8.43944 5.77386 8.70496L6.23852 9.78292C6.27604 9.86806 6.39726 9.8695 6.43333 9.78292H6.43189Z" fill="var(--th-text-primary)"/>
+      <path d="M8.53992 4.79559L9.13445 5.05823C9.27587 5.12028 9.38699 5.23428 9.4476 5.37425L9.69436 5.94714C9.71456 5.99332 9.77805 5.99332 9.79826 5.94714L10.0522 5.36415C10.1143 5.22273 10.2268 5.11018 10.3668 5.04957L10.9498 4.79559C10.9945 4.77539 10.9945 4.7119 10.9498 4.69169L10.3668 4.43772C10.2254 4.37567 10.1128 4.26311 10.0522 4.12313L9.79826 3.54014C9.77805 3.49541 9.71456 3.49541 9.69436 3.54014L9.44038 4.12313C9.37833 4.26455 9.26577 4.37711 9.1258 4.43772L8.54136 4.69314C8.49663 4.71334 8.49663 4.77683 8.54136 4.79703L8.53992 4.79559Z" fill="var(--th-text-primary)"/>
     </svg>
   );
 }
@@ -90,8 +90,8 @@ export function ActiveAIIcon({ className }: { className?: string }) {
 function PlayIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <circle cx="8" cy="8" r="7" stroke="#2E1055" strokeWidth="1"/>
-      <path d="M6.5 5L10.5 8L6.5 11V5Z" fill="#2E1055"/>
+      <circle cx="8" cy="8" r="7" stroke="var(--th-text-primary)" strokeWidth="1"/>
+      <path d="M6.5 5L10.5 8L6.5 11V5Z" fill="var(--th-text-primary)"/>
     </svg>
   );
 }
@@ -150,29 +150,33 @@ function ReceptionistBanner() {
 
 /* ── Step content for expanded accordion sections (#6) ── */
 function StepContent({ stepIndex }: { stepIndex: number }) {
+  const inputStyle: React.CSSProperties = { color: "var(--th-text-primary)", border: "1px solid var(--th-border)", backgroundColor: "var(--th-bg-input)" };
+  const labelStyle: React.CSSProperties = { color: "var(--th-text-secondary)" };
+  const btnStyle: React.CSSProperties = { backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" };
+
   switch (stepIndex) {
     case 1: // Company description
       return (
         <div className="px-1 pb-5 space-y-3 animate-[fadeIn_0.2s_ease-out]">
           <div>
-            <label className="block text-[12px] font-medium text-[#4C5863] mb-1.5">Company name</label>
-            <input type="text" defaultValue="Sangoma Technologies" className="w-full px-3 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors" />
+            <label className="block text-[12px] font-medium mb-1.5" style={labelStyle}>Company name</label>
+            <input type="text" defaultValue="Sangoma Technologies" className="w-full px-3 py-2.5 text-[13px] rounded-lg focus:outline-none transition-colors" style={inputStyle} />
           </div>
           <div>
-            <label className="block text-[12px] font-medium text-[#4C5863] mb-1.5">Industry</label>
-            <select className="w-full px-3 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors appearance-none">
+            <label className="block text-[12px] font-medium mb-1.5" style={labelStyle}>Industry</label>
+            <select className="w-full px-3 py-2.5 text-[13px] rounded-lg focus:outline-none transition-colors appearance-none" style={inputStyle}>
               <option>Telecommunications</option>
               <option>Healthcare</option>
-              <option>Restaurant & Hospitality</option>
+              <option>Restaurant &amp; Hospitality</option>
               <option>Legal Services</option>
               <option>Real Estate</option>
             </select>
           </div>
           <div>
-            <label className="block text-[12px] font-medium text-[#4C5863] mb-1.5">Description</label>
-            <textarea rows={3} defaultValue="We provide unified communication solutions for businesses of all sizes, including VoIP, video conferencing, and AI-powered tools." className="w-full px-3 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors resize-none" />
+            <label className="block text-[12px] font-medium mb-1.5" style={labelStyle}>Description</label>
+            <textarea rows={3} defaultValue="We provide unified communication solutions for businesses of all sizes, including VoIP, video conferencing, and AI-powered tools." className="w-full px-3 py-2.5 text-[13px] rounded-lg focus:outline-none transition-colors resize-none" style={inputStyle} />
           </div>
-          <button className="w-full py-3 bg-[#001221] text-white text-[12px] font-bold tracking-wider uppercase rounded-full hover:bg-[#0a2540] active:scale-[0.98] transition-all mt-1">
+          <button className="w-full py-3 text-[12px] font-bold tracking-wider uppercase rounded-full active:scale-[0.98] transition-all mt-1" style={btnStyle}>
             Save and Continue
           </button>
         </div>
@@ -181,27 +185,27 @@ function StepContent({ stepIndex }: { stepIndex: number }) {
       return (
         <div className="px-1 pb-5 space-y-3 animate-[fadeIn_0.2s_ease-out]">
           <div>
-            <label className="block text-[12px] font-medium text-[#4C5863] mb-1.5">Address</label>
-            <input type="text" defaultValue="100 Renfrew Dr, Suite 100, Markham, ON" className="w-full px-3 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors" />
+            <label className="block text-[12px] font-medium mb-1.5" style={labelStyle}>Address</label>
+            <input type="text" defaultValue="100 Renfrew Dr, Suite 100, Markham, ON" className="w-full px-3 py-2.5 text-[13px] rounded-lg focus:outline-none transition-colors" style={inputStyle} />
           </div>
           <div>
-            <label className="block text-[12px] font-medium text-[#4C5863] mb-1.5">Timezone</label>
-            <select className="w-full px-3 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors appearance-none">
+            <label className="block text-[12px] font-medium mb-1.5" style={labelStyle}>Timezone</label>
+            <select className="w-full px-3 py-2.5 text-[13px] rounded-lg focus:outline-none transition-colors appearance-none" style={inputStyle}>
               <option>Eastern Time (ET)</option>
               <option>Pacific Time (PT)</option>
               <option>Central Time (CT)</option>
             </select>
           </div>
           <div className="space-y-2">
-            <label className="block text-[12px] font-medium text-[#4C5863] mb-1">Business hours</label>
+            <label className="block text-[12px] font-medium mb-1" style={labelStyle}>Business hours</label>
             {["Monday - Friday", "Saturday", "Sunday"].map((day, i) => (
               <div key={day} className="flex items-center gap-2">
-                <span className="text-[12px] text-[#001221] w-28">{day}</span>
-                <input type="text" defaultValue={i === 0 ? "9:00 AM - 5:00 PM" : i === 1 ? "10:00 AM - 2:00 PM" : "Closed"} className="flex-1 px-2.5 py-1.5 text-[12px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors" />
+                <span className="text-[12px] w-28" style={{ color: "var(--th-text-primary)" }}>{day}</span>
+                <input type="text" defaultValue={i === 0 ? "9:00 AM - 5:00 PM" : i === 1 ? "10:00 AM - 2:00 PM" : "Closed"} className="flex-1 px-2.5 py-1.5 text-[12px] rounded-lg focus:outline-none transition-colors" style={inputStyle} />
               </div>
             ))}
           </div>
-          <button className="w-full py-3 bg-[#001221] text-white text-[12px] font-bold tracking-wider uppercase rounded-full hover:bg-[#0a2540] active:scale-[0.98] transition-all mt-1">
+          <button className="w-full py-3 text-[12px] font-bold tracking-wider uppercase rounded-full active:scale-[0.98] transition-all mt-1" style={btnStyle}>
             Save and Continue
           </button>
         </div>
@@ -209,26 +213,26 @@ function StepContent({ stepIndex }: { stepIndex: number }) {
     case 3: // Transfer by name
       return (
         <div className="px-1 pb-5 space-y-3 animate-[fadeIn_0.2s_ease-out]">
-          <p className="text-[12px] text-[#4C5863]">Allow callers to be transferred to a team member by name.</p>
+          <p className="text-[12px]" style={labelStyle}>Allow callers to be transferred to a team member by name.</p>
           <div className="flex items-center justify-between py-2">
-            <span className="text-[13px] text-[#001221] font-medium">Enable transfer by name</span>
-            <div className="w-10 h-6 bg-[#2E1055] rounded-full relative cursor-pointer">
+            <span className="text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>Enable transfer by name</span>
+            <div className="w-10 h-6 rounded-full relative cursor-pointer" style={{ backgroundColor: "var(--th-tab-active)" }}>
               <div className="absolute top-1 right-1 w-4 h-4 bg-white rounded-full shadow-sm transition-all" />
             </div>
           </div>
           <div>
-            <label className="block text-[12px] font-medium text-[#4C5863] mb-1.5">Directory source</label>
-            <select className="w-full px-3 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors appearance-none">
+            <label className="block text-[12px] font-medium mb-1.5" style={labelStyle}>Directory source</label>
+            <select className="w-full px-3 py-2.5 text-[13px] rounded-lg focus:outline-none transition-colors appearance-none" style={inputStyle}>
               <option>All extensions</option>
               <option>Sales team only</option>
               <option>Support team only</option>
             </select>
           </div>
           <div>
-            <label className="block text-[12px] font-medium text-[#4C5863] mb-1.5">Max transfer attempts</label>
-            <input type="number" defaultValue={3} className="w-full px-3 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors" />
+            <label className="block text-[12px] font-medium mb-1.5" style={labelStyle}>Max transfer attempts</label>
+            <input type="number" defaultValue={3} className="w-full px-3 py-2.5 text-[13px] rounded-lg focus:outline-none transition-colors" style={inputStyle} />
           </div>
-          <button className="w-full py-3 bg-[#001221] text-white text-[12px] font-bold tracking-wider uppercase rounded-full hover:bg-[#0a2540] active:scale-[0.98] transition-all mt-1">
+          <button className="w-full py-3 text-[12px] font-bold tracking-wider uppercase rounded-full active:scale-[0.98] transition-all mt-1" style={btnStyle}>
             Save and Continue
           </button>
         </div>
@@ -237,20 +241,20 @@ function StepContent({ stepIndex }: { stepIndex: number }) {
       return (
         <div className="px-1 pb-5 space-y-3 animate-[fadeIn_0.2s_ease-out]">
           <div>
-            <label className="block text-[12px] font-medium text-[#4C5863] mb-1.5">Greeting message</label>
-            <textarea rows={3} defaultValue="Thank you for calling Sangoma Technologies! How may I direct your call today?" className="w-full px-3 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors resize-none" />
+            <label className="block text-[12px] font-medium mb-1.5" style={labelStyle}>Greeting message</label>
+            <textarea rows={3} defaultValue="Thank you for calling Sangoma Technologies! How may I direct your call today?" className="w-full px-3 py-2.5 text-[13px] rounded-lg focus:outline-none transition-colors resize-none" style={inputStyle} />
           </div>
           <div>
-            <label className="block text-[12px] font-medium text-[#4C5863] mb-1.5">After-hours message</label>
-            <textarea rows={3} defaultValue="We are currently closed. Our business hours are Monday to Friday, 9 AM to 5 PM. Please leave a message and we will return your call." className="w-full px-3 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors resize-none" />
+            <label className="block text-[12px] font-medium mb-1.5" style={labelStyle}>After-hours message</label>
+            <textarea rows={3} defaultValue="We are currently closed. Our business hours are Monday to Friday, 9 AM to 5 PM. Please leave a message and we will return your call." className="w-full px-3 py-2.5 text-[13px] rounded-lg focus:outline-none transition-colors resize-none" style={inputStyle} />
           </div>
           <div className="flex items-center justify-between py-2">
-            <span className="text-[13px] text-[#001221] font-medium">Play hold music</span>
-            <div className="w-10 h-6 bg-[#2E1055] rounded-full relative cursor-pointer">
+            <span className="text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>Play hold music</span>
+            <div className="w-10 h-6 rounded-full relative cursor-pointer" style={{ backgroundColor: "var(--th-tab-active)" }}>
               <div className="absolute top-1 right-1 w-4 h-4 bg-white rounded-full shadow-sm transition-all" />
             </div>
           </div>
-          <button className="w-full py-3 bg-[#001221] text-white text-[12px] font-bold tracking-wider uppercase rounded-full hover:bg-[#0a2540] active:scale-[0.98] transition-all mt-1">
+          <button className="w-full py-3 text-[12px] font-bold tracking-wider uppercase rounded-full active:scale-[0.98] transition-all mt-1" style={btnStyle}>
             Save and Finish
           </button>
         </div>
@@ -333,31 +337,40 @@ export default function AIAssistPanel({
   };
 
   return (
-    <div className={`w-[390px] shrink-0 bg-white border-l border-[#E5E6E8] flex flex-col overflow-hidden ${animating ? "animate-[slideInRight_0.3s_ease-out]" : ""}`}>
+    <div
+      className={`w-[390px] shrink-0 flex flex-col overflow-hidden transition-colors duration-300 ${animating ? "animate-[slideInRight_0.3s_ease-out]" : ""}`}
+      style={{ backgroundColor: "var(--th-bg)", borderLeft: "1px solid var(--th-border)" }}
+    >
       {/* Header */}
       <div className="flex items-center justify-between px-5 h-14 shrink-0">
         <div className="flex items-center gap-2">
           {view !== "main" && (
             <button
               onClick={handleBack}
-              className="p-1 -ml-1 rounded-lg hover:bg-[#F2F2F3] active:bg-[#E5E6E8] transition-all duration-150 active:scale-90"
+              className="p-1 -ml-1 rounded-lg transition-all duration-150 active:scale-90"
+              style={{ color: "var(--th-text-primary)" }}
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; }}
             >
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M12.5 15L7.5 10L12.5 5" stroke="#001221" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </button>
           )}
-          <span className="text-[15px] font-semibold text-[#001221]">
+          <span className="text-[15px] font-semibold" style={{ color: "var(--th-text-primary)" }}>
             {viewTitles[view]}
           </span>
         </div>
         <button
           onClick={onClose}
-          className="p-1.5 rounded-lg hover:bg-[#F2F2F3] active:bg-[#E5E6E8] transition-all duration-150 active:scale-90"
+          className="p-1.5 rounded-lg transition-all duration-150 active:scale-90"
+          style={{ color: "var(--th-text-primary)" }}
+          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; }}
         >
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M13.5 4.5L4.5 13.5" stroke="#001221" strokeWidth="1.5" strokeLinecap="round"/>
-            <path d="M4.5 4.5L13.5 13.5" stroke="#001221" strokeWidth="1.5" strokeLinecap="round"/>
+            <path d="M13.5 4.5L4.5 13.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            <path d="M4.5 4.5L13.5 13.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
           </svg>
         </button>
       </div>
@@ -406,12 +419,12 @@ function MainView({ onActionClick }: { onActionClick: (a: string) => void }) {
       </div>
 
       {/* Heading */}
-      <h2 className="text-[22px] font-bold text-[#001221] leading-[1.3] mb-3 animate-[fadeIn_0.35s_ease-out]">
+      <h2 className="text-[22px] font-bold leading-[1.3] mb-3 animate-[fadeIn_0.35s_ease-out]" style={{ color: "var(--th-text-primary)" }}>
         Use Your Sangoma AI<br />Assistant to Make Your<br />Job Easier
       </h2>
 
       {/* Subtitle */}
-      <p className="text-[14px] text-[#4C5863] leading-[1.5] mb-8 animate-[fadeIn_0.4s_ease-out]">
+      <p className="text-[14px] leading-[1.5] mb-8 animate-[fadeIn_0.4s_ease-out]" style={{ color: "var(--th-text-secondary)" }}>
         Power up your productivity with AI features in the app you use every day.
       </p>
 
@@ -421,10 +434,16 @@ function MainView({ onActionClick }: { onActionClick: (a: string) => void }) {
           <button
             key={action.label}
             onClick={() => onActionClick(action.label)}
-            className="w-full py-3.5 px-5 bg-white rounded-xl border border-[#E5E6E8] text-[14px] font-medium text-[#001221] text-left flex items-center gap-3 hover:border-[#C5C7CA] hover:shadow-[0_2px_12px_rgba(0,0,0,0.06)] active:scale-[0.98] active:shadow-none transition-all duration-150"
-            style={{ animationDelay: `${0.05 * i}s`, animation: `fadeIn 0.3s ease-out ${0.05 * i}s both` }}
+            className="w-full py-3.5 px-5 rounded-xl text-[14px] font-medium text-left flex items-center gap-3 active:scale-[0.98] active:shadow-none transition-all duration-150"
+            style={{
+              animationDelay: `${0.05 * i}s`,
+              animation: `fadeIn 0.3s ease-out ${0.05 * i}s both`,
+              backgroundColor: "var(--th-bg-card)",
+              border: "1px solid var(--th-border)",
+              color: "var(--th-text-primary)",
+            }}
           >
-            <span className="w-8 h-8 rounded-full bg-[#F2F0F5] flex items-center justify-center shrink-0">
+            <span className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: "var(--th-bg-hover)" }}>
               <ActionIcon type={action.icon} />
             </span>
             {action.label}
@@ -448,22 +467,24 @@ function ReceptionistView({
       <ReceptionistBanner />
 
       <div className="px-5">
-        <h2 className="text-[22px] font-bold text-[#001221] leading-[1.3] mb-2">
+        <h2 className="text-[22px] font-bold leading-[1.3] mb-2" style={{ color: "var(--th-text-primary)" }}>
           Create your AI<br />receptionist
         </h2>
-        <p className="text-[13px] text-[#4C5863] leading-[1.5] mb-6">
+        <p className="text-[13px] leading-[1.5] mb-6" style={{ color: "var(--th-text-secondary)" }}>
           Customize your receptionist and equip them with the skills they need to assist your business in 5 easy steps.
         </p>
 
         {/* Steps accordion */}
         <div className="flex flex-col">
           {receptionistSteps.map((step, i) => (
-            <div key={i} className="border-b border-[#E5E6E8]">
+            <div key={i} style={{ borderBottom: "1px solid var(--th-border)" }}>
               <button
                 onClick={() => onStepToggle(i)}
-                className="w-full flex items-center justify-between py-4 px-1 text-left hover:bg-[#F9F9FA] rounded-lg transition-all duration-150 active:scale-[0.99]"
+                className="w-full flex items-center justify-between py-4 px-1 text-left rounded-lg transition-all duration-150 active:scale-[0.99]"
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; }}
               >
-                <span className="text-[14px] font-medium text-[#001221]">
+                <span className="text-[14px] font-medium" style={{ color: "var(--th-text-primary)" }}>
                   {i + 1}. {step}
                 </span>
                 <svg
@@ -474,11 +495,11 @@ function ReceptionistView({
                   className={`transition-transform duration-300 ${expandedStep === i ? "rotate-180" : ""}`}
                 >
                   {expandedStep === i ? (
-                    <path d="M4 10H16" stroke="#001221" strokeWidth="1.5" strokeLinecap="round"/>
+                    <path d="M4 10H16" stroke="var(--th-text-primary)" strokeWidth="1.5" strokeLinecap="round"/>
                   ) : (
                     <>
-                      <path d="M10 4V16" stroke="#001221" strokeWidth="1.5" strokeLinecap="round"/>
-                      <path d="M4 10H16" stroke="#001221" strokeWidth="1.5" strokeLinecap="round"/>
+                      <path d="M10 4V16" stroke="var(--th-text-primary)" strokeWidth="1.5" strokeLinecap="round"/>
+                      <path d="M4 10H16" stroke="var(--th-text-primary)" strokeWidth="1.5" strokeLinecap="round"/>
                     </>
                   )}
                 </svg>
@@ -514,24 +535,24 @@ function ToneView({
       <ReceptionistBanner />
 
       <div className="px-5">
-        <h2 className="text-[22px] font-bold text-[#001221] leading-[1.3] mb-2">
+        <h2 className="text-[22px] font-bold leading-[1.3] mb-2" style={{ color: "var(--th-text-primary)" }}>
           Create your AI<br />receptionist
         </h2>
-        <p className="text-[13px] text-[#4C5863] leading-[1.5] mb-6">
+        <p className="text-[13px] leading-[1.5] mb-6" style={{ color: "var(--th-text-secondary)" }}>
           Customize your receptionist and equip them with the skills they need to assist your business in 5 easy steps.
         </p>
 
         {/* Step 1: Tone and personality – expanded with personas */}
-        <div className="border-b border-[#E5E6E8]">
+        <div style={{ borderBottom: "1px solid var(--th-border)" }}>
           <button
             onClick={() => onStepToggle(0)}
             className="w-full flex items-center justify-between py-4 px-1 text-left"
           >
-            <span className="text-[14px] font-medium text-[#001221]">
+            <span className="text-[14px] font-medium" style={{ color: "var(--th-text-primary)" }}>
               1. Tone and personality
             </span>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M4 10H16" stroke="#001221" strokeWidth="1.5" strokeLinecap="round"/>
+              <path d="M4 10H16" stroke="var(--th-text-primary)" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
           </button>
 
@@ -562,7 +583,7 @@ function ToneView({
                       unoptimized
                     />
                   </div>
-                  <span className={`text-[12px] font-medium transition-colors ${isSelected ? "text-[#001221]" : "text-[#4C5863] group-hover:text-[#001221]"}`}>
+                  <span className="text-[12px] font-medium transition-colors" style={{ color: isSelected ? "var(--th-text-primary)" : "var(--th-text-secondary)" }}>
                     {persona.name}
                   </span>
                   <div className="opacity-70 group-hover:opacity-100 transition-opacity active:scale-90">
@@ -586,17 +607,19 @@ function ToneView({
 
         {/* Remaining steps (collapsed) */}
         {receptionistSteps.slice(1).map((step, i) => (
-          <div key={i + 1} className="border-b border-[#E5E6E8]">
+          <div key={i + 1} style={{ borderBottom: "1px solid var(--th-border)" }}>
             <button
               onClick={() => onStepToggle(i + 1)}
-              className="w-full flex items-center justify-between py-4 px-1 text-left hover:bg-[#F9F9FA] rounded-lg transition-all duration-150 active:scale-[0.99]"
+              className="w-full flex items-center justify-between py-4 px-1 text-left rounded-lg transition-all duration-150 active:scale-[0.99]"
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; }}
             >
-              <span className="text-[14px] font-medium text-[#001221]">
+              <span className="text-[14px] font-medium" style={{ color: "var(--th-text-primary)" }}>
                 {i + 2}. {step}
               </span>
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M10 4V16" stroke="#001221" strokeWidth="1.5" strokeLinecap="round"/>
-                <path d="M4 10H16" stroke="#001221" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M10 4V16" stroke="var(--th-text-primary)" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M4 10H16" stroke="var(--th-text-primary)" strokeWidth="1.5" strokeLinecap="round"/>
               </svg>
             </button>
           </div>
@@ -651,21 +674,21 @@ function MeetingView() {
     <div className="px-5 pt-6 pb-8">
       {/* Meeting selector */}
       <div className="mb-5">
-        <label className="block text-[12px] font-medium text-[#4C5863] mb-2">Select a recent meeting</label>
+        <label className="block text-[12px] font-medium mb-2" style={{ color: "var(--th-text-secondary)" }}>Select a recent meeting</label>
         <div className="flex flex-col gap-2">
           {meetings.map((m, i) => (
             <button
               key={i}
               onClick={() => setSelectedMeeting(i)}
-              className={`w-full px-4 py-3 rounded-xl border text-left transition-all duration-150 active:scale-[0.98] ${
-                selectedMeeting === i
-                  ? "border-[#2E1055] bg-[#F8F5FB] shadow-sm"
-                  : "border-[#E5E6E8] bg-white hover:border-[#C5C7CA] hover:shadow-sm"
-              }`}
-              style={{ animation: `fadeIn 0.25s ease-out ${0.05 * i}s both` }}
+              className="w-full px-4 py-3 rounded-xl text-left transition-all duration-150 active:scale-[0.98]"
+              style={{
+                border: `1px solid ${selectedMeeting === i ? "var(--th-active-conv-border)" : "var(--th-border)"}`,
+                backgroundColor: selectedMeeting === i ? "var(--th-active-conv-bg)" : "var(--th-bg)",
+                animation: `fadeIn 0.25s ease-out ${0.05 * i}s both`,
+              }}
             >
-              <div className="text-[13px] font-semibold text-[#001221]">{m.title}</div>
-              <div className="text-[11px] text-[#7F888F] mt-0.5">{m.date} · {m.duration}</div>
+              <div className="text-[13px] font-semibold" style={{ color: "var(--th-text-primary)" }}>{m.title}</div>
+              <div className="text-[11px] mt-0.5" style={{ color: "var(--th-text-muted)" }}>{m.date} · {m.duration}</div>
             </button>
           ))}
         </div>
@@ -675,21 +698,21 @@ function MeetingView() {
       <div className="animate-[fadeIn_0.25s_ease-out]" key={selectedMeeting}>
         {/* Attendees */}
         <div className="mb-4">
-          <span className="text-[12px] font-medium text-[#4C5863]">Attendees</span>
+          <span className="text-[12px] font-medium" style={{ color: "var(--th-text-secondary)" }}>Attendees</span>
           <div className="flex flex-wrap gap-1.5 mt-1.5">
             {meeting.attendees.map((a) => (
-              <span key={a} className="px-2.5 py-1 bg-[#F2F0F5] text-[11px] font-medium text-[#2E1055] rounded-full">{a}</span>
+              <span key={a} className="px-2.5 py-1 text-[11px] font-medium rounded-full" style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-tab-active)" }}>{a}</span>
             ))}
           </div>
         </div>
 
         {/* Key Topics */}
         <div className="mb-4">
-          <span className="text-[12px] font-medium text-[#4C5863]">Key Topics</span>
+          <span className="text-[12px] font-medium" style={{ color: "var(--th-text-secondary)" }}>Key Topics</span>
           <ul className="mt-1.5 space-y-1.5">
             {summary.keyTopics.map((topic, i) => (
-              <li key={i} className="flex items-start gap-2 text-[13px] text-[#001221]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#2E1055] shrink-0 mt-[7px]" />
+              <li key={i} className="flex items-start gap-2 text-[13px]" style={{ color: "var(--th-text-primary)" }}>
+                <span className="w-1.5 h-1.5 rounded-full shrink-0 mt-[7px]" style={{ backgroundColor: "var(--th-tab-active)" }} />
                 {topic}
               </li>
             ))}
@@ -698,14 +721,14 @@ function MeetingView() {
 
         {/* Action Items */}
         <div className="mb-4">
-          <span className="text-[12px] font-medium text-[#4C5863]">Action Items</span>
+          <span className="text-[12px] font-medium" style={{ color: "var(--th-text-secondary)" }}>Action Items</span>
           <div className="mt-1.5 space-y-2">
             {summary.actionItems.map((item, i) => (
-              <div key={i} className="flex items-start gap-2.5 px-3 py-2.5 bg-[#F9F9FA] rounded-lg">
-                <div className="w-4 h-4 rounded border-2 border-[#CCCFD2] shrink-0 mt-0.5" />
+              <div key={i} className="flex items-start gap-2.5 px-3 py-2.5 rounded-lg" style={{ backgroundColor: "var(--th-bg-card)" }}>
+                <div className="w-4 h-4 rounded shrink-0 mt-0.5" style={{ border: "2px solid var(--th-border)" }} />
                 <div className="flex-1">
-                  <div className="text-[12px] text-[#001221] font-medium">{item.task}</div>
-                  <div className="text-[11px] text-[#7F888F] mt-0.5">{item.assignee} · Due {item.due}</div>
+                  <div className="text-[12px] font-medium" style={{ color: "var(--th-text-primary)" }}>{item.task}</div>
+                  <div className="text-[11px] mt-0.5" style={{ color: "var(--th-text-muted)" }}>{item.assignee} · Due {item.due}</div>
                 </div>
               </div>
             ))}
@@ -714,13 +737,13 @@ function MeetingView() {
 
         {/* Key Decisions */}
         <div className="mb-5">
-          <span className="text-[12px] font-medium text-[#4C5863]">Key Decision</span>
-          <div className="mt-1.5 px-3 py-2.5 bg-[#FFFDE7] border border-[#FCC624]/30 rounded-lg text-[12px] text-[#001221] leading-relaxed">
+          <span className="text-[12px] font-medium" style={{ color: "var(--th-text-secondary)" }}>Key Decision</span>
+          <div className="mt-1.5 px-3 py-2.5 rounded-lg text-[12px] leading-relaxed" style={{ backgroundColor: "var(--th-bg-card)", border: "1px solid var(--th-border)", color: "var(--th-text-primary)" }}>
             {summary.decisions}
           </div>
         </div>
 
-        <button className="w-full py-3 bg-[#001221] text-white text-[12px] font-bold tracking-wider uppercase rounded-full hover:bg-[#0a2540] active:scale-[0.98] transition-all">
+        <button className="w-full py-3 text-[12px] font-bold tracking-wider uppercase rounded-full active:scale-[0.98] transition-all" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>
           Share Summary
         </button>
       </div>
@@ -732,32 +755,34 @@ function MeetingView() {
 function SMSView() {
   const [tone, setTone] = useState("Professional");
   const tones = ["Professional", "Casual", "Friendly", "Urgent"];
+  const inputStyle: React.CSSProperties = { color: "var(--th-text-primary)", border: "1px solid var(--th-border)", backgroundColor: "var(--th-bg-input)" };
 
   return (
     <div className="px-5 pt-6 pb-8">
-      <p className="text-[13px] text-[#4C5863] leading-[1.5] mb-5">
+      <p className="text-[13px] leading-[1.5] mb-5" style={{ color: "var(--th-text-secondary)" }}>
         Tell us who you&apos;re writing to and what you want to say. AI will draft a polished message for you.
       </p>
 
       {/* Recipient */}
       <div className="mb-4">
-        <label className="block text-[12px] font-medium text-[#4C5863] mb-1.5">Recipient</label>
-        <input type="text" defaultValue="Sarah Chen" className="w-full px-3 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors" placeholder="Enter name or number" />
+        <label className="block text-[12px] font-medium mb-1.5" style={{ color: "var(--th-text-secondary)" }}>Recipient</label>
+        <input type="text" defaultValue="Sarah Chen" className="w-full px-3 py-2.5 text-[13px] rounded-lg focus:outline-none transition-colors" style={inputStyle} placeholder="Enter name or number" />
       </div>
 
       {/* Tone selector */}
       <div className="mb-4">
-        <label className="block text-[12px] font-medium text-[#4C5863] mb-1.5">Tone</label>
+        <label className="block text-[12px] font-medium mb-1.5" style={{ color: "var(--th-text-secondary)" }}>Tone</label>
         <div className="flex gap-2 flex-wrap">
           {tones.map((t) => (
             <button
               key={t}
               onClick={() => setTone(t)}
-              className={`px-3 py-1.5 rounded-full text-[12px] font-medium border transition-all duration-150 active:scale-95 ${
+              className="px-3 py-1.5 rounded-full text-[12px] font-medium transition-all duration-150 active:scale-95"
+              style={
                 tone === t
-                  ? "bg-[#2E1055] text-white border-[#2E1055]"
-                  : "bg-white text-[#4C5863] border-[#E5E6E8] hover:border-[#C5C7CA]"
-              }`}
+                  ? { backgroundColor: "var(--th-tab-active)", color: "var(--th-bg)", border: "1px solid var(--th-tab-active)" }
+                  : { backgroundColor: "var(--th-bg)", color: "var(--th-text-secondary)", border: "1px solid var(--th-border)" }
+              }
             >
               {t}
             </button>
@@ -767,30 +792,30 @@ function SMSView() {
 
       {/* Topic / purpose */}
       <div className="mb-4">
-        <label className="block text-[12px] font-medium text-[#4C5863] mb-1.5">What do you want to say?</label>
-        <textarea rows={3} defaultValue="Remind about tomorrow's meeting at 2 PM and ask to bring the Q2 report" className="w-full px-3 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors resize-none" placeholder="Describe your message purpose..." />
+        <label className="block text-[12px] font-medium mb-1.5" style={{ color: "var(--th-text-secondary)" }}>What do you want to say?</label>
+        <textarea rows={3} defaultValue="Remind about tomorrow's meeting at 2 PM and ask to bring the Q2 report" className="w-full px-3 py-2.5 text-[13px] rounded-lg focus:outline-none transition-colors resize-none" style={inputStyle} placeholder="Describe your message purpose..." />
       </div>
 
       {/* Generated message preview */}
       <div className="mb-5">
-        <label className="block text-[12px] font-medium text-[#4C5863] mb-1.5">AI-generated draft</label>
-        <div className="px-4 py-3.5 bg-[#F8F5FB] border border-[#E5E6E8] rounded-xl">
-          <p className="text-[13px] text-[#001221] leading-relaxed">
+        <label className="block text-[12px] font-medium mb-1.5" style={{ color: "var(--th-text-secondary)" }}>AI-generated draft</label>
+        <div className="px-4 py-3.5 rounded-xl" style={{ backgroundColor: "var(--th-bg-card)", border: "1px solid var(--th-border)" }}>
+          <p className="text-[13px] leading-relaxed" style={{ color: "var(--th-text-primary)" }}>
             Hi Sarah, just a quick reminder about our meeting tomorrow at 2:00 PM. Could you please bring the Q2 report along? Looking forward to catching up. Thanks!
           </p>
-          <div className="flex items-center gap-1.5 mt-3 pt-2.5 border-t border-[#E5E6E8]">
-            <span className="text-[10px] text-[#7F888F] uppercase tracking-wider">Tone: {tone}</span>
-            <span className="text-[10px] text-[#7F888F]">·</span>
-            <span className="text-[10px] text-[#7F888F]">142 characters</span>
+          <div className="flex items-center gap-1.5 mt-3 pt-2.5" style={{ borderTop: "1px solid var(--th-border)" }}>
+            <span className="text-[10px] uppercase tracking-wider" style={{ color: "var(--th-text-muted)" }}>Tone: {tone}</span>
+            <span className="text-[10px]" style={{ color: "var(--th-text-muted)" }}>·</span>
+            <span className="text-[10px]" style={{ color: "var(--th-text-muted)" }}>142 characters</span>
           </div>
         </div>
       </div>
 
       <div className="flex gap-2.5">
-        <button className="flex-1 py-3 bg-white text-[#001221] text-[12px] font-bold tracking-wider uppercase rounded-full border border-[#E5E6E8] hover:bg-[#F9F9FA] active:scale-[0.98] transition-all">
+        <button className="flex-1 py-3 text-[12px] font-bold tracking-wider uppercase rounded-full active:scale-[0.98] transition-all" style={{ backgroundColor: "var(--th-bg)", color: "var(--th-text-primary)", border: "1px solid var(--th-border)" }}>
           Regenerate
         </button>
-        <button className="flex-1 py-3 bg-[#001221] text-white text-[12px] font-bold tracking-wider uppercase rounded-full hover:bg-[#0a2540] active:scale-[0.98] transition-all">
+        <button className="flex-1 py-3 text-[12px] font-bold tracking-wider uppercase rounded-full active:scale-[0.98] transition-all" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>
           Copy & Send
         </button>
       </div>
@@ -807,10 +832,11 @@ function RecordingView() {
     { caller: "Lisa Thompson", number: "+1 (416) 555-0321", date: "Yesterday, 1:22 PM", duration: "2:15", sentiment: "Poor", sentColor: "bg-red-400" },
     { caller: "Robert Chen", number: "+1 (905) 555-0654", date: "Mar 1, 4:50 PM", duration: "18:30", sentiment: "Good", sentColor: "bg-green-500" },
   ];
+  const inputStyle: React.CSSProperties = { color: "var(--th-text-primary)", border: "1px solid var(--th-border)", backgroundColor: "var(--th-bg-input)" };
 
   return (
     <div className="px-5 pt-6 pb-8">
-      <p className="text-[13px] text-[#4C5863] leading-[1.5] mb-5">
+      <p className="text-[13px] leading-[1.5] mb-5" style={{ color: "var(--th-text-secondary)" }}>
         Search and filter your call recordings by caller, date, or keyword.
       </p>
 
@@ -818,55 +844,63 @@ function RecordingView() {
       <div className="mb-4">
         <div className="relative">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="absolute left-3 top-1/2 -translate-y-1/2">
-            <circle cx="7" cy="7" r="5" stroke="#7F888F" strokeWidth="1.5"/>
-            <path d="M11 11L14 14" stroke="#7F888F" strokeWidth="1.5" strokeLinecap="round"/>
+            <circle cx="7" cy="7" r="5" stroke="var(--th-text-muted)" strokeWidth="1.5"/>
+            <path d="M11 11L14 14" stroke="var(--th-text-muted)" strokeWidth="1.5" strokeLinecap="round"/>
           </svg>
-          <input type="text" placeholder="Search by name, number, or keyword..." className="w-full pl-9 pr-3 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors" />
+          <input type="text" placeholder="Search by name, number, or keyword..." className="w-full pl-9 pr-3 py-2.5 text-[13px] rounded-lg focus:outline-none transition-colors" style={inputStyle} />
         </div>
       </div>
 
       {/* Date filter */}
       <div className="flex gap-2 mb-5">
         <div className="flex-1">
-          <label className="block text-[11px] font-medium text-[#4C5863] mb-1">From</label>
-          <input type="date" defaultValue="2026-03-01" className="w-full px-2.5 py-2 text-[12px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors" />
+          <label className="block text-[11px] font-medium mb-1" style={{ color: "var(--th-text-secondary)" }}>From</label>
+          <input type="date" defaultValue="2026-03-01" className="w-full px-2.5 py-2 text-[12px] rounded-lg focus:outline-none transition-colors" style={inputStyle} />
         </div>
         <div className="flex-1">
-          <label className="block text-[11px] font-medium text-[#4C5863] mb-1">To</label>
-          <input type="date" defaultValue="2026-03-03" className="w-full px-2.5 py-2 text-[12px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors" />
+          <label className="block text-[11px] font-medium mb-1" style={{ color: "var(--th-text-secondary)" }}>To</label>
+          <input type="date" defaultValue="2026-03-03" className="w-full px-2.5 py-2 text-[12px] rounded-lg focus:outline-none transition-colors" style={inputStyle} />
         </div>
       </div>
 
       {/* Results count */}
-      <div className="text-[12px] text-[#7F888F] mb-3">{recordings.length} recordings found</div>
+      <div className="text-[12px] mb-3" style={{ color: "var(--th-text-muted)" }}>{recordings.length} recordings found</div>
 
       {/* Recording results */}
       <div className="flex flex-col gap-2">
         {recordings.map((rec, i) => (
           <div
             key={i}
-            className="px-4 py-3 border border-[#E5E6E8] rounded-xl hover:border-[#C5C7CA] hover:shadow-sm transition-all duration-150 cursor-pointer active:scale-[0.99]"
-            style={{ animation: `fadeIn 0.25s ease-out ${0.04 * i}s both` }}
+            className="px-4 py-3 rounded-xl transition-all duration-150 cursor-pointer active:scale-[0.99]"
+            style={{ border: "1px solid var(--th-border)", animation: `fadeIn 0.25s ease-out ${0.04 * i}s both` }}
           >
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[13px] font-semibold text-[#001221]">{rec.caller}</span>
+              <span className="text-[13px] font-semibold" style={{ color: "var(--th-text-primary)" }}>{rec.caller}</span>
               <div className="flex items-center gap-1.5">
                 <span className={`w-2 h-2 rounded-full ${rec.sentColor}`} />
-                <span className="text-[10px] text-[#7F888F]">{rec.sentiment}</span>
+                <span className="text-[10px]" style={{ color: "var(--th-text-muted)" }}>{rec.sentiment}</span>
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-[11px] text-[#7F888F]">{rec.number}</span>
-              <span className="text-[11px] text-[#7F888F]">{rec.duration}</span>
+              <span className="text-[11px]" style={{ color: "var(--th-text-muted)" }}>{rec.number}</span>
+              <span className="text-[11px]" style={{ color: "var(--th-text-muted)" }}>{rec.duration}</span>
             </div>
             <div className="flex items-center justify-between mt-1.5">
-              <span className="text-[11px] text-[#7F888F]">{rec.date}</span>
+              <span className="text-[11px]" style={{ color: "var(--th-text-muted)" }}>{rec.date}</span>
               <div className="flex items-center gap-1">
-                <button className="p-1 hover:bg-[#F2F0F5] rounded transition-colors active:scale-90">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 3v10l8-5-8-5z" stroke="#2E1055" strokeWidth="1.2" strokeLinejoin="round"/></svg>
+                <button
+                  className="p-1 rounded transition-colors active:scale-90"
+                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 3v10l8-5-8-5z" stroke="var(--th-text-primary)" strokeWidth="1.2" strokeLinejoin="round"/></svg>
                 </button>
-                <button className="p-1 hover:bg-[#F2F0F5] rounded transition-colors active:scale-90">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 14V3h10v11l-5-3-5 3z" stroke="#2E1055" strokeWidth="1.2" strokeLinejoin="round"/></svg>
+                <button
+                  className="p-1 rounded transition-colors active:scale-90"
+                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 14V3h10v11l-5-3-5 3z" stroke="var(--th-text-primary)" strokeWidth="1.2" strokeLinejoin="round"/></svg>
                 </button>
               </div>
             </div>
@@ -881,6 +915,7 @@ function RecordingView() {
 function AutoResponseView() {
   const [enabled, setEnabled] = useState(true);
   const [activeRule, setActiveRule] = useState(0);
+  const inputStyle: React.CSSProperties = { color: "var(--th-text-primary)", border: "1px solid var(--th-border)", backgroundColor: "var(--th-bg-input)" };
 
   const rules = [
     { name: "After hours", trigger: "Calls received outside business hours", status: true },
@@ -890,19 +925,20 @@ function AutoResponseView() {
 
   return (
     <div className="px-5 pt-6 pb-8">
-      <p className="text-[13px] text-[#4C5863] leading-[1.5] mb-5">
+      <p className="text-[13px] leading-[1.5] mb-5" style={{ color: "var(--th-text-secondary)" }}>
         Set up automatic responses for missed calls, voicemails, and text messages based on your availability.
       </p>
 
       {/* Master toggle */}
-      <div className="flex items-center justify-between py-3 px-4 bg-[#F9F9FA] rounded-xl mb-5">
+      <div className="flex items-center justify-between py-3 px-4 rounded-xl mb-5" style={{ backgroundColor: "var(--th-bg-card)" }}>
         <div>
-          <span className="text-[13px] font-semibold text-[#001221]">Auto-response</span>
-          <p className="text-[11px] text-[#7F888F] mt-0.5">{enabled ? "Active — responding automatically" : "Disabled"}</p>
+          <span className="text-[13px] font-semibold" style={{ color: "var(--th-text-primary)" }}>Auto-response</span>
+          <p className="text-[11px] mt-0.5" style={{ color: "var(--th-text-muted)" }}>{enabled ? "Active — responding automatically" : "Disabled"}</p>
         </div>
         <button
           onClick={() => setEnabled(!enabled)}
-          className={`w-11 h-6.5 rounded-full relative transition-colors duration-200 ${enabled ? "bg-[#2E1055]" : "bg-[#CCCFD2]"}`}
+          className="w-11 h-6.5 rounded-full relative transition-colors duration-200"
+          style={{ backgroundColor: enabled ? "var(--th-tab-active)" : "var(--th-border)" }}
         >
           <div className={`absolute top-[3px] w-[18px] h-[18px] bg-white rounded-full shadow-sm transition-all duration-200 ${enabled ? "right-[3px]" : "left-[3px]"}`} />
         </button>
@@ -910,26 +946,26 @@ function AutoResponseView() {
 
       {/* Response rules */}
       <div className="mb-5">
-        <label className="block text-[12px] font-medium text-[#4C5863] mb-2">Response rules</label>
+        <label className="block text-[12px] font-medium mb-2" style={{ color: "var(--th-text-secondary)" }}>Response rules</label>
         <div className="flex flex-col gap-2">
           {rules.map((rule, i) => (
             <button
               key={i}
               onClick={() => setActiveRule(i)}
-              className={`w-full px-4 py-3 rounded-xl border text-left transition-all duration-150 active:scale-[0.98] ${
-                activeRule === i
-                  ? "border-[#2E1055] bg-[#F8F5FB]"
-                  : "border-[#E5E6E8] bg-white hover:border-[#C5C7CA]"
-              }`}
-              style={{ animation: `fadeIn 0.25s ease-out ${0.05 * i}s both` }}
+              className="w-full px-4 py-3 rounded-xl text-left transition-all duration-150 active:scale-[0.98]"
+              style={{
+                border: `1px solid ${activeRule === i ? "var(--th-active-conv-border)" : "var(--th-border)"}`,
+                backgroundColor: activeRule === i ? "var(--th-active-conv-bg)" : "var(--th-bg)",
+                animation: `fadeIn 0.25s ease-out ${0.05 * i}s both`,
+              }}
             >
               <div className="flex items-center justify-between mb-0.5">
-                <span className="text-[13px] font-medium text-[#001221]">{rule.name}</span>
-                <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${rule.status ? "bg-[#E8F5E9] text-[#2CAD43]" : "bg-[#F2F2F3] text-[#7F888F]"}`}>
+                <span className="text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>{rule.name}</span>
+                <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${rule.status ? "bg-[#E8F5E9] text-[#2CAD43]" : ""}`} style={!rule.status ? { backgroundColor: "var(--th-bg-hover)", color: "var(--th-text-muted)" } : undefined}>
                   {rule.status ? "Active" : "Inactive"}
                 </span>
               </div>
-              <span className="text-[11px] text-[#7F888F]">{rule.trigger}</span>
+              <span className="text-[11px]" style={{ color: "var(--th-text-muted)" }}>{rule.trigger}</span>
             </button>
           ))}
         </div>
@@ -937,7 +973,7 @@ function AutoResponseView() {
 
       {/* Response template for selected rule */}
       <div className="mb-4 animate-[fadeIn_0.2s_ease-out]" key={activeRule}>
-        <label className="block text-[12px] font-medium text-[#4C5863] mb-1.5">
+        <label className="block text-[12px] font-medium mb-1.5" style={{ color: "var(--th-text-secondary)" }}>
           Response message — {rules[activeRule].name}
         </label>
         <textarea
@@ -949,31 +985,32 @@ function AutoResponseView() {
                 ? "I'm currently on another call. I'll get back to you as soon as I'm available. If this is urgent, please press 1 to be transferred to the front desk."
                 : "Our office is closed for the holiday. We will reopen on January 2nd. For emergencies, please contact our on-call team at (416) 555-0199."
           }
-          className="w-full px-3 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors resize-none"
+          className="w-full px-3 py-2.5 text-[13px] rounded-lg focus:outline-none transition-colors resize-none"
+          style={inputStyle}
         />
       </div>
 
       {/* Response channels */}
       <div className="mb-5">
-        <label className="block text-[12px] font-medium text-[#4C5863] mb-2">Respond via</label>
+        <label className="block text-[12px] font-medium mb-2" style={{ color: "var(--th-text-secondary)" }}>Respond via</label>
         <div className="flex flex-col gap-2">
           {[
             { label: "SMS", desc: "Send text message reply", checked: true },
             { label: "Voicemail greeting", desc: "Play custom voicemail", checked: true },
             { label: "Email notification", desc: "Send email to caller (if known)", checked: false },
           ].map((ch) => (
-            <label key={ch.label} className="flex items-center gap-3 px-3 py-2.5 border border-[#E5E6E8] rounded-lg cursor-pointer hover:border-[#C5C7CA] transition-colors">
-              <input type="checkbox" defaultChecked={ch.checked} className="w-4 h-4 rounded border-[#CCCFD2] text-[#2E1055] focus:ring-[#2E1055] accent-[#2E1055]" />
+            <label key={ch.label} className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-colors" style={{ border: "1px solid var(--th-border)" }}>
+              <input type="checkbox" defaultChecked={ch.checked} className="w-4 h-4 rounded accent-[#2E1055]" />
               <div>
-                <div className="text-[12px] font-medium text-[#001221]">{ch.label}</div>
-                <div className="text-[11px] text-[#7F888F]">{ch.desc}</div>
+                <div className="text-[12px] font-medium" style={{ color: "var(--th-text-primary)" }}>{ch.label}</div>
+                <div className="text-[11px]" style={{ color: "var(--th-text-muted)" }}>{ch.desc}</div>
               </div>
             </label>
           ))}
         </div>
       </div>
 
-      <button className="w-full py-3 bg-[#001221] text-white text-[12px] font-bold tracking-wider uppercase rounded-full hover:bg-[#0a2540] active:scale-[0.98] transition-all">
+      <button className="w-full py-3 text-[12px] font-bold tracking-wider uppercase rounded-full active:scale-[0.98] transition-all" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>
         Save Auto-Response Rules
       </button>
     </div>
