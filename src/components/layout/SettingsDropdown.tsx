@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
+import IntegrationDialog from "./IntegrationDialog";
 
 export default function SettingsDropdown({ onClose }: { onClose: () => void }) {
   const { isDark, toggleTheme } = useTheme();
   const [volume, setVolume] = useState(65);
+  const [showIntegration, setShowIntegration] = useState(false);
 
   return (
     <div
@@ -142,6 +144,7 @@ export default function SettingsDropdown({ onClose }: { onClose: () => void }) {
         style={{ borderTop: "1px solid var(--th-dropdown-divider)" }}
         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"}
         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+        onClick={() => setShowIntegration(true)}
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-primary)" strokeWidth="1.5">
           <rect x="3" y="3" width="7" height="7"/>
@@ -151,6 +154,10 @@ export default function SettingsDropdown({ onClose }: { onClose: () => void }) {
         </svg>
         <span className="text-sm" style={{ color: "var(--th-text-primary)" }}>Integration</span>
       </button>
+
+      {showIntegration && (
+        <IntegrationDialog onClose={() => setShowIntegration(false)} />
+      )}
     </div>
   );
 }

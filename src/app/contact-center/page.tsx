@@ -28,10 +28,10 @@ const activeCalls = [
 ];
 
 const statusConfig: Record<string, { label: string; color: string; bg: string }> = {
-  available: { label: "Available", color: "#2CAD43", bg: "#E8F5E9" },
-  "on-call": { label: "On Call", color: "#3B82F6", bg: "#DBEAFE" },
-  "wrap-up": { label: "Wrap-up", color: "#F59E0B", bg: "#FEF3C7" },
-  break: { label: "Break", color: "#7F888F", bg: "#F2F2F3" },
+  available: { label: "Available", color: "#2CAD43", bg: hexToRgba("#2CAD43", 0.15) },
+  "on-call": { label: "On Call", color: "#3B82F6", bg: hexToRgba("#3B82F6", 0.15) },
+  "wrap-up": { label: "Wrap-up", color: "#F59E0B", bg: hexToRgba("#F59E0B", 0.15) },
+  break: { label: "Break", color: "#7F888F", bg: hexToRgba("#7F888F", 0.15) },
 };
 
 /* Hourly call data with inbound/outbound split */
@@ -136,7 +136,7 @@ function DashboardView() {
           >
             <div className="flex items-center justify-between mb-2">
               <div className="text-[12px] font-medium" style={{ color: "var(--th-text-muted)" }}>{stat.label}</div>
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: `${stat.color}15` }}>
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: hexToRgba(stat.color, 0.08) }}>
                 {stat.icon === "calls" && <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke={stat.color} strokeWidth="1.5"/></svg>}
                 {stat.icon === "queue" && <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100 8 4 4 0 000-8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke={stat.color} strokeWidth="1.5" strokeLinecap="round"/></svg>}
                 {stat.icon === "agents" && <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke={stat.color} strokeWidth="1.5"/><path d="M4 20c0-2.67 5.33-4 8-4s8 1.33 8 4" stroke={stat.color} strokeWidth="1.5" strokeLinecap="round"/></svg>}
@@ -182,9 +182,13 @@ function DashboardView() {
                 <tr key={q.name} className="last:border-0 transition-colors group" style={{ borderBottom: "1px solid var(--th-border-light)" }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>
                   <td className="py-3 text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>{q.name}</td>
                   <td className="py-3 text-center">
-                    <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-[12px] font-semibold ${
-                      q.waiting > 5 ? "bg-[#FEE2E2] text-[#EF4444]" : q.waiting > 2 ? "bg-[#FEF3C7] text-[#F59E0B]" : "bg-[#E8F5E9] text-[#2CAD43]"
-                    }`}>{q.waiting}</span>
+                    <span
+                      className="inline-flex items-center justify-center w-7 h-7 rounded-full text-[12px] font-semibold"
+                      style={{
+                        backgroundColor: q.waiting > 5 ? hexToRgba("#EF4444", 0.15) : q.waiting > 2 ? hexToRgba("#F59E0B", 0.15) : hexToRgba("#2CAD43", 0.15),
+                        color: q.waiting > 5 ? "#EF4444" : q.waiting > 2 ? "#F59E0B" : "#2CAD43",
+                      }}
+                    >{q.waiting}</span>
                   </td>
                   <td className="py-3 text-center text-[13px]" style={{ color: "var(--th-text-primary)" }}>{q.active}</td>
                   <td className="py-3 text-center text-[13px]" style={{ color: "var(--th-text-muted)" }}>{q.avgWait}</td>
@@ -198,13 +202,13 @@ function DashboardView() {
                   </td>
                   <td className="py-3 text-right">
                     <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button className="p-1.5 rounded-lg hover:bg-[#FEF3C7] transition-colors active:scale-90" title="Hold">
+                      <button className="p-1.5 rounded-lg transition-colors active:scale-90" title="Hold" onMouseEnter={(e) => e.currentTarget.style.backgroundColor = hexToRgba("#F59E0B", 0.15)} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>
                         <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="4" y="3" width="2.5" height="10" rx="1" fill="#F59E0B"/><rect x="9.5" y="3" width="2.5" height="10" rx="1" fill="#F59E0B"/></svg>
                       </button>
-                      <button className="p-1.5 rounded-lg hover:bg-[#DBEAFE] transition-colors active:scale-90" title="Transfer">
+                      <button className="p-1.5 rounded-lg transition-colors active:scale-90" title="Transfer" onMouseEnter={(e) => e.currentTarget.style.backgroundColor = hexToRgba("#3B82F6", 0.15)} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>
                         <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M5 8h8m0 0l-3-3m3 3l-3 3M3 3v10" stroke="#3B82F6" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
                       </button>
-                      <button className="p-1.5 rounded-lg hover:bg-[#FEE2E2] transition-colors active:scale-90" title="End">
+                      <button className="p-1.5 rounded-lg transition-colors active:scale-90" title="End" onMouseEnter={(e) => e.currentTarget.style.backgroundColor = hexToRgba("#EF4444", 0.15)} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>
                         <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round"/></svg>
                       </button>
                     </div>
@@ -225,10 +229,10 @@ function DashboardView() {
           {/* Status summary */}
           <div className="grid grid-cols-2 gap-2 mb-4">
             {[
-              { label: "Available", count: agents.filter(a => a.status === "available").length, color: "#2CAD43", bg: "#E8F5E9" },
-              { label: "On Call", count: agents.filter(a => a.status === "on-call").length, color: "#3B82F6", bg: "#DBEAFE" },
-              { label: "Wrap-up", count: agents.filter(a => a.status === "wrap-up").length, color: "#F59E0B", bg: "#FEF3C7" },
-              { label: "Break", count: agents.filter(a => a.status === "break").length, color: "#7F888F", bg: "#F2F2F3" },
+              { label: "Available", count: agents.filter(a => a.status === "available").length, color: "#2CAD43", bg: hexToRgba("#2CAD43", 0.15) },
+              { label: "On Call", count: agents.filter(a => a.status === "on-call").length, color: "#3B82F6", bg: hexToRgba("#3B82F6", 0.15) },
+              { label: "Wrap-up", count: agents.filter(a => a.status === "wrap-up").length, color: "#F59E0B", bg: hexToRgba("#F59E0B", 0.15) },
+              { label: "Break", count: agents.filter(a => a.status === "break").length, color: "#7F888F", bg: hexToRgba("#7F888F", 0.15) },
             ].map((s) => (
               <div key={s.label} className="flex items-center gap-2 px-2.5 py-2 rounded-lg" style={{ background: s.bg }}>
                 <span className="w-2 h-2 rounded-full" style={{ background: s.color }} />
@@ -457,13 +461,13 @@ function CallsView() {
                     <button className="p-1.5 rounded-lg transition-colors active:scale-90" title="Listen" onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>
                       <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 7v2a6 6 0 0012 0V7" stroke="var(--th-text-muted)" strokeWidth="1.3" strokeLinecap="round"/><rect x="1" y="7" width="3" height="5" rx="1" stroke="var(--th-text-muted)" strokeWidth="1.3"/><rect x="12" y="7" width="3" height="5" rx="1" stroke="var(--th-text-muted)" strokeWidth="1.3"/></svg>
                     </button>
-                    <button className="p-1.5 rounded-lg hover:bg-[#FEF3C7] transition-colors active:scale-90" title="Hold">
+                    <button className="p-1.5 rounded-lg transition-colors active:scale-90" title="Hold" onMouseEnter={(e) => e.currentTarget.style.backgroundColor = hexToRgba("#F59E0B", 0.15)} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>
                       <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="4" y="3" width="2.5" height="10" rx="1" fill="#F59E0B"/><rect x="9.5" y="3" width="2.5" height="10" rx="1" fill="#F59E0B"/></svg>
                     </button>
-                    <button className="p-1.5 rounded-lg hover:bg-[#DBEAFE] transition-colors active:scale-90" title="Transfer">
+                    <button className="p-1.5 rounded-lg transition-colors active:scale-90" title="Transfer" onMouseEnter={(e) => e.currentTarget.style.backgroundColor = hexToRgba("#3B82F6", 0.15)} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>
                       <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M5 8h8m0 0l-3-3m3 3l-3 3M3 3v10" stroke="#3B82F6" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
                     </button>
-                    <button className="p-1.5 rounded-lg hover:bg-[#FEE2E2] transition-colors active:scale-90" title="End">
+                    <button className="p-1.5 rounded-lg transition-colors active:scale-90" title="End" onMouseEnter={(e) => e.currentTarget.style.backgroundColor = hexToRgba("#EF4444", 0.15)} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>
                       <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round"/></svg>
                     </button>
                   </div>
@@ -493,10 +497,10 @@ function CallsView() {
               <div className="flex items-center gap-2">
                 <span className="text-[12px] font-mono" style={{ color: "var(--th-text-muted)" }}>Waiting {caller.wait}</span>
                 <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button className="p-1 rounded hover:bg-[#E8F5E9] transition-colors active:scale-90" title="Answer">
+                  <button className="p-1 rounded transition-colors active:scale-90" title="Answer" onMouseEnter={(e) => e.currentTarget.style.backgroundColor = hexToRgba("#2CAD43", 0.15)} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>
                     <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M14 10.67v2a1.33 1.33 0 01-1.45 1.33A13.2 13.2 0 016.8 12a13 13 0 01-4-4 13.2 13.2 0 01-2-5.72A1.33 1.33 0 012.13 1H4.13a1.33 1.33 0 011.34 1.15c.08.64.24 1.27.47 1.87a1.33 1.33 0 01-.3 1.4L4.8 6.27a10.67 10.67 0 004 4l.85-.85a1.33 1.33 0 011.4-.3c.6.23 1.23.39 1.87.47A1.33 1.33 0 0114 10.93z" stroke="#2CAD43" strokeWidth="1.2"/></svg>
                   </button>
-                  <button className="p-1 rounded hover:bg-[#DBEAFE] transition-colors active:scale-90" title="Transfer">
+                  <button className="p-1 rounded transition-colors active:scale-90" title="Transfer" onMouseEnter={(e) => e.currentTarget.style.backgroundColor = hexToRgba("#3B82F6", 0.15)} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>
                     <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M5 8h8m0 0l-3-3m3 3l-3 3M3 3v10" stroke="#3B82F6" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   </button>
                 </div>
