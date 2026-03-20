@@ -140,6 +140,27 @@ body {
   border-radius: 3px;
 }
 
+/* Range slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--th-text-muted);
+  cursor: pointer;
+  border: 2px solid var(--th-bg);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--th-text-muted);
+  cursor: pointer;
+  border: 2px solid var(--th-bg);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-8px); }
   to { opacity: 1; transform: translateY(0); }

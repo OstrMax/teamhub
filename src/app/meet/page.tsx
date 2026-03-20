@@ -141,7 +141,7 @@ export default function MeetPage() {
   };
 
   return (
-    <div className="flex h-full relative">
+    <div className="flex h-full relative bg-[var(--th-bg)]">
       {/* Minimized meeting floating card */}
       {meetingActive && meetingMinimized && (
         <div className="fixed bottom-6 right-6 z-50 bg-[#1a0a2e] rounded-2xl shadow-2xl shadow-black/30 overflow-hidden transition-all duration-300" style={{ width: 320, animation: "slideIn 0.25s ease-out" }}>
@@ -172,14 +172,14 @@ export default function MeetPage() {
       )}
 
       {/* Left sidebar */}
-      <div className="w-[220px] shrink-0 border-r border-[#E5E6E8] bg-white flex flex-col">
+      <div className="w-[220px] shrink-0 border-r border-[var(--th-border)] bg-[var(--th-bg)] flex flex-col">
         <div className="px-4 pt-5 pb-3">
-          <button onClick={() => setSideTab("events")} className={`flex items-center gap-2.5 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all ${sideTab === "events" ? "bg-[#F2F0F5] text-[#2E1055]" : "text-[#4C5863] hover:bg-[#F9F9FA]"}`}>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke={sideTab === "events" ? "#2E1055" : "#7F888F"} strokeWidth="1.3"/><path d="M2 6h12" stroke={sideTab === "events" ? "#2E1055" : "#7F888F"} strokeWidth="1.3"/><circle cx="5" cy="9.5" r="1" fill={sideTab === "events" ? "#2E1055" : "#7F888F"}/><circle cx="8" cy="9.5" r="1" fill={sideTab === "events" ? "#2E1055" : "#7F888F"}/></svg>
+          <button onClick={() => setSideTab("events")} className={`flex items-center gap-2.5 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all ${sideTab === "events" ? "bg-[var(--th-bg-hover)] text-[var(--th-tab-active)]" : "text-[var(--th-text-secondary)] hover:bg-[var(--th-bg-hover)]"}`}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke={sideTab === "events" ? "var(--th-tab-active)" : "var(--th-text-muted)"} strokeWidth="1.3"/><path d="M2 6h12" stroke={sideTab === "events" ? "var(--th-tab-active)" : "var(--th-text-muted)"} strokeWidth="1.3"/><circle cx="5" cy="9.5" r="1" fill={sideTab === "events" ? "var(--th-tab-active)" : "var(--th-text-muted)"}/><circle cx="8" cy="9.5" r="1" fill={sideTab === "events" ? "var(--th-tab-active)" : "var(--th-text-muted)"}/></svg>
             Events
           </button>
-          <button onClick={() => setSideTab("recordings")} className={`flex items-center gap-2.5 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all mt-1 ${sideTab === "recordings" ? "bg-[#F2F0F5] text-[#2E1055]" : "text-[#4C5863] hover:bg-[#F9F9FA]"}`}>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke={sideTab === "recordings" ? "#2E1055" : "#7F888F"} strokeWidth="1.3"/><circle cx="8" cy="8" r="2.5" stroke={sideTab === "recordings" ? "#2E1055" : "#7F888F"} strokeWidth="1.3"/></svg>
+          <button onClick={() => setSideTab("recordings")} className={`flex items-center gap-2.5 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all mt-1 ${sideTab === "recordings" ? "bg-[var(--th-bg-hover)] text-[var(--th-tab-active)]" : "text-[var(--th-text-secondary)] hover:bg-[var(--th-bg-hover)]"}`}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke={sideTab === "recordings" ? "var(--th-tab-active)" : "var(--th-text-muted)"} strokeWidth="1.3"/><circle cx="8" cy="8" r="2.5" stroke={sideTab === "recordings" ? "var(--th-tab-active)" : "var(--th-text-muted)"} strokeWidth="1.3"/></svg>
             My recordings
           </button>
         </div>
@@ -502,44 +502,44 @@ function SchedulePopup({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={onClose} style={{ animation: "fadeIn 0.2s ease-out" }}>
-      <div className="bg-white rounded-2xl shadow-2xl w-[480px] max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()} style={{ animation: "slideIn 0.25s ease-out" }}>
+      <div className="bg-[var(--th-bg-card)] rounded-2xl shadow-2xl w-[480px] max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()} style={{ animation: "slideIn 0.25s ease-out" }}>
         <div className="flex items-center justify-between px-6 pt-5 pb-3">
-          <h2 className="text-[18px] font-semibold text-[#001221]">Schedule Meeting</h2>
-          <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-[#F2F2F3] transition-colors active:scale-90">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="#7F888F" strokeWidth="1.5" strokeLinecap="round"/></svg>
+          <h2 className="text-[18px] font-semibold text-[var(--th-text-primary)]">Schedule Meeting</h2>
+          <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-[var(--th-bg-hover)] transition-colors active:scale-90">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="var(--th-text-muted)" strokeWidth="1.5" strokeLinecap="round"/></svg>
           </button>
         </div>
         <div className="px-6 pb-6 space-y-4">
           <div>
-            <label className="block text-[12px] font-semibold text-[#7F888F] uppercase tracking-wider mb-1.5">Meeting title</label>
-            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Enter meeting name" className="w-full px-3.5 py-2.5 text-[14px] text-[#001221] border border-[#E5E6E8] rounded-xl bg-white focus:outline-none focus:border-[#2E1055] focus:ring-1 focus:ring-[#2E1055]/20 transition-all placeholder:text-[#CCCFD2]" />
+            <label className="block text-[12px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider mb-1.5">Meeting title</label>
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Enter meeting name" className="w-full px-3.5 py-2.5 text-[14px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-xl bg-[var(--th-bg)] focus:outline-none focus:border-[#2E1055] focus:ring-1 focus:ring-[#2E1055]/20 transition-all placeholder:text-[var(--th-text-disabled)]" />
           </div>
           <div className="grid grid-cols-3 gap-3">
-            <div><label className="block text-[12px] font-semibold text-[#7F888F] uppercase tracking-wider mb-1.5">Date</label><input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="w-full px-3.5 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-xl bg-white focus:outline-none focus:border-[#2E1055] transition-all" /></div>
-            <div><label className="block text-[12px] font-semibold text-[#7F888F] uppercase tracking-wider mb-1.5">Start</label><input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} className="w-full px-3.5 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-xl bg-white focus:outline-none focus:border-[#2E1055] transition-all" /></div>
-            <div><label className="block text-[12px] font-semibold text-[#7F888F] uppercase tracking-wider mb-1.5">End</label><input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} className="w-full px-3.5 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-xl bg-white focus:outline-none focus:border-[#2E1055] transition-all" /></div>
+            <div><label className="block text-[12px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider mb-1.5">Date</label><input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="w-full px-3.5 py-2.5 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-xl bg-[var(--th-bg)] focus:outline-none focus:border-[#2E1055] transition-all" /></div>
+            <div><label className="block text-[12px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider mb-1.5">Start</label><input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} className="w-full px-3.5 py-2.5 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-xl bg-[var(--th-bg)] focus:outline-none focus:border-[#2E1055] transition-all" /></div>
+            <div><label className="block text-[12px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider mb-1.5">End</label><input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} className="w-full px-3.5 py-2.5 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-xl bg-[var(--th-bg)] focus:outline-none focus:border-[#2E1055] transition-all" /></div>
           </div>
           <div>
-            <label className="block text-[12px] font-semibold text-[#7F888F] uppercase tracking-wider mb-1.5">Participants</label>
-            <div className="flex items-center gap-2 px-3.5 py-2 border border-[#E5E6E8] rounded-xl">
+            <label className="block text-[12px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider mb-1.5">Participants</label>
+            <div className="flex items-center gap-2 px-3.5 py-2 border border-[var(--th-border)] rounded-xl">
               <div className="flex -space-x-1.5">{[5, 12].map((id) => (<Image key={id} src={`https://i.pravatar.cc/64?img=${id}`} alt="" width={24} height={24} className="w-6 h-6 rounded-full border-2 border-white object-cover" unoptimized />))}</div>
-              <input type="text" placeholder="Add participants..." className="flex-1 outline-none text-[13px] text-[#001221] placeholder:text-[#CCCFD2]" />
+              <input type="text" placeholder="Add participants..." className="flex-1 outline-none text-[13px] text-[var(--th-text-primary)] bg-transparent placeholder:text-[var(--th-text-disabled)]" />
             </div>
           </div>
           <div>
-            <label className="block text-[12px] font-semibold text-[#7F888F] uppercase tracking-wider mb-1.5">Meeting link</label>
-            <div className="flex items-center gap-2 px-3.5 py-2.5 bg-[#F9F9FA] border border-[#E5E6E8] rounded-xl">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="1.5"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
-              <span className="text-[13px] text-[#7F888F] flex-1 truncate">https://meet.sangoma.com/new-{Math.random().toString(36).slice(2, 7)}</span>
+            <label className="block text-[12px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider mb-1.5">Meeting link</label>
+            <div className="flex items-center gap-2 px-3.5 py-2.5 bg-[var(--th-bg-hover)] border border-[var(--th-border)] rounded-xl">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-muted)" strokeWidth="1.5"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+              <span className="text-[13px] text-[var(--th-text-muted)] flex-1 truncate">https://meet.sangoma.com/new-{Math.random().toString(36).slice(2, 7)}</span>
               <button className="text-[12px] text-[#2E1055] font-medium hover:underline">Copy</button>
             </div>
           </div>
           <div>
-            <label className="block text-[12px] font-semibold text-[#7F888F] uppercase tracking-wider mb-1.5">Description</label>
-            <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Add a description or agenda..." rows={3} className="w-full px-3.5 py-2.5 text-[13px] text-[#001221] border border-[#E5E6E8] rounded-xl bg-white focus:outline-none focus:border-[#2E1055] focus:ring-1 focus:ring-[#2E1055]/20 transition-all placeholder:text-[#CCCFD2] resize-none" />
+            <label className="block text-[12px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider mb-1.5">Description</label>
+            <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Add a description or agenda..." rows={3} className="w-full px-3.5 py-2.5 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-xl bg-[var(--th-bg)] focus:outline-none focus:border-[#2E1055] focus:ring-1 focus:ring-[#2E1055]/20 transition-all placeholder:text-[var(--th-text-disabled)] resize-none" />
           </div>
           <div className="flex items-center justify-end gap-3 pt-2">
-            <button onClick={onClose} className="px-5 py-2.5 text-[13px] text-[#4C5863] font-medium rounded-xl hover:bg-[#F2F2F3] transition-colors">Cancel</button>
+            <button onClick={onClose} className="px-5 py-2.5 text-[13px] text-[var(--th-text-secondary)] font-medium rounded-xl hover:bg-[var(--th-bg-hover)] transition-colors">Cancel</button>
             <button onClick={onClose} className="px-5 py-2.5 text-[13px] text-white font-semibold rounded-xl bg-[#2E1055] hover:bg-[#3d1670] transition-colors active:scale-95">Schedule</button>
           </div>
         </div>
@@ -556,31 +556,31 @@ function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, s
   return (
     <>
       {showSchedule && <SchedulePopup onClose={() => setShowSchedule(false)} />}
-      <div className="px-4 pt-3 pb-4 border-b border-[#E5E6E8]">
+      <div className="px-4 pt-3 pb-4 border-b border-[var(--th-border)]">
         <div className="flex items-center gap-2">
           <div className="shrink-0">
-            <h1 className="text-[18px] font-semibold text-[#18181B] leading-none mb-1">Events</h1>
+            <h1 className="text-[18px] font-semibold text-[var(--th-text-primary)] leading-none mb-1">Events</h1>
             <div className="flex items-center gap-1 text-[12px]">
-              <span className="flex items-center gap-1"><span className="w-[13px] h-[13px] rounded-full bg-[#099F24] flex items-center justify-center"><svg width="8" height="8" viewBox="0 0 12 12" fill="none"><path d="M3 6l2 2 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span><span className="text-[#18181B]">Today <b>2</b> events done</span></span>
-              <span className="text-[#E5E6E8] mx-0.5">|</span>
-              <span className="flex items-center gap-0.5"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#7F888F" strokeWidth="1.5"/><path d="M12 7v5l3 3" stroke="#7F888F" strokeWidth="1.5" strokeLinecap="round"/></svg><span className="text-[#18181B]"><b>3</b> scheduled</span></span>
+              <span className="flex items-center gap-1"><span className="w-[13px] h-[13px] rounded-full bg-[#099F24] flex items-center justify-center"><svg width="8" height="8" viewBox="0 0 12 12" fill="none"><path d="M3 6l2 2 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span><span className="text-[var(--th-text-primary)]">Today <b>2</b> events done</span></span>
+              <span className="text-[var(--th-border)] mx-0.5">|</span>
+              <span className="flex items-center gap-0.5"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="var(--th-text-muted)" strokeWidth="1.5"/><path d="M12 7v5l3 3" stroke="var(--th-text-muted)" strokeWidth="1.5" strokeLinecap="round"/></svg><span className="text-[var(--th-text-primary)]"><b>3</b> scheduled</span></span>
             </div>
           </div>
           <div className="flex-1 flex items-center justify-center">
             <div className="flex items-center">
-              <button onClick={() => setEventsTab("upcoming")} className={`px-4 py-1 rounded-lg text-[14px] font-medium transition-all ${eventsTab === "upcoming" ? "bg-[#001221] text-white" : "text-[#18181B] hover:text-[#4C5863]"}`} style={{ height: 28 }}>Upcoming</button>
-              <button onClick={() => setEventsTab("past")} className={`px-4 py-1 rounded-lg text-[14px] font-medium transition-all ${eventsTab === "past" ? "bg-[#001221] text-white" : "text-[#18181B] hover:text-[#4C5863]"}`} style={{ height: 28 }}>Past events</button>
+              <button onClick={() => setEventsTab("upcoming")} className={`px-4 py-1 rounded-lg text-[14px] font-medium transition-all ${eventsTab === "upcoming" ? "bg-[var(--th-text-primary)] text-white" : "text-[var(--th-text-primary)] hover:text-[var(--th-text-secondary)]"}`} style={{ height: 28 }}>Upcoming</button>
+              <button onClick={() => setEventsTab("past")} className={`px-4 py-1 rounded-lg text-[14px] font-medium transition-all ${eventsTab === "past" ? "bg-[var(--th-text-primary)] text-white" : "text-[var(--th-text-primary)] hover:text-[var(--th-text-secondary)]"}`} style={{ height: 28 }}>Past events</button>
             </div>
           </div>
           <div className="flex items-center gap-2 shrink-0">
-            <button className="flex items-center gap-1 text-[12px] text-[#18181B] hover:text-[#001221] transition-colors">
+            <button className="flex items-center gap-1 text-[12px] text-[var(--th-text-primary)] hover:text-[var(--th-text-primary)] transition-colors">
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>
               All events
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div className="relative">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="absolute left-2 top-1/2 -translate-y-1/2"><circle cx="7" cy="7" r="4.5" stroke="#7F888F" strokeWidth="1.3"/><path d="M10.5 10.5L13.5 13.5" stroke="#7F888F" strokeWidth="1.3" strokeLinecap="round"/></svg>
-              <input type="text" placeholder="Search" className="pl-7 pr-3 py-1 w-[184px] text-[12px] text-[#001221] bg-[#F4F4F5] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#2E1055]/20 transition-colors" />
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="absolute left-2 top-1/2 -translate-y-1/2"><circle cx="7" cy="7" r="4.5" stroke="var(--th-text-muted)" strokeWidth="1.3"/><path d="M10.5 10.5L13.5 13.5" stroke="var(--th-text-muted)" strokeWidth="1.3" strokeLinecap="round"/></svg>
+              <input type="text" placeholder="Search" className="pl-7 pr-3 py-1 w-[184px] text-[12px] text-[var(--th-text-primary)] bg-[var(--th-bg-hover)] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#2E1055]/20 transition-colors" />
             </div>
           </div>
         </div>
@@ -613,18 +613,18 @@ function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, s
         {events.map((group, gi) => (
           <div key={gi} className="mb-1">
             {group.items.map((event, ei) => (
-              <div key={ei} className={`flex items-center gap-4 py-3 border-b border-[#F2F2F3] hover:bg-[#F9F9FA] transition-colors cursor-pointer group ${event.highlight ? "bg-[#FFF8E1] hover:bg-[#FFF3CD]" : ""}`} style={{ animation: `fadeIn 0.2s ease-out ${0.03 * (gi * 3 + ei)}s both` }}>
+              <div key={ei} className={`flex items-center gap-4 py-3 border-b border-[var(--th-border-light)] hover:bg-[var(--th-bg-hover)] transition-colors cursor-pointer group ${event.highlight ? "bg-[#FFF8E1] hover:bg-[#FFF3CD]" : ""}`} style={{ animation: `fadeIn 0.2s ease-out ${0.03 * (gi * 3 + ei)}s both` }}>
                 <div className="w-12 shrink-0 text-center">
-                  {ei === 0 && (<><div className="text-[11px] text-[#7F888F] uppercase tracking-wider font-medium">{group.day}</div><div className="text-[24px] font-semibold text-[#001221] leading-none mt-0.5">{group.date}</div></>)}
+                  {ei === 0 && (<><div className="text-[11px] text-[var(--th-text-muted)] uppercase tracking-wider font-medium">{group.day}</div><div className="text-[24px] font-semibold text-[var(--th-text-primary)] leading-none mt-0.5">{group.date}</div></>)}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-[14px] font-medium text-[#001221]">{event.title}</div>
-                  <div className="text-[12px] text-[#7F888F] mt-0.5">{event.time} at {event.url}</div>
+                  <div className="text-[14px] font-medium text-[var(--th-text-primary)]">{event.title}</div>
+                  <div className="text-[12px] text-[var(--th-text-muted)] mt-0.5">{event.time} at {event.url}</div>
                 </div>
                 <div className="flex items-center -space-x-2 shrink-0">
                   {event.avatars.map((id) => (<Image key={id} src={`https://i.pravatar.cc/64?img=${id}`} alt="" width={28} height={28} className="w-7 h-7 rounded-full border-2 border-white object-cover" unoptimized />))}
                 </div>
-                {event.more && <span className="text-[12px] text-[#7F888F] shrink-0">{event.more}</span>}
+                {event.more && <span className="text-[12px] text-[var(--th-text-muted)] shrink-0">{event.more}</span>}
                 {/* Hover Join button */}
                 <button
                   onClick={(e) => { e.stopPropagation(); onJoinMeeting(event.title); }}
@@ -632,8 +632,8 @@ function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, s
                 >
                   Join
                 </button>
-                <button onClick={(e) => e.stopPropagation()} className="p-1.5 rounded-lg hover:bg-[#F2F2F3] opacity-0 group-hover:opacity-100 transition-all active:scale-90 shrink-0">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M11.333 2a1.886 1.886 0 012.667 2.667l-8.167 8.166L2.5 13.5l.667-3.333L11.333 2z" stroke="#7F888F" strokeWidth="1.2" strokeLinejoin="round"/></svg>
+                <button onClick={(e) => e.stopPropagation()} className="p-1.5 rounded-lg hover:bg-[var(--th-bg-hover)] opacity-0 group-hover:opacity-100 transition-all active:scale-90 shrink-0">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M11.333 2a1.886 1.886 0 012.667 2.667l-8.167 8.166L2.5 13.5l.667-3.333L11.333 2z" stroke="var(--th-text-muted)" strokeWidth="1.2" strokeLinejoin="round"/></svg>
                 </button>
               </div>
             ))}
@@ -649,22 +649,22 @@ function RecordingsContent() {
   return (
     <div className="flex-1 flex flex-col">
       <div className="px-6 pt-5 pb-4">
-        <h1 className="text-[22px] font-semibold text-[#001221] mb-4">My Recordings</h1>
+        <h1 className="text-[22px] font-semibold text-[var(--th-text-primary)] mb-4">My Recordings</h1>
         <div className="relative mb-4">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="absolute left-3 top-1/2 -translate-y-1/2"><circle cx="7" cy="7" r="4.5" stroke="#7F888F" strokeWidth="1.3"/><path d="M10.5 10.5L13.5 13.5" stroke="#7F888F" strokeWidth="1.3" strokeLinecap="round"/></svg>
-          <input type="text" placeholder="Search recordings..." className="pl-9 pr-3 py-2 w-full max-w-md text-[13px] text-[#001221] border border-[#E5E6E8] rounded-lg bg-white focus:outline-none focus:border-[#2E1055] transition-colors" />
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="absolute left-3 top-1/2 -translate-y-1/2"><circle cx="7" cy="7" r="4.5" stroke="var(--th-text-muted)" strokeWidth="1.3"/><path d="M10.5 10.5L13.5 13.5" stroke="var(--th-text-muted)" strokeWidth="1.3" strokeLinecap="round"/></svg>
+          <input type="text" placeholder="Search recordings..." className="pl-9 pr-3 py-2 w-full max-w-md text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-lg bg-[var(--th-bg)] focus:outline-none focus:border-[#2E1055] transition-colors" />
         </div>
       </div>
       <div className="flex-1 overflow-y-auto px-6 pb-6">
         <div className="flex flex-col">
           {recordings.map((rec, i) => (
-            <div key={i} className="flex items-center gap-4 py-3.5 border-b border-[#F2F2F3] hover:bg-[#F9F9FA] transition-colors cursor-pointer group" style={{ animation: `fadeIn 0.2s ease-out ${0.05 * i}s both` }}>
-              <button className="w-9 h-9 rounded-full bg-[#F2F0F5] flex items-center justify-center shrink-0 hover:bg-[#E8E0FF] active:scale-90 transition-all"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M5 3v10l8-5-8-5z" fill="#2E1055"/></svg></button>
-              <div className="flex-1 min-w-0"><div className="text-[14px] font-medium text-[#001221]">{rec.title}</div><div className="text-[12px] text-[#7F888F] mt-0.5">{rec.date} · {rec.duration}</div></div>
-              <span className="text-[12px] text-[#7F888F] shrink-0">{rec.size}</span>
+            <div key={i} className="flex items-center gap-4 py-3.5 border-b border-[var(--th-border-light)] hover:bg-[var(--th-bg-hover)] transition-colors cursor-pointer group" style={{ animation: `fadeIn 0.2s ease-out ${0.05 * i}s both` }}>
+              <button className="w-9 h-9 rounded-full bg-[var(--th-bg-hover)] flex items-center justify-center shrink-0 hover:bg-[#E8E0FF] active:scale-90 transition-all"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M5 3v10l8-5-8-5z" fill="#2E1055"/></svg></button>
+              <div className="flex-1 min-w-0"><div className="text-[14px] font-medium text-[var(--th-text-primary)]">{rec.title}</div><div className="text-[12px] text-[var(--th-text-muted)] mt-0.5">{rec.date} · {rec.duration}</div></div>
+              <span className="text-[12px] text-[var(--th-text-muted)] shrink-0">{rec.size}</span>
               <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button className="p-1.5 rounded-lg hover:bg-[#F2F2F3] active:scale-90 transition-all" title="Download"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v9m0 0l-3-3m3 3l3-3M3 13h10" stroke="#7F888F" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
-                <button className="p-1.5 rounded-lg hover:bg-[#F2F2F3] active:scale-90 transition-all" title="Delete"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 5h8l-.667 8H4.667L4 5zM6 3h4M3 5h10" stroke="#7F888F" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
+                <button className="p-1.5 rounded-lg hover:bg-[var(--th-bg-hover)] active:scale-90 transition-all" title="Download"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v9m0 0l-3-3m3 3l3-3M3 13h10" stroke="var(--th-text-muted)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
+                <button className="p-1.5 rounded-lg hover:bg-[var(--th-bg-hover)] active:scale-90 transition-all" title="Delete"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 5h8l-.667 8H4.667L4 5zM6 3h4M3 5h10" stroke="var(--th-text-muted)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
               </div>
             </div>
           ))}
