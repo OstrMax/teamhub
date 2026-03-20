@@ -621,9 +621,9 @@ function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, s
             {group.items.map((event, ei) => {
               const globalIdx = offset + ei;
               return (
-              <div key={ei} className={`flex items-center gap-4 py-4 transition-all cursor-pointer group rounded-lg ${globalIdx < 3 ? '' : 'hover:bg-[var(--th-bg-hover)]'}`} style={{ animation: `fadeIn 0.2s ease-out ${0.03 * globalIdx}s both`, borderLeft: globalIdx < 3 ? `3px solid ${event.color}` : 'none', backgroundColor: globalIdx < 3 ? hexToRgba(event.color, 0.15) : 'transparent', marginBottom: '10px' }}>
+              <div key={ei} className={`flex items-center gap-4 py-4 transition-all cursor-pointer group rounded-lg ${globalIdx < 3 ? '' : 'hover:bg-[var(--th-bg-hover)]'}`} style={{ animation: `fadeIn 0.2s ease-out ${0.03 * globalIdx}s both`, borderLeft: globalIdx < 3 ? `3px solid ${event.color}` : 'none', backgroundColor: globalIdx < 3 ? hexToRgba(event.color, 0.14) : 'transparent', marginBottom: '10px' }}>
                 <div className="w-12 shrink-0 text-center">
-                  {ei === 0 && (<><div className="text-[11px] text-[var(--th-text-muted)] uppercase tracking-wider font-medium">{group.day}</div><div className="text-[24px] font-semibold text-[var(--th-text-primary)] leading-none mt-0.5">{group.date}</div></>)}
+                  {ei === 0 && (<><div className="text-[10px] text-[var(--th-text-muted)] uppercase tracking-wider font-medium">{group.day}</div><div className="text-[22px] font-semibold text-[var(--th-text-primary)] leading-none mt-0.5">{group.date}</div></>)}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-[14px] font-medium text-[var(--th-text-primary)]">{event.title}</div>
