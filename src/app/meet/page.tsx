@@ -620,9 +620,8 @@ function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, s
           <div key={gi} className="mb-1">
             {group.items.map((event, ei) => {
               const globalIdx = offset + ei;
-              const hasStripe = globalIdx < 3;
               return (
-              <div key={ei} className="flex items-center gap-4 py-4 border-b border-[var(--th-border-light)] hover:brightness-95 transition-all cursor-pointer group rounded-lg" style={{ animation: `fadeIn 0.2s ease-out ${0.03 * globalIdx}s both`, borderLeft: hasStripe ? `3px solid ${event.color}` : '3px solid transparent', backgroundColor: !hasStripe ? hexToRgba(event.color, 0.1) : 'transparent' }}>
+              <div key={ei} className="flex items-center gap-4 py-4 border-b border-[var(--th-border-light)] hover:brightness-95 transition-all cursor-pointer group rounded-lg" style={{ animation: `fadeIn 0.2s ease-out ${0.03 * globalIdx}s both`, borderLeft: `3px solid ${event.color}`, backgroundColor: hexToRgba(event.color, 0.15) }}>
                 <div className="w-12 shrink-0 text-center">
                   {ei === 0 && (<><div className="text-[11px] text-[var(--th-text-muted)] uppercase tracking-wider font-medium">{group.day}</div><div className="text-[24px] font-semibold text-[var(--th-text-primary)] leading-none mt-0.5">{group.date}</div></>)}
                 </div>
