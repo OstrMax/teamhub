@@ -120,9 +120,34 @@ export default function TalkPage() {
               value={phoneInput}
               onChange={(e) => setPhoneInput(e.target.value)}
               placeholder="Enter a name or number"
-              className="w-full text-center text-base text-[#7F888F] mb-6 pb-2 outline-none placeholder:text-[#7F888F]"
+              className="w-full text-center text-base text-[var(--th-text-muted)] mb-4 pb-2 outline-none placeholder:text-[var(--th-text-muted)]"
               style={{ backgroundColor: 'transparent' }}
             />
+
+            {/* Volume slider */}
+            <div className="flex items-center gap-2.5 w-full mb-5 px-1">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M11 5L6 9H2v6h4l5 4V5z" fill="var(--th-text-muted)"/>
+                <path d="M15.54 8.46a5 5 0 010 7.07" stroke="var(--th-text-muted)" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+              <input
+                type="range"
+                min={0}
+                max={100}
+                defaultValue={50}
+                className="flex-1 h-[3px] rounded-full appearance-none cursor-pointer"
+                style={{
+                  background: `linear-gradient(to right, var(--th-text-muted) 0%, var(--th-text-muted) 50%, var(--th-border) 50%, var(--th-border) 100%)`,
+                }}
+                onChange={(e) => {
+                  const v = Number(e.target.value);
+                  e.target.style.background = `linear-gradient(to right, var(--th-text-muted) 0%, var(--th-text-muted) ${v}%, var(--th-border) ${v}%, var(--th-border) 100%)`;
+                }}
+              />
+              <button className="text-[11px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider whitespace-nowrap hover:text-[var(--th-text-primary)] transition-colors">
+                Phone Settings
+              </button>
+            </div>
 
             <div className="grid grid-cols-3 gap-3 mb-6">
               {dialPadKeys.map((key) => (

@@ -4,6 +4,14 @@ import { useState } from "react";
 import Image from "next/image";
 import CallPopup from "./CallPopup";
 
+/* ── Speaker / Volume icon ── */
+const SpeakerIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+    <path d="M11 5L6 9H2v6h4l5 4V5z" fill="var(--th-text-muted)"/>
+    <path d="M15.54 8.46a5 5 0 010 7.07" stroke="var(--th-text-muted)" strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+);
+
 const keys = [
   { num: "1", sub: "" },
   { num: "2", sub: "ABC" },
@@ -22,6 +30,7 @@ const keys = [
 export default function DialPad() {
   const [input, setInput] = useState("");
   const [calling, setCalling] = useState(false);
+  const [volume, setVolume] = useState(50);
 
   const handleCall = () => {
     if (input.length > 0) setCalling(true);
@@ -36,15 +45,34 @@ export default function DialPad() {
           onEnd={() => { setCalling(false); }}
         />
       )}
-      <div className="flex flex-col items-center w-[300px] shrink-0 border-r border-[#E5E6E8] h-full bg-white p-6">
+      <div className="flex flex-col items-center w-[300px] shrink-0 border-r border-[var(--th-border)] h-full bg-[var(--th-bg)] p-6">
         {/* Input */}
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Enter a name or number"
-          className="w-full text-center text-base text-[#7F888F] mb-6 pb-2 outline-none placeholder:text-[#7F888F]"
+          className="w-full text-center text-base text-[var(--th-text-muted)] mb-4 pb-2 outline-none placeholder:text-[var(--th-text-muted)] bg-transparent"
         />
+
+        {/* Volume slider */}
+        <div className="flex items-center gap-2.5 w-full mb-5 px-1">
+          <SpeakerIcon />
+          <input
+            type="range"
+            min={0}
+            max={100}
+            value={volume}
+            onChange={(e) => setVolume(Number(e.target.value))}
+            className="flex-1 h-[3px] rounded-full appearance-none cursor-pointer"
+            style={{
+              background: `linear-gradient(to right, var(--th-text-muted) 0%, var(--th-text-muted) ${volume}%, var(--th-border) ${volume}%, var(--th-border) 100%)`,
+            }}
+          />
+          <button className="text-[11px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider whitespace-nowrap hover:text-[var(--th-text-primary)] transition-colors">
+            Phone Settings
+          </button>
+        </div>
 
         {/* Keypad */}
         <div className="grid grid-cols-3 gap-3 mb-6">
@@ -52,11 +80,11 @@ export default function DialPad() {
             <button
               key={key.num}
               onClick={() => setInput((prev) => prev + key.num)}
-              className="flex flex-col items-center justify-center w-16 h-16 rounded-full border border-[#E5E6E8] hover:bg-[#F2F2F3] transition-colors"
+              className="flex flex-col items-center justify-center w-16 h-16 rounded-full border border-[var(--th-border)] hover:bg-[var(--th-bg-hover)] transition-colors"
             >
-              <span className="text-2xl font-medium text-[#001221]">{key.num}</span>
+              <span className="text-2xl font-medium text-[var(--th-text-primary)]">{key.num}</span>
               {key.sub && (
-                <span className="text-[10px] font-medium text-[#7F888F] tracking-wider">{key.sub}</span>
+                <span className="text-[10px] font-medium text-[var(--th-text-muted)] tracking-wider">{key.sub}</span>
               )}
             </button>
           ))}
