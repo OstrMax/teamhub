@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 
 export default function SettingsDropdown({ onClose }: { onClose: () => void }) {
   const { isDark, toggleTheme } = useTheme();
+  const [volume, setVolume] = useState(65);
 
   return (
     <div
@@ -28,16 +30,34 @@ export default function SettingsDropdown({ onClose }: { onClose: () => void }) {
       </button>
 
       {/* Phone settings */}
-      <button
-        className="w-full flex items-center gap-3 px-4 py-3.5 transition-colors text-left"
-        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"}
-        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-primary)" strokeWidth="1.5">
-          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
-        </svg>
-        <span className="text-sm" style={{ color: "var(--th-text-primary)" }}>Phone settings</span>
-      </button>
+      <div className="px-4 py-3.5 transition-colors">
+        <div className="flex items-center gap-3">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-primary)" strokeWidth="1.5">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          <span className="text-sm" style={{ color: "var(--th-text-primary)" }}>Phone settings</span>
+        </div>
+        {/* Volume control */}
+        <div className="flex items-center gap-2.5 mt-3 ml-[32px]">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M11 5L6 9H2v6h4l5 4V5z" fill="var(--th-text-muted)"/>
+            {volume > 0 && <path d="M15.54 8.46a5 5 0 010 7.07" stroke="var(--th-text-muted)" strokeWidth="1.5" strokeLinecap="round"/>}
+            {volume > 50 && <path d="M18.07 5.93a9 9 0 010 12.14" stroke="var(--th-text-muted)" strokeWidth="1.5" strokeLinecap="round"/>}
+          </svg>
+          <input
+            type="range"
+            min={0}
+            max={100}
+            value={volume}
+            onChange={(e) => setVolume(Number(e.target.value))}
+            className="flex-1 h-[3px] rounded-full appearance-none cursor-pointer"
+            style={{
+              background: `linear-gradient(to right, var(--th-text-muted) 0%, var(--th-text-muted) ${volume}%, var(--th-border) ${volume}%, var(--th-border) 100%)`,
+            }}
+          />
+          <span className="text-[11px] font-medium tabular-nums w-7 text-right" style={{ color: "var(--th-text-muted)" }}>{volume}</span>
+        </div>
+      </div>
 
       {/* SMS settings */}
       <button

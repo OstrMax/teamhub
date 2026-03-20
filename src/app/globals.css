@@ -140,6 +140,15 @@ body {
   border-radius: 3px;
 }
 
+/* Range slider track */
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: 2px;
+}
+input[type="range"]::-moz-range-track {
+  height: 3px;
+  border-radius: 2px;
+}
 /* Range slider thumb */
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -150,6 +159,7 @@ input[type="range"]::-webkit-slider-thumb {
   cursor: pointer;
   border: 2px solid var(--th-bg);
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  margin-top: -5.5px;
 }
 input[type="range"]::-moz-range-thumb {
   width: 14px;

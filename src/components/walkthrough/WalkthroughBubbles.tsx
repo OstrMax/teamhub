@@ -116,11 +116,18 @@ export default function WalkthroughBubbles() {
     setDismissed(true);
   };
 
-  const arrowStyles: Record<string, string> = {
-    up: "bottom-full left-1/2 -translate-x-1/2 mb-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[6px] border-b-[#001221]",
-    down: "top-full left-1/2 -translate-x-1/2 mt-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-[#001221]",
-    left: "right-full top-1/2 -translate-y-1/2 mr-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-r-[6px] border-r-[#001221]",
-    right: "left-full top-1/2 -translate-y-1/2 ml-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-l-[6px] border-l-[#001221]",
+  const arrowBaseClasses: Record<string, { position: string; borders: string }> = {
+    up: { position: "bottom-full left-1/2 -translate-x-1/2 mb-0", borders: "border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[6px]" },
+    down: { position: "top-full left-1/2 -translate-x-1/2 mt-0", borders: "border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px]" },
+    left: { position: "right-full top-1/2 -translate-y-1/2 mr-0", borders: "border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-r-[6px]" },
+    right: { position: "left-full top-1/2 -translate-y-1/2 ml-0", borders: "border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-l-[6px]" },
+  };
+
+  const arrowColorProp: Record<string, string> = {
+    up: "borderBottomColor",
+    down: "borderTopColor",
+    left: "borderRightColor",
+    right: "borderLeftColor",
   };
 
   return (
@@ -134,9 +141,9 @@ export default function WalkthroughBubbles() {
         style={{ ...tip.position }}
         key={tip.id}
       >
-        <div className="relative bg-[#001221] text-white rounded-2xl px-5 py-4 shadow-[0_8px_30px_rgba(0,0,0,0.3)] min-w-[300px] max-w-[320px]">
+        <div className="relative text-white rounded-2xl px-5 py-4 min-w-[300px] max-w-[320px]" style={{ backgroundColor: "var(--th-walkthrough-bg)", border: "1px solid var(--th-walkthrough-border)", boxShadow: "var(--th-dropdown-shadow)" }}>
           {/* Arrow */}
-          <div className={`absolute w-0 h-0 ${arrowStyles[tip.arrowDirection]}`} />
+          <div className={`absolute w-0 h-0 ${arrowBaseClasses[tip.arrowDirection].position} ${arrowBaseClasses[tip.arrowDirection].borders}`} style={{ [arrowColorProp[tip.arrowDirection]]: "var(--th-walkthrough-bg)" }} />
 
           {/* Title */}
           <p className="text-[15px] font-semibold mb-1.5">{tip.title}</p>
