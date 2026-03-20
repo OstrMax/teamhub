@@ -41,21 +41,7 @@ export default function TalkPage() {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Page header — title + phone only */}
-      <div
-        className="flex items-center gap-3 px-6 py-3 border-b"
-        style={{ borderColor: 'var(--th-border)' }}
-      >
-        <h1 className="text-lg font-semibold" style={{ color: 'var(--th-text-primary)' }}>Talk</h1>
-        <button className="flex items-center gap-1 text-sm" style={{ color: 'var(--th-text-primary)' }}>
-          +12063127805
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <polyline points="6 9 12 15 18 9"/>
-          </svg>
-        </button>
-      </div>
-
-      {/* Content — Left panel (call card + dial pad) | Tabs + Content right */}
+      {/* Content — Left panel (call card + dial pad) | Header+Tabs + Content right */}
       <div className="flex flex-1 overflow-hidden">
         {/* Left panel */}
         <div

@@ -69,6 +69,7 @@
   --th-chart-bar-light: rgba(0,18,33,0.6);
   --th-chart-bar-hover: rgba(0,18,33,0.95);
   --th-chart-bar-light-hover: rgba(0,18,33,0.75);
+  --th-action-btn: #ffffff;
 }
 
 [data-theme="dark"] {
@@ -113,6 +114,7 @@
   --th-chart-bar-light: rgba(255,255,255,0.45);
   --th-chart-bar-hover: rgba(255,255,255,0.85);
   --th-chart-bar-light-hover: rgba(255,255,255,0.6);
+  --th-action-btn: rgba(46, 16, 85, 0.1);
 }
 
 body {
