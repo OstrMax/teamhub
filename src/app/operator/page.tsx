@@ -155,59 +155,70 @@ export default function OperatorConsolePage() {
 
         {/* Ongoing Call */}
         <div className="px-3 pt-3 pb-1">
-          <div className="text-[11px] font-semibold uppercase tracking-wider mb-2 px-1" style={{ color: "var(--th-text-muted)" }}>Ongoing call</div>
-          <div className="rounded-xl p-3 mb-2" style={{ backgroundColor: "var(--th-bg-card)", border: "1px solid var(--th-border)" }}>
-            <div className="flex items-center justify-between mb-0.5">
-              <span className="text-[14px] font-semibold" style={{ color: "var(--th-text-primary)" }}>(416) 7638098</span>
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{ backgroundColor: "rgba(59,130,246,0.12)", color: "#3B82F6" }}>✓ External</span>
+          <span className="text-xs font-semibold px-1" style={{ color: "var(--th-text-primary)" }}>Ongoing call</span>
+          <div className="mt-2 bg-[#001221] rounded-[12px] p-3 mb-2">
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-white text-[14px] font-medium">(416) 7638098</span>
+              <span className="flex items-center gap-1 px-2.5 py-0.5 bg-[#ebd6e8] text-[#9c328c] text-[11px] font-medium rounded-full">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#9c328c" strokeWidth="2"><polyline points="7 17 2 12 7 7"/><polyline points="17 7 22 12 17 17"/></svg>
+                External
+              </span>
             </div>
-            <div className="text-[12px] mb-2.5" style={{ color: "var(--th-text-muted)" }}>00:00:02</div>
-            <div className="flex items-center gap-1.5">
-              <button className="flex items-center gap-1 px-3 py-1.5 rounded-full text-[11px] font-medium" style={{ border: "1px solid var(--th-border)", color: "var(--th-text-primary)" }}>
-                Blind <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
+            <div className="text-white/60 text-[12px] mb-3">00:00:02</div>
+            <div className="flex items-center gap-2">
+              <button className="flex items-center gap-1 bg-white rounded-full px-3 py-1.5 hover:bg-gray-100 transition-colors active:scale-95">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#001221" strokeWidth="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                <span className="text-[#001221] text-[12px] font-medium">Blind</span>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#001221" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
               </button>
-              <button className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+              <div className="flex-1" />
+              <button className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors active:scale-95" title="Hold">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
               </button>
-              <button className="w-8 h-8 rounded-full flex items-center justify-center text-[13px] font-bold" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>P</button>
-              <button className="w-8 h-8 rounded-full bg-[#EF4444] flex items-center justify-center ml-auto">
-                <svg width="14" height="14" viewBox="0 0 20 20" fill="white"><path d="M4.32 12.12C5.48 11.95 6.42 11.57 6.44 10.41L6.45 9.72C6.46 9.22 5.79 7.66 9.97 7.66C14.14 7.65 13.42 9.21 13.4 9.71L13.39 10.41C13.37 11.56 14.3 11.94 15.45 12.11L16.14 12.21C17.29 12.38 18.23 12.28 18.25 11.13L18.26 10.5C18.31 10.02 18.35 8.61 17.24 7.28C15.91 5.68 13.47 4.87 10.02 4.88C6.56 4.88 4.1 5.7 2.71 7.3C1.55 8.63 1.54 10.05 1.57 10.52L1.56 11.15C1.54 12.3 2.47 12.4 3.63 12.22L4.32 12.12Z"/></svg>
+              <button className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors active:scale-95" title="Park">
+                <span className="text-white text-[13px] font-bold">P</span>
+              </button>
+              <button className="w-9 h-9 rounded-full bg-[#c70816] flex items-center justify-center hover:bg-[#a90612] transition-all active:scale-90" title="End call">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M23.71 16.67C20.66 13.78 16.54 12 12 12 7.46 12 3.34 13.78.29 16.67c-.18.18-.29.43-.29.71 0 .28.11.53.29.71l2.48 2.48c.18.18.43.29.71.29.27 0 .52-.11.7-.28.79-.74 1.69-1.36 2.66-1.85.33-.16.56-.5.56-.9v-3.1C8.69 14.25 10.32 14 12 14s3.31.25 4.9.72v3.1c0 .39.23.74.56.9.98.49 1.87 1.12 2.67 1.85.18.18.43.28.7.28.28 0 .53-.11.71-.29l2.48-2.48c.18-.18.29-.43.29-.71 0-.27-.11-.52-.29-.7z"/></svg>
               </button>
             </div>
           </div>
 
           {/* Ringing */}
-          <div className="rounded-xl p-3 mb-2" style={{ backgroundColor: "var(--th-bg-card)", border: "1px solid var(--th-border)" }}>
-            <div className="flex items-center justify-between mb-0.5">
-              <span className="text-[14px] font-semibold" style={{ color: "var(--th-text-primary)" }}>Mary Clary</span>
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{ backgroundColor: "rgba(52,199,89,0.12)", color: "#34C759" }}>✓ Internal</span>
+          <div className="bg-[#001221] rounded-[12px] p-3 mb-2">
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-white text-[14px] font-medium">Mary Clary</span>
+              <span className="flex items-center gap-1 px-2.5 py-0.5 bg-[#d4edda] text-[#28a745] text-[11px] font-medium rounded-full">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#28a745" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>
+                Internal
+              </span>
             </div>
-            <div className="text-[12px] mb-2.5" style={{ color: "var(--th-text-muted)" }}>Ringing...</div>
-            <div className="flex items-center gap-1.5">
-              <button className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" stroke="currentColor" fill="none" strokeWidth="2"/></svg>
+            <div className="text-white/60 text-[12px] mb-3">Ringing...</div>
+            <div className="flex items-center gap-2">
+              <button className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors active:scale-95" title="Speaker">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/></svg>
               </button>
-              <button className="w-8 h-8 rounded-full bg-[#34C759] flex items-center justify-center">
+              <button className="w-9 h-9 rounded-full bg-[#34C759] flex items-center justify-center hover:bg-[#2daa4e] transition-colors active:scale-95" title="Answer">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg>
               </button>
-              <button className="w-8 h-8 rounded-full bg-[#EF4444] flex items-center justify-center">
+              <button className="w-9 h-9 rounded-full bg-[#EF4444] flex items-center justify-center hover:bg-[#dc3545] transition-colors active:scale-95" title="Decline">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </button>
             </div>
           </div>
 
           {/* On Hold */}
-          <div className="text-[11px] font-semibold uppercase tracking-wider mt-3 mb-2 px-1" style={{ color: "var(--th-text-muted)" }}>On Hold</div>
+          <div className="text-xs font-semibold mt-3 mb-2 px-1" style={{ color: "var(--th-text-primary)" }}>On Hold</div>
           {[
             { number: "(416) 7638098", time: "00:00:02" },
             { number: "Terry Lowlance", time: "00:01:01" },
           ].map((hold, i) => (
-            <div key={i} className="flex items-center justify-between rounded-xl px-3 py-2.5 mb-1.5" style={{ backgroundColor: "var(--th-bg-card)", border: "1px solid var(--th-border)" }}>
-              <span className="text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>{hold.number}</span>
+            <div key={i} className="flex items-center justify-between bg-[#001221] rounded-[12px] px-3 py-2.5 mb-1.5">
+              <span className="text-white text-[13px] font-medium">{hold.number}</span>
               <div className="flex items-center gap-2">
-                <span className="text-[12px] font-mono" style={{ color: "var(--th-text-muted)" }}>{hold.time}</span>
-                <button className="w-7 h-7 rounded-full flex items-center justify-center" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
+                <span className="text-white/60 text-[12px] font-mono">{hold.time}</span>
+                <button className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors active:scale-95">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
                 </button>
               </div>
             </div>
