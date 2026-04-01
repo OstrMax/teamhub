@@ -92,6 +92,9 @@ export default function OperatorConsolePage() {
   const [groupName, setGroupName] = useState("Sales");
   const [groupContacts, setGroupContacts] = useState(editGroupContacts);
   const [hoveredListRow, setHoveredListRow] = useState<number | null>(null);
+  const [sortDropdown, setSortDropdown] = useState(false);
+  const [recipientsDropdown, setRecipientsDropdown] = useState(false);
+  const [locationsDropdown, setLocationsDropdown] = useState(false);
 
   return (
     <div className="flex h-full overflow-hidden">
@@ -139,6 +142,67 @@ export default function OperatorConsolePage() {
             </svg>
             <span className="text-[12px] font-medium uppercase tracking-[0.25px]" style={{ color: "var(--th-text-primary)" }}>Phone Settings</span>
           </div>
+        </div>
+
+        {/* Ongoing Call */}
+        <div className="px-4 pt-4 pb-2">
+          <div className="text-[12px] font-semibold uppercase tracking-wider mb-2" style={{ color: "var(--th-text-muted)" }}>Ongoing call</div>
+          <div className="rounded-xl p-3 mb-2" style={{ backgroundColor: "var(--th-bg-hover)", border: "1px solid var(--th-border)" }}>
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[14px] font-semibold" style={{ color: "var(--th-text-primary)" }}>(416) 7638098</span>
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#3B82F6]/15 text-[#3B82F6]">External</span>
+            </div>
+            <div className="text-[12px] mb-3" style={{ color: "var(--th-text-muted)" }}>00:00:02</div>
+            <div className="flex items-center gap-2">
+              <button className="flex items-center gap-1 px-3 py-1.5 rounded-full text-[11px] font-medium" style={{ border: "1px solid var(--th-border)", color: "var(--th-text-primary)" }}>
+                Blind <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <button className="w-9 h-9 rounded-full flex items-center justify-center" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+              </button>
+              <button className="w-9 h-9 rounded-full flex items-center justify-center text-[14px] font-bold" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>P</button>
+              <button className="w-9 h-9 rounded-full bg-[#EF4444] flex items-center justify-center ml-auto">
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="white"><path d="M4.32 12.12C5.48 11.95 6.42 11.57 6.44 10.41L6.45 9.72C6.46 9.22 5.79 7.66 9.97 7.66C14.14 7.65 13.42 9.21 13.4 9.71L13.39 10.41C13.37 11.56 14.3 11.94 15.45 12.11L16.14 12.21C17.29 12.38 18.23 12.28 18.25 11.13L18.26 10.5C18.31 10.02 18.35 8.61 17.24 7.28C15.91 5.68 13.47 4.87 10.02 4.88C6.56 4.88 4.1 5.7 2.71 7.3C1.55 8.63 1.54 10.05 1.57 10.52L1.56 11.15C1.54 12.3 2.47 12.4 3.63 12.22L4.32 12.12Z"/></svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Ringing */}
+          <div className="rounded-xl p-3 mb-2" style={{ backgroundColor: "var(--th-bg-hover)", border: "1px solid var(--th-border)" }}>
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[14px] font-semibold" style={{ color: "var(--th-text-primary)" }}>Mary Clary</span>
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#34C759]/15 text-[#34C759]">Internal</span>
+            </div>
+            <div className="text-[12px] mb-3" style={{ color: "var(--th-text-muted)" }}>Ringing...</div>
+            <div className="flex items-center gap-2">
+              <button className="w-9 h-9 rounded-full flex items-center justify-center" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" stroke="currentColor" fill="none" strokeWidth="2"/></svg>
+              </button>
+              <button className="w-9 h-9 rounded-full bg-[#34C759] flex items-center justify-center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><polyline points="20 6 9 17 4 12" stroke="white" strokeWidth="3" fill="none"/></svg>
+              </button>
+              <button className="w-9 h-9 rounded-full bg-[#EF4444] flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+          </div>
+
+          {/* On Hold */}
+          <div className="text-[12px] font-semibold uppercase tracking-wider mt-4 mb-2" style={{ color: "var(--th-text-muted)" }}>On Hold</div>
+          {[
+            { number: "(416) 7638098", time: "00:00:02" },
+            { number: "Terry Lowlance", time: "00:01:01" },
+          ].map((hold, i) => (
+            <div key={i} className="flex items-center justify-between rounded-xl px-3 py-2.5 mb-1.5" style={{ backgroundColor: "var(--th-bg-hover)", border: "1px solid var(--th-border)" }}>
+              <span className="text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>{hold.number}</span>
+              <div className="flex items-center gap-2">
+                <span className="text-[12px] font-mono" style={{ color: "var(--th-text-muted)" }}>{hold.time}</span>
+                <button className="w-7 h-7 rounded-full flex items-center justify-center" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* Phone Input */}
@@ -312,22 +376,67 @@ export default function OperatorConsolePage() {
           </div>
         </div>
 
-        {/* Sort row */}
-        <div className="flex items-center gap-3 px-4 py-2" style={{ borderBottom: "1px solid var(--th-border)" }}>
-          <button className="flex items-center gap-1.5 text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>
-            Sort by status
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 10l5 5 5-5"/></svg>
-          </button>
+        {/* Sort row with dropdowns */}
+        <div className="flex items-center gap-3 px-4 py-2 relative" style={{ borderBottom: "1px solid var(--th-border)" }}>
+          {/* Sort by status */}
+          <div className="relative">
+            <button onClick={() => { setSortDropdown(!sortDropdown); setRecipientsDropdown(false); setLocationsDropdown(false); }} className="flex items-center gap-1.5 text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>
+              Sort by status
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 10l5 5 5-5"/></svg>
+            </button>
+            {sortDropdown && (
+              <div className="absolute top-full left-0 mt-2 z-50 rounded-xl shadow-lg py-1 min-w-[180px]" style={{ backgroundColor: "var(--th-bg-card)", border: "1px solid var(--th-border)" }}>
+                {["All contacts", "Available", "Busy", "Offline", "Ringing"].map((item) => (
+                  <button key={item} onClick={() => setSortDropdown(false)} className="w-full text-left px-4 py-2.5 text-[13px] transition-colors" style={{ color: "var(--th-text-primary)" }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>{item}</button>
+                ))}
+              </div>
+            )}
+          </div>
           <div className="w-px h-4" style={{ backgroundColor: "var(--th-border)" }} />
-          <button className="flex items-center gap-1.5 text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>
-            All recipients
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 10l5 5 5-5"/></svg>
-          </button>
+          {/* All recipients */}
+          <div className="relative">
+            <button onClick={() => { setRecipientsDropdown(!recipientsDropdown); setSortDropdown(false); setLocationsDropdown(false); }} className="flex items-center gap-1.5 text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>
+              All recipients
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 10l5 5 5-5"/></svg>
+            </button>
+            {recipientsDropdown && (
+              <div className="absolute top-full left-0 mt-2 z-50 rounded-xl shadow-lg py-2 min-w-[220px]" style={{ backgroundColor: "var(--th-bg-card)", border: "1px solid var(--th-border)" }}>
+                <div className="px-3 pb-2 mb-1" style={{ borderBottom: "1px solid var(--th-border-light)" }}>
+                  <div className="flex items-center gap-2 rounded-lg px-3 py-2" style={{ backgroundColor: "var(--th-bg-hover)" }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" placeholder="Search contact" className="flex-1 outline-none text-[13px] bg-transparent" style={{ color: "var(--th-text-primary)" }} />
+                  </div>
+                </div>
+                <button className="w-full flex items-center gap-3 px-4 py-2 text-[13px]" style={{ color: "var(--th-text-primary)" }}>
+                  <div className="w-4 h-4 rounded flex items-center justify-center bg-[#3B82F6]"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+                  Unselect all
+                </button>
+                {["Trerry Lowrance", "Bryan Kaligan", "Lowse Lowet", "Trerry Lowrance", "Brandon Stone", "Sharon Stone"].map((name, i) => (
+                  <button key={i} className="w-full flex items-center gap-3 px-4 py-2 text-[13px] transition-colors" style={{ color: "var(--th-text-primary)" }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>
+                    <div className="w-4 h-4 rounded flex items-center justify-center" style={{ backgroundColor: i < 4 ? "#3B82F6" : "transparent", border: i < 4 ? "none" : "2px solid var(--th-border)" }}>
+                      {i < 4 && <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><path d="M20 6L9 17l-5-5"/></svg>}
+                    </div>
+                    {name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           <div className="w-px h-4" style={{ backgroundColor: "var(--th-border)" }} />
-          <button className="flex items-center gap-1.5 text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>
-            All locations
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 10l5 5 5-5"/></svg>
-          </button>
+          {/* All locations */}
+          <div className="relative">
+            <button onClick={() => { setLocationsDropdown(!locationsDropdown); setSortDropdown(false); setRecipientsDropdown(false); }} className="flex items-center gap-1.5 text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>
+              All locations
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 10l5 5 5-5"/></svg>
+            </button>
+            {locationsDropdown && (
+              <div className="absolute top-full right-0 mt-2 z-50 rounded-xl shadow-lg py-1 min-w-[180px]" style={{ backgroundColor: "var(--th-bg-card)", border: "1px solid var(--th-border)" }}>
+                {["All locations", "Austin", "San Francisco", "New York", "Toronto"].map((item) => (
+                  <button key={item} onClick={() => setLocationsDropdown(false)} className="w-full text-left px-4 py-2.5 text-[13px] transition-colors" style={{ color: "var(--th-text-primary)" }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>{item}</button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Contacts Grid or List */}
