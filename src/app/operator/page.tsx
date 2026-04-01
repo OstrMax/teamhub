@@ -98,6 +98,19 @@ export default function OperatorConsolePage() {
 
   return (
     <div className="flex h-full overflow-hidden">
+      {editGroupView ? (
+        <EditGroupView
+          groups={groups}
+          activeGroupId={activeGroupId}
+          setActiveGroupId={setActiveGroupId}
+          groupName={groupName}
+          setGroupName={setGroupName}
+          groupContacts={groupContacts}
+          setGroupContacts={setGroupContacts}
+          onBack={() => setEditGroupView(false)}
+        />
+      ) : (
+      <>
       {/* Left Panel - Dial Pad */}
       <div
         className="w-[320px] shrink-0 flex flex-col h-full overflow-y-auto"
@@ -141,60 +154,60 @@ export default function OperatorConsolePage() {
         </div>
 
         {/* Ongoing Call */}
-        <div className="px-4 pt-4 pb-2">
-          <div className="text-[12px] font-semibold uppercase tracking-wider mb-2" style={{ color: "var(--th-text-muted)" }}>Ongoing call</div>
-          <div className="rounded-xl p-3 mb-2" style={{ backgroundColor: "var(--th-bg-hover)", border: "1px solid var(--th-border)" }}>
-            <div className="flex items-center justify-between mb-1">
+        <div className="px-3 pt-3 pb-1">
+          <div className="text-[11px] font-semibold uppercase tracking-wider mb-2 px-1" style={{ color: "var(--th-text-muted)" }}>Ongoing call</div>
+          <div className="rounded-xl p-3 mb-2" style={{ backgroundColor: "var(--th-bg-card)", border: "1px solid var(--th-border)" }}>
+            <div className="flex items-center justify-between mb-0.5">
               <span className="text-[14px] font-semibold" style={{ color: "var(--th-text-primary)" }}>(416) 7638098</span>
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#3B82F6]/15 text-[#3B82F6]">External</span>
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{ backgroundColor: "rgba(59,130,246,0.12)", color: "#3B82F6" }}>✓ External</span>
             </div>
-            <div className="text-[12px] mb-3" style={{ color: "var(--th-text-muted)" }}>00:00:02</div>
-            <div className="flex items-center gap-2">
+            <div className="text-[12px] mb-2.5" style={{ color: "var(--th-text-muted)" }}>00:00:02</div>
+            <div className="flex items-center gap-1.5">
               <button className="flex items-center gap-1 px-3 py-1.5 rounded-full text-[11px] font-medium" style={{ border: "1px solid var(--th-border)", color: "var(--th-text-primary)" }}>
                 Blind <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
               </button>
-              <button className="w-9 h-9 rounded-full flex items-center justify-center" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+              <button className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
               </button>
-              <button className="w-9 h-9 rounded-full flex items-center justify-center text-[14px] font-bold" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>P</button>
-              <button className="w-9 h-9 rounded-full bg-[#EF4444] flex items-center justify-center ml-auto">
-                <svg width="16" height="16" viewBox="0 0 20 20" fill="white"><path d="M4.32 12.12C5.48 11.95 6.42 11.57 6.44 10.41L6.45 9.72C6.46 9.22 5.79 7.66 9.97 7.66C14.14 7.65 13.42 9.21 13.4 9.71L13.39 10.41C13.37 11.56 14.3 11.94 15.45 12.11L16.14 12.21C17.29 12.38 18.23 12.28 18.25 11.13L18.26 10.5C18.31 10.02 18.35 8.61 17.24 7.28C15.91 5.68 13.47 4.87 10.02 4.88C6.56 4.88 4.1 5.7 2.71 7.3C1.55 8.63 1.54 10.05 1.57 10.52L1.56 11.15C1.54 12.3 2.47 12.4 3.63 12.22L4.32 12.12Z"/></svg>
+              <button className="w-8 h-8 rounded-full flex items-center justify-center text-[13px] font-bold" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>P</button>
+              <button className="w-8 h-8 rounded-full bg-[#EF4444] flex items-center justify-center ml-auto">
+                <svg width="14" height="14" viewBox="0 0 20 20" fill="white"><path d="M4.32 12.12C5.48 11.95 6.42 11.57 6.44 10.41L6.45 9.72C6.46 9.22 5.79 7.66 9.97 7.66C14.14 7.65 13.42 9.21 13.4 9.71L13.39 10.41C13.37 11.56 14.3 11.94 15.45 12.11L16.14 12.21C17.29 12.38 18.23 12.28 18.25 11.13L18.26 10.5C18.31 10.02 18.35 8.61 17.24 7.28C15.91 5.68 13.47 4.87 10.02 4.88C6.56 4.88 4.1 5.7 2.71 7.3C1.55 8.63 1.54 10.05 1.57 10.52L1.56 11.15C1.54 12.3 2.47 12.4 3.63 12.22L4.32 12.12Z"/></svg>
               </button>
             </div>
           </div>
 
           {/* Ringing */}
-          <div className="rounded-xl p-3 mb-2" style={{ backgroundColor: "var(--th-bg-hover)", border: "1px solid var(--th-border)" }}>
-            <div className="flex items-center justify-between mb-1">
+          <div className="rounded-xl p-3 mb-2" style={{ backgroundColor: "var(--th-bg-card)", border: "1px solid var(--th-border)" }}>
+            <div className="flex items-center justify-between mb-0.5">
               <span className="text-[14px] font-semibold" style={{ color: "var(--th-text-primary)" }}>Mary Clary</span>
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#34C759]/15 text-[#34C759]">Internal</span>
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{ backgroundColor: "rgba(52,199,89,0.12)", color: "#34C759" }}>✓ Internal</span>
             </div>
-            <div className="text-[12px] mb-3" style={{ color: "var(--th-text-muted)" }}>Ringing...</div>
-            <div className="flex items-center gap-2">
-              <button className="w-9 h-9 rounded-full flex items-center justify-center" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" stroke="currentColor" fill="none" strokeWidth="2"/></svg>
+            <div className="text-[12px] mb-2.5" style={{ color: "var(--th-text-muted)" }}>Ringing...</div>
+            <div className="flex items-center gap-1.5">
+              <button className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" stroke="currentColor" fill="none" strokeWidth="2"/></svg>
               </button>
-              <button className="w-9 h-9 rounded-full bg-[#34C759] flex items-center justify-center">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><polyline points="20 6 9 17 4 12" stroke="white" strokeWidth="3" fill="none"/></svg>
+              <button className="w-8 h-8 rounded-full bg-[#34C759] flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg>
               </button>
-              <button className="w-9 h-9 rounded-full bg-[#EF4444] flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <button className="w-8 h-8 rounded-full bg-[#EF4444] flex items-center justify-center">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </button>
             </div>
           </div>
 
           {/* On Hold */}
-          <div className="text-[12px] font-semibold uppercase tracking-wider mt-4 mb-2" style={{ color: "var(--th-text-muted)" }}>On Hold</div>
+          <div className="text-[11px] font-semibold uppercase tracking-wider mt-3 mb-2 px-1" style={{ color: "var(--th-text-muted)" }}>On Hold</div>
           {[
             { number: "(416) 7638098", time: "00:00:02" },
             { number: "Terry Lowlance", time: "00:01:01" },
           ].map((hold, i) => (
-            <div key={i} className="flex items-center justify-between rounded-xl px-3 py-2.5 mb-1.5" style={{ backgroundColor: "var(--th-bg-hover)", border: "1px solid var(--th-border)" }}>
+            <div key={i} className="flex items-center justify-between rounded-xl px-3 py-2.5 mb-1.5" style={{ backgroundColor: "var(--th-bg-card)", border: "1px solid var(--th-border)" }}>
               <span className="text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>{hold.number}</span>
               <div className="flex items-center gap-2">
                 <span className="text-[12px] font-mono" style={{ color: "var(--th-text-muted)" }}>{hold.time}</span>
                 <button className="w-7 h-7 rounded-full flex items-center justify-center" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
                 </button>
               </div>
             </div>
@@ -254,19 +267,6 @@ export default function OperatorConsolePage() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-full overflow-hidden" style={{ backgroundColor: "var(--th-bg)" }}>
-        {editGroupView ? (
-          <EditGroupView
-            groups={groups}
-            activeGroupId={activeGroupId}
-            setActiveGroupId={setActiveGroupId}
-            groupName={groupName}
-            setGroupName={setGroupName}
-            groupContacts={groupContacts}
-            setGroupContacts={setGroupContacts}
-            onBack={() => setEditGroupView(false)}
-          />
-        ) : (
-        <>
         {/* Tabs */}
         <div className="flex items-center" style={{ borderBottom: "1px solid var(--th-border)" }}>
           {[
@@ -538,11 +538,11 @@ export default function OperatorConsolePage() {
             </div>
           </div>
         </div>
-        </>
-        )}
       </div>
 
       {calling && <CallPopup name={callingName || "Unknown"} initials="#" onEnd={() => setCalling(false)} />}
+      </>
+      )}
     </div>
   );
 }
@@ -563,9 +563,9 @@ function EditGroupView({ groups, activeGroupId, setActiveGroupId, groupName, set
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full flex-1" style={{ backgroundColor: "var(--th-bg)" }}>
       {/* Back link */}
-      <div className="px-6 py-4" style={{ borderBottom: "1px solid var(--th-border)" }}>
+      <div className="px-8 py-4" style={{ borderBottom: "1px solid var(--th-border)" }}>
         <button onClick={onBack} className="flex items-center gap-2 text-sm font-medium transition-colors" style={{ color: "var(--th-text-primary)" }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
           Back to contacts
@@ -574,20 +574,24 @@ function EditGroupView({ groups, activeGroupId, setActiveGroupId, groupName, set
 
       <div className="flex flex-1 overflow-hidden">
         {/* Left sidebar — group list */}
-        <div className="w-[220px] shrink-0 flex flex-col overflow-y-auto" style={{ borderRight: "1px solid var(--th-border)" }}>
-          <div className="flex items-center justify-between px-5 pt-5 pb-3">
-            <h2 className="text-lg font-semibold" style={{ color: "var(--th-text-primary)" }}>All groups</h2>
-            <button className="text-xs font-bold uppercase tracking-wider" style={{ color: "var(--th-tab-active)" }}>+ Add New Group</button>
+        <div className="w-[260px] shrink-0 flex flex-col overflow-y-auto px-6" style={{ borderRight: "1px solid var(--th-border)" }}>
+          <div className="flex items-center justify-between pt-6 pb-4">
+            <h2 className="text-xl font-semibold" style={{ color: "var(--th-text-primary)" }}>All groups</h2>
+            <button className="flex items-center gap-1 text-xs font-bold uppercase tracking-wider" style={{ color: "var(--th-tab-active)" }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add New Group
+            </button>
           </div>
-          <div className="flex flex-col gap-1 px-3">
+          <div className="flex flex-col gap-0.5">
             {groups.map((g) => (
               <button
                 key={g.id}
                 onClick={() => { setActiveGroupId(g.id); setGroupName(g.name); }}
-                className="text-left px-3 py-2.5 rounded-lg text-[14px] font-medium transition-colors"
+                className="text-left px-4 py-3 rounded-lg text-[15px] font-medium transition-colors"
                 style={{
                   backgroundColor: activeGroupId === g.id ? "var(--th-bg-hover)" : "transparent",
-                  color: activeGroupId === g.id ? "var(--th-tab-active)" : "var(--th-text-secondary)",
+                  color: activeGroupId === g.id ? "var(--th-text-primary)" : "var(--th-text-secondary)",
+                  fontWeight: activeGroupId === g.id ? 600 : 400,
                 }}
               >
                 {g.name}
@@ -597,15 +601,15 @@ function EditGroupView({ groups, activeGroupId, setActiveGroupId, groupName, set
         </div>
 
         {/* Right panel — group edit */}
-        <div className="flex-1 flex flex-col overflow-hidden px-6 py-5">
+        <div className="flex-1 flex flex-col overflow-hidden px-8 py-6">
           {/* Group name + delete */}
-          <div className="flex items-center gap-4 mb-5">
-            <span className="text-sm font-medium shrink-0" style={{ color: "var(--th-text-secondary)" }}>Group Name</span>
+          <div className="flex items-center gap-4 mb-6">
+            <span className="text-[15px] font-medium shrink-0" style={{ color: "var(--th-text-secondary)" }}>Group Name</span>
             <input
               type="text"
               value={groupName}
               onChange={(e) => setGroupName(e.target.value)}
-              className="flex-1 px-4 py-2.5 rounded-xl text-sm outline-none transition-all"
+              className="flex-1 px-4 py-3 rounded-xl text-[15px] outline-none transition-all"
               style={{ border: "1px solid var(--th-border)", backgroundColor: "var(--th-bg)", color: "var(--th-text-primary)" }}
             />
             <button className="flex items-center gap-1.5 text-sm font-bold text-[#EF4444]">
@@ -627,7 +631,7 @@ function EditGroupView({ groups, activeGroupId, setActiveGroupId, groupName, set
           </div>
 
           {/* Count */}
-          <div className="text-sm font-semibold mb-3" style={{ color: "var(--th-text-primary)" }}>
+          <div className="text-[15px] font-semibold mb-4" style={{ color: "var(--th-text-primary)" }}>
             Group has {groupContacts.filter(c => c.checked).length} contacts
           </div>
 
