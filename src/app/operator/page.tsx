@@ -37,6 +37,33 @@ const statusColors: Record<ContactStatus, string> = {
 
 const filterChips = ["ALL", "INTERNAL", "EXTERNAL"];
 
+/* ── List view fake data ── */
+const listViewData = [
+  { id: 1, recipient: "Sarah Tenner", ext: "112344", location: "Austin", caller: "Wade Warren", callerNum: "5553", type: "External", date: "2/11/2023", time: "8:21 AM" },
+  { id: 2, recipient: "Cody Briant (Me)", ext: "112344", location: "San Fran...", caller: "(684) 555-0102", callerNum: "(684) 555-0102", type: "External", date: "2/11/2023", time: "8:21 AM" },
+  { id: 3, recipient: "Sarah Tenner", ext: "112344", location: "Austin", caller: "Wade Warren", callerNum: "5553", type: "External", date: "2/11/2023", time: "8:21 AM" },
+  { id: 4, recipient: "Cody Briant (Me)", ext: "112344", location: "San Fran...", caller: "(684) 555-0102", callerNum: "(684) 555-0102", type: "External", date: "2/11/2023", time: "8:21 AM" },
+  { id: 5, recipient: "Cody Briant (Me)", ext: "112344", location: "San Fran...", caller: "(684) 555-0102", callerNum: "(684) 555-0102", type: "External", date: "2/11/2023", time: "8:21 AM" },
+];
+
+/* ── Edit Group data ── */
+const groups = [
+  { id: 1, name: "Management" },
+  { id: 2, name: "Sales" },
+  { id: 3, name: "NY Office" },
+];
+
+interface EditGroupContact { id: number; name: string; avatar?: string; initials?: string; checked: boolean; }
+
+const editGroupContacts: EditGroupContact[] = [
+  { id: 1, name: "Jordan Anderson", avatar: "https://i.pravatar.cc/80?img=15", checked: false },
+  { id: 2, name: "Cody Fisher", avatar: "https://i.pravatar.cc/80?img=22", checked: true },
+  { id: 3, name: "Arlene McCoy", initials: "TF", checked: true },
+  { id: 4, name: "Floyd Miles", avatar: "https://i.pravatar.cc/80?img=33", checked: true },
+  { id: 5, name: "Allen Munger", avatar: "https://i.pravatar.cc/80?img=44", checked: true },
+  { id: 6, name: "Caroline Sparks", avatar: "https://i.pravatar.cc/80?img=48", checked: true },
+];
+
 const dialPadKeys = [
   { digit: "1", sub: "" },
   { digit: "2", sub: "ABC" },
@@ -60,6 +87,11 @@ export default function OperatorConsolePage() {
   const [calling, setCalling] = useState(false);
   const [callingName, setCallingName] = useState("");
   const [volume, setVolume] = useState(56);
+  const [editGroupView, setEditGroupView] = useState(false);
+  const [activeGroupId, setActiveGroupId] = useState(2);
+  const [groupName, setGroupName] = useState("Sales");
+  const [groupContacts, setGroupContacts] = useState(editGroupContacts);
+  const [hoveredListRow, setHoveredListRow] = useState<number | null>(null);
 
   return (
     <div className="flex h-full overflow-hidden">
@@ -160,8 +192,21 @@ export default function OperatorConsolePage() {
         </div>
       </div>
 
-      {/* Main Content - Contact List */}
+      {/* Main Content */}
       <div className="flex-1 flex flex-col h-full overflow-hidden" style={{ backgroundColor: "var(--th-bg)" }}>
+        {editGroupView ? (
+          <EditGroupView
+            groups={groups}
+            activeGroupId={activeGroupId}
+            setActiveGroupId={setActiveGroupId}
+            groupName={groupName}
+            setGroupName={setGroupName}
+            groupContacts={groupContacts}
+            setGroupContacts={setGroupContacts}
+            onBack={() => setEditGroupView(false)}
+          />
+        ) : (
+        <>
         {/* Tabs */}
         <div className="flex items-center" style={{ borderBottom: "1px solid var(--th-border)" }}>
           {[
@@ -217,7 +262,7 @@ export default function OperatorConsolePage() {
             </button>
           </div>
           <div className="flex items-center gap-4">
-            <button className="text-xs font-bold tracking-[0.24px] uppercase" style={{ color: "var(--th-tab-active)" }}>
+            <button onClick={() => setEditGroupView(true)} className="text-xs font-bold tracking-[0.24px] uppercase" style={{ color: "var(--th-tab-active)" }}>
               Edit group
             </button>
             <button className="flex items-center gap-1 text-xs font-bold tracking-[0.24px] uppercase" style={{ color: "var(--th-tab-active)" }}>
@@ -267,13 +312,83 @@ export default function OperatorConsolePage() {
           </div>
         </div>
 
-        {/* Contacts Grid */}
+        {/* Sort row */}
+        <div className="flex items-center gap-3 px-4 py-2" style={{ borderBottom: "1px solid var(--th-border)" }}>
+          <button className="flex items-center gap-1.5 text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>
+            Sort by status
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 10l5 5 5-5"/></svg>
+          </button>
+          <div className="w-px h-4" style={{ backgroundColor: "var(--th-border)" }} />
+          <button className="flex items-center gap-1.5 text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>
+            All recipients
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 10l5 5 5-5"/></svg>
+          </button>
+          <div className="w-px h-4" style={{ backgroundColor: "var(--th-border)" }} />
+          <button className="flex items-center gap-1.5 text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>
+            All locations
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 10l5 5 5-5"/></svg>
+          </button>
+        </div>
+
+        {/* Contacts Grid or List */}
         <div className="flex-1 overflow-y-auto px-4 py-2">
-          <div className={gridView ? "grid grid-cols-2 gap-4" : "flex flex-col gap-2"}>
-            {contacts.map((contact) => (
-              <ContactCard key={contact.id} contact={contact} />
-            ))}
-          </div>
+          {gridView ? (
+            <div className="grid grid-cols-2 gap-4">
+              {contacts.map((contact) => (
+                <ContactCard key={contact.id} contact={contact} />
+              ))}
+            </div>
+          ) : (
+            /* List/Table view */
+            <table className="w-full text-sm">
+              <thead>
+                <tr style={{ borderBottom: "1px solid var(--th-border)" }}>
+                  <th className="text-left text-[11px] font-semibold uppercase tracking-wider pb-2.5 pl-2" style={{ color: "var(--th-text-muted)" }}>Recipient</th>
+                  <th className="text-left text-[11px] font-semibold uppercase tracking-wider pb-2.5" style={{ color: "var(--th-text-muted)" }}>Location</th>
+                  <th className="text-left text-[11px] font-semibold uppercase tracking-wider pb-2.5" style={{ color: "var(--th-text-muted)" }}>Caller</th>
+                  <th className="text-left text-[11px] font-semibold uppercase tracking-wider pb-2.5" style={{ color: "var(--th-text-muted)" }}>Type</th>
+                  <th className="text-left text-[11px] font-semibold uppercase tracking-wider pb-2.5" style={{ color: "var(--th-text-muted)" }}>Call Time</th>
+                  <th className="w-10 pb-2.5" />
+                </tr>
+              </thead>
+              <tbody>
+                {listViewData.map((row) => (
+                  <tr
+                    key={row.id}
+                    className="transition-colors cursor-pointer"
+                    style={{ borderBottom: "1px solid var(--th-border-light)", backgroundColor: hoveredListRow === row.id ? "var(--th-bg-hover)" : "transparent" }}
+                    onMouseEnter={() => setHoveredListRow(row.id)}
+                    onMouseLeave={() => setHoveredListRow(null)}
+                  >
+                    <td className="py-3 pl-2">
+                      <div className="text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>{row.recipient}</div>
+                      <span className="text-[11px] px-1.5 py-0.5 rounded mt-0.5 inline-block" style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-text-muted)" }}>{row.ext}</span>
+                    </td>
+                    <td className="py-3 text-[13px]" style={{ color: "var(--th-text-secondary)" }}>{row.location}</td>
+                    <td className="py-3">
+                      <div className="text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>{row.caller}</div>
+                      <span className="text-[11px] px-1.5 py-0.5 rounded mt-0.5 inline-block" style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-text-muted)" }}>{row.callerNum}</span>
+                    </td>
+                    <td className="py-3">
+                      <span className="flex items-center gap-1.5 text-[13px]" style={{ color: "var(--th-text-primary)" }}>
+                        <span className="w-2 h-2 rounded-full bg-[#34C759]" />
+                        {row.type}
+                      </span>
+                    </td>
+                    <td className="py-3 text-[13px]" style={{ color: "var(--th-text-secondary)" }}>
+                      <div>{row.date}</div>
+                      <div>{row.time}</div>
+                    </td>
+                    <td className="py-3 text-center">
+                      <button className="p-1 rounded-lg transition-colors" onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-text-muted)"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
 
         {/* Pagination */}
@@ -316,9 +431,139 @@ export default function OperatorConsolePage() {
             </div>
           </div>
         </div>
+        </>
+        )}
       </div>
 
       {calling && <CallPopup name={callingName || "Unknown"} initials="#" onEnd={() => setCalling(false)} />}
+    </div>
+  );
+}
+
+/* ── Edit Group View ── */
+function EditGroupView({ groups, activeGroupId, setActiveGroupId, groupName, setGroupName, groupContacts, setGroupContacts, onBack }: {
+  groups: { id: number; name: string }[];
+  activeGroupId: number;
+  setActiveGroupId: (id: number) => void;
+  groupName: string;
+  setGroupName: (name: string) => void;
+  groupContacts: EditGroupContact[];
+  setGroupContacts: (c: EditGroupContact[]) => void;
+  onBack: () => void;
+}) {
+  const toggleContact = (id: number) => {
+    setGroupContacts(groupContacts.map(c => c.id === id ? { ...c, checked: !c.checked } : c));
+  };
+
+  return (
+    <div className="flex flex-col h-full">
+      {/* Back link */}
+      <div className="px-6 py-4" style={{ borderBottom: "1px solid var(--th-border)" }}>
+        <button onClick={onBack} className="flex items-center gap-2 text-sm font-medium transition-colors" style={{ color: "var(--th-text-primary)" }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back to contacts
+        </button>
+      </div>
+
+      <div className="flex flex-1 overflow-hidden">
+        {/* Left sidebar — group list */}
+        <div className="w-[220px] shrink-0 flex flex-col overflow-y-auto" style={{ borderRight: "1px solid var(--th-border)" }}>
+          <div className="flex items-center justify-between px-5 pt-5 pb-3">
+            <h2 className="text-lg font-semibold" style={{ color: "var(--th-text-primary)" }}>All groups</h2>
+            <button className="text-xs font-bold uppercase tracking-wider" style={{ color: "var(--th-tab-active)" }}>+ Add New Group</button>
+          </div>
+          <div className="flex flex-col gap-1 px-3">
+            {groups.map((g) => (
+              <button
+                key={g.id}
+                onClick={() => { setActiveGroupId(g.id); setGroupName(g.name); }}
+                className="text-left px-3 py-2.5 rounded-lg text-[14px] font-medium transition-colors"
+                style={{
+                  backgroundColor: activeGroupId === g.id ? "var(--th-bg-hover)" : "transparent",
+                  color: activeGroupId === g.id ? "var(--th-tab-active)" : "var(--th-text-secondary)",
+                }}
+              >
+                {g.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Right panel — group edit */}
+        <div className="flex-1 flex flex-col overflow-hidden px-6 py-5">
+          {/* Group name + delete */}
+          <div className="flex items-center gap-4 mb-5">
+            <span className="text-sm font-medium shrink-0" style={{ color: "var(--th-text-secondary)" }}>Group Name</span>
+            <input
+              type="text"
+              value={groupName}
+              onChange={(e) => setGroupName(e.target.value)}
+              className="flex-1 px-4 py-2.5 rounded-xl text-sm outline-none transition-all"
+              style={{ border: "1px solid var(--th-border)", backgroundColor: "var(--th-bg)", color: "var(--th-text-primary)" }}
+            />
+            <button className="flex items-center gap-1.5 text-sm font-bold text-[#EF4444]">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+              DELETE
+            </button>
+          </div>
+
+          {/* Search + location filter */}
+          <div className="flex items-center gap-3 mb-4">
+            <div className="flex-1 flex items-center gap-2 rounded-xl px-4 py-2.5" style={{ border: "1px solid var(--th-border)", backgroundColor: "var(--th-bg)" }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" placeholder="Search contact" className="flex-1 outline-none text-sm bg-transparent" style={{ color: "var(--th-text-primary)" }} />
+            </div>
+            <button className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium" style={{ border: "1px solid var(--th-border)", color: "var(--th-text-primary)" }}>
+              All locations
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 10l5 5 5-5"/></svg>
+            </button>
+          </div>
+
+          {/* Count */}
+          <div className="text-sm font-semibold mb-3" style={{ color: "var(--th-text-primary)" }}>
+            Group has {groupContacts.filter(c => c.checked).length} contacts
+          </div>
+
+          {/* Contact list with checkboxes */}
+          <div className="flex-1 overflow-y-auto">
+            {groupContacts.map((contact) => (
+              <div
+                key={contact.id}
+                className="flex items-center gap-4 py-3 cursor-pointer transition-colors"
+                style={{ borderBottom: "1px solid var(--th-border-light)" }}
+                onClick={() => toggleContact(contact.id)}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+              >
+                {/* Checkbox */}
+                <div
+                  className="w-5 h-5 rounded flex items-center justify-center shrink-0 transition-colors"
+                  style={{
+                    backgroundColor: contact.checked ? "#3B82F6" : "transparent",
+                    border: contact.checked ? "none" : "2px solid var(--th-border)",
+                  }}
+                >
+                  {contact.checked && (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  )}
+                </div>
+
+                {/* Avatar */}
+                {contact.avatar ? (
+                  <Image src={contact.avatar} alt="" width={40} height={40} className="w-10 h-10 rounded-full object-cover" unoptimized />
+                ) : (
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold" style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-text-primary)" }}>
+                    {contact.initials}
+                  </div>
+                )}
+
+                {/* Name */}
+                <span className="text-sm font-medium" style={{ color: "var(--th-text-primary)" }}>{contact.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
