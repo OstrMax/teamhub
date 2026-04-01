@@ -115,33 +115,29 @@ export default function OperatorConsolePage() {
           <span className="text-[13px]" style={{ color: "var(--th-text-secondary)" }}>ext: x2344</span>
         </div>
 
-        {/* Audio Controls */}
+        {/* Audio Controls — single line */}
         <div className="flex items-center gap-2 px-3 py-3" style={{ borderBottom: "1px solid var(--th-border)" }}>
-          <div className="flex items-center gap-2 flex-1">
-            {/* Speaker icon */}
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: "var(--th-text-primary)" }}>
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-              <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" />
-            </svg>
-            {/* Volume slider */}
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={volume}
-              onChange={(e) => setVolume(Number(e.target.value))}
-              className="flex-1 h-[3px] rounded-full appearance-none cursor-pointer"
-              style={{
-                background: `linear-gradient(to right, var(--th-text-muted) 0%, var(--th-text-muted) ${volume}%, var(--th-border) ${volume}%, var(--th-border) 100%)`,
-              }}
-            />
-          </div>
-          <div className="flex items-center gap-1 ml-1">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: "var(--th-text-primary)" }} className="shrink-0">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+            <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" />
+          </svg>
+          <input
+            type="range"
+            min={0}
+            max={100}
+            value={volume}
+            onChange={(e) => setVolume(Number(e.target.value))}
+            className="flex-1 h-[3px] rounded-full appearance-none cursor-pointer"
+            style={{
+              background: `linear-gradient(to right, var(--th-text-muted) 0%, var(--th-text-muted) ${volume}%, var(--th-border) ${volume}%, var(--th-border) 100%)`,
+            }}
+          />
+          <button className="flex items-center gap-1 shrink-0 ml-1">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: "var(--th-text-muted)" }}>
               <circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
             </svg>
-            <span className="text-[12px] font-medium uppercase tracking-[0.25px]" style={{ color: "var(--th-text-primary)" }}>Phone Settings</span>
-          </div>
+            <span className="text-[11px] font-medium uppercase tracking-[0.25px]" style={{ color: "var(--th-text-primary)" }}>Phone Settings</span>
+          </button>
         </div>
 
         {/* Ongoing Call */}
@@ -329,10 +325,12 @@ export default function OperatorConsolePage() {
             <button onClick={() => setEditGroupView(true)} className="text-xs font-bold tracking-[0.24px] uppercase" style={{ color: "var(--th-tab-active)" }}>
               Edit group
             </button>
-            <button className="flex items-center gap-1 text-xs font-bold tracking-[0.24px] uppercase" style={{ color: "var(--th-tab-active)" }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-              Add Contact
-            </button>
+            {activeFilter === "EXTERNAL" && (
+              <button className="flex items-center gap-1 text-xs font-bold tracking-[0.24px] uppercase" style={{ color: "var(--th-tab-active)" }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                Add Contact
+              </button>
+            )}
           </div>
         </div>
 
@@ -685,7 +683,7 @@ function ContactCard({ contact }: { contact: Contact }) {
       className="rounded-xl transition-all duration-200"
       style={{
         border: "1px solid var(--th-border)",
-        backgroundColor: hovered ? "var(--th-bg-hover)" : "transparent",
+        backgroundColor: hovered ? "var(--th-bg-hover)" : "var(--th-bg-card)",
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
