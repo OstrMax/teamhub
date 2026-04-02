@@ -310,6 +310,8 @@ export default function OperatorConsolePage() {
           ))}
         </div>
 
+        {activeTab === "Contacts" ? (
+        <>
         {/* Filters & Actions Row */}
         <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: "1px solid var(--th-border)" }}>
           <div className="flex items-center gap-3">
@@ -553,6 +555,59 @@ export default function OperatorConsolePage() {
             </div>
           </div>
         </div>
+        </>
+        ) : activeTab === "Unattended calls" ? (
+        /* Unattended calls — list view */
+        <div className="flex-1 overflow-y-auto px-4 py-4">
+          <table className="w-full text-sm">
+            <thead>
+              <tr style={{ borderBottom: "1px solid var(--th-border)" }}>
+                <th className="text-left text-[11px] font-semibold uppercase tracking-wider pb-2.5 pl-2" style={{ color: "var(--th-text-muted)" }}>Recipient</th>
+                <th className="text-left text-[11px] font-semibold uppercase tracking-wider pb-2.5" style={{ color: "var(--th-text-muted)" }}>Location</th>
+                <th className="text-left text-[11px] font-semibold uppercase tracking-wider pb-2.5" style={{ color: "var(--th-text-muted)" }}>Caller</th>
+                <th className="text-left text-[11px] font-semibold uppercase tracking-wider pb-2.5" style={{ color: "var(--th-text-muted)" }}>Type</th>
+                <th className="text-left text-[11px] font-semibold uppercase tracking-wider pb-2.5" style={{ color: "var(--th-text-muted)" }}>Call Time</th>
+                <th className="w-10 pb-2.5" />
+              </tr>
+            </thead>
+            <tbody>
+              {listViewData.map((row) => (
+                <tr key={row.id} className="transition-colors cursor-pointer" style={{ borderBottom: "1px solid var(--th-border-light)" }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>
+                  <td className="py-3 pl-2">
+                    <div className="text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>{row.recipient}</div>
+                    <span className="text-[11px] px-1.5 py-0.5 rounded mt-0.5 inline-block" style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-text-muted)" }}>{row.ext}</span>
+                  </td>
+                  <td className="py-3 text-[13px]" style={{ color: "var(--th-text-secondary)" }}>{row.location}</td>
+                  <td className="py-3">
+                    <div className="text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>{row.caller}</div>
+                    <span className="text-[11px] px-1.5 py-0.5 rounded mt-0.5 inline-block" style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-text-muted)" }}>{row.callerNum}</span>
+                  </td>
+                  <td className="py-3">
+                    <span className="flex items-center gap-1.5 text-[13px]" style={{ color: "var(--th-text-primary)" }}>
+                      <span className="w-2 h-2 rounded-full bg-[#34C759]" />
+                      {row.type}
+                    </span>
+                  </td>
+                  <td className="py-3 text-[13px]" style={{ color: "var(--th-text-secondary)" }}>
+                    <div>{row.date}</div>
+                    <div>{row.time}</div>
+                  </td>
+                  <td className="py-3 text-center">
+                    <button className="p-1 rounded-lg transition-colors" title="More" onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-text-muted)"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        ) : (
+        /* Parked — placeholder */
+        <div className="flex-1 flex items-center justify-center">
+          <span className="text-sm" style={{ color: "var(--th-text-muted)" }}>No parked calls</span>
+        </div>
+        )}
       </div>
 
       {calling && <CallPopup name={callingName || "Unknown"} initials="#" onEnd={() => setCalling(false)} />}
