@@ -257,31 +257,32 @@ export default function Home() {
             {[
               {
                 label: "Create new\ntask",
-                iconStyle: { background: "var(--th-bg-hover)", border: "1px solid var(--th-border)" },
+                iconStyle: { background: "var(--th-bg-hover)" },
                 icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-secondary)" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
               },
               {
                 label: "Send SMS",
-                iconStyle: { background: "rgba(44,173,67,0.15)" },
-                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" fill="#2CAD43"/><rect x="7" y="9" width="2" height="2" rx="0.5" fill="#2CAD43"/><rect x="11" y="9" width="2" height="2" rx="0.5" fill="#2CAD43"/><rect x="15" y="9" width="2" height="2" rx="0.5" fill="#2CAD43"/></svg>,
+                iconStyle: { background: "#2CAD43" },
+                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/><circle cx="8" cy="10" r="1" fill="#2CAD43"/><circle cx="12" cy="10" r="1" fill="#2CAD43"/><circle cx="16" cy="10" r="1" fill="#2CAD43"/></svg>,
               },
               {
                 label: "Make a call",
-                iconStyle: { background: "rgba(29,62,119,0.15)" },
-                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>,
+                iconStyle: { background: "var(--th-tab-active)" },
+                icon: <svg width="15" height="15" viewBox="0 0 28 28" fill="white"><path d="M21.76 18.2c-1.3-1.1-2.61-1.78-3.89-.67l-.77.67c-.56.49-1.56 2.76-5.58-1.87-4.02-4.62-1.61-5.34-1.15-5.82l.77-.67c1.27-1.11.79-2.51-.13-3.94l-.55-.87c-.74-1.15-1.75-2.1-3.02-.99l-.7.6c-.56.41-2.14 1.75-2.52 4.29-.46 3.04.72 6.53 4.05 10.36 3.32 3.83 6.58 5.75 9.66 5.72 2.56-.03 4.11-1.4 4.6-1.9l.69-.61c1.28-1.1.49-2.24-.79-3.35l-.78-.63z"/></svg>,
               },
               {
                 label: "Start video\nmeeting",
-                iconStyle: { background: "rgba(124,58,237,0.15)" },
-                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="#7C3AED"><path d="M15 8v8H5V8h10m1-2H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4V7c0-.55-.45-1-1-1z"/></svg>,
+                iconStyle: { background: "#7C3AED" },
+                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M15 8v8H5V8h10m1-2H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4V7c0-.55-.45-1-1-1z"/></svg>,
               },
             ].map((action) => (
               <button
                 key={action.label}
-                className="flex items-center gap-4 p-3 rounded-[12px] shadow-[0px_1px_12px_0px_rgba(0,0,0,0.08)] hover:shadow-[0_2px_16px_rgba(0,0,0,0.08)] active:scale-[0.98] transition-all"
-                style={{ height: 74, backgroundColor: 'var(--th-bg-card)', border: '1px solid var(--th-border)' }}
+                className="flex items-center gap-4 p-3 rounded-[12px] shadow-[0px_1px_12px_0px_rgba(0,0,0,0.06)] hover:shadow-[0_2px_16px_rgba(0,0,0,0.08)] active:scale-[0.98] transition-all"
+                style={{ height: 74, backgroundColor: 'var(--th-bg-card)' }}
+                title={action.label.replace('\n', ' ')}
               >
-                <span className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={action.iconStyle}>{action.icon}</span>
+                <span className="w-9 h-9 rounded-full flex items-center justify-center shrink-0" style={action.iconStyle}>{action.icon}</span>
                 <span className="text-[14px] font-medium text-left whitespace-pre-wrap leading-[1.3]" style={{ color: 'var(--th-text-primary)' }}>{action.label}</span>
               </button>
             ))}
