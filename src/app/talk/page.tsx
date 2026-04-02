@@ -136,7 +136,7 @@ export default function TalkPage() {
                 {/* Controls row */}
                 <div className="flex items-center gap-2">
                   {/* Blind dropdown */}
-                  <button className="flex items-center gap-1 bg-white rounded-full px-3 py-1.5 hover:bg-gray-100 transition-colors active:scale-95">
+                  <button className="flex items-center gap-1 bg-white rounded-full px-3 py-1.5 hover:bg-gray-100 transition-colors active:scale-95" title="Transfer call">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#001221" strokeWidth="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                     <span className="text-[#001221] text-[12px] font-medium">Blind</span>
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#001221" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>

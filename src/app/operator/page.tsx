@@ -145,7 +145,7 @@ export default function OperatorConsolePage() {
               background: `linear-gradient(to right, var(--th-text-muted) 0%, var(--th-text-muted) ${volume}%, var(--th-border) ${volume}%, var(--th-border) 100%)`,
             }}
           />
-          <button className="flex items-center gap-1 shrink-0 ml-1">
+          <button className="flex items-center gap-1 shrink-0 ml-1" title="Phone Settings">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: "var(--th-text-muted)" }}>
               <circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
             </svg>
@@ -166,7 +166,7 @@ export default function OperatorConsolePage() {
             </div>
             <div className="text-white/60 text-[12px] mb-3">00:00:02</div>
             <div className="flex items-center gap-2">
-              <button className="flex items-center gap-1 bg-white rounded-full px-3 py-1.5 hover:bg-gray-100 transition-colors active:scale-95">
+              <button className="flex items-center gap-1 bg-white rounded-full px-3 py-1.5 hover:bg-gray-100 transition-colors active:scale-95" title="Transfer call">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#001221" strokeWidth="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                 <span className="text-[#001221] text-[12px] font-medium">Blind</span>
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#001221" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
@@ -217,7 +217,7 @@ export default function OperatorConsolePage() {
               <span className="text-white text-[13px] font-medium">{hold.number}</span>
               <div className="flex items-center gap-2">
                 <span className="text-white/60 text-[12px] font-mono">{hold.time}</span>
-                <button className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors active:scale-95">
+                <button className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors active:scale-95" title="Resume call">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
                 </button>
               </div>
@@ -240,6 +240,7 @@ export default function OperatorConsolePage() {
               onClick={() => setPhoneInput("")}
               className="shrink-0 w-6 h-6 flex items-center justify-center rounded-full transition-colors"
               style={{ color: "var(--th-text-muted)" }}
+              title="Backspace"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></svg>
             </button>
@@ -270,6 +271,7 @@ export default function OperatorConsolePage() {
               setCalling(true);
             }}
             className="w-16 h-16 rounded-full bg-[#34C759] hover:bg-[#2CAD43] active:scale-90 flex items-center justify-center transition-all shadow-lg"
+            title="Make a call"
           >
             <Image src="/icons/call-button.svg" alt="Call" width={22} height={23} />
           </button>
@@ -333,11 +335,11 @@ export default function OperatorConsolePage() {
             </button>
           </div>
           <div className="flex items-center gap-4">
-            <button onClick={() => setEditGroupView(true)} className="text-xs font-bold tracking-[0.24px] uppercase" style={{ color: "var(--th-tab-active)" }}>
+            <button onClick={() => setEditGroupView(true)} className="text-xs font-bold tracking-[0.24px] uppercase" title="Edit group" style={{ color: "var(--th-tab-active)" }}>
               Edit group
             </button>
             {activeFilter === "EXTERNAL" && (
-              <button className="flex items-center gap-1 text-xs font-bold tracking-[0.24px] uppercase" style={{ color: "var(--th-tab-active)" }}>
+              <button className="flex items-center gap-1 text-xs font-bold tracking-[0.24px] uppercase" title="Add new contact" style={{ color: "var(--th-tab-active)" }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
                 Add Contact
               </button>
@@ -370,6 +372,7 @@ export default function OperatorConsolePage() {
             <button
               onClick={() => setGridView(false)}
               className="p-1 transition-colors"
+              title="Show list view"
               style={{ backgroundColor: !gridView ? "var(--th-text-primary)" : "transparent" }}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={!gridView ? "var(--th-bg)" : "var(--th-text-muted)"} strokeWidth="2"><line x1="8" y1="6" x2="21" y2="6" /><line x1="8" y1="12" x2="21" y2="12" /><line x1="8" y1="18" x2="21" y2="18" /><line x1="3" y1="6" x2="3.01" y2="6" /><line x1="3" y1="12" x2="3.01" y2="12" /><line x1="3" y1="18" x2="3.01" y2="18" /></svg>
@@ -378,6 +381,7 @@ export default function OperatorConsolePage() {
             <button
               onClick={() => setGridView(true)}
               className="p-1 transition-colors"
+              title="Show grid view"
               style={{ backgroundColor: gridView ? "var(--th-text-primary)" : "transparent" }}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={gridView ? "var(--th-bg)" : "var(--th-text-muted)"} strokeWidth="2"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /></svg>
@@ -498,7 +502,7 @@ export default function OperatorConsolePage() {
                       <div>{row.time}</div>
                     </td>
                     <td className="py-3 text-center">
-                      <button className="p-1 rounded-lg transition-colors" onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>
+                      <button className="p-1 rounded-lg transition-colors" title="More" onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-text-muted)"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
                       </button>
                     </td>
@@ -534,16 +538,16 @@ export default function OperatorConsolePage() {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg>
             </button>
             <div className="flex items-center gap-1">
-              <button className="p-1 rounded" style={{ color: "var(--th-text-muted)" }}>
+              <button className="p-1 rounded" style={{ color: "var(--th-text-muted)" }} title="First page">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="11 17 6 12 11 7" /><line x1="6" y1="12" x2="6" y2="12" /></svg>
               </button>
-              <button className="p-1 rounded" style={{ color: "var(--th-text-muted)" }}>
+              <button className="p-1 rounded" style={{ color: "var(--th-text-muted)" }} title="Previous page">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6" /></svg>
               </button>
-              <button className="p-1 rounded" style={{ color: "var(--th-text-muted)" }}>
+              <button className="p-1 rounded" style={{ color: "var(--th-text-muted)" }} title="Next page">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
               </button>
-              <button className="p-1 rounded" style={{ color: "var(--th-text-muted)" }}>
+              <button className="p-1 rounded" style={{ color: "var(--th-text-muted)" }} title="Last page">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="13 17 18 12 13 7" /><line x1="18" y1="12" x2="18" y2="12" /></svg>
               </button>
             </div>
@@ -706,7 +710,7 @@ function ContactCard({ contact }: { contact: Contact }) {
       {/* Main row */}
       <div className="flex items-center gap-2 px-4 py-2">
         {/* Star */}
-        <button className="shrink-0 transition-transform hover:scale-110 active:scale-90">
+        <button className="shrink-0 transition-transform hover:scale-110 active:scale-90" title={contact.favorite ? "Remove from favorites" : "Add to favorites"}>
           {contact.favorite ? (
             <svg width="18" height="18" viewBox="0 0 24 24" fill="#FBBD00" stroke="#FBBD00" strokeWidth="1">
               <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -756,7 +760,7 @@ function ContactCard({ contact }: { contact: Contact }) {
         </div>
 
         {/* Phone icon */}
-        <button className="p-1 shrink-0 rounded-full transition-all active:scale-90">
+        <button className="p-1 shrink-0 rounded-full transition-all active:scale-90" title="Make a call">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--th-text-muted)">
             <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z" />
           </svg>
