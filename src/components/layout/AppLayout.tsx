@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
@@ -9,6 +10,7 @@ import WalkthroughBubbles from "@/components/walkthrough/WalkthroughBubbles";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [aiPanelOpen, setAiPanelOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden">
@@ -45,7 +47,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </div>
 
             {/* AI Assist Panel */}
-            <AIAssistPanel isOpen={aiPanelOpen} onClose={() => setAiPanelOpen(false)} />
+            <AIAssistPanel isOpen={aiPanelOpen} onClose={() => setAiPanelOpen(false)} currentPage={pathname} />
           </div>
         </div>
       </div>

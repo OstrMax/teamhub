@@ -260,13 +260,59 @@ function StepContent({ stepIndex }: { stepIndex: number }) {
   }
 }
 
+/* ── Contextual AI features per page ── */
+const contextualFeatures: Record<string, { label: string; icon: string }[]> = {
+  "/chats": [
+    { label: "Smart reply", icon: "sms" },
+    { label: "Summarize conversation", icon: "meeting" },
+    { label: "Translate message", icon: "auto" },
+  ],
+  "/talk": [
+    { label: "Transcribe call", icon: "recording" },
+    { label: "Call summary", icon: "meeting" },
+    { label: "Voicemail to text", icon: "recording" },
+  ],
+  "/operator": [
+    { label: "Smart call routing", icon: "receptionist" },
+    { label: "Agent coaching tips", icon: "auto" },
+    { label: "Call sentiment analysis", icon: "recording" },
+  ],
+  "/meet": [
+    { label: "Generate meeting notes", icon: "meeting" },
+    { label: "Extract action items", icon: "auto" },
+    { label: "AI virtual background", icon: "meeting" },
+  ],
+  "/sms": [
+    { label: "Smart reply", icon: "sms" },
+    { label: "Auto-translate message", icon: "auto" },
+  ],
+  "/calendar": [
+    { label: "Meeting prep brief", icon: "meeting" },
+    { label: "Find best time", icon: "auto" },
+    { label: "Detect conflicts", icon: "auto" },
+  ],
+  "/files": [
+    { label: "Smart search", icon: "recording" },
+    { label: "Summarize document", icon: "meeting" },
+    { label: "Auto-categorize files", icon: "auto" },
+  ],
+  "/contact-center": [
+    { label: "Sentiment analysis", icon: "receptionist" },
+    { label: "Queue optimization", icon: "auto" },
+    { label: "Predict call volume", icon: "recording" },
+    { label: "Agent performance report", icon: "meeting" },
+  ],
+};
+
 /* ── Main AI Assist Panel (inline, white bg, with micro-interactions) ── */
 export default function AIAssistPanel({
   isOpen,
   onClose,
+  currentPage,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  currentPage?: string;
 }) {
   const [view, setView] = useState<PanelView>("main");
   const [expandedStep, setExpandedStep] = useState<number | null>(null);
@@ -370,7 +416,7 @@ export default function AIAssistPanel({
       <div className="flex-1 overflow-y-auto">
         <div key={view} className="animate-[fadeIn_0.2s_ease-out]">
           {view === "main" && (
-            <MainView onActionClick={handleActionClick} />
+            <MainView onActionClick={handleActionClick} currentPage={currentPage} />
           )}
           {view === "receptionist" && (
             <ReceptionistView
@@ -401,7 +447,11 @@ export default function AIAssistPanel({
 }
 
 /* ── Main View ── */
-function MainView({ onActionClick }: { onActionClick: (a: string) => void }) {
+function MainView({ onActionClick, currentPage }: { onActionClick: (a: string) => void; currentPage?: string }) {
+  const pageFeatures = currentPage ? contextualFeatures[currentPage] || [] : [];
+  const pageName = currentPage?.replace("/", "") || "home";
+  const pageLabels: Record<string, string> = { "": "Home", chats: "Chat", talk: "Talk", operator: "Operator Console", meet: "Meet", sms: "SMS", calendar: "Calendar", files: "Files", "contact-center": "Contact Center" };
+
   return (
     <div className="px-5 pt-10 pb-8">
       {/* Sparkle icon */}
@@ -415,11 +465,43 @@ function MainView({ onActionClick }: { onActionClick: (a: string) => void }) {
       </h2>
 
       {/* Subtitle */}
-      <p className="text-[14px] leading-[1.5] mb-8 animate-[fadeIn_0.4s_ease-out]" style={{ color: "var(--th-text-secondary)" }}>
+      <p className="text-[14px] leading-[1.5] mb-6 animate-[fadeIn_0.4s_ease-out]" style={{ color: "var(--th-text-secondary)" }}>
         Power up your productivity with AI features in the app you use every day.
       </p>
 
-      {/* Action buttons with staggered animation */}
+      {/* Contextual AI features for current page */}
+      {pageFeatures.length > 0 && (
+        <div className="mb-6 animate-[fadeIn_0.45s_ease-out]">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "var(--th-tab-active)" }} />
+            <span className="text-[12px] font-semibold uppercase tracking-wider" style={{ color: "var(--th-text-muted)" }}>
+              {pageLabels[pageName] || pageName} AI Features
+            </span>
+          </div>
+          <div className="flex flex-col gap-2">
+            {pageFeatures.map((feature, i) => (
+              <button
+                key={feature.label}
+                className="w-full py-3 px-4 rounded-xl text-[13px] font-medium text-left flex items-center gap-3 active:scale-[0.98] transition-all duration-150"
+                style={{ background: "linear-gradient(135deg, rgba(174,13,138,0.06), rgba(47,17,85,0.06))", border: "1px solid rgba(174,13,138,0.12)", color: "var(--th-text-primary)", animation: `fadeIn 0.25s ease-out ${0.05 * i}s both` }}
+                onMouseEnter={(e) => e.currentTarget.style.borderColor = "rgba(174,13,138,0.3)"}
+                onMouseLeave={(e) => e.currentTarget.style.borderColor = "rgba(174,13,138,0.12)"}
+              >
+                <span className="w-7 h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: "linear-gradient(135deg, rgba(174,13,138,0.15), rgba(47,17,85,0.15))" }}>
+                  <ActionIcon type={feature.icon} />
+                </span>
+                {feature.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* General action buttons */}
+      <div className="flex items-center gap-2 mb-3">
+        <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "var(--th-text-muted)" }} />
+        <span className="text-[12px] font-semibold uppercase tracking-wider" style={{ color: "var(--th-text-muted)" }}>General</span>
+      </div>
       <div className="flex flex-col gap-3">
         {actionButtons.map((action, i) => (
           <button
