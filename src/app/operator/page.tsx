@@ -678,7 +678,7 @@ function EditGroupView({ groups, activeGroupId, setActiveGroupId, groupName, set
                 {contact.avatar ? (
                   <Image src={contact.avatar} alt="" width={40} height={40} className="w-10 h-10 rounded-full object-cover" unoptimized />
                 ) : (
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold" style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-text-primary)" }}>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold" style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-text-secondary)" }}>
                     {contact.initials}
                   </div>
                 )}
@@ -735,7 +735,7 @@ function ContactCard({ contact }: { contact: Contact }) {
           ) : (
             <div
               className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold"
-              style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-text-primary)" }}
+              style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-text-secondary)" }}
             >
               {contact.initials}
             </div>

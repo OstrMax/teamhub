@@ -317,7 +317,7 @@ export default function Home() {
                 </div>
                 <div className="flex items-center -space-x-2">
                   {meeting.avatars.map((a) => (
-                    <div key={a} className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-medium text-white" style={{ background: avatarColors[a] || "#7C3AED", borderWidth: 2, borderStyle: 'solid', borderColor: 'var(--th-bg-card)' }}>{a}</div>
+                    <div key={a} className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-semibold" style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-text-secondary)", borderWidth: 2, borderStyle: 'solid', borderColor: 'var(--th-bg-card)' }}>{a}</div>
                   ))}
                 </div>
                 {meeting.more && <span className="text-xs whitespace-nowrap" style={{ color: 'var(--th-text-muted)' }}>{meeting.more}</span>}

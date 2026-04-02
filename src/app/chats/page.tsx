@@ -146,7 +146,7 @@ export default function ChatsPage() {
                 </div>
               )}
               <div className="flex gap-3 mb-4 group -mx-2 px-2 py-1 rounded-lg transition-colors hover:bg-[var(--th-bg-hover)]">
-                <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-medium text-white shrink-0" style={{ background: msg.avatarColor }}>{msg.avatar}</div>
+                <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-semibold shrink-0" style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-text-secondary)" }}>{msg.avatar}</div>
                 <div className="flex-1">
                   <div className="flex items-baseline gap-2">
                     <span className="text-sm font-semibold" style={{ color: 'var(--th-text-primary)' }}>{msg.sender}</span>
@@ -259,7 +259,7 @@ export default function ChatsPage() {
           </div>
           <div className="flex-1 overflow-y-auto px-5 pt-6 pb-8">
             <div className="flex flex-col items-center mb-6">
-              <div className="w-20 h-20 rounded-full bg-[#3B82F6] flex items-center justify-center text-white text-2xl font-semibold mb-3">JD</div>
+              <div className="w-20 h-20 rounded-full flex items-center justify-center text-2xl font-semibold mb-3" style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-text-secondary)" }}>JD</div>
               <h3 className="text-lg font-semibold" style={{ color: 'var(--th-text-primary)' }}>{activeChannel}</h3>
               <span className="flex items-center gap-1.5 text-sm text-[#7F888F] mt-1">
                 <span className="w-2 h-2 rounded-full bg-[#2CAD43]" /> Online

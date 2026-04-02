@@ -118,19 +118,15 @@ export default function ContactsList() {
               {/* Avatar */}
               <div
                 className="w-10 h-10 rounded-full shrink-0 overflow-hidden flex items-center justify-center"
-                style={{ backgroundColor: 'var(--th-border)' }}
+                style={{ backgroundColor: 'var(--th-bg-hover)' }}
               >
                 {contact.isUnknown ? (
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2">
                     <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
                     <circle cx="12" cy="7" r="4"/>
                   </svg>
-                ) : contact.initials ? (
-                  <span className="text-sm font-semibold text-[#4C5863]">{contact.initials}</span>
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-sm font-semibold">
-                    {contact.name.split(" ").map(n => n[0]).join("")}
-                  </div>
+                  <span className="text-sm font-semibold" style={{ color: "var(--th-text-secondary)" }}>{contact.initials || contact.name.split(" ").map(n => n[0]).join("")}</span>
                 )}
               </div>
 
