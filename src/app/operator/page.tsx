@@ -589,20 +589,16 @@ function EditGroupView({ groups, activeGroupId, setActiveGroupId, groupName, set
 
       <div className="flex flex-1 overflow-hidden">
         {/* Left sidebar — group list */}
-        <div className="w-[260px] shrink-0 flex flex-col overflow-y-auto px-6" style={{ borderRight: "1px solid var(--th-border)" }}>
-          <div className="flex items-center justify-between pt-6 pb-4">
+        <div className="w-[260px] shrink-0 flex flex-col overflow-y-auto" style={{ borderRight: "1px solid var(--th-border)" }}>
+          <div className="px-6 pt-6 pb-4">
             <h2 className="text-xl font-semibold" style={{ color: "var(--th-text-primary)" }}>All groups</h2>
-            <button className="flex items-center gap-1 text-xs font-bold uppercase tracking-wider" style={{ color: "var(--th-tab-active)" }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Add New Group
-            </button>
           </div>
-          <div className="flex flex-col gap-0.5">
+          <div className="flex flex-col gap-0.5 px-4">
             {groups.map((g) => (
               <button
                 key={g.id}
                 onClick={() => { setActiveGroupId(g.id); setGroupName(g.name); }}
-                className="text-left px-4 py-3 rounded-lg text-[15px] font-medium transition-colors"
+                className="text-left px-4 py-3 rounded-lg text-[15px] transition-colors"
                 style={{
                   backgroundColor: activeGroupId === g.id ? "var(--th-bg-hover)" : "transparent",
                   color: activeGroupId === g.id ? "var(--th-text-primary)" : "var(--th-text-secondary)",
@@ -616,7 +612,16 @@ function EditGroupView({ groups, activeGroupId, setActiveGroupId, groupName, set
         </div>
 
         {/* Right panel — group edit */}
-        <div className="flex-1 flex flex-col overflow-hidden px-8 py-6">
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {/* + ADD NEW GROUP row */}
+          <div className="flex items-center justify-end px-8 pt-5 pb-3">
+            <button className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider" style={{ color: "var(--th-tab-active)" }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add New Group
+            </button>
+          </div>
+
+          <div className="flex-1 flex flex-col overflow-hidden px-8 pb-6">
           {/* Group name + delete */}
           <div className="flex items-center gap-4 mb-6">
             <span className="text-[15px] font-medium shrink-0" style={{ color: "var(--th-text-secondary)" }}>Group Name</span>
@@ -687,6 +692,7 @@ function EditGroupView({ groups, activeGroupId, setActiveGroupId, groupName, set
                 <span className="text-sm font-medium" style={{ color: "var(--th-text-primary)" }}>{contact.name}</span>
               </div>
             ))}
+          </div>
           </div>
         </div>
       </div>
