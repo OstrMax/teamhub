@@ -73,7 +73,7 @@ export default function ContactsList() {
               </button>
             ))}
           </div>
-          <button className="text-xs font-semibold tracking-wider hover:opacity-80" style={{ color: 'var(--th-tab-active)' }}>
+          <button className="text-xs font-semibold tracking-wider hover:opacity-80" title="Add new contact" style={{ color: 'var(--th-tab-active)' }}>
             + ADD CONTACT
           </button>
         </div>
@@ -109,7 +109,7 @@ export default function ContactsList() {
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
             >
               {/* Favorite star */}
-              <button className="shrink-0 -mr-1">
+              <button className="shrink-0 -mr-1" title={contact.isFavorite ? "Remove from favorites" : "Add to favorites"}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill={contact.isFavorite ? "#FBBD00" : "none"} stroke={contact.isFavorite ? "#FBBD00" : "#CCCFD2"} strokeWidth="1.5">
                   <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                 </svg>
@@ -148,6 +148,7 @@ export default function ContactsList() {
               <button
                 onClick={(e) => { e.stopPropagation(); setCallingContact(contact); }}
                 className="p-1.5 rounded transition-colors active:scale-90"
+                title="Make a call"
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               >
@@ -157,6 +158,7 @@ export default function ContactsList() {
               {/* More */}
               <button
                 className="p-1 rounded transition-colors opacity-0 group-hover:opacity-100"
+                title="More options"
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               >

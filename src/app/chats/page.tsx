@@ -71,7 +71,7 @@ export default function ChatsPage() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
               <input type="text" placeholder="Find channel" className="bg-transparent outline-none text-sm placeholder:text-[#7F888F] w-full" style={{ color: 'var(--th-text-primary)' }} />
             </div>
-            <button className="p-2 text-[#7F888F] rounded-lg transition-colors hover:bg-[var(--th-bg-hover)]">
+            <button className="p-2 text-[#7F888F] rounded-lg transition-colors hover:bg-[var(--th-bg-hover)]" title="Filter channels">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
             </button>
           </div>
@@ -163,7 +163,7 @@ export default function ChatsPage() {
                         <p className="text-sm font-medium" style={{ color: 'var(--th-text-primary)' }}>{msg.metadata.callTitle}</p>
                         <p className="text-xs" style={{ color: 'var(--th-text-muted)' }}>{msg.metadata.duration} · {msg.metadata.participants} participants</p>
                       </div>
-                      <button className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all active:scale-95" style={{ backgroundColor: 'var(--th-text-primary)', color: 'var(--th-bg)' }}>Join</button>
+                      <button className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all active:scale-95" title="Join call" style={{ backgroundColor: 'var(--th-text-primary)', color: 'var(--th-bg)' }}>Join</button>
                     </div>
                   )}
 
@@ -222,7 +222,7 @@ export default function ChatsPage() {
                           {r.emoji}{r.count > 0 && <span className="text-[#7F888F]">{r.count}</span>}
                         </span>
                       ))}
-                      <button className="w-6 h-6 flex items-center justify-center rounded-full text-[#7F888F] text-xs transition-colors hover:bg-[var(--th-bg-hover)]">😊</button>
+                      <button className="w-6 h-6 flex items-center justify-center rounded-full text-[#7F888F] text-xs transition-colors hover:bg-[var(--th-bg-hover)]" title="Add reaction">😊</button>
                     </div>
                   )}
                 </div>
@@ -242,7 +242,7 @@ export default function ChatsPage() {
               className="flex-1 outline-none text-sm placeholder:text-[#7F888F] bg-transparent"
               style={{ color: 'var(--th-text-primary)' }}
             />
-            <button className="w-9 h-9 rounded-full flex items-center justify-center hover:opacity-90 transition-opacity shrink-0" style={{ background: "linear-gradient(180deg, #AE0D8A 0%, #64168E 47.6%, #2F1155 100%)" }}>
+            <button className="w-9 h-9 rounded-full flex items-center justify-center hover:opacity-90 transition-opacity shrink-0" title="Send message" style={{ background: "linear-gradient(180deg, #AE0D8A 0%, #64168E 47.6%, #2F1155 100%)" }}>
               <svg width="16" height="15" viewBox="0 0 16 15" fill="none"><path d="M14.5439 0.820147C12.4104 -1.22485 5.54146 1.16452 4.76577 1.44327C2.63493 2.21015 0.0788345 3.3864 0.00205328 4.6414C-0.085228 6.36952 2.6264 8.10015 5.02696 8.77515C5.14246 8.80765 5.26715 8.77515 5.35246 8.6939L9.66533 4.5864C9.92193 4.34202 10.3367 4.34202 10.5933 4.5864C10.8499 4.83077 10.8499 5.22577 10.5933 5.47015L6.26924 9.58827C6.18393 9.66952 6.1498 9.78827 6.18327 9.89827C6.90121 12.2458 8.77349 14.6683 10.508 14.6683C10.5217 14.6683 10.5362 14.6683 10.55 14.6683C11.9419 14.5633 13.2524 11.6995 13.9093 10.0026C14.1941 9.27015 16.6183 2.79765 14.5439 0.820147Z" fill="white"/></svg>
             </button>
           </div>
@@ -253,7 +253,7 @@ export default function ChatsPage() {
         <div className="w-[340px] shrink-0 flex flex-col overflow-hidden animate-[slideInRight_0.3s_ease-out]" style={{ backgroundColor: 'var(--th-bg)', borderLeft: '1px solid var(--th-border)' }}>
           <div className="flex items-center justify-between px-5 h-14 shrink-0" style={{ borderBottom: '1px solid var(--th-border)' }}>
             <span className="text-[15px] font-semibold" style={{ color: 'var(--th-text-primary)' }}>Contact Info</span>
-            <button onClick={() => setShowInfo(false)} className="p-1.5 rounded-lg transition-colors hover:bg-[var(--th-bg-hover)]">
+            <button onClick={() => setShowInfo(false)} className="p-1.5 rounded-lg transition-colors hover:bg-[var(--th-bg-hover)]" title="Close">
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M13.5 4.5L4.5 13.5" stroke="var(--th-text-primary)" strokeWidth="1.5" strokeLinecap="round"/><path d="M4.5 4.5L13.5 13.5" stroke="var(--th-text-primary)" strokeWidth="1.5" strokeLinecap="round"/></svg>
             </button>
           </div>
