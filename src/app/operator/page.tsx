@@ -95,6 +95,7 @@ export default function OperatorConsolePage() {
   const [sortDropdown, setSortDropdown] = useState(false);
   const [recipientsDropdown, setRecipientsDropdown] = useState(false);
   const [locationsDropdown, setLocationsDropdown] = useState(false);
+  const [showAddContact, setShowAddContact] = useState(false);
 
   return (
     <div className="flex h-full overflow-hidden">
@@ -341,7 +342,7 @@ export default function OperatorConsolePage() {
               Edit group
             </button>
             {activeFilter === "EXTERNAL" && (
-              <button className="flex items-center gap-1 text-xs font-bold tracking-[0.24px] uppercase" title="Add new contact" style={{ color: "var(--th-tab-active)" }}>
+              <button onClick={() => setShowAddContact(true)} className="flex items-center gap-1 text-xs font-bold tracking-[0.24px] uppercase" title="Add new contact" style={{ color: "var(--th-tab-active)" }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
                 Add Contact
               </button>
@@ -611,6 +612,7 @@ export default function OperatorConsolePage() {
       </div>
 
       {calling && <CallPopup name={callingName || "Unknown"} initials="#" onEnd={() => setCalling(false)} />}
+      {showAddContact && <AddContactDialog onClose={() => setShowAddContact(false)} />}
       </>
       )}
     </div>
@@ -747,6 +749,89 @@ function EditGroupView({ groups, activeGroupId, setActiveGroupId, groupName, set
               </div>
             ))}
           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Add New Contact Dialog ── */
+function AddContactDialog({ onClose }: { onClose: () => void }) {
+  const [firstName, setFirstName] = useState("Maksym");
+  const [lastName, setLastName] = useState("");
+  const [title, setTitle] = useState("");
+  const [company, setCompany] = useState("");
+
+  return (
+    <div className="fixed inset-0 z-[200] flex items-center justify-center" style={{ backgroundColor: "rgba(0,0,0,0.4)" }} onClick={onClose}>
+      <div className="w-[480px] max-h-[90vh] rounded-2xl shadow-2xl overflow-y-auto" style={{ backgroundColor: "var(--th-bg-card)" }} onClick={(e) => e.stopPropagation()}>
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 pt-6 pb-2">
+          <h2 className="text-lg font-semibold" style={{ color: "var(--th-text-primary)" }}>Add new contact</h2>
+          <button onClick={onClose} className="p-1.5 rounded-lg transition-colors hover:bg-[var(--th-bg-hover)]" title="Close">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-muted)" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        <div className="px-6 pb-6">
+          {/* First name + Avatar upload */}
+          <div className="flex gap-6 mt-4">
+            <div className="flex-1">
+              <label className="text-[13px] font-medium mb-1.5 block" style={{ color: "var(--th-text-primary)" }}><span className="text-[#EF4444]">*</span> First name</label>
+              <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="w-full px-4 py-2.5 rounded-xl text-[14px] outline-none" style={{ border: "1px solid var(--th-border)", backgroundColor: "var(--th-bg)", color: "var(--th-text-primary)" }} />
+            </div>
+            <div className="flex flex-col items-center gap-1.5 pt-4">
+              <div className="w-14 h-14 rounded-full flex items-center justify-center" style={{ backgroundColor: "var(--th-bg-hover)" }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-muted)" strokeWidth="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <button className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--th-tab-active)" }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                Upload
+              </button>
+            </div>
+          </div>
+
+          {/* Last name */}
+          <div className="mt-4">
+            <label className="text-[13px] font-medium mb-1.5 block" style={{ color: "var(--th-text-primary)" }}><span className="text-[#EF4444]">*</span> Last name</label>
+            <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} className="w-full px-4 py-2.5 rounded-xl text-[14px] outline-none" style={{ border: "1px solid var(--th-border)", backgroundColor: "var(--th-bg)", color: "var(--th-text-primary)" }} />
+          </div>
+
+          {/* Title */}
+          <div className="mt-4">
+            <label className="text-[13px] font-medium mb-1.5 block" style={{ color: "var(--th-text-primary)" }}>Title</label>
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full px-4 py-2.5 rounded-xl text-[14px] outline-none" style={{ border: "1px solid var(--th-border)", backgroundColor: "var(--th-bg)", color: "var(--th-text-primary)" }} />
+          </div>
+
+          {/* Company */}
+          <div className="mt-4">
+            <label className="text-[13px] font-medium mb-1.5 block" style={{ color: "var(--th-text-primary)" }}>Company</label>
+            <input type="text" value={company} onChange={(e) => setCompany(e.target.value)} className="w-full px-4 py-2.5 rounded-xl text-[14px] outline-none" style={{ border: "1px solid var(--th-border)", backgroundColor: "var(--th-bg)", color: "var(--th-text-primary)" }} />
+          </div>
+
+          {/* Add links */}
+          <div className="mt-6 space-y-3">
+            {[
+              { label: "ADD PHONE", icon: <svg width="16" height="16" viewBox="0 0 28 28" fill="var(--th-tab-active)"><path d="M21.76 18.2c-1.3-1.1-2.61-1.78-3.89-.67l-.77.67c-.56.49-1.56 2.76-5.58-1.87-4.02-4.62-1.61-5.34-1.15-5.82l.77-.67c1.27-1.11.79-2.51-.13-3.94l-.55-.87c-.74-1.15-1.75-2.1-3.02-.99l-.7.6c-.56.41-2.14 1.75-2.52 4.29-.46 3.04.72 6.53 4.05 10.36 3.32 3.83 6.58 5.75 9.66 5.72 2.56-.03 4.11-1.4 4.6-1.9l.69-.61c1.28-1.1.49-2.24-.79-3.35l-.78-.63z"/></svg> },
+              { label: "ADD EMAIL", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--th-tab-active)" strokeWidth="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> },
+              { label: "ADD ADDRESSES", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--th-tab-active)" strokeWidth="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> },
+            ].map((item) => (
+              <button key={item.label} className="flex items-center gap-3 text-[12px] font-bold uppercase tracking-wider" style={{ color: "var(--th-tab-active)" }}>
+                {item.icon}
+                {item.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Footer buttons */}
+          <div className="flex items-center justify-end gap-3 mt-8">
+            <button onClick={onClose} className="px-5 py-2.5 text-[13px] font-bold uppercase tracking-wider transition-colors" style={{ color: "var(--th-text-secondary)" }}>
+              Cancel
+            </button>
+            <button onClick={onClose} className="px-5 py-2.5 rounded-xl text-[13px] font-bold uppercase tracking-wider text-white transition-colors" style={{ backgroundColor: "#001221" }}>
+              Create Contact
+            </button>
           </div>
         </div>
       </div>
