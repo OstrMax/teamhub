@@ -273,7 +273,7 @@ export default function OperatorConsolePage() {
             className="w-16 h-16 rounded-full bg-[#34C759] hover:bg-[#2CAD43] active:scale-90 flex items-center justify-center transition-all shadow-lg"
             title="Make a call"
           >
-            <Image src="/icons/call-button.svg" alt="Call" width={22} height={23} />
+            <svg width="22" height="22" viewBox="0 0 28 28" fill="white"><path d="M21.76 18.2c-1.3-1.1-2.61-1.78-3.89-.67l-.77.67c-.56.49-1.56 2.76-5.58-1.87-4.02-4.62-1.61-5.34-1.15-5.82l.77-.67c1.27-1.11.79-2.51-.13-3.94l-.55-.87c-.74-1.15-1.75-2.1-3.02-.99l-.7.6c-.56.41-2.14 1.75-2.52 4.29-.46 3.04.72 6.53 4.05 10.36 3.32 3.83 6.58 5.75 9.66 5.72 2.56-.03 4.11-1.4 4.6-1.9l.69-.61c1.28-1.1.49-2.24-.79-3.35l-.78-.63z"/></svg>
           </button>
         </div>
       </div>
@@ -613,15 +613,14 @@ function EditGroupView({ groups, activeGroupId, setActiveGroupId, groupName, set
 
         {/* Right panel — group edit */}
         <div className="flex-1 flex flex-col overflow-hidden">
-          {/* + ADD NEW GROUP row */}
-          <div className="flex items-center justify-end px-8 pt-5 pb-3">
+          <div className="flex-1 flex flex-col overflow-hidden px-8 pt-6 pb-6">
+          {/* + ADD NEW GROUP — same level as "All groups" title */}
+          <div className="flex items-center justify-end mb-5">
             <button className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider" style={{ color: "var(--th-tab-active)" }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Add New Group
             </button>
           </div>
-
-          <div className="flex-1 flex flex-col overflow-hidden px-8 pb-6">
           {/* Group name + delete */}
           <div className="flex items-center gap-4 mb-6">
             <span className="text-[15px] font-medium shrink-0" style={{ color: "var(--th-text-secondary)" }}>Group Name</span>
@@ -767,9 +766,7 @@ function ContactCard({ contact }: { contact: Contact }) {
 
         {/* Phone icon */}
         <button className="p-1 shrink-0 rounded-full transition-all active:scale-90" title="Make a call">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--th-text-muted)">
-            <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z" />
-          </svg>
+          <svg width="18" height="18" viewBox="0 0 28 28" fill="var(--th-text-muted)"><path d="M21.76 18.2c-1.3-1.1-2.61-1.78-3.89-.67l-.77.67c-.56.49-1.56 2.76-5.58-1.87-4.02-4.62-1.61-5.34-1.15-5.82l.77-.67c1.27-1.11.79-2.51-.13-3.94l-.55-.87c-.74-1.15-1.75-2.1-3.02-.99l-.7.6c-.56.41-2.14 1.75-2.52 4.29-.46 3.04.72 6.53 4.05 10.36 3.32 3.83 6.58 5.75 9.66 5.72 2.56-.03 4.11-1.4 4.6-1.9l.69-.61c1.28-1.1.49-2.24-.79-3.35l-.78-.63z"/></svg>
         </button>
       </div>
 

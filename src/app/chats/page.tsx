@@ -125,7 +125,7 @@ export default function ChatsPage() {
             </button>
             {/* Talk/Phone icon */}
             <button onClick={() => setCalling(true)} className="w-9 h-9 flex items-center justify-center rounded-lg transition-colors hover:bg-[var(--th-bg-hover)]" title="Start voice call">
-              <svg width="24" height="24" viewBox="0 0 28 28" fill="none"><path d="M20.2081 17.3652C19.1718 16.4781 18.1172 15.9391 17.0941 16.8262L16.4817 17.36C16.0342 17.7499 15.2021 19.566 11.986 15.8632C8.76986 12.1682 10.6828 11.5925 11.1329 11.2078L11.7478 10.6713C12.7658 9.78422 12.3811 8.66683 11.6458 7.51541L11.2035 6.81933C10.4656 5.67315 9.65959 4.9195 8.63901 5.80399L8.08686 6.28811C7.63414 6.61522 6.37282 7.68551 6.06665 9.71619C5.69767 12.1525 6.86217 14.9447 9.52351 18.0064C12.1822 21.0707 14.7886 22.6094 17.2537 22.5832C19.3027 22.5597 20.5431 21.4606 20.9304 21.0602L21.4825 20.5761C22.5031 19.6916 21.8698 18.7888 20.8309 17.9017L20.2081 17.3652Z" fill="var(--th-text-primary)"/></svg>
+              <svg width="22" height="22" viewBox="0 0 28 28" fill="var(--th-text-primary)"><path d="M21.76 18.2c-1.3-1.1-2.61-1.78-3.89-.67l-.77.67c-.56.49-1.56 2.76-5.58-1.87-4.02-4.62-1.61-5.34-1.15-5.82l.77-.67c1.27-1.11.79-2.51-.13-3.94l-.55-.87c-.74-1.15-1.75-2.1-3.02-.99l-.7.6c-.56.41-2.14 1.75-2.52 4.29-.46 3.04.72 6.53 4.05 10.36 3.32 3.83 6.58 5.75 9.66 5.72 2.56-.03 4.11-1.4 4.6-1.9l.69-.61c1.28-1.1.49-2.24-.79-3.35l-.78-.63z"/></svg>
             </button>
             {/* Info icon */}
             <button onClick={() => setShowInfo(!showInfo)} className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors hover:bg-[var(--th-bg-hover)]" title="Contact info">
