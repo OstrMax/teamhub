@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-type PanelView = "main" | "receptionist" | "tone" | "meeting" | "sms" | "recording" | "autoresponse";
+type PanelView = "main" | "receptionist" | "tone" | "meeting" | "sms" | "recording" | "autoresponse" | "smart-reply" | "summarize" | "transcribe" | "meeting-notes" | "sentiment" | "smart-search";
 
 const personas = [
   { name: "John", img: "https://i.pravatar.cc/128?img=11" },
@@ -343,6 +343,18 @@ export default function AIAssistPanel({
       setView("recording");
     } else if (action === "Create auto-response") {
       setView("autoresponse");
+    } else if (action === "Smart reply") {
+      setView("smart-reply");
+    } else if (action === "Summarize conversation" || action === "Summarize document") {
+      setView("summarize");
+    } else if (action === "Transcribe call" || action === "Voicemail to text") {
+      setView("transcribe");
+    } else if (action === "Generate meeting notes" || action === "Extract action items" || action === "Meeting prep brief") {
+      setView("meeting-notes");
+    } else if (action === "Sentiment analysis" || action === "Call sentiment analysis") {
+      setView("sentiment");
+    } else if (action === "Smart search") {
+      setView("smart-search");
     }
   };
 
@@ -376,6 +388,12 @@ export default function AIAssistPanel({
     sms: "Write a Message",
     recording: "Find Recordings",
     autoresponse: "Auto-response",
+    "smart-reply": "Smart Reply",
+    summarize: "Summarize",
+    transcribe: "Transcribe",
+    "meeting-notes": "Meeting Notes",
+    sentiment: "Sentiment Analysis",
+    "smart-search": "Smart Search",
   };
 
   return (
@@ -440,6 +458,12 @@ export default function AIAssistPanel({
           {view === "sms" && <SMSView />}
           {view === "recording" && <RecordingView />}
           {view === "autoresponse" && <AutoResponseView />}
+          {view === "smart-reply" && <SmartReplyView />}
+          {view === "summarize" && <SummarizeView />}
+          {view === "transcribe" && <TranscribeView />}
+          {view === "meeting-notes" && <MeetingNotesView />}
+          {view === "sentiment" && <SentimentView />}
+          {view === "smart-search" && <SmartSearchView />}
         </div>
       </div>
     </div>
@@ -482,6 +506,7 @@ function MainView({ onActionClick, currentPage }: { onActionClick: (a: string) =
             {pageFeatures.map((feature, i) => (
               <button
                 key={feature.label}
+                onClick={() => onActionClick(feature.label)}
                 className="w-full py-3 px-4 rounded-xl text-[13px] font-medium text-left flex items-center gap-3 active:scale-[0.98] transition-all duration-150"
                 style={{ background: "linear-gradient(135deg, rgba(174,13,138,0.06), rgba(47,17,85,0.06))", border: "1px solid rgba(174,13,138,0.12)", color: "var(--th-text-primary)", animation: `fadeIn 0.25s ease-out ${0.05 * i}s both` }}
                 onMouseEnter={(e) => e.currentTarget.style.borderColor = "rgba(174,13,138,0.3)"}
@@ -1093,6 +1118,215 @@ function AutoResponseView() {
       <button className="w-full py-3 text-[12px] font-bold tracking-wider uppercase rounded-full active:scale-[0.98] transition-all" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>
         Save Auto-Response Rules
       </button>
+    </div>
+  );
+}
+
+/* ── Smart Reply View (Chats) ── */
+function SmartReplyView() {
+  const [tone, setTone] = useState("Professional");
+  const tones = ["Professional", "Casual", "Friendly"];
+  const draft = tone === "Professional"
+    ? "Thank you for the update. I'll review the document and share my feedback by end of day tomorrow."
+    : tone === "Casual"
+      ? "Got it, thanks! I'll take a look and get back to you tomorrow."
+      : "Hey, thanks for sharing! I'll check it out and let you know what I think. Have a great evening!";
+
+  return (
+    <div className="px-5 pt-6 pb-8">
+      <p className="text-[13px] leading-[1.5] mb-5" style={{ color: "var(--th-text-secondary)" }}>AI generates a context-aware reply based on the conversation.</p>
+      <div className="mb-4">
+        <label className="block text-[12px] font-medium mb-2" style={{ color: "var(--th-text-secondary)" }}>Conversation context</label>
+        <div className="px-4 py-3 rounded-xl text-[13px]" style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-text-primary)" }}>
+          <span className="font-semibold">Jim Dowell:</span> Hi Jim! Got time to discuss the doc?
+        </div>
+      </div>
+      <div className="mb-4">
+        <label className="block text-[12px] font-medium mb-2" style={{ color: "var(--th-text-secondary)" }}>Tone</label>
+        <div className="flex gap-2">
+          {tones.map((t) => (
+            <button key={t} onClick={() => setTone(t)} className="px-3 py-1.5 rounded-full text-[12px] font-medium border transition-all active:scale-95" style={tone === t ? { backgroundColor: "#2E1055", color: "white", borderColor: "#2E1055" } : { backgroundColor: "var(--th-bg-card)", color: "var(--th-text-secondary)", borderColor: "var(--th-border)" }}>{t}</button>
+          ))}
+        </div>
+      </div>
+      <div className="mb-5">
+        <label className="block text-[12px] font-medium mb-1.5" style={{ color: "var(--th-text-secondary)" }}>Suggested reply</label>
+        <div className="px-4 py-3.5 border rounded-xl" style={{ backgroundColor: "var(--th-bg-hover)", borderColor: "var(--th-border)" }}>
+          <p className="text-[13px] leading-relaxed" style={{ color: "var(--th-text-primary)" }}>{draft}</p>
+        </div>
+      </div>
+      <div className="flex gap-2.5">
+        <button className="flex-1 py-3 text-[12px] font-bold tracking-wider uppercase rounded-full border active:scale-[0.98] transition-all" style={{ backgroundColor: "var(--th-bg-card)", color: "var(--th-text-primary)", borderColor: "var(--th-border)" }}>Regenerate</button>
+        <button className="flex-1 py-3 text-[12px] font-bold tracking-wider uppercase rounded-full active:scale-[0.98] transition-all" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>Insert Reply</button>
+      </div>
+    </div>
+  );
+}
+
+/* ── Summarize View (Chats/Meet/Files) ── */
+function SummarizeView() {
+  return (
+    <div className="px-5 pt-6 pb-8">
+      <p className="text-[13px] leading-[1.5] mb-5" style={{ color: "var(--th-text-secondary)" }}>AI-generated summary of the current conversation or document.</p>
+      <div className="mb-4">
+        <span className="text-[12px] font-medium" style={{ color: "var(--th-text-secondary)" }}>Summary</span>
+        <div className="mt-1.5 space-y-2">
+          {["Team discussed Q2 launch timeline — moved to April 15", "AI features prioritized for v3.2 release", "Mobile app redesign approved by stakeholders", "Analytics dashboard postponed to Q3"].map((item, i) => (
+            <div key={i} className="flex items-start gap-2 text-[13px]" style={{ color: "var(--th-text-primary)", animation: `fadeIn 0.25s ease-out ${0.1 * i}s both` }}>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2E1055] shrink-0 mt-[7px]" />{item}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="mb-5">
+        <span className="text-[12px] font-medium" style={{ color: "var(--th-text-secondary)" }}>Key Takeaway</span>
+        <div className="mt-1.5 px-3 py-2.5 rounded-lg text-[12px] leading-relaxed" style={{ backgroundColor: "var(--th-bg-hover)", border: "1px solid var(--th-border)", color: "var(--th-text-primary)" }}>Focus shifted to core AI features; analytics dashboard deferred to maintain velocity.</div>
+      </div>
+      <button className="w-full py-3 text-[12px] font-bold tracking-wider uppercase rounded-full active:scale-[0.98] transition-all" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>Copy Summary</button>
+    </div>
+  );
+}
+
+/* ── Transcribe View (Talk) ── */
+function TranscribeView() {
+  const transcript = [
+    { time: "00:00", speaker: "You", text: "Hi Sarah, thanks for calling back." },
+    { time: "00:05", speaker: "Sarah Chen", text: "No problem! I wanted to follow up on the proposal." },
+    { time: "00:12", speaker: "You", text: "Sure, we reviewed it internally. A few questions on pricing." },
+    { time: "00:20", speaker: "Sarah Chen", text: "Of course, happy to walk through each line item." },
+    { time: "00:35", speaker: "You", text: "The enterprise tier — is there flexibility on the per-seat cost?" },
+    { time: "00:42", speaker: "Sarah Chen", text: "For annual commitments over 50 seats, we can offer 15% off." },
+  ];
+  return (
+    <div className="px-5 pt-6 pb-8">
+      <p className="text-[13px] leading-[1.5] mb-5" style={{ color: "var(--th-text-secondary)" }}>AI-generated transcript from the most recent call.</p>
+      <div className="mb-4">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-[12px] font-medium" style={{ color: "var(--th-text-secondary)" }}>Call with Sarah Chen</span>
+          <span className="text-[11px]" style={{ color: "var(--th-text-muted)" }}>Today, 11:32 AM · 4:23</span>
+        </div>
+        <div className="space-y-3">
+          {transcript.map((line, i) => (
+            <div key={i} className="flex gap-2" style={{ animation: `fadeIn 0.2s ease-out ${0.08 * i}s both` }}>
+              <span className="text-[10px] font-mono shrink-0 mt-0.5 w-8" style={{ color: "var(--th-text-muted)" }}>{line.time}</span>
+              <div>
+                <span className="text-[11px] font-semibold" style={{ color: line.speaker === "You" ? "var(--th-tab-active)" : "var(--th-text-primary)" }}>{line.speaker}</span>
+                <p className="text-[12px] mt-0.5" style={{ color: "var(--th-text-primary)" }}>{line.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="flex gap-2.5">
+        <button className="flex-1 py-3 text-[12px] font-bold tracking-wider uppercase rounded-full border active:scale-[0.98] transition-all" style={{ backgroundColor: "var(--th-bg-card)", color: "var(--th-text-primary)", borderColor: "var(--th-border)" }}>Export</button>
+        <button className="flex-1 py-3 text-[12px] font-bold tracking-wider uppercase rounded-full active:scale-[0.98] transition-all" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>Share</button>
+      </div>
+    </div>
+  );
+}
+
+/* ── Meeting Notes View (Meet/Calendar) ── */
+function MeetingNotesView() {
+  return (
+    <div className="px-5 pt-6 pb-8">
+      <p className="text-[13px] leading-[1.5] mb-5" style={{ color: "var(--th-text-secondary)" }}>AI-generated notes from your recent meeting.</p>
+      <div className="mb-3 px-4 py-3 rounded-xl" style={{ backgroundColor: "var(--th-bg-hover)" }}>
+        <div className="text-[13px] font-semibold" style={{ color: "var(--th-text-primary)" }}>Weekly Design Team Meeting</div>
+        <div className="text-[11px] mt-0.5" style={{ color: "var(--th-text-muted)" }}>Today, 10:00 AM · 45 min · 4 attendees</div>
+      </div>
+      <div className="mb-4">
+        <span className="text-[12px] font-medium" style={{ color: "var(--th-text-secondary)" }}>Notes</span>
+        <ul className="mt-1.5 space-y-1.5">
+          {["Reviewed component library v2 progress", "Dark mode implementation on track for next sprint", "Accessibility audit: 3 critical issues to fix", "New icon set approved — will replace current by April 20"].map((n, i) => (
+            <li key={i} className="flex items-start gap-2 text-[13px]" style={{ color: "var(--th-text-primary)" }}><span className="w-1.5 h-1.5 rounded-full bg-[#2E1055] shrink-0 mt-[7px]" />{n}</li>
+          ))}
+        </ul>
+      </div>
+      <div className="mb-5">
+        <span className="text-[12px] font-medium" style={{ color: "var(--th-text-secondary)" }}>Action Items</span>
+        <div className="mt-1.5 space-y-2">
+          {[{ task: "Fix contrast issues from audit", who: "Laura Kim", due: "Apr 10" }, { task: "Update Button component variants", who: "Ava Singh", due: "Apr 12" }, { task: "Share icon set with dev team", who: "David Park", due: "Apr 8" }].map((a, i) => (
+            <div key={i} className="flex items-start gap-2.5 px-3 py-2.5 rounded-lg" style={{ backgroundColor: "var(--th-bg-hover)" }}>
+              <div className="w-4 h-4 rounded border-2 shrink-0 mt-0.5" style={{ borderColor: "var(--th-border)" }} />
+              <div className="flex-1"><div className="text-[12px] font-medium" style={{ color: "var(--th-text-primary)" }}>{a.task}</div><div className="text-[11px] mt-0.5" style={{ color: "var(--th-text-muted)" }}>{a.who} · Due {a.due}</div></div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <button className="w-full py-3 text-[12px] font-bold tracking-wider uppercase rounded-full active:scale-[0.98] transition-all" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>Share Notes</button>
+    </div>
+  );
+}
+
+/* ── Sentiment View (CX) ── */
+function SentimentView() {
+  const calls = [
+    { caller: "John Smith", sentiment: "Good", color: "bg-green-500", score: 87 },
+    { caller: "Maria Garcia", sentiment: "Neutral", color: "bg-yellow-400", score: 62 },
+    { caller: "David Park", sentiment: "Good", color: "bg-green-500", score: 91 },
+    { caller: "Lisa Thompson", sentiment: "Poor", color: "bg-red-400", score: 28 },
+  ];
+  return (
+    <div className="px-5 pt-6 pb-8">
+      <p className="text-[13px] leading-[1.5] mb-5" style={{ color: "var(--th-text-secondary)" }}>AI analyzes call sentiment to identify trends and areas for improvement.</p>
+      <div className="mb-5">
+        <span className="text-[12px] font-medium" style={{ color: "var(--th-text-secondary)" }}>Today&apos;s Breakdown</span>
+        <div className="flex gap-3 mt-2">
+          {[{ label: "Good", pct: "62%", color: "bg-green-500" }, { label: "Neutral", pct: "25%", color: "bg-yellow-400" }, { label: "Poor", pct: "13%", color: "bg-red-400" }].map((s) => (
+            <div key={s.label} className="flex-1 px-3 py-2.5 rounded-lg text-center" style={{ backgroundColor: "var(--th-bg-hover)" }}>
+              <span className={`inline-block w-2 h-2 rounded-full ${s.color} mb-1`} />
+              <div className="text-[16px] font-semibold" style={{ color: "var(--th-text-primary)" }}>{s.pct}</div>
+              <div className="text-[10px]" style={{ color: "var(--th-text-muted)" }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="mb-5">
+        <span className="text-[12px] font-medium" style={{ color: "var(--th-text-secondary)" }}>Recent Calls</span>
+        <div className="mt-2 space-y-2">
+          {calls.map((c, i) => (
+            <div key={i} className="flex items-center justify-between px-3 py-2.5 rounded-lg" style={{ backgroundColor: "var(--th-bg-hover)", animation: `fadeIn 0.2s ease-out ${0.08 * i}s both` }}>
+              <div className="flex items-center gap-2"><span className={`w-2 h-2 rounded-full ${c.color}`} /><span className="text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>{c.caller}</span></div>
+              <span className="text-[12px] font-medium" style={{ color: "var(--th-text-secondary)" }}>{c.score}%</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="mb-5">
+        <span className="text-[12px] font-medium" style={{ color: "var(--th-text-secondary)" }}>Recommendation</span>
+        <div className="mt-1.5 px-3 py-2.5 rounded-lg text-[12px] leading-relaxed" style={{ backgroundColor: "var(--th-bg-hover)", border: "1px solid var(--th-border)", color: "var(--th-text-primary)" }}>Lisa Thompson&apos;s call had low sentiment. Consider reviewing the interaction and providing coaching on de-escalation techniques.</div>
+      </div>
+      <button className="w-full py-3 text-[12px] font-bold tracking-wider uppercase rounded-full active:scale-[0.98] transition-all" style={{ backgroundColor: "var(--th-text-primary)", color: "var(--th-bg)" }}>Export Report</button>
+    </div>
+  );
+}
+
+/* ── Smart Search View (Files) ── */
+function SmartSearchView() {
+  const [query, setQuery] = useState("Q2 product roadmap changes");
+  const results = [
+    { name: "Q2_Product_Roadmap_v3.pdf", match: "95%", snippet: "...timeline moved to April 15 with AI features prioritized..." },
+    { name: "Sprint Planning Notes.docx", match: "78%", snippet: "...discussed roadmap changes affecting Q2 deliverables..." },
+    { name: "Board Meeting Recap.pdf", match: "65%", snippet: "...Q2 roadmap approved with modifications to timeline..." },
+  ];
+  return (
+    <div className="px-5 pt-6 pb-8">
+      <p className="text-[13px] leading-[1.5] mb-5" style={{ color: "var(--th-text-secondary)" }}>Search your files using natural language. AI finds the most relevant documents.</p>
+      <div className="mb-4">
+        <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Ask about your files..." className="w-full px-4 py-2.5 text-[13px] border rounded-xl focus:outline-none transition-colors" style={{ color: "var(--th-text-primary)", borderColor: "var(--th-border)", backgroundColor: "var(--th-bg-card)" }} />
+      </div>
+      <div className="text-[12px] mb-3" style={{ color: "var(--th-text-muted)" }}>{results.length} results found</div>
+      <div className="space-y-2">
+        {results.map((r, i) => (
+          <div key={i} className="px-4 py-3 border rounded-xl cursor-pointer hover:shadow-sm transition-all active:scale-[0.99]" style={{ borderColor: "var(--th-border)", animation: `fadeIn 0.25s ease-out ${0.08 * i}s both` }} onMouseEnter={(e) => e.currentTarget.style.borderColor = "var(--th-text-muted)"} onMouseLeave={(e) => e.currentTarget.style.borderColor = "var(--th-border)"}>
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[13px] font-semibold" style={{ color: "var(--th-text-primary)" }}>{r.name}</span>
+              <span className="text-[10px] px-2 py-0.5 rounded-full font-medium" style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-tab-active)" }}>{r.match}</span>
+            </div>
+            <p className="text-[11px]" style={{ color: "var(--th-text-muted)" }}>{r.snippet}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
