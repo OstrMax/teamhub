@@ -278,7 +278,7 @@ export default function Home() {
             ].map((action) => (
               <button
                 key={action.label}
-                className="flex items-center gap-4 p-3 rounded-[12px] shadow-[0px_1px_12px_0px_rgba(0,0,0,0.06)] hover:shadow-[0_2px_16px_rgba(0,0,0,0.08)] active:scale-[0.98] transition-all"
+                className="card-lift flex items-center gap-4 p-3 rounded-[12px] shadow-[0px_1px_12px_0px_rgba(0,0,0,0.06)]"
                 style={{ height: 74, backgroundColor: 'var(--th-bg-card)' }}
                 title={action.label.replace('\n', ' ')}
               >

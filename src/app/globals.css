@@ -206,3 +206,171 @@ input[type="range"]::-moz-range-thumb {
   from { opacity: 0; max-height: 0; }
   to { opacity: 1; max-height: 500px; }
 }
+
+/* ── macOS-inspired micro-interactions ── */
+
+/* Spring-bounce on press for primary buttons */
+@keyframes springPress {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  75% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+@keyframes springIn {
+  0% { transform: scale(0.9); opacity: 0; }
+  60% { transform: scale(1.03); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes gentlePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(46, 16, 85, 0); }
+  50% { box-shadow: 0 0 0 4px rgba(46, 16, 85, 0.08); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Primary button — macOS style */
+.btn-primary {
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 18, 33, 0.15), 0 1px 3px rgba(0, 18, 33, 0.1);
+}
+.btn-primary:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 1px 2px rgba(0, 18, 33, 0.1);
+  transition-duration: 0.1s;
+}
+
+/* CTA button — Meet/Join/Schedule with glow */
+.btn-cta {
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+}
+.btn-cta:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(46, 16, 85, 0.2), 0 2px 8px rgba(46, 16, 85, 0.1);
+}
+.btn-cta:active {
+  transform: translateY(0) scale(0.96);
+  box-shadow: 0 2px 4px rgba(46, 16, 85, 0.1);
+  transition-duration: 0.1s;
+}
+
+/* Card hover — macOS window lift effect */
+.card-lift {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.card-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+.card-lift:active {
+  transform: translateY(0);
+  transition-duration: 0.1s;
+}
+
+/* Icon button — macOS toolbar button */
+.btn-icon {
+  transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.btn-icon:hover {
+  background-color: var(--th-bg-hover);
+  transform: scale(1.05);
+}
+.btn-icon:active {
+  transform: scale(0.92);
+  transition-duration: 0.08s;
+}
+
+/* Chip/tag — macOS segmented control feel */
+.chip-interactive {
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.chip-interactive:hover {
+  transform: scale(1.03);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+.chip-interactive:active {
+  transform: scale(0.97);
+  transition-duration: 0.08s;
+}
+
+/* Call button — macOS green button glow */
+.btn-call {
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.btn-call:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 20px rgba(52, 199, 89, 0.4), 0 4px 12px rgba(52, 199, 89, 0.2);
+}
+.btn-call:active {
+  transform: scale(0.92);
+  box-shadow: 0 0 8px rgba(52, 199, 89, 0.3);
+  transition-duration: 0.08s;
+}
+
+/* End call button — red glow */
+.btn-end-call {
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.btn-end-call:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 20px rgba(199, 8, 22, 0.4), 0 4px 12px rgba(199, 8, 22, 0.2);
+}
+.btn-end-call:active {
+  transform: scale(0.92);
+  transition-duration: 0.08s;
+}
+
+/* AI feature button — gradient shimmer on hover */
+.btn-ai {
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background-size: 200% 100%;
+}
+.btn-ai:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(174, 13, 138, 0.12), 0 1px 4px rgba(47, 17, 85, 0.08);
+  background-position: 100% 0;
+}
+.btn-ai:active {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 0.1s;
+}
+
+/* Tab underline — smooth slide */
+.tab-indicator {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Modal/dialog entrance — macOS sheet animation */
+@keyframes modalIn {
+  0% { opacity: 0; transform: scale(0.95) translateY(10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal-enter {
+  animation: modalIn 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Dropdown menu — macOS popover */
+@keyframes popoverIn {
+  0% { opacity: 0; transform: scale(0.95) translateY(-4px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.popover-enter {
+  animation: popoverIn 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Smooth focus ring — macOS blue glow */
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(46, 16, 85, 0.2);
+  transition: box-shadow 0.15s ease;
+}

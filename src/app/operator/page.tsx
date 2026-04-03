@@ -271,7 +271,7 @@ export default function OperatorConsolePage() {
               setCallingName(phoneInput || "Unknown");
               setCalling(true);
             }}
-            className="w-16 h-16 rounded-full bg-[#34C759] hover:bg-[#2CAD43] active:scale-90 flex items-center justify-center transition-all shadow-lg"
+            className="btn-call w-16 h-16 rounded-full bg-[#34C759] flex items-center justify-center shadow-lg"
             title="Make a call"
           >
             <svg width="22" height="22" viewBox="0 0 28 28" fill="white"><path d="M21.76 18.2c-1.3-1.1-2.61-1.78-3.89-.67l-.77.67c-.56.49-1.56 2.76-5.58-1.87-4.02-4.62-1.61-5.34-1.15-5.82l.77-.67c1.27-1.11.79-2.51-.13-3.94l-.55-.87c-.74-1.15-1.75-2.1-3.02-.99l-.7.6c-.56.41-2.14 1.75-2.52 4.29-.46 3.04.72 6.53 4.05 10.36 3.32 3.83 6.58 5.75 9.66 5.72 2.56-.03 4.11-1.4 4.6-1.9l.69-.61c1.28-1.1.49-2.24-.79-3.35l-.78-.63z"/></svg>
@@ -401,7 +401,7 @@ export default function OperatorConsolePage() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 10l5 5 5-5"/></svg>
             </button>
             {sortDropdown && (
-              <div className="absolute top-full left-0 mt-2 z-50 rounded-xl shadow-lg py-1 min-w-[180px]" style={{ backgroundColor: "var(--th-bg-card)", border: "1px solid var(--th-border)" }}>
+              <div className="popover-enter absolute top-full left-0 mt-2 z-50 rounded-xl shadow-lg py-1 min-w-[180px]" style={{ backgroundColor: "var(--th-bg-card)", border: "1px solid var(--th-border)" }}>
                 {["All contacts", "Available", "Busy", "Offline", "Ringing"].map((item) => (
                   <button key={item} onClick={() => setSortDropdown(false)} className="w-full text-left px-4 py-2.5 text-[13px] transition-colors" style={{ color: "var(--th-text-primary)" }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>{item}</button>
                 ))}
@@ -416,7 +416,7 @@ export default function OperatorConsolePage() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 10l5 5 5-5"/></svg>
             </button>
             {recipientsDropdown && (
-              <div className="absolute top-full left-0 mt-2 z-50 rounded-xl shadow-lg py-2 min-w-[220px]" style={{ backgroundColor: "var(--th-bg-card)", border: "1px solid var(--th-border)" }}>
+              <div className="popover-enter absolute top-full left-0 mt-2 z-50 rounded-xl shadow-lg py-2 min-w-[220px]" style={{ backgroundColor: "var(--th-bg-card)", border: "1px solid var(--th-border)" }}>
                 <div className="px-3 pb-2 mb-1" style={{ borderBottom: "1px solid var(--th-border-light)" }}>
                   <div className="flex items-center gap-2 rounded-lg px-3 py-2" style={{ backgroundColor: "var(--th-bg-hover)" }}>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -446,7 +446,7 @@ export default function OperatorConsolePage() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 10l5 5 5-5"/></svg>
             </button>
             {locationsDropdown && (
-              <div className="absolute top-full right-0 mt-2 z-50 rounded-xl shadow-lg py-1 min-w-[180px]" style={{ backgroundColor: "var(--th-bg-card)", border: "1px solid var(--th-border)" }}>
+              <div className="popover-enter absolute top-full right-0 mt-2 z-50 rounded-xl shadow-lg py-1 min-w-[180px]" style={{ backgroundColor: "var(--th-bg-card)", border: "1px solid var(--th-border)" }}>
                 {["All locations", "Austin", "San Francisco", "New York", "Toronto"].map((item) => (
                   <button key={item} onClick={() => setLocationsDropdown(false)} className="w-full text-left px-4 py-2.5 text-[13px] transition-colors" style={{ color: "var(--th-text-primary)" }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}>{item}</button>
                 ))}
@@ -765,7 +765,7 @@ function AddContactDialog({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center" style={{ backgroundColor: "rgba(0,0,0,0.4)" }} onClick={onClose}>
-      <div className="w-[480px] max-h-[90vh] rounded-2xl shadow-2xl overflow-y-auto" style={{ backgroundColor: "var(--th-bg-card)" }} onClick={(e) => e.stopPropagation()}>
+      <div className="modal-enter w-[480px] max-h-[90vh] rounded-2xl shadow-2xl overflow-y-auto" style={{ backgroundColor: "var(--th-bg-card)" }} onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="flex items-center justify-between px-6 pt-6 pb-2">
           <h2 className="text-lg font-semibold" style={{ color: "var(--th-text-primary)" }}>Add new contact</h2>
