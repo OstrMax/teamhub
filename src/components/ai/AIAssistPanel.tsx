@@ -381,19 +381,19 @@ export default function AIAssistPanel({
   };
 
   const viewTitles: Record<PanelView, string> = {
-    main: "AI Assist",
+    main: "AI assist",
     receptionist: "AI receptionist",
     tone: "AI receptionist",
-    meeting: "Meeting Catch-up",
-    sms: "Write a Message",
-    recording: "Find Recordings",
+    meeting: "Meeting catch-up",
+    sms: "Write a message",
+    recording: "Find recordings",
     autoresponse: "Auto-response",
-    "smart-reply": "Smart Reply",
+    "smart-reply": "Smart reply",
     summarize: "Summarize",
     transcribe: "Transcribe",
-    "meeting-notes": "Meeting Notes",
-    sentiment: "Sentiment Analysis",
-    "smart-search": "Smart Search",
+    "meeting-notes": "Meeting notes",
+    sentiment: "Sentiment analysis",
+    "smart-search": "Smart search",
   };
 
   return (
@@ -473,8 +473,8 @@ export default function AIAssistPanel({
 /* ── Main View ── */
 function MainView({ onActionClick, currentPage }: { onActionClick: (a: string) => void; currentPage?: string }) {
   const pageFeatures = currentPage ? contextualFeatures[currentPage] || [] : [];
-  const pageName = currentPage?.replace("/", "") || "home";
-  const pageLabels: Record<string, string> = { "": "Home", chats: "Chat", talk: "Talk", operator: "Operator Console", meet: "Meet", sms: "SMS", calendar: "Calendar", files: "Files", "contact-center": "Contact Center" };
+  const pageName = currentPage === "/" ? "" : (currentPage?.replace("/", "") ?? "");
+  const pageLabels: Record<string, string> = { "": "Home", chats: "Chats", talk: "Talk", operator: "Operator console", meet: "Meet", sms: "SMS", calendar: "Calendar", files: "Files", "contact-center": "Contact center" };
 
   return (
     <div className="px-5 pt-10 pb-8">
@@ -522,28 +522,47 @@ function MainView({ onActionClick, currentPage }: { onActionClick: (a: string) =
         </div>
       )}
 
-      {/* General action buttons */}
+      {/* General action buttons / links */}
       <div className="flex items-center gap-2 mb-3">
         <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "var(--th-text-muted)" }} />
         <span className="text-[12px] font-semibold uppercase tracking-wider" style={{ color: "var(--th-text-muted)" }}>General</span>
       </div>
-      <div className="flex flex-col gap-3">
-        {actionButtons.map((action, i) => (
-          <button
-            key={action.label}
-            onClick={() => onActionClick(action.label)}
-            className="w-full py-3.5 px-5 rounded-xl border text-[14px] font-medium text-left flex items-center gap-3 hover:shadow-[0_2px_12px_rgba(0,0,0,0.06)] active:scale-[0.98] active:shadow-none transition-all duration-150"
-            style={{ backgroundColor: "var(--th-bg-card)", borderColor: "var(--th-border)", color: "var(--th-text-primary)", animationDelay: `${0.05 * i}s`, animation: `fadeIn 0.3s ease-out ${0.05 * i}s both` }}
-            onMouseEnter={(e) => e.currentTarget.style.borderColor = "var(--th-text-muted)"}
-            onMouseLeave={(e) => e.currentTarget.style.borderColor = "var(--th-border)"}
-          >
-            <span className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: "var(--th-bg-hover)" }}>
-              <ActionIcon type={action.icon} />
-            </span>
-            {action.label}
-          </button>
-        ))}
-      </div>
+      {pageName === "" ? (
+        /* Home page — full button cards with icons */
+        <div className="flex flex-col gap-3">
+          {actionButtons.map((action, i) => (
+            <button
+              key={action.label}
+              onClick={() => onActionClick(action.label)}
+              className="w-full py-3.5 px-5 rounded-xl border text-[14px] font-medium text-left flex items-center gap-3 hover:shadow-[0_2px_12px_rgba(0,0,0,0.06)] active:scale-[0.98] active:shadow-none transition-all duration-150"
+              style={{ backgroundColor: "var(--th-bg-card)", borderColor: "var(--th-border)", color: "var(--th-text-primary)", animation: `fadeIn 0.3s ease-out ${0.05 * i}s both` }}
+              onMouseEnter={(e) => e.currentTarget.style.borderColor = "var(--th-text-muted)"}
+              onMouseLeave={(e) => e.currentTarget.style.borderColor = "var(--th-border)"}
+            >
+              <span className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: "var(--th-bg-hover)" }}>
+                <ActionIcon type={action.icon} />
+              </span>
+              {action.label}
+            </button>
+          ))}
+        </div>
+      ) : (
+        /* Other pages — simple text links */
+        <div className="flex flex-col gap-1">
+          {actionButtons.map((action, i) => (
+            <button
+              key={action.label}
+              onClick={() => onActionClick(action.label)}
+              className="text-left py-2 text-[13px] transition-colors"
+              style={{ color: "var(--th-tab-active)", animation: `fadeIn 0.2s ease-out ${0.04 * i}s both` }}
+              onMouseEnter={(e) => e.currentTarget.style.opacity = "0.7"}
+              onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
+            >
+              {action.label}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
