@@ -257,13 +257,13 @@ export default function Home() {
             {[
               {
                 label: "Create new\ntask",
-                iconStyle: { background: "transparent", border: "1.5px solid #CCCFD2", borderRadius: "50%" },
+                iconStyle: { background: "transparent", border: "1.5px solid #CCCFD2" },
                 icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
               },
               {
                 label: "Send SMS",
-                iconStyle: { background: "rgba(44,173,67,0.15)" },
-                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="#1a7a2b"><path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>,
+                iconStyle: { background: "rgba(44,173,67,0.12)" },
+                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="#1a7a2b"><path d="M11.99 3C8.65 3 5.75 4.12 3.83 6.15C1.58 8.54 1 11.5 2.11 14.98C2.68 16.76 3.81 19.26 5.96 21.08C6.13 21.22 6.33 21.29 6.54 21.29C6.76 21.29 6.98 21.21 7.15 21.06C7.64 20.62 8.11 19.98 8.6 19.13C9.76 19.38 10.88 19.5 12 19.5C17.97 19.5 22.47 15.91 22.47 11.14C22.47 6.5 17.97 3 11.99 3ZM8.62 12.75C8 12.75 7.5 12.25 7.5 11.63C7.5 11 8 10.5 8.62 10.5C9.25 10.5 9.75 11 9.75 11.63C9.75 12.25 9.25 12.75 8.62 12.75ZM12.37 12.75C11.75 12.75 11.25 12.25 11.25 11.63C11.25 11 11.75 10.5 12.37 10.5C13 10.5 13.5 11 13.5 11.63C13.5 12.25 13 12.75 12.37 12.75ZM16.12 12.75C15.5 12.75 15 12.25 15 11.63C15 11 15.5 10.5 16.12 10.5C16.75 10.5 17.25 11 17.25 11.63C17.25 12.25 16.75 12.75 16.12 12.75Z"/></svg>,
               },
               {
                 label: "Make a call",
@@ -273,12 +273,12 @@ export default function Home() {
               {
                 label: "Start video\nmeeting",
                 iconStyle: { background: "rgba(156,50,140,0.12)" },
-                icon: <svg width="17" height="17" viewBox="0 0 24 24" fill="#7C2870"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>,
+                icon: <svg width="17" height="17" viewBox="0 0 24 24" fill="#7C2870"><path d="M23.2 7.95C22.89 7.28 22.15 6.89 21.44 7.07C20.9 7.2 20.33 7.52 19.72 7.92C19.45 8.1 19.33 8.44 19.42 8.75C20.01 10.91 20.01 13.09 19.42 15.25C19.33 15.56 19.45 15.9 19.72 16.08C20.33 16.49 20.9 16.8 21.44 16.93C22.15 17.11 22.89 16.71 23.2 16.05C24.24 13.77 24.24 10.23 23.2 7.95ZM3.7 5.92C7.85 4.35 12.01 4.35 16.16 5.92C16.53 6.06 16.84 6.34 17.02 6.7C18.8 10.23 18.8 13.77 17.02 17.3C16.84 17.66 16.53 17.94 16.16 18.08C12.01 19.65 7.85 19.65 3.7 18.08C3.33 17.94 3.02 17.66 2.84 17.3C1.05 13.77 1.05 10.23 2.84 6.7C3.02 6.34 3.33 6.06 3.7 5.92Z"/></svg>,
               },
             ].map((action) => (
               <button
                 key={action.label}
-                className="card-lift flex items-center gap-3 px-4 py-3.5 rounded-[12px] shadow-[0px_1px_12px_0px_rgba(0,0,0,0.06)]"
+                className="card-lift flex items-center gap-3 p-4 rounded-[12px] shadow-[0px_1px_12px_0px_rgba(0,0,0,0.06)]"
                 style={{ backgroundColor: 'var(--th-bg-card)' }}
                 title={action.label.replace('\n', ' ')}
               >
