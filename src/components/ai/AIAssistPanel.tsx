@@ -261,46 +261,46 @@ function StepContent({ stepIndex }: { stepIndex: number }) {
 }
 
 /* ── Contextual AI features per page ── */
-const contextualFeatures: Record<string, { label: string; icon: string }[]> = {
+const contextualFeatures: Record<string, { label: string; icon: React.ReactNode }[]> = {
   "/chats": [
-    { label: "Smart reply", icon: "sms" },
-    { label: "Summarize conversation", icon: "meeting" },
-    { label: "Translate message", icon: "auto" },
+    { label: "Smart reply", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg> },
+    { label: "Summarize conversation", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 14H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg> },
+    { label: "Translate message", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg> },
   ],
   "/talk": [
-    { label: "Transcribe call", icon: "recording" },
-    { label: "Call summary", icon: "meeting" },
-    { label: "Voicemail to text", icon: "recording" },
+    { label: "Transcribe call", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.2 14.47 16 12 16s-4.52-1.8-4.93-4.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08a6.993 6.993 0 005.91-5.78c.1-.6-.39-1.14-1-1.14z"/></svg> },
+    { label: "Call summary", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/></svg> },
+    { label: "Voicemail to text", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M18.5 6C15.46 6 13 8.46 13 11.5c0 1.33.47 2.55 1.26 3.5H9.74c.79-.95 1.26-2.17 1.26-3.5C11 8.46 8.54 6 5.5 6S0 8.46 0 11.5 2.46 17 5.5 17h13c3.04 0 5.5-2.46 5.5-5.5S21.54 6 18.5 6zm-13 9C3.57 15 2 13.43 2 11.5S3.57 8 5.5 8 9 9.57 9 11.5 7.43 15 5.5 15zm13 0c-1.93 0-3.5-1.57-3.5-3.5S16.57 8 18.5 8 22 9.57 22 11.5 20.43 15 18.5 15z"/></svg> },
   ],
   "/operator": [
-    { label: "Smart call routing", icon: "receptionist" },
-    { label: "Agent coaching tips", icon: "auto" },
-    { label: "Call sentiment analysis", icon: "recording" },
+    { label: "Smart call routing", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3h7zM7 9H4V5h3v4zm10 6h3v4h-3v-4zm0-10h3v4h-3V5z"/></svg> },
+    { label: "Agent coaching tips", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg> },
+    { label: "Call sentiment analysis", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg> },
   ],
   "/meet": [
-    { label: "Generate meeting notes", icon: "meeting" },
-    { label: "Extract action items", icon: "auto" },
-    { label: "AI virtual background", icon: "meeting" },
+    { label: "Generate meeting notes", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg> },
+    { label: "Extract action items", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M22 5.18L10.59 16.6l-4.24-4.24 1.41-1.41 2.83 2.83 10-10L22 5.18zm-2.21 5.04c.13.57.21 1.17.21 1.78 0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8c1.58 0 3.04.46 4.28 1.25l1.44-1.44A9.9 9.9 0 0012 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10c0-1.19-.22-2.33-.6-3.39l-1.61 1.61z"/></svg> },
+    { label: "AI virtual background", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zm-5-7l-3 3.72L10 12l-4 5h16l-6-6z"/></svg> },
   ],
   "/sms": [
-    { label: "Smart reply", icon: "sms" },
-    { label: "Auto-translate message", icon: "auto" },
+    { label: "Smart reply", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg> },
+    { label: "Auto-translate message", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg> },
   ],
   "/calendar": [
-    { label: "Meeting prep brief", icon: "meeting" },
-    { label: "Find best time", icon: "auto" },
-    { label: "Detect conflicts", icon: "auto" },
+    { label: "Meeting prep brief", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 14H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg> },
+    { label: "Find best time", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg> },
+    { label: "Detect conflicts", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg> },
   ],
   "/files": [
-    { label: "Smart search", icon: "recording" },
-    { label: "Summarize document", icon: "meeting" },
-    { label: "Auto-categorize files", icon: "auto" },
+    { label: "Smart search", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg> },
+    { label: "Summarize document", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 14H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg> },
+    { label: "Auto-categorize files", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6 10H6v-2h8v2zm4-4H6v-2h12v2z"/></svg> },
   ],
   "/contact-center": [
-    { label: "Sentiment analysis", icon: "receptionist" },
-    { label: "Queue optimization", icon: "auto" },
-    { label: "Predict call volume", icon: "recording" },
-    { label: "Agent performance report", icon: "meeting" },
+    { label: "Sentiment analysis", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg> },
+    { label: "Queue optimization", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg> },
+    { label: "Predict call volume", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/></svg> },
+    { label: "Agent performance report", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--th-tab-active)"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg> },
   ],
 };
 
@@ -518,7 +518,7 @@ function MainView({ onActionClick, currentPage }: { onActionClick: (a: string) =
                 onMouseLeave={(e) => e.currentTarget.style.borderColor = "var(--th-border)"}
               >
                 <span className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: "var(--th-bg-hover)" }}>
-                  <ActionIcon type={feature.icon} />
+                  {feature.icon}
                 </span>
                 {feature.label}
               </button>
@@ -557,11 +557,11 @@ function MainView({ onActionClick, currentPage }: { onActionClick: (a: string) =
             <button
               key={action.label}
               onClick={() => onActionClick(action.label)}
-              className="text-left py-2.5 text-[13px] font-medium flex items-center justify-between group transition-colors"
+              className="text-left py-2.5 text-[13px] font-medium flex items-center gap-1 group transition-colors"
               style={{ color: "var(--th-tab-active)", animation: `fadeIn 0.2s ease-out ${0.04 * i}s both` }}
             >
               <span className="group-hover:underline">{action.label}</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0"><path d="M9 18l6-6-6-6"/></svg>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0"><path d="M9 18l6-6-6-6"/></svg>
             </button>
           ))}
         </div>
