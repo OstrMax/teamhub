@@ -494,40 +494,30 @@ function MainView({ onActionClick, currentPage }: { onActionClick: (a: string) =
         <SparkleIcon />
       </div>
 
-      {/* Heading */}
+      {/* Heading — uses tab title if available */}
       <h2 className="text-[22px] font-bold leading-[1.3] mb-3 animate-[fadeIn_0.35s_ease-out]" style={{ color: "var(--th-text-primary)" }}>
-        Use Your Sangoma AI<br />Assistant to Make Your<br />Job Easier
+        {meta ? meta.title : <>Use Your Sangoma AI<br />Assistant to Make Your<br />Job Easier</>}
       </h2>
 
       {/* Subtitle */}
-      <p className="text-[14px] leading-[1.5] mb-6 animate-[fadeIn_0.4s_ease-out]" style={{ color: "var(--th-text-secondary)" }}>
-        Power up your productivity with AI features in the app you use every day.
+      <p className="text-[14px] leading-[1.5] mb-8 animate-[fadeIn_0.4s_ease-out]" style={{ color: "var(--th-text-secondary)" }}>
+        {meta ? meta.subtitle : "Power up your productivity with AI features in the app you use every day."}
       </p>
 
-      {/* Contextual AI features for current page */}
+      {/* Contextual AI features — same button style as Home */}
       {pageFeatures.length > 0 && (
-        <div className="mb-6 animate-[fadeIn_0.45s_ease-out]">
-          {/* Tab-specific icon + title + subtitle */}
-          {meta && (
-            <div className="flex items-start gap-3 mb-4">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: "linear-gradient(135deg, rgba(174,13,138,0.1), rgba(47,17,85,0.1))" }}>{meta.icon}</div>
-              <div>
-                <div className="text-[14px] font-semibold" style={{ color: "var(--th-text-primary)" }}>{meta.title}</div>
-                <div className="text-[12px] mt-0.5" style={{ color: "var(--th-text-secondary)" }}>{meta.subtitle}</div>
-              </div>
-            </div>
-          )}
-          <div className="flex flex-col gap-2">
+        <div className="mb-8 animate-[fadeIn_0.45s_ease-out]">
+          <div className="flex flex-col gap-3">
             {pageFeatures.map((feature, i) => (
               <button
                 key={feature.label}
                 onClick={() => onActionClick(feature.label)}
-                className="w-full py-3 px-4 rounded-xl text-[13px] font-medium text-left flex items-center gap-3 active:scale-[0.98] transition-all duration-150"
-                style={{ background: "linear-gradient(135deg, rgba(174,13,138,0.06), rgba(47,17,85,0.06))", border: "1px solid rgba(174,13,138,0.12)", color: "var(--th-text-primary)", animation: `fadeIn 0.25s ease-out ${0.05 * i}s both` }}
-                onMouseEnter={(e) => e.currentTarget.style.borderColor = "rgba(174,13,138,0.3)"}
-                onMouseLeave={(e) => e.currentTarget.style.borderColor = "rgba(174,13,138,0.12)"}
+                className="w-full py-3.5 px-5 rounded-xl border text-[14px] font-medium text-left flex items-center gap-3 hover:shadow-[0_2px_12px_rgba(0,0,0,0.06)] active:scale-[0.98] active:shadow-none transition-all duration-150"
+                style={{ backgroundColor: "var(--th-bg-card)", borderColor: "var(--th-border)", color: "var(--th-text-primary)", animation: `fadeIn 0.3s ease-out ${0.05 * i}s both` }}
+                onMouseEnter={(e) => e.currentTarget.style.borderColor = "var(--th-text-muted)"}
+                onMouseLeave={(e) => e.currentTarget.style.borderColor = "var(--th-border)"}
               >
-                <span className="w-7 h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: "linear-gradient(135deg, rgba(174,13,138,0.15), rgba(47,17,85,0.15))" }}>
+                <span className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: "var(--th-bg-hover)" }}>
                   <ActionIcon type={feature.icon} />
                 </span>
                 {feature.label}
@@ -537,12 +527,12 @@ function MainView({ onActionClick, currentPage }: { onActionClick: (a: string) =
         </div>
       )}
 
-      {/* General action buttons / links */}
+      {/* More section */}
       <div className="mb-3">
-        <span className="text-[12px] font-semibold uppercase tracking-wider" style={{ color: "var(--th-text-muted)" }}>General</span>
+        <span className="text-[12px] font-semibold uppercase tracking-wider" style={{ color: "var(--th-text-muted)" }}>More</span>
       </div>
       {pageName === "" ? (
-        /* Home page — full button cards with icons */
+        /* Home — full button cards */
         <div className="flex flex-col gap-3">
           {actionButtons.map((action, i) => (
             <button
@@ -561,18 +551,17 @@ function MainView({ onActionClick, currentPage }: { onActionClick: (a: string) =
           ))}
         </div>
       ) : (
-        /* Other pages — simple text links */
-        <div className="flex flex-col gap-1">
+        /* Other pages — links with right arrow + hover underline */
+        <div className="flex flex-col gap-0.5">
           {actionButtons.map((action, i) => (
             <button
               key={action.label}
               onClick={() => onActionClick(action.label)}
-              className="text-left py-2 text-[13px] transition-colors"
+              className="text-left py-2.5 text-[13px] font-medium flex items-center justify-between group transition-colors"
               style={{ color: "var(--th-tab-active)", animation: `fadeIn 0.2s ease-out ${0.04 * i}s both` }}
-              onMouseEnter={(e) => e.currentTarget.style.opacity = "0.7"}
-              onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
             >
-              {action.label}
+              <span className="group-hover:underline">{action.label}</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0"><path d="M9 18l6-6-6-6"/></svg>
             </button>
           ))}
         </div>
