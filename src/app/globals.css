@@ -74,6 +74,17 @@
   --th-meet-label-new: #5b074e;
   --th-meet-label-alt: #244c91;
   --th-meet-btn-border: transparent;
+  --th-call-card-bg: #001221;
+  --th-call-card-border: transparent;
+  --th-call-card-text: #ffffff;
+  --th-call-card-muted: rgba(255,255,255,0.6);
+  --th-call-btn-bg: #ffffff;
+  --th-call-btn-text: #001221;
+  --th-call-action-bg: rgba(255,255,255,0.1);
+  --th-badge-external-bg: #ebd6e8;
+  --th-badge-external-text: #9c328c;
+  --th-badge-internal-bg: #d4edda;
+  --th-badge-internal-text: #28a745;
 }
 
 [data-theme="dark"] {
@@ -123,6 +134,17 @@
   --th-meet-label-new: #ffffff;
   --th-meet-label-alt: #ffffff;
   --th-meet-btn-border: #112547;
+  --th-call-card-bg: #0B182E;
+  --th-call-card-border: #112547;
+  --th-call-card-text: #ffffff;
+  --th-call-card-muted: rgba(255,255,255,0.5);
+  --th-call-btn-bg: rgba(255,255,255,0.12);
+  --th-call-btn-text: #ffffff;
+  --th-call-action-bg: rgba(255,255,255,0.08);
+  --th-badge-external-bg: rgba(156,50,140,0.2);
+  --th-badge-external-text: #e0a0d8;
+  --th-badge-internal-bg: rgba(52,199,89,0.2);
+  --th-badge-internal-text: #6ee7a0;
 }
 
 body {
