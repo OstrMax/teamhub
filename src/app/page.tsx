@@ -278,8 +278,8 @@ export default function Home() {
             ].map((action) => (
               <button
                 key={action.label}
-                className="card-lift flex items-center gap-4 p-3 rounded-[12px] shadow-[0px_1px_12px_0px_rgba(0,0,0,0.06)]"
-                style={{ height: 74, backgroundColor: 'var(--th-bg-card)' }}
+                className="card-lift flex items-center gap-3 px-3 py-2.5 rounded-[12px] shadow-[0px_1px_12px_0px_rgba(0,0,0,0.06)]"
+                style={{ backgroundColor: 'var(--th-bg-card)' }}
                 title={action.label.replace('\n', ' ')}
               >
                 <span className="w-9 h-9 rounded-full flex items-center justify-center shrink-0" style={action.iconStyle}>{action.icon}</span>

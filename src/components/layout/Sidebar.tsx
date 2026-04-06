@@ -8,7 +8,7 @@ const navItems = [
   { icon: "/icons/home.svg", label: "Home", href: "/", iconSize: 24 },
   { icon: "/icons/chats.svg", label: "Chats", href: "/chats", iconSize: 24 },
   { icon: "/icons/talk.svg", label: "Talk", href: "/talk", iconSize: 28 },
-  { icon: "/icons/operator-console.svg", label: "Operator\nConsole", href: "/operator", iconSize: 32, extraPy: true },
+  { icon: "/icons/operator-console.svg", label: "Operator\nconsole", href: "/operator", iconSize: 32, extraPy: true },
   { icon: "/icons/meet.svg", label: "Meet", href: "/meet", iconSize: 24 },
   { icon: "/icons/sms.svg", label: "SMS", href: "/sms", iconSize: 24 },
   { icon: "/icons/calendar.svg", label: "Calendar", href: "/calendar", iconSize: 24 },

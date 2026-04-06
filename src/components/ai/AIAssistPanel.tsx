@@ -475,6 +475,17 @@ function MainView({ onActionClick, currentPage }: { onActionClick: (a: string) =
   const pageFeatures = currentPage ? contextualFeatures[currentPage] || [] : [];
   const pageName = currentPage === "/" ? "" : (currentPage?.replace("/", "") ?? "");
   const pageLabels: Record<string, string> = { "": "Home", chats: "Chats", talk: "Talk", operator: "Operator console", meet: "Meet", sms: "SMS", calendar: "Calendar", files: "Files", "contact-center": "Contact center" };
+  const pageMeta: Record<string, { icon: React.ReactNode; title: string; subtitle: string }> = {
+    chats: { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--th-tab-active)" strokeWidth="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>, title: "Smarter conversations", subtitle: "AI helps you reply faster, summarize chats, and break language barriers." },
+    talk: { icon: <svg width="20" height="20" viewBox="0 0 28 28" fill="var(--th-tab-active)"><path d="M21.76 18.2c-1.3-1.1-2.61-1.78-3.89-.67l-.77.67c-.56.49-1.56 2.76-5.58-1.87-4.02-4.62-1.61-5.34-1.15-5.82l.77-.67c1.27-1.11.79-2.51-.13-3.94l-.55-.87c-.74-1.15-1.75-2.1-3.02-.99l-.7.6c-.56.41-2.14 1.75-2.52 4.29-.46 3.04.72 6.53 4.05 10.36 3.32 3.83 6.58 5.75 9.66 5.72 2.56-.03 4.11-1.4 4.6-1.9l.69-.61c1.28-1.1.49-2.24-.79-3.35l-.78-.63z"/></svg>, title: "Let\u2019s make calls easier", subtitle: "Transcribe calls, get instant summaries, and convert voicemails to text." },
+    operator: { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--th-tab-active)" strokeWidth="1.5"><circle cx="9" cy="8" r="4"/><path d="M1 20c0-2.5 3.5-4 8-4s8 1.5 8 4"/></svg>, title: "Supercharge your console", subtitle: "Smart routing, coaching tips, and real-time sentiment for every call." },
+    meet: { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--th-tab-active)" strokeWidth="1.5"><rect x="3" y="6" width="14" height="12" rx="1.5"/><path d="M17 10l4-3v10l-4-3"/></svg>, title: "Never miss a detail", subtitle: "Generate notes, extract action items, and prep for meetings instantly." },
+    sms: { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--th-tab-active)" strokeWidth="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H6l-4 4V6c0-1.1.9-2 2-2z"/></svg>, title: "Text smarter", subtitle: "AI drafts replies and translates messages on the fly." },
+    calendar: { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--th-tab-active)" strokeWidth="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>, title: "Plan ahead effortlessly", subtitle: "Prep for meetings, find the best times, and spot conflicts before they happen." },
+    files: { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--th-tab-active)" strokeWidth="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>, title: "Find anything instantly", subtitle: "Search with natural language, summarize docs, and auto-organize files." },
+    "contact-center": { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--th-tab-active)" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>, title: "Insights at a glance", subtitle: "Sentiment analysis, queue optimization, and predictive call volume." },
+  };
+  const meta = pageMeta[pageName];
 
   return (
     <div className="px-5 pt-10 pb-8">
@@ -496,12 +507,16 @@ function MainView({ onActionClick, currentPage }: { onActionClick: (a: string) =
       {/* Contextual AI features for current page */}
       {pageFeatures.length > 0 && (
         <div className="mb-6 animate-[fadeIn_0.45s_ease-out]">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "var(--th-tab-active)" }} />
-            <span className="text-[12px] font-semibold uppercase tracking-wider" style={{ color: "var(--th-text-muted)" }}>
-              {pageLabels[pageName] || pageName} AI Features
-            </span>
-          </div>
+          {/* Tab-specific icon + title + subtitle */}
+          {meta && (
+            <div className="flex items-start gap-3 mb-4">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: "linear-gradient(135deg, rgba(174,13,138,0.1), rgba(47,17,85,0.1))" }}>{meta.icon}</div>
+              <div>
+                <div className="text-[14px] font-semibold" style={{ color: "var(--th-text-primary)" }}>{meta.title}</div>
+                <div className="text-[12px] mt-0.5" style={{ color: "var(--th-text-secondary)" }}>{meta.subtitle}</div>
+              </div>
+            </div>
+          )}
           <div className="flex flex-col gap-2">
             {pageFeatures.map((feature, i) => (
               <button
@@ -523,8 +538,7 @@ function MainView({ onActionClick, currentPage }: { onActionClick: (a: string) =
       )}
 
       {/* General action buttons / links */}
-      <div className="flex items-center gap-2 mb-3">
-        <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "var(--th-text-muted)" }} />
+      <div className="mb-3">
         <span className="text-[12px] font-semibold uppercase tracking-wider" style={{ color: "var(--th-text-muted)" }}>General</span>
       </div>
       {pageName === "" ? (
