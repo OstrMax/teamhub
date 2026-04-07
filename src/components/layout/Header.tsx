@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import ProfileDropdown from "@/components/profile/ProfileDropdown";
 import SettingsDropdown from "@/components/layout/SettingsDropdown";
+import CustomizeTabsDialog from "@/components/layout/CustomizeTabsDialog";
 import { PassiveAIIcon, ActiveAIIcon } from "@/components/ai/AIAssistPanel";
 
 export default function Header({
@@ -15,6 +16,7 @@ export default function Header({
 }) {
   const [showProfile, setShowProfile] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showCustomizeTabs, setShowCustomizeTabs] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
   const settingsRef = useRef<HTMLDivElement>(null);
 
@@ -98,9 +100,15 @@ export default function Header({
             <Image src="/icons/settings.svg" alt="Settings" width={24} height={24} />
           </button>
           {showSettings && (
-            <SettingsDropdown onClose={() => setShowSettings(false)} />
+            <SettingsDropdown
+              onClose={() => setShowSettings(false)}
+              onOpenCustomizeTabs={() => { setShowSettings(false); setShowCustomizeTabs(true); }}
+            />
           )}
         </div>
+        {showCustomizeTabs && (
+          <CustomizeTabsDialog onClose={() => setShowCustomizeTabs(false)} />
+        )}
 
         {/* Profile Avatar */}
         <div className="relative" ref={profileRef}>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import IntegrationDialog from "./IntegrationDialog";
 
-export default function SettingsDropdown({ onClose }: { onClose: () => void }) {
+export default function SettingsDropdown({ onClose: _onClose, onOpenCustomizeTabs }: { onClose: () => void; onOpenCustomizeTabs?: () => void }) {
   const { isDark, toggleTheme } = useTheme();
   const [volume, setVolume] = useState(65);
   const [showIntegration, setShowIntegration] = useState(false);
@@ -153,6 +153,24 @@ export default function SettingsDropdown({ onClose }: { onClose: () => void }) {
           <rect x="3" y="14" width="7" height="7"/>
         </svg>
         <span className="text-sm" style={{ color: "var(--th-text-primary)" }}>Integration</span>
+      </button>
+
+      {/* Customize tabs */}
+      <button
+        className="w-full flex items-center gap-3 px-4 py-3.5 transition-colors text-left"
+        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"}
+        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+        onClick={() => onOpenCustomizeTabs?.()}
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-primary)" strokeWidth="1.5">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+          <circle cx="6" cy="6" r="1.5" fill="var(--th-text-primary)" />
+          <circle cx="14" cy="12" r="1.5" fill="var(--th-text-primary)" />
+          <circle cx="9" cy="18" r="1.5" fill="var(--th-text-primary)" />
+        </svg>
+        <span className="text-sm" style={{ color: "var(--th-text-primary)" }}>Customize tabs</span>
       </button>
 
       {showIntegration && (
