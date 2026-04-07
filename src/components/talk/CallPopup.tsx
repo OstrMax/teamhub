@@ -30,13 +30,14 @@ export default function CallPopup({ name, onEnd }: CallPopupProps) {
     return () => clearInterval(interval);
   }, []);
 
-  /* ── Default position (bottom-right) ── */
+  /* ── Default position (left side, above dial pad) ── */
   useEffect(() => {
     if (pos === null) {
-      const w = 320;
+      // Position on the left side, above where dialer would be
+      // Sidebar is ~80px wide, leave some margin
       setPos({
-        x: window.innerWidth - w - 24,
-        y: window.innerHeight - 200 - 24,
+        x: 96,
+        y: window.innerHeight - 200 - 80,
       });
     }
   }, [pos]);
@@ -78,8 +79,8 @@ export default function CallPopup({ name, onEnd }: CallPopupProps) {
   }, []);
 
   const style: React.CSSProperties = pos
-    ? { left: pos.x, top: pos.y, width: 320, animation: hasDragged.current ? undefined : "slideInRight 0.25s ease-out" }
-    : { right: 24, bottom: 24, width: 320, animation: "slideInRight 0.25s ease-out" };
+    ? { left: pos.x, top: pos.y, width: 320, animation: hasDragged.current ? undefined : "slideIn 0.25s ease-out" }
+    : { left: 96, bottom: 80, width: 320, animation: "slideIn 0.25s ease-out" };
 
   return (
     <div
@@ -139,7 +140,7 @@ export default function CallPopup({ name, onEnd }: CallPopupProps) {
             className="w-9 h-9 rounded-full bg-[#EF4444] flex items-center justify-center hover:bg-[#dc3545] transition-all active:scale-90"
             title="End call"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M10.68 13.31a16 16 0 006.63-6.63l-1.27 1.27a2 2 0 01-2.11.45 12.84 12.84 0 01-2.81-.7A2 2 0 019.12 6l.42-1.72A2 2 0 007.55 2.4c-5.1 1.26-6.82 7.88-1.2 13.5s12.24 3.9 13.5-1.2a2 2 0 00-1.88-1.99L16.25 13a2 2 0 00-1.67 1.72 12.84 12.84 0 01-.7 2.81 2 2 0 01-.45 2.11l-1.27 1.27"/><line x1="23" y1="1" x2="1" y2="23"/></svg>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4.32564 12.1201C5.47897 11.9481 6.42229 11.5697 6.44429 10.4146L6.4556 9.72167C6.464 9.2154 5.78853 7.66424 9.96947 7.66096C14.1454 7.65328 13.4184 9.20775 13.4052 9.71277L13.3941 10.4089C13.375 11.5606 14.3024 11.9371 15.4514 12.1067L16.1447 12.2107C17.2919 12.3757 18.2292 12.2774 18.2514 11.1255L18.2599 10.4991C18.311 10.0246 18.3529 8.61362 17.2413 7.28151C15.9087 5.68225 13.4754 4.87232 10.0172 4.87638C6.55883 4.87729 4.0967 5.69704 2.70646 7.30024C1.55202 8.63383 1.54033 10.0474 1.57292 10.5207L1.56446 11.1471C1.54229 12.299 2.47557 12.3955 3.63039 12.2217L4.32564 12.1201Z" fill="white"/></svg>
           </button>
         </div>
       </div>
