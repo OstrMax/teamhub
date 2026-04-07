@@ -11,6 +11,7 @@ const navItems = [
   { icon: "/icons/operator-console.svg", label: "Operator\nconsole", href: "/operator", iconSize: 32, extraPy: true },
   { icon: "/icons/meet.svg", label: "Meet", href: "/meet", iconSize: 24 },
   { icon: "/icons/sms.svg", label: "SMS", href: "/sms", iconSize: 24 },
+  { icon: "/icons/fax.svg", label: "Fax", href: "/fax", iconSize: 24 },
   { icon: "/icons/calendar.svg", label: "Calendar", href: "/calendar", iconSize: 24 },
   { icon: "/icons/files.svg", label: "Files", href: "/files", iconSize: 24 },
   { icon: "/icons/contact-center.svg", label: "CX", href: "/contact-center", iconSize: 24, badge: true },
