@@ -269,7 +269,7 @@ function MeetingView({ title, onEnd, onMinimize }: { title: string; onEnd: () =>
                 <span className="text-white text-[14px] tracking-[0.1px]">{formatTime(timer)}</span>
               </div>
               <div className="flex items-center justify-center bg-[rgba(0,0,0,0.24)] rounded-full h-[32px] w-[40px]">
-                <span className="text-white text-[14px] font-extrabold tracking-[0.1px]">HD</span>
+                <span className="text-white text-[14px] font-bold tracking-[0.1px]">HD</span>
               </div>
             </div>
           </div>
@@ -321,7 +321,7 @@ function MeetingView({ title, onEnd, onMinimize }: { title: string; onEnd: () =>
               <div key={i} className="flex-1 rounded-[8px] relative overflow-hidden flex items-center justify-center"
                 style={{ background: "linear-gradient(180deg, #9c119a 0%, #401268 55%, #2a1051 100%)", animation: `fadeIn 0.3s ease-out ${0.1 * i}s both` }}>
                 <div className="w-8 h-8 rounded-full flex items-center justify-center">
-                  <span className="text-white text-[17px] font-extralight tracking-[0.44px]">{p.initials}</span>
+                  <span className="text-white text-[17px] font-normal tracking-[0.44px]">{p.initials}</span>
                 </div>
                 <div className="absolute bottom-1 left-1">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="white" opacity="0.7"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>

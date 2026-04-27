@@ -151,8 +151,18 @@ body {
   background: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-inter);
+  font-feature-settings: "cv11", "ss01", "ss03";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.005em;
   margin: 0;
   overflow: hidden;
+}
+
+/* Inputs, buttons, and form controls inherit body font */
+input, button, textarea, select {
+  font-family: inherit;
+  letter-spacing: inherit;
 }
 
 * {
@@ -395,4 +405,15 @@ input[type="range"]::-moz-range-thumb {
   outline: none;
   box-shadow: 0 0 0 3px rgba(46, 16, 85, 0.2);
   transition: box-shadow 0.15s ease;
+}
+
+/* ── Unified easing curve for ad-hoc transitions ── */
+/* Use !important to override Tailwind's default transition-timing-function
+   on every transition-* utility for consistent macOS spring feel. */
+.transition-all,
+.transition-colors,
+.transition-opacity,
+.transition-shadow,
+.transition-transform {
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
 }
