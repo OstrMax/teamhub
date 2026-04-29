@@ -2,15 +2,17 @@
 
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import AIAssistPanel from "@/components/ai/AIAssistPanel";
 import WalkthroughBubbles from "@/components/walkthrough/WalkthroughBubbles";
+import { useWhiteLabel } from "@/contexts/WhiteLabelContext";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [aiPanelOpen, setAiPanelOpen] = useState(false);
   const pathname = usePathname();
+  const { config } = useWhiteLabel();
+  const isCustomLogo = config.logoUrl !== "/icons/logo.png";
 
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden">
@@ -23,8 +25,16 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         }}
       >
         <div className="flex items-center gap-2">
-          <Image src="/icons/logo.png" alt="TeamHub" width={20} height={14} priority />
-          <span className="text-white/90 font-normal text-[15px] tracking-[0.3px] font-[family-name:var(--font-inter)]">TeamHub</span>
+          {/* Use a plain img tag when the logo is a remote/data URL — Next/Image
+              requires registered domains and can't render arbitrary user URLs */}
+          {isCustomLogo ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={config.logoUrl} alt={config.appName} width={20} height={14} style={{ objectFit: "contain" }} />
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={config.logoUrl} alt={config.appName} width={20} height={14} />
+          )}
+          <span className="text-white/90 font-normal text-[15px] tracking-[0.3px] font-[family-name:var(--font-inter)]">{config.appName}</span>
         </div>
       </div>
 

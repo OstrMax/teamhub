@@ -4,6 +4,29 @@ import { useState } from "react";
 import ContactsList from "@/components/talk/ContactsList";
 import CallLog from "@/components/talk/CallLog";
 import CallPopup from "@/components/talk/CallPopup";
+import AIAssistantCard from "@/components/ai/AIAssistantCard";
+
+/* ── Talk AI features (icons match the right-side AI Assist panel) ── */
+const talkAIFeatures = [
+  {
+    label: "Transcribe call",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--th-tab-active)" strokeWidth="1.5"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>,
+  },
+  {
+    label: "Call summary",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--th-tab-active)" strokeWidth="1.5"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>,
+  },
+  {
+    label: "Voicemail to text",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--th-tab-active)" strokeWidth="1.5"><circle cx="5.5" cy="11.5" r="3.5"/><circle cx="18.5" cy="11.5" r="3.5"/><line x1="9" y1="11.5" x2="15" y2="11.5"/></svg>,
+  },
+];
+
+const talkAIIcon = (
+  <svg width="22" height="22" viewBox="0 0 28 28" fill="#1D3E77">
+    <path d="M21.76 18.2c-1.3-1.1-2.61-1.78-3.89-.67l-.77.67c-.56.49-1.56 2.76-5.58-1.87-4.02-4.62-1.61-5.34-1.15-5.82l.77-.67c1.27-1.11.79-2.51-.13-3.94l-.55-.87c-.74-1.15-1.75-2.1-3.02-.99l-.7.6c-.56.41-2.14 1.75-2.52 4.29-.46 3.04.72 6.53 4.05 10.36 3.32 3.83 6.58 5.75 9.66 5.72 2.56-.03 4.11-1.4 4.6-1.9l.69-.61c1.28-1.1.49-2.24-.79-3.35l-.78-.63z" />
+  </svg>
+);
 
 const tabs = [
   { id: "contacts", label: "Contacts", icon: ContactsIcon },
@@ -209,8 +232,22 @@ export default function TalkPage() {
         {/* Right panel — content */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Tab content */}
-          <div className="flex-1 overflow-hidden">
-            {activeTab === "contacts" && <ContactsList />}
+          <div className="flex-1 overflow-y-auto">
+            {activeTab === "contacts" && (
+              <>
+                <div className="px-5 pt-4">
+                  <AIAssistantCard
+                    icon={talkAIIcon}
+                    iconBg="rgba(29,62,119,0.12)"
+                    title="Let's make calls easier"
+                    subtitle="Transcribe calls, get instant summaries, and convert voicemails to text."
+                    features={talkAIFeatures}
+                    variant="stacked"
+                  />
+                </div>
+                <ContactsList />
+              </>
+            )}
             {activeTab === "call-log" && <CallLog />}
             {activeTab === "voicemail" && <VoicemailList />}
             {activeTab === "recordings" && <RecordingsListView />}

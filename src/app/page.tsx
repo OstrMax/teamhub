@@ -1,6 +1,35 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import AIAssistantCard from "@/components/ai/AIAssistantCard";
+
+/* ── Home AI assistant features (general/cross-app) ── */
+const homeAIFeatures = [
+  {
+    label: "Catch up on meeting",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--th-tab-active)" strokeWidth="1.5"><rect x="3" y="6" width="14" height="12" rx="1.5"/><path d="M17 10l4-3v10l-4-3"/></svg>,
+  },
+  {
+    label: "Help me write a message",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--th-tab-active)" strokeWidth="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H6l-4 4V6c0-1.1.9-2 2-2z"/><circle cx="8" cy="12" r="1" fill="var(--th-tab-active)"/><circle cx="12" cy="12" r="1" fill="var(--th-tab-active)"/><circle cx="16" cy="12" r="1" fill="var(--th-tab-active)"/></svg>,
+  },
+  {
+    label: "Find a recording",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--th-tab-active)" strokeWidth="1.5"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0014 0"/><path d="M12 18v3m-3 0h6"/></svg>,
+  },
+  {
+    label: "Create auto-response",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--th-tab-active)" strokeWidth="1.5"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-5"/></svg>,
+  },
+];
+
+const homeAIIcon = (
+  <svg width="22" height="22" viewBox="0 0 20 20" fill="none">
+    <path d="M15.8645 11.3095L13.5196 10.2864C12.9525 10.0397 12.5008 9.58654 12.254 9.02087L11.2309 6.67592C11.1516 6.49409 10.8933 6.49409 10.8139 6.67592L9.79077 9.02087C9.54401 9.58798 9.09089 10.0397 8.52522 10.2864L6.17738 11.311C5.99556 11.3903 5.99556 11.6472 6.17738 11.7266L8.56562 12.7829C9.1313 13.0325 9.58153 13.4871 9.8254 14.0557L10.8153 16.3559C10.8933 16.5391 11.153 16.5391 11.2324 16.3559L12.254 14.0152C12.5008 13.4481 12.9539 12.9965 13.5196 12.7497L15.8645 11.7266C16.0464 11.6472 16.0464 11.3889 15.8645 11.3095Z" fill="var(--th-tab-active)" />
+    <path d="M6.43189 9.78292L6.91098 8.68476C7.02643 8.41924 7.23855 8.20711 7.50407 8.09167L8.60367 7.61258C8.68881 7.57506 8.68881 7.45384 8.60367 7.41777L7.50407 6.93868C7.23855 6.82323 7.02643 6.6111 6.91098 6.34558L6.43189 5.24598C6.39437 5.16084 6.27316 5.16084 6.23708 5.24598L5.75799 6.34558C5.64255 6.6111 5.43042 6.82323 5.1649 6.93868L4.06385 7.41921C3.97872 7.45673 3.97872 7.5765 4.06385 7.61402L5.18366 8.10898C5.44918 8.22587 5.65986 8.43944 5.77386 8.70496L6.23852 9.78292C6.27604 9.86806 6.39726 9.8695 6.43333 9.78292H6.43189Z" fill="var(--th-tab-active)" />
+    <path d="M8.53992 4.79559L9.13445 5.05823C9.27587 5.12028 9.38699 5.23428 9.4476 5.37425L9.69436 5.94714C9.71456 5.99332 9.77805 5.99332 9.79826 5.94714L10.0522 5.36415C10.1143 5.22273 10.2268 5.11018 10.3668 5.04957L10.9498 4.79559C10.9945 4.77539 10.9945 4.7119 10.9498 4.69169L10.3668 4.43772C10.2254 4.37567 10.1128 4.26311 10.0522 4.12313L9.79826 3.54014C9.77805 3.49541 9.71456 3.49541 9.69436 3.54014L9.44038 4.12313C9.37833 4.26455 9.26577 4.37711 9.1258 4.43772L8.54136 4.69314C8.49663 4.71334 8.49663 4.77683 8.54136 4.79703L8.53992 4.79559Z" fill="var(--th-tab-active)" />
+  </svg>
+);
 
 interface Todo {
   id: number;
@@ -289,6 +318,16 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* AI Assistant row */}
+      <AIAssistantCard
+        icon={homeAIIcon}
+        iconBg="rgba(174,13,138,0.12)"
+        title="Your AI assistant is ready to help"
+        subtitle="Power up your productivity with AI features in the app you use every day."
+        features={homeAIFeatures}
+        variant="grid"
+      />
 
       {/* Middle row: Upcoming meeting + Apps - equal height */}
       <div className="grid grid-cols-3 gap-5">

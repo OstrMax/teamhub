@@ -5,6 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import ProfileDropdown from "@/components/profile/ProfileDropdown";
 import SettingsDropdown from "@/components/layout/SettingsDropdown";
 import CustomizeTabsDialog from "@/components/layout/CustomizeTabsDialog";
+import WhiteLabelDialog from "@/components/layout/WhiteLabelDialog";
 import { PassiveAIIcon, ActiveAIIcon } from "@/components/ai/AIAssistPanel";
 
 export default function Header({
@@ -17,6 +18,7 @@ export default function Header({
   const [showProfile, setShowProfile] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showCustomizeTabs, setShowCustomizeTabs] = useState(false);
+  const [showBranding, setShowBranding] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
   const settingsRef = useRef<HTMLDivElement>(null);
 
@@ -103,11 +105,15 @@ export default function Header({
             <SettingsDropdown
               onClose={() => setShowSettings(false)}
               onOpenCustomizeTabs={() => { setShowSettings(false); setShowCustomizeTabs(true); }}
+              onOpenBranding={() => { setShowSettings(false); setShowBranding(true); }}
             />
           )}
         </div>
         {showCustomizeTabs && (
           <CustomizeTabsDialog onClose={() => setShowCustomizeTabs(false)} />
+        )}
+        {showBranding && (
+          <WhiteLabelDialog onClose={() => setShowBranding(false)} />
         )}
 
         {/* Profile Avatar */}

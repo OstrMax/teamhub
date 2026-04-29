@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import IntegrationDialog from "./IntegrationDialog";
 
-export default function SettingsDropdown({ onClose: _onClose, onOpenCustomizeTabs }: { onClose: () => void; onOpenCustomizeTabs?: () => void }) {
+export default function SettingsDropdown({ onClose: _onClose, onOpenCustomizeTabs, onOpenBranding }: { onClose: () => void; onOpenCustomizeTabs?: () => void; onOpenBranding?: () => void }) {
   const { isDark, toggleTheme } = useTheme();
   const [volume, setVolume] = useState(65);
   const [showIntegration, setShowIntegration] = useState(false);
@@ -171,6 +171,23 @@ export default function SettingsDropdown({ onClose: _onClose, onOpenCustomizeTab
           <circle cx="9" cy="18" r="1.5" fill="var(--th-text-primary)" />
         </svg>
         <span className="text-sm" style={{ color: "var(--th-text-primary)" }}>Customize tabs</span>
+      </button>
+
+      {/* Branding & theme (white-label) */}
+      <button
+        className="w-full flex items-center gap-3 px-4 py-3.5 transition-colors text-left"
+        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--th-bg-hover)"}
+        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+        onClick={() => onOpenBranding?.()}
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-primary)" strokeWidth="1.5">
+          <circle cx="13.5" cy="6.5" r="0.5" fill="var(--th-text-primary)" />
+          <circle cx="17.5" cy="10.5" r="0.5" fill="var(--th-text-primary)" />
+          <circle cx="8.5" cy="7.5" r="0.5" fill="var(--th-text-primary)" />
+          <circle cx="6.5" cy="12.5" r="0.5" fill="var(--th-text-primary)" />
+          <path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c3.31 0 6-2.69 6-6 0-4.96-4.49-9-10-9z" />
+        </svg>
+        <span className="text-sm" style={{ color: "var(--th-text-primary)" }}>Branding & theme</span>
       </button>
 
       {showIntegration && (
