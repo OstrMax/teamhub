@@ -22,7 +22,6 @@ const PRESETS: Preset[] = [
 export default function WhiteLabelDialog({ onClose }: { onClose: () => void }) {
   const { config, setConfig, resetConfig } = useWhiteLabel();
   const [draft, setDraft] = useState(config);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Reflect external config updates while dialog is open (e.g. live preview applied via setConfig)
   useEffect(() => { setDraft(config); }, [config]);
@@ -53,20 +52,6 @@ export default function WhiteLabelDialog({ onClose }: { onClose: () => void }) {
   const snapshot = useRef(config);
   // Snapshot only on first mount
   useEffect(() => { snapshot.current = config; /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, []);
-
-  const handleLogoFile = (file: File) => {
-    if (!file) return;
-    if (file.size > 256 * 1024) {
-      alert("Logo file must be smaller than 256 KB");
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const dataUrl = e.target?.result as string;
-      if (dataUrl) update({ logoUrl: dataUrl });
-    };
-    reader.readAsDataURL(file);
-  };
 
   const styleOptions: { value: SidebarStyle; label: string }[] = [
     { value: "gradient", label: "Gradient" },
@@ -180,51 +165,6 @@ export default function WhiteLabelDialog({ onClose }: { onClose: () => void }) {
             <p className="text-[11px] mt-1" style={{ color: "var(--th-text-muted)" }}>Shown in the topbar next to the logo · max 32 characters</p>
           </section>
 
-          {/* Logo */}
-          <section>
-            <label className="text-[13px] font-semibold mb-2 block" style={{ color: "var(--th-text-primary)" }}>Logo</label>
-            <div className="flex items-center gap-3">
-              <div
-                className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0"
-                style={{ border: "1px solid var(--th-border)", backgroundColor: draft.brandColor }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={draft.logoUrl} alt="Logo preview" style={{ maxWidth: 36, maxHeight: 24, objectFit: "contain" }} />
-              </div>
-              <div className="flex-1">
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/png,image/svg+xml,image/jpeg,image/webp"
-                  className="hidden"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) handleLogoFile(file);
-                  }}
-                />
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    className="btn-primary px-4 py-2 rounded-lg text-[12px] font-bold uppercase tracking-wider transition-all"
-                    style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-text-primary)", border: "1px solid var(--th-border)" }}
-                  >
-                    Upload image
-                  </button>
-                  {draft.logoUrl !== DEFAULT_WHITE_LABEL.logoUrl && (
-                    <button
-                      onClick={() => update({ logoUrl: DEFAULT_WHITE_LABEL.logoUrl })}
-                      className="text-[12px] font-medium"
-                      style={{ color: "var(--th-text-secondary)" }}
-                    >
-                      Use default
-                    </button>
-                  )}
-                </div>
-                <p className="text-[11px] mt-1.5" style={{ color: "var(--th-text-muted)" }}>PNG / SVG / JPG · up to 256 KB</p>
-              </div>
-            </div>
-          </section>
-
           {/* Live preview */}
           <section>
             <label className="text-[13px] font-semibold mb-2 block" style={{ color: "var(--th-text-primary)" }}>Preview</label>
@@ -232,7 +172,7 @@ export default function WhiteLabelDialog({ onClose }: { onClose: () => void }) {
               {/* Mock topbar */}
               <div className="h-9 flex items-center justify-center gap-2" style={{ backgroundColor: draft.brandColor }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={draft.logoUrl} alt="" width={16} height={11} style={{ objectFit: "contain" }} />
+                <img src="/icons/logo.png" alt="" width={16} height={11} style={{ objectFit: "contain" }} />
                 <span className="text-white/90 text-[12px] font-normal tracking-[0.3px]">{draft.appName}</span>
               </div>
               {/* Mock body */}

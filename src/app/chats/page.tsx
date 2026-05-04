@@ -71,14 +71,14 @@ export default function ChatsPage() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
               <input type="text" placeholder="Find channel" className="bg-transparent outline-none text-sm placeholder:text-[#7F888F] w-full" style={{ color: 'var(--th-text-primary)' }} />
             </div>
-            <button className="p-2 text-[#7F888F] rounded-lg transition-colors hover:bg-[var(--th-bg-hover)]" title="Filter channels">
+            <button className="p-2 text-[color:var(--th-text-muted)] rounded-lg transition-colors hover:bg-[var(--th-bg-hover)]" title="Filter channels">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
             </button>
           </div>
         </div>
 
         <div className="flex-1 overflow-y-auto px-4">
-          <button className="flex items-center gap-2 text-sm text-[#7F888F] mb-3">
+          <button className="flex items-center gap-2 text-sm text-[color:var(--th-text-muted)] mb-3">
             <span className="text-base">+</span> Threads
           </button>
 
@@ -112,7 +112,7 @@ export default function ChatsPage() {
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-primary)" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             </div>
-            <div className="flex items-center gap-3 text-xs text-[#7F888F]">
+            <div className="flex items-center gap-3 text-xs text-[color:var(--th-text-muted)]">
               <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#2CAD43]" /> Online</span>
               <span className="flex items-center gap-1">📌 0</span>
               <span className="flex items-center gap-1">📝 Add chat description</span>
@@ -141,7 +141,7 @@ export default function ChatsPage() {
               {msg.dividerBefore && (
                 <div className="flex items-center gap-4 my-4">
                   <div className="flex-1 h-px" style={{ backgroundColor: 'var(--th-divider)' }} />
-                  <span className="text-xs text-[#7F888F] font-medium px-2 py-0.5 rounded" style={{ backgroundColor: 'var(--th-bg)' }}>{msg.dividerBefore}</span>
+                  <span className="text-xs text-[color:var(--th-text-muted)] font-medium px-2 py-0.5 rounded" style={{ backgroundColor: 'var(--th-bg)' }}>{msg.dividerBefore}</span>
                   <div className="flex-1 h-px" style={{ backgroundColor: 'var(--th-divider)' }} />
                 </div>
               )}
@@ -150,7 +150,7 @@ export default function ChatsPage() {
                 <div className="flex-1">
                   <div className="flex items-baseline gap-2">
                     <span className="text-sm font-semibold" style={{ color: 'var(--th-text-primary)' }}>{msg.sender}</span>
-                    <span className="text-xs text-[#7F888F]">{msg.time}</span>
+                    <span className="text-xs text-[color:var(--th-text-muted)]">{msg.time}</span>
                   </div>
 
                   {/* Video call card */}
@@ -219,10 +219,10 @@ export default function ChatsPage() {
                     <div className="flex items-center gap-1.5 mt-1.5">
                       {msg.reactions.map((r, i) => (
                         <span key={i} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs" style={{ backgroundColor: 'var(--th-badge-bg)' }}>
-                          {r.emoji}{r.count > 0 && <span className="text-[#7F888F]">{r.count}</span>}
+                          {r.emoji}{r.count > 0 && <span className="text-[color:var(--th-text-muted)]">{r.count}</span>}
                         </span>
                       ))}
-                      <button className="w-6 h-6 flex items-center justify-center rounded-full text-[#7F888F] text-xs transition-colors hover:bg-[var(--th-bg-hover)]" title="Add reaction">😊</button>
+                      <button className="w-6 h-6 flex items-center justify-center rounded-full text-[color:var(--th-text-muted)] text-xs transition-colors hover:bg-[var(--th-bg-hover)]" title="Add reaction">😊</button>
                     </div>
                   )}
                 </div>
@@ -261,13 +261,13 @@ export default function ChatsPage() {
             <div className="flex flex-col items-center mb-6">
               <div className="w-20 h-20 rounded-full flex items-center justify-center text-2xl font-semibold mb-3" style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-text-secondary)" }}>JD</div>
               <h3 className="text-lg font-semibold" style={{ color: 'var(--th-text-primary)' }}>{activeChannel}</h3>
-              <span className="flex items-center gap-1.5 text-sm text-[#7F888F] mt-1">
+              <span className="flex items-center gap-1.5 text-sm text-[color:var(--th-text-muted)] mt-1">
                 <span className="w-2 h-2 rounded-full bg-[#2CAD43]" /> Online
               </span>
             </div>
             <div className="space-y-4">
               <div className="pt-4" style={{ borderTop: '1px solid var(--th-border)' }}>
-                <p className="text-xs font-semibold text-[#7F888F] uppercase tracking-wider mb-2">Contact Details</p>
+                <p className="text-xs font-semibold text-[color:var(--th-text-muted)] uppercase tracking-wider mb-2">Contact Details</p>
                 <div className="space-y-2">
                   <div className="flex items-center gap-3"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg><span className="text-sm" style={{ color: 'var(--th-text-primary)' }}>+1 (416) 555-0198</span></div>
                   <div className="flex items-center gap-3"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span className="text-sm" style={{ color: 'var(--th-text-primary)' }}>jim.dowell@company.com</span></div>
@@ -276,7 +276,7 @@ export default function ChatsPage() {
                 </div>
               </div>
               <div className="pt-4" style={{ borderTop: '1px solid var(--th-border)' }}>
-                <p className="text-xs font-semibold text-[#7F888F] uppercase tracking-wider mb-2">Shared Files</p>
+                <p className="text-xs font-semibold text-[color:var(--th-text-muted)] uppercase tracking-wider mb-2">Shared Files</p>
                 <div className="space-y-2">
                   {["Q2 Report.pdf", "Design Specs.fig", "Meeting Notes.docx"].map((f) => (
                     <div key={f} className="flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-colors hover:bg-[var(--th-bg-hover)]" style={{ backgroundColor: 'var(--th-bg-elevated)' }}>
@@ -301,7 +301,7 @@ function SectionHeader({ title }: { title: string }) {
   return (
     <div className="flex items-center gap-1 mt-4 mb-1">
       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
-      <span className="text-[10px] font-semibold text-[#7F888F] tracking-wider uppercase">{title}</span>
+      <span className="text-[10px] font-semibold text-[color:var(--th-text-muted)] tracking-wider uppercase">{title}</span>
     </div>
   );
 }
@@ -310,11 +310,11 @@ function ChannelItem({ name, type, bold, online, locked }: { name: string; type:
   return (
     <button className="flex items-center gap-2 w-full px-2 py-1.5 rounded-lg text-left transition-colors hover:bg-[var(--th-bg-hover)]">
       {type === "channel" ? (
-        <span className="text-[#7F888F] text-sm">{locked ? "🔒" : "#"}</span>
+        <span className="text-[color:var(--th-text-muted)] text-sm">{locked ? "🔒" : "#"}</span>
       ) : (
         <span className={`w-2 h-2 rounded-full shrink-0 ${online ? "bg-[#2CAD43]" : "bg-[#CCCFD2]"}`} />
       )}
-      <span className={`text-sm truncate ${bold ? "font-semibold" : "text-[#4C5863]"}`} style={bold ? { color: 'var(--th-text-primary)' } : undefined}>{name}</span>
+      <span className={`text-sm truncate ${bold ? "font-semibold" : "text-[color:var(--th-text-secondary)]"}`} style={bold ? { color: 'var(--th-text-primary)' } : undefined}>{name}</span>
     </button>
   );
 }

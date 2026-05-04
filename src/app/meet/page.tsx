@@ -486,7 +486,7 @@ function MeetingView({ title, onEnd, onMinimize }: { title: string; onEnd: () =>
           </div>
           {/* Invite button */}
           <div className="px-4 py-3 border-t border-white/10">
-            <button className="w-full py-2.5 rounded-lg bg-[#2E1055] text-white text-[13px] font-semibold hover:bg-[#3d1670] transition-colors active:scale-95">
+            <button style={{ backgroundColor: "var(--th-tab-active)" }} className="w-full py-2.5 rounded-lg text-white text-[13px] font-semibold hover:bg-[#3d1670] transition-colors active:scale-95">
               Invite People
             </button>
           </div>
@@ -516,12 +516,12 @@ function SchedulePopup({ onClose }: { onClose: () => void }) {
         <div className="px-6 pb-6 space-y-4">
           <div>
             <label className="block text-[12px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider mb-1.5">Meeting title</label>
-            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Enter meeting name" className="w-full px-3.5 py-2.5 text-[14px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-xl bg-[var(--th-bg)] focus:outline-none focus:border-[#2E1055] focus:ring-1 focus:ring-[#2E1055]/20 transition-all placeholder:text-[var(--th-text-disabled)]" />
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Enter meeting name" className="w-full px-3.5 py-2.5 text-[14px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-xl bg-[var(--th-bg)] focus:outline-none focus:border-[color:var(--th-tab-active)] focus:ring-1 focus:ring-[color:var(--th-tab-active)]/20 transition-all placeholder:text-[var(--th-text-disabled)]" />
           </div>
           <div className="grid grid-cols-3 gap-3">
-            <div><label className="block text-[12px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider mb-1.5">Date</label><input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="w-full px-3.5 py-2.5 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-xl bg-[var(--th-bg)] focus:outline-none focus:border-[#2E1055] transition-all" /></div>
-            <div><label className="block text-[12px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider mb-1.5">Start</label><input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} className="w-full px-3.5 py-2.5 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-xl bg-[var(--th-bg)] focus:outline-none focus:border-[#2E1055] transition-all" /></div>
-            <div><label className="block text-[12px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider mb-1.5">End</label><input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} className="w-full px-3.5 py-2.5 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-xl bg-[var(--th-bg)] focus:outline-none focus:border-[#2E1055] transition-all" /></div>
+            <div><label className="block text-[12px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider mb-1.5">Date</label><input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="w-full px-3.5 py-2.5 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-xl bg-[var(--th-bg)] focus:outline-none focus:border-[color:var(--th-tab-active)] transition-all" /></div>
+            <div><label className="block text-[12px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider mb-1.5">Start</label><input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} className="w-full px-3.5 py-2.5 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-xl bg-[var(--th-bg)] focus:outline-none focus:border-[color:var(--th-tab-active)] transition-all" /></div>
+            <div><label className="block text-[12px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider mb-1.5">End</label><input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} className="w-full px-3.5 py-2.5 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-xl bg-[var(--th-bg)] focus:outline-none focus:border-[color:var(--th-tab-active)] transition-all" /></div>
           </div>
           <div>
             <label className="block text-[12px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider mb-1.5">Participants</label>
@@ -535,16 +535,16 @@ function SchedulePopup({ onClose }: { onClose: () => void }) {
             <div className="flex items-center gap-2 px-3.5 py-2.5 bg-[var(--th-bg-hover)] border border-[var(--th-border)] rounded-xl">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-muted)" strokeWidth="1.5"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
               <span className="text-[13px] text-[var(--th-text-muted)] flex-1 truncate">https://meet.sangoma.com/new-{Math.random().toString(36).slice(2, 7)}</span>
-              <button className="text-[12px] text-[#2E1055] font-medium hover:underline">Copy</button>
+              <button style={{ color: "var(--th-tab-active)" }} className="text-[12px] font-medium hover:underline">Copy</button>
             </div>
           </div>
           <div>
             <label className="block text-[12px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider mb-1.5">Description</label>
-            <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Add a description or agenda..." rows={3} className="w-full px-3.5 py-2.5 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-xl bg-[var(--th-bg)] focus:outline-none focus:border-[#2E1055] focus:ring-1 focus:ring-[#2E1055]/20 transition-all placeholder:text-[var(--th-text-disabled)] resize-none" />
+            <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Add a description or agenda..." rows={3} className="w-full px-3.5 py-2.5 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-xl bg-[var(--th-bg)] focus:outline-none focus:border-[color:var(--th-tab-active)] focus:ring-1 focus:ring-[color:var(--th-tab-active)]/20 transition-all placeholder:text-[var(--th-text-disabled)] resize-none" />
           </div>
           <div className="flex items-center justify-end gap-3 pt-2">
             <button onClick={onClose} className="px-5 py-2.5 text-[13px] text-[var(--th-text-secondary)] font-medium rounded-xl hover:bg-[var(--th-bg-hover)] transition-colors">Cancel</button>
-            <button onClick={onClose} className="px-5 py-2.5 text-[13px] text-white font-semibold rounded-xl bg-[#2E1055] hover:bg-[#3d1670] transition-colors active:scale-95">Schedule</button>
+            <button onClick={onClose} style={{ backgroundColor: "var(--th-tab-active)" }} className="px-5 py-2.5 text-[13px] text-white font-semibold rounded-xl hover:bg-[#3d1670] transition-colors active:scale-95">Schedule</button>
           </div>
         </div>
       </div>
@@ -584,7 +584,7 @@ function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, s
             </button>
             <div className="relative">
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="absolute left-2 top-1/2 -translate-y-1/2"><circle cx="7" cy="7" r="4.5" stroke="var(--th-text-muted)" strokeWidth="1.3"/><path d="M10.5 10.5L13.5 13.5" stroke="var(--th-text-muted)" strokeWidth="1.3" strokeLinecap="round"/></svg>
-              <input type="text" placeholder="Search" className="pl-7 pr-3 py-1 w-[184px] text-[12px] text-[var(--th-text-primary)] bg-[var(--th-bg-hover)] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#2E1055]/20 transition-colors" />
+              <input type="text" placeholder="Search" className="pl-7 pr-3 py-1 w-[184px] text-[12px] text-[var(--th-text-primary)] bg-[var(--th-bg-hover)] rounded-lg focus:outline-none focus:ring-1 focus:ring-[color:var(--th-tab-active)]/20 transition-colors" />
             </div>
           </div>
         </div>
@@ -636,7 +636,8 @@ function EventsContent({ eventsTab, setEventsTab, onJoinMeeting, showSchedule, s
                 {/* Hover Join button */}
                 <button
                   onClick={(e) => { e.stopPropagation(); onJoinMeeting(event.title); }}
-                  className="px-4 py-1.5 rounded-lg bg-[#2E1055] text-white text-[12px] font-semibold opacity-0 group-hover:opacity-100 transition-all active:scale-95 shrink-0 hover:bg-[#3d1670]"
+                  style={{ backgroundColor: "var(--th-tab-active)" }}
+                  className="px-4 py-1.5 rounded-lg text-white text-[12px] font-semibold opacity-0 group-hover:opacity-100 transition-all active:scale-95 shrink-0 hover:bg-[#3d1670]"
                 >
                   Join
                 </button>
@@ -662,14 +663,14 @@ function RecordingsContent() {
         <h1 className="text-[22px] font-semibold text-[var(--th-text-primary)] mb-4">My Recordings</h1>
         <div className="relative mb-4">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="absolute left-3 top-1/2 -translate-y-1/2"><circle cx="7" cy="7" r="4.5" stroke="var(--th-text-muted)" strokeWidth="1.3"/><path d="M10.5 10.5L13.5 13.5" stroke="var(--th-text-muted)" strokeWidth="1.3" strokeLinecap="round"/></svg>
-          <input type="text" placeholder="Search recordings..." className="pl-9 pr-3 py-2 w-full max-w-md text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-lg bg-[var(--th-bg)] focus:outline-none focus:border-[#2E1055] transition-colors" />
+          <input type="text" placeholder="Search recordings..." className="pl-9 pr-3 py-2 w-full max-w-md text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-lg bg-[var(--th-bg)] focus:outline-none focus:border-[color:var(--th-tab-active)] transition-colors" />
         </div>
       </div>
       <div className="flex-1 overflow-y-auto px-6 pb-6">
         <div className="flex flex-col">
           {recordings.map((rec, i) => (
             <div key={i} className="flex items-center gap-4 py-3.5 border-b border-[var(--th-border-light)] hover:bg-[var(--th-bg-hover)] transition-colors cursor-pointer group" style={{ animation: `fadeIn 0.2s ease-out ${0.05 * i}s both` }}>
-              <button className="w-9 h-9 rounded-full bg-[var(--th-bg-hover)] flex items-center justify-center shrink-0 hover:bg-[#E8E0FF] active:scale-90 transition-all"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M5 3v10l8-5-8-5z" fill="#2E1055"/></svg></button>
+              <button className="w-9 h-9 rounded-full bg-[var(--th-bg-hover)] flex items-center justify-center shrink-0 hover:bg-[#E8E0FF] active:scale-90 transition-all"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M5 3v10l8-5-8-5z" fill="var(--th-tab-active)"/></svg></button>
               <div className="flex-1 min-w-0"><div className="text-[14px] font-medium text-[var(--th-text-primary)]">{rec.title}</div><div className="text-[12px] text-[var(--th-text-muted)] mt-0.5">{rec.date} · {rec.duration}</div></div>
               <span className="text-[12px] text-[var(--th-text-muted)] shrink-0">{rec.size}</span>
               <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">

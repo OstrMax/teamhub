@@ -12,7 +12,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [aiPanelOpen, setAiPanelOpen] = useState(false);
   const pathname = usePathname();
   const { config } = useWhiteLabel();
-  const isCustomLogo = config.logoUrl !== "/icons/logo.png";
 
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden">
@@ -25,15 +24,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         }}
       >
         <div className="flex items-center gap-2">
-          {/* Use a plain img tag when the logo is a remote/data URL — Next/Image
-              requires registered domains and can't render arbitrary user URLs */}
-          {isCustomLogo ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={config.logoUrl} alt={config.appName} width={20} height={14} style={{ objectFit: "contain" }} />
-          ) : (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={config.logoUrl} alt={config.appName} width={20} height={14} />
-          )}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/icons/logo.png" alt={config.appName} width={20} height={14} />
           <span className="text-white/90 font-normal text-[15px] tracking-[0.3px] font-[family-name:var(--font-inter)]">{config.appName}</span>
         </div>
       </div>

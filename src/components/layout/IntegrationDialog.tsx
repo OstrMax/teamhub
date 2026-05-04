@@ -164,7 +164,7 @@ export default function IntegrationDialog({ onClose }: { onClose: () => void }) 
                 </div>
                 <button
                   className="mt-4 px-4 py-2 rounded-lg text-[13px] font-medium text-white transition-colors"
-                  style={{ backgroundColor: "#2a1051" }}
+                  style={{ backgroundColor: "var(--th-tab-active)" }}
                   onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
                   onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
                 >
@@ -195,7 +195,7 @@ export default function IntegrationDialog({ onClose }: { onClose: () => void }) 
                 </div>
                 <button
                   className="mt-4 px-4 py-2 rounded-lg text-[13px] font-medium text-white transition-colors"
-                  style={{ backgroundColor: "#2a1051" }}
+                  style={{ backgroundColor: "var(--th-tab-active)" }}
                   onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
                   onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
                 >
@@ -325,7 +325,8 @@ function ExtensionsContent({
                     name="selectedExt"
                     checked={selectedExt === i}
                     onChange={() => setSelectedExt(i)}
-                    className="w-3.5 h-3.5 accent-[#2a1051]"
+                    className="w-3.5 h-3.5"
+                    style={{ accentColor: "var(--th-tab-active)" }}
                     aria-label={`Select extension ${row.ext}`}
                   />
                 </td>
@@ -405,7 +406,7 @@ function ExtensionsContent({
         </button>
         <button
           className="px-4 py-2 rounded-lg text-[13px] font-medium text-white transition-colors"
-          style={{ backgroundColor: "#2a1051" }}
+          style={{ backgroundColor: "var(--th-tab-active)" }}
           onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
           onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
         >

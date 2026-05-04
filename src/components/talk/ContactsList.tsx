@@ -133,12 +133,12 @@ export default function ContactsList() {
               {/* Info */}
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate" style={{ color: 'var(--th-text-primary)' }}>{contact.name}</p>
-                <p className="text-xs text-[#7F888F]">{contact.phone || contact.type}</p>
+                <p className="text-xs text-[color:var(--th-text-muted)]">{contact.phone || contact.type}</p>
               </div>
 
               {/* Extension badge */}
               <span
-                className="text-xs text-[#4C5863] px-2 py-0.5 rounded border"
+                className="text-xs text-[color:var(--th-text-secondary)] px-2 py-0.5 rounded border"
                 style={{ backgroundColor: 'var(--th-badge-bg)', borderColor: 'var(--th-border)' }}
               >
                 {contact.extension}

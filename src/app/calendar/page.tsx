@@ -177,9 +177,10 @@ export default function CalendarPage() {
                   !cell.currentMonth
                     ? "text-[var(--th-text-disabled)]"
                     : isSelected
-                      ? "bg-[#2E1055] text-white"
+                      ? "text-white"
                       : "text-[var(--th-text-primary)] hover:bg-[var(--th-bg-hover)]"
                 }`}
+                style={isSelected ? { backgroundColor: "var(--th-tab-active)" } : undefined}
               >
                 {cell.day}
                 {dots && dots.length > 0 && (
@@ -201,7 +202,7 @@ export default function CalendarPage() {
         <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--th-border)]">
           {/* Left: nav + date */}
           <div className="flex items-center gap-3 shrink-0">
-            <button className="w-8 h-8 rounded-lg bg-[#2a1051] flex items-center justify-center hover:bg-[#3d1a6e] active:scale-95 transition-all">
+            <button style={{ backgroundColor: "var(--th-tab-active)" }} className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-[#3d1a6e] active:scale-95 transition-all">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="white" strokeWidth="1.5" strokeLinecap="round"/></svg>
             </button>
             <button onClick={handlePrevDay} className="p-1.5 rounded-lg hover:bg-[var(--th-bg-hover)] active:scale-90 transition-all">
@@ -250,7 +251,7 @@ export default function CalendarPage() {
               <input
                 type="text"
                 placeholder="Search"
-                className="pl-8 pr-3 py-1.5 w-40 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-lg bg-[var(--th-bg-input)] focus:outline-none focus:border-[#2E1055] transition-colors"
+                className="pl-8 pr-3 py-1.5 w-40 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-lg bg-[var(--th-bg-input)] focus:outline-none focus:border-[color:var(--th-tab-active)] transition-colors"
               />
             </div>
           </div>
@@ -335,7 +336,7 @@ function WeekView({ currentDate }: { currentDate: Date }) {
           return (
             <div key={dayName} className="text-center">
               <div className="text-[10px] text-[var(--th-text-muted)] uppercase tracking-wider font-medium">{dayName}</div>
-              <div className={`text-[20px] font-semibold leading-none mt-1 w-9 h-9 mx-auto flex items-center justify-center rounded-full ${isToday ? "bg-[#2E1055] text-white" : "text-[var(--th-text-primary)]"}`}>
+              <div className={`text-[20px] font-semibold leading-none mt-1 w-9 h-9 mx-auto flex items-center justify-center rounded-full ${isToday ? "text-white" : "text-[var(--th-text-primary)]"}`} style={isToday ? { backgroundColor: "var(--th-tab-active)" } : undefined}>
                 {d.getDate()}
               </div>
             </div>
@@ -417,7 +418,7 @@ function MonthView({ currentDate }: { currentDate: Date }) {
           const events = cell.current ? monthEventsMap[cell.day] : undefined;
           return (
             <div key={i} className={`bg-[var(--th-bg)] min-h-[90px] p-1.5 ${!cell.current ? "opacity-40" : ""}`}>
-              <div className={`text-[12px] font-medium mb-1 w-6 h-6 flex items-center justify-center rounded-full ${isToday ? "bg-[#2E1055] text-white" : "text-[var(--th-text-primary)]"}`}>
+              <div className={`text-[12px] font-medium mb-1 w-6 h-6 flex items-center justify-center rounded-full ${isToday ? "text-white" : "text-[var(--th-text-primary)]"}`} style={isToday ? { backgroundColor: "var(--th-tab-active)" } : undefined}>
                 {cell.day}
               </div>
               {events && events.slice(0, 3).map((evt, ei) => (

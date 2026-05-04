@@ -108,8 +108,8 @@ function ReceptionistBanner() {
       <div className="absolute inset-0 flex flex-col justify-center px-3.5 gap-1.5">
         <div className="bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5 flex items-center text-[9px] shadow-sm">
           <span className="font-semibold text-[#2E1055] uppercase tracking-wider w-16">Sentiment</span>
-          <span className="text-[#4C5863] flex-1">Audio</span>
-          <span className="text-[#4C5863]">Actions</span>
+          <span className="text-[color:var(--th-text-secondary)] flex-1">Audio</span>
+          <span className="text-[color:var(--th-text-secondary)]">Actions</span>
         </div>
         {[
           { sentiment: "Neutral", color: "bg-yellow-400", time1: "00:00", time2: "00:24", width: "35%", action: "Open transcript" },
@@ -119,16 +119,16 @@ function ReceptionistBanner() {
         ].map((row, i) => (
           <div key={i} className="bg-white/75 backdrop-blur-sm rounded-lg px-3 py-1 flex items-center gap-1.5 text-[8px] shadow-sm">
             <span className={`w-1.5 h-1.5 rounded-full ${row.color} shrink-0`} />
-            <span className="text-[#001221] font-medium w-10">{row.sentiment}</span>
+            <span className="text-[color:var(--th-text-primary)] font-medium w-10">{row.sentiment}</span>
             <div className="flex items-center gap-1 flex-1 mx-0.5">
               <div className="w-2.5 h-2.5 rounded-full bg-[#2E1055]/10 flex items-center justify-center">
                 <span className="text-[5px]">&#9654;</span>
               </div>
-              <span className="text-[#7F888F]">{row.time1}</span>
+              <span className="text-[color:var(--th-text-muted)]">{row.time1}</span>
               <div className="flex-1 h-[3px] bg-[#2E1055]/10 rounded-full relative mx-0.5">
                 <div className="absolute left-0 top-0 h-full bg-[#2E1055]/30 rounded-full" style={{ width: row.width }} />
               </div>
-              <span className="text-[#7F888F]">{row.time2}</span>
+              <span className="text-[color:var(--th-text-muted)]">{row.time2}</span>
             </div>
             <span className="text-[#2E1055] font-medium shrink-0">{row.action}</span>
           </div>
@@ -212,7 +212,7 @@ function StepContent({ stepIndex }: { stepIndex: number }) {
           <p className="text-[12px]" style={{ color: "var(--th-text-secondary)" }}>Allow callers to be transferred to a team member by name.</p>
           <div className="flex items-center justify-between py-2">
             <span className="text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>Enable transfer by name</span>
-            <div className="w-10 h-6 bg-[#2E1055] rounded-full relative cursor-pointer">
+            <div className="w-10 h-6 rounded-full relative cursor-pointer" style={{ backgroundColor: "var(--th-tab-active)" }}>
               <div className="absolute top-1 right-1 w-4 h-4 bg-white rounded-full shadow-sm transition-all" />
             </div>
           </div>
@@ -246,7 +246,7 @@ function StepContent({ stepIndex }: { stepIndex: number }) {
           </div>
           <div className="flex items-center justify-between py-2">
             <span className="text-[13px] font-medium" style={{ color: "var(--th-text-primary)" }}>Play hold music</span>
-            <div className="w-10 h-6 bg-[#2E1055] rounded-full relative cursor-pointer">
+            <div className="w-10 h-6 rounded-full relative cursor-pointer" style={{ backgroundColor: "var(--th-tab-active)" }}>
               <div className="absolute top-1 right-1 w-4 h-4 bg-white rounded-full shadow-sm transition-all" />
             </div>
           </div>
@@ -844,7 +844,7 @@ function MeetingView() {
           <ul className="mt-1.5 space-y-1.5">
             {summary.keyTopics.map((topic, i) => (
               <li key={i} className="flex items-start gap-2 text-[13px]" style={{ color: "var(--th-text-primary)" }}>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#2E1055] shrink-0 mt-[7px]" />
+                <span className="w-1.5 h-1.5 rounded-full shrink-0 mt-[7px]" style={{ backgroundColor: "var(--th-tab-active)" }} />
                 {topic}
               </li>
             ))}
@@ -911,7 +911,7 @@ function SMSView() {
               className="px-3 py-1.5 rounded-full text-[12px] font-medium border transition-all duration-150 active:scale-95"
               style={
                 tone === t
-                  ? { backgroundColor: "#2E1055", color: "white", borderColor: "#2E1055" }
+                  ? { backgroundColor: "var(--th-tab-active)", color: "white", borderColor: "var(--th-tab-active)" }
                   : { backgroundColor: "var(--th-bg-card)", color: "var(--th-text-secondary)", borderColor: "var(--th-border)" }
               }
               onMouseEnter={(e) => { if (tone !== t) e.currentTarget.style.borderColor = "var(--th-text-muted)"; }}
@@ -1075,7 +1075,8 @@ function AutoResponseView() {
         </div>
         <button
           onClick={() => setEnabled(!enabled)}
-          className={`w-11 h-6.5 rounded-full relative transition-colors duration-200 ${enabled ? "bg-[#2E1055]" : "bg-[#CCCFD2]"}`}
+          style={enabled ? { backgroundColor: "var(--th-tab-active)" } : undefined}
+          className={`w-11 h-6.5 rounded-full relative transition-colors duration-200 ${enabled ? "" : "bg-[#CCCFD2]"}`}
         >
           <div className={`absolute top-[3px] w-[18px] h-[18px] bg-white rounded-full shadow-sm transition-all duration-200 ${enabled ? "right-[3px]" : "left-[3px]"}`} />
         </button>
@@ -1139,7 +1140,7 @@ function AutoResponseView() {
             { label: "Email notification", desc: "Send email to caller (if known)", checked: false },
           ].map((ch) => (
             <label key={ch.label} className="flex items-center gap-3 px-3 py-2.5 border rounded-lg cursor-pointer transition-colors" style={{ borderColor: "var(--th-border)" }}>
-              <input type="checkbox" defaultChecked={ch.checked} className="w-4 h-4 rounded accent-[#2E1055]" />
+              <input type="checkbox" defaultChecked={ch.checked} className="w-4 h-4 rounded" style={{ accentColor: "var(--th-tab-active)" }} />
               <div>
                 <div className="text-[12px] font-medium" style={{ color: "var(--th-text-primary)" }}>{ch.label}</div>
                 <div className="text-[11px]" style={{ color: "var(--th-text-muted)" }}>{ch.desc}</div>
@@ -1179,7 +1180,7 @@ function SmartReplyView() {
         <label className="block text-[12px] font-medium mb-2" style={{ color: "var(--th-text-secondary)" }}>Tone</label>
         <div className="flex gap-2">
           {tones.map((t) => (
-            <button key={t} onClick={() => setTone(t)} className="px-3 py-1.5 rounded-full text-[12px] font-medium border transition-all active:scale-95" style={tone === t ? { backgroundColor: "#2E1055", color: "white", borderColor: "#2E1055" } : { backgroundColor: "var(--th-bg-card)", color: "var(--th-text-secondary)", borderColor: "var(--th-border)" }}>{t}</button>
+            <button key={t} onClick={() => setTone(t)} className="px-3 py-1.5 rounded-full text-[12px] font-medium border transition-all active:scale-95" style={tone === t ? { backgroundColor: "var(--th-tab-active)", color: "white", borderColor: "var(--th-tab-active)" } : { backgroundColor: "var(--th-bg-card)", color: "var(--th-text-secondary)", borderColor: "var(--th-border)" }}>{t}</button>
           ))}
         </div>
       </div>
@@ -1207,7 +1208,7 @@ function SummarizeView() {
         <div className="mt-1.5 space-y-2">
           {["Team discussed Q2 launch timeline — moved to April 15", "AI features prioritized for v3.2 release", "Mobile app redesign approved by stakeholders", "Analytics dashboard postponed to Q3"].map((item, i) => (
             <div key={i} className="flex items-start gap-2 text-[13px]" style={{ color: "var(--th-text-primary)", animation: `fadeIn 0.25s ease-out ${0.1 * i}s both` }}>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#2E1055] shrink-0 mt-[7px]" />{item}
+              <span className="w-1.5 h-1.5 rounded-full shrink-0 mt-[7px]" style={{ backgroundColor: "var(--th-tab-active)" }} />{item}
             </div>
           ))}
         </div>
@@ -1272,7 +1273,7 @@ function MeetingNotesView() {
         <span className="text-[12px] font-medium" style={{ color: "var(--th-text-secondary)" }}>Notes</span>
         <ul className="mt-1.5 space-y-1.5">
           {["Reviewed component library v2 progress", "Dark mode implementation on track for next sprint", "Accessibility audit: 3 critical issues to fix", "New icon set approved — will replace current by April 20"].map((n, i) => (
-            <li key={i} className="flex items-start gap-2 text-[13px]" style={{ color: "var(--th-text-primary)" }}><span className="w-1.5 h-1.5 rounded-full bg-[#2E1055] shrink-0 mt-[7px]" />{n}</li>
+            <li key={i} className="flex items-start gap-2 text-[13px]" style={{ color: "var(--th-text-primary)" }}><span className="w-1.5 h-1.5 rounded-full shrink-0 mt-[7px]" style={{ backgroundColor: "var(--th-tab-active)" }} />{n}</li>
           ))}
         </ul>
       </div>

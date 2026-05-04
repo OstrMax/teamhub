@@ -46,7 +46,7 @@ export default function FilesPage() {
               <circle cx="7" cy="7" r="4.5" stroke="#7F888F" strokeWidth="1.3"/>
               <path d="M10.5 10.5L13.5 13.5" stroke="#7F888F" strokeWidth="1.3" strokeLinecap="round"/>
             </svg>
-            <input type="text" placeholder="Search files..." className="pl-8 pr-3 py-1.5 w-52 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-lg bg-[var(--th-bg)] focus:outline-none focus:border-[#2E1055] transition-colors" />
+            <input type="text" placeholder="Search files..." className="pl-8 pr-3 py-1.5 w-52 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-lg bg-[var(--th-bg)] focus:outline-none focus:border-[color:var(--th-tab-active)] transition-colors" />
           </div>
 
           {/* Sort */}
@@ -71,7 +71,7 @@ export default function FilesPage() {
           </div>
 
           {/* Upload */}
-          <button className="flex items-center gap-1.5 px-4 py-1.5 bg-[#2a1051] text-white text-[13px] font-medium rounded-lg hover:bg-[#3d1a6e] active:scale-[0.98] transition-all">
+          <button style={{ backgroundColor: "var(--th-tab-active)" }} className="flex items-center gap-1.5 px-4 py-1.5 text-white text-[13px] font-medium rounded-lg hover:bg-[#3d1a6e] active:scale-[0.98] transition-all">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 11V3m0 0L5 6m3-3l3 3M3 13h10" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
             Upload
           </button>

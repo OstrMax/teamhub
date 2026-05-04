@@ -181,7 +181,7 @@ export default function WalkthroughBubbles() {
               )}
               <button
                 onClick={handleNext}
-                className="px-4 py-1.5 bg-white text-[#001221] text-[12px] font-semibold rounded-full hover:bg-white/90 active:scale-95 transition-all"
+                className="px-4 py-1.5 bg-white text-[color:var(--th-text-primary)] text-[12px] font-semibold rounded-full hover:bg-white/90 active:scale-95 transition-all"
               >
                 {isLast ? "Got it!" : "Next"}
               </button>
