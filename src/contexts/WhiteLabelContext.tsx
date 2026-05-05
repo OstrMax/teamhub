@@ -62,11 +62,41 @@ function rgba(hex: string, alpha: number): string {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
+/* List of all the document-level CSS custom properties that white-labeling
+   may override. Used to clear them when reverting to the default brand
+   so the CSS file defaults (including the original purple→magenta sidebar
+   gradient) take effect again. */
+const OVERRIDE_VARS = [
+  "--th-tab-active",
+  "--th-active-conv-border",
+  "--th-shell-bg",
+  "--th-topbar-bg",
+  "--th-sidebar-active",
+  "--th-sidebar-badge-border",
+  "--th-walkthrough-bg",
+  "--th-status-dot-border",
+  "--th-quick-actions-bg",
+];
+
 /* ── Apply config to document root ── */
 function applyToDocument(config: WhiteLabelConfig) {
   if (typeof document === "undefined") return;
   const root = document.documentElement;
   const c = config.brandColor;
+
+  const isDefault =
+    c.toLowerCase() === DEFAULT_WHITE_LABEL.brandColor.toLowerCase() &&
+    config.sidebarStyle === DEFAULT_WHITE_LABEL.sidebarStyle &&
+    config.sidebarSolidColor.toLowerCase() === DEFAULT_WHITE_LABEL.sidebarSolidColor.toLowerCase();
+
+  if (isDefault) {
+    // Clear all overrides so the original CSS file defaults take effect —
+    // this preserves the signature purple→magenta sidebar gradient,
+    // the original --th-sidebar-active (#783a9b), etc.
+    OVERRIDE_VARS.forEach((p) => root.style.removeProperty(p));
+    return;
+  }
+
   // Primary accent + dependent shades
   root.style.setProperty("--th-tab-active", c);
   root.style.setProperty("--th-active-conv-border", c);
@@ -125,7 +155,7 @@ export function WhiteLabelProvider({ children }: { children: ReactNode }) {
     // Remove inline style overrides so the CSS file defaults take effect again
     if (typeof document !== "undefined") {
       const root = document.documentElement;
-      ["--th-tab-active", "--th-active-conv-border", "--th-shell-bg", "--th-topbar-bg", "--th-sidebar-active", "--th-sidebar-badge-border", "--th-walkthrough-bg", "--th-status-dot-border", "--th-quick-actions-bg"].forEach((p) => root.style.removeProperty(p));
+      OVERRIDE_VARS.forEach((p) => root.style.removeProperty(p));
     }
   }, []);
 
