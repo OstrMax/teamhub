@@ -53,20 +53,19 @@ export default function ContactsList() {
           className="flex items-center gap-4 px-6 py-3 border-b"
           style={{ borderColor: 'var(--th-border)' }}
         >
-          <div className="flex items-center gap-4 flex-1">
+          <div className="flex items-center gap-2 flex-1 flex-wrap">
             {filterTabs.map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveFilter(tab)}
-                className={`text-xs font-semibold tracking-wider transition-colors flex items-center gap-1 ${
-                  activeFilter === tab
-                    ? ""
-                    : "text-[#7F888F] hover:text-[#4C5863]"
-                }`}
-                style={activeFilter === tab ? { color: 'var(--th-text-primary)' } : undefined}
+                className="flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.25px] transition-all"
+                style={{
+                  backgroundColor: activeFilter === tab ? 'var(--th-bg-hover)' : 'transparent',
+                  color: activeFilter === tab ? 'var(--th-tab-active)' : 'var(--th-text-secondary)',
+                }}
               >
                 {activeFilter === tab && (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <polyline points="20 6 9 17 4 12"/>
                   </svg>
                 )}
@@ -74,7 +73,7 @@ export default function ContactsList() {
               </button>
             ))}
           </div>
-          <button className="text-xs font-semibold tracking-wider hover:opacity-80" style={{ color: 'var(--th-tab-active)' }}>
+          <button className="text-xs font-semibold tracking-wider hover:opacity-80" data-tip="Add new contact" style={{ color: 'var(--th-tab-active)' }}>
             + ADD CONTACT
           </button>
         </div>
@@ -110,8 +109,8 @@ export default function ContactsList() {
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
             >
               {/* Favorite star */}
-              <button className="shrink-0">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill={contact.isFavorite ? "#FBBD00" : "none"} stroke={contact.isFavorite ? "#FBBD00" : "#CCCFD2"} strokeWidth="1.5">
+              <button className="shrink-0 -mr-1" title={contact.isFavorite ? "Remove from favorites" : "Add to favorites"}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill={contact.isFavorite ? "#FBBD00" : "none"} stroke={contact.isFavorite ? "#FBBD00" : "#CCCFD2"} strokeWidth="1.5">
                   <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                 </svg>
               </button>
@@ -119,31 +118,27 @@ export default function ContactsList() {
               {/* Avatar */}
               <div
                 className="w-10 h-10 rounded-full shrink-0 overflow-hidden flex items-center justify-center"
-                style={{ backgroundColor: 'var(--th-border)' }}
+                style={{ backgroundColor: 'var(--th-bg-hover)' }}
               >
                 {contact.isUnknown ? (
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2">
                     <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
                     <circle cx="12" cy="7" r="4"/>
                   </svg>
-                ) : contact.initials ? (
-                  <span className="text-sm font-semibold text-[#4C5863]">{contact.initials}</span>
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-sm font-semibold">
-                    {contact.name.split(" ").map(n => n[0]).join("")}
-                  </div>
+                  <span className="text-sm font-semibold" style={{ color: "var(--th-text-secondary)" }}>{contact.initials || contact.name.split(" ").map(n => n[0]).join("")}</span>
                 )}
               </div>
 
               {/* Info */}
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate" style={{ color: 'var(--th-text-primary)' }}>{contact.name}</p>
-                <p className="text-xs text-[#7F888F]">{contact.phone || contact.type}</p>
+                <p className="text-xs text-[color:var(--th-text-muted)]">{contact.phone || contact.type}</p>
               </div>
 
               {/* Extension badge */}
               <span
-                className="text-xs text-[#4C5863] px-2 py-0.5 rounded border"
+                className="text-xs text-[color:var(--th-text-secondary)] px-2 py-0.5 rounded border"
                 style={{ backgroundColor: 'var(--th-badge-bg)', borderColor: 'var(--th-border)' }}
               >
                 {contact.extension}
@@ -153,17 +148,17 @@ export default function ContactsList() {
               <button
                 onClick={(e) => { e.stopPropagation(); setCallingContact(contact); }}
                 className="p-1.5 rounded transition-colors active:scale-90"
+                data-tip="Make a call"
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
-                </svg>
+                <svg width="18" height="18" viewBox="0 0 28 28" fill="#4C5863"><path d="M21.76 18.2c-1.3-1.1-2.61-1.78-3.89-.67l-.77.67c-.56.49-1.56 2.76-5.58-1.87-4.02-4.62-1.61-5.34-1.15-5.82l.77-.67c1.27-1.11.79-2.51-.13-3.94l-.55-.87c-.74-1.15-1.75-2.1-3.02-.99l-.7.6c-.56.41-2.14 1.75-2.52 4.29-.46 3.04.72 6.53 4.05 10.36 3.32 3.83 6.58 5.75 9.66 5.72 2.56-.03 4.11-1.4 4.6-1.9l.69-.61c1.28-1.1.49-2.24-.79-3.35l-.78-.63z"/></svg>
               </button>
 
               {/* More */}
               <button
                 className="p-1 rounded transition-colors opacity-0 group-hover:opacity-100"
+                data-tip="More options"
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               >

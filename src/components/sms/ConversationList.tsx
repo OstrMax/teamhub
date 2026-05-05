@@ -52,7 +52,7 @@ export default function ConversationList({
               style={{ color: 'var(--th-text-primary)' }}
             />
           </div>
-          <button className="w-8 h-8 rounded-full bg-[#2a1051] flex items-center justify-center hover:bg-[#3d1870] transition-colors">
+          <button style={{ backgroundColor: "var(--th-tab-active)" }} className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-[#3d1870] transition-colors">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
               <line x1="12" y1="5" x2="12" y2="19"/>
               <line x1="5" y1="12" x2="19" y2="12"/>
@@ -99,7 +99,7 @@ export default function ConversationList({
               </p>
             </div>
             {conv.unread && (
-              <span className="shrink-0 w-5 h-5 rounded-full bg-[#2a1051] text-white text-[10px] font-bold flex items-center justify-center">
+              <span style={{ backgroundColor: "var(--th-tab-active)" }} className="shrink-0 w-5 h-5 rounded-full text-white text-[10px] font-bold flex items-center justify-center">
                 {conv.unread}
               </span>
             )}

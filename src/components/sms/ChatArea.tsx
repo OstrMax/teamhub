@@ -154,13 +154,7 @@ export default function ChatArea() {
 
       {/* Message input */}
       <div className="px-4 py-3 border-t" style={{ borderColor: 'var(--th-border)' }}>
-        <div
-          className="flex items-center gap-3 border rounded-xl px-4 py-2.5"
-          style={{
-            borderColor: 'var(--th-border-light)',
-            backgroundColor: 'var(--th-bg)',
-          }}
-        >
+        <div className="glass-composer flex items-center gap-3 rounded-xl px-4 py-2.5">
           <input
             type="text"
             placeholder="Ask anything or select"
@@ -169,7 +163,7 @@ export default function ChatArea() {
             className="flex-1 outline-none text-sm bg-transparent placeholder:text-[#7F888F]"
             style={{ color: 'var(--th-text-primary)' }}
           />
-          <button className="w-9 h-9 rounded-full flex items-center justify-center hover:opacity-90 transition-opacity shrink-0" style={{ background: "linear-gradient(180deg, #AE0D8A 0%, #64168E 47.6%, #2F1155 100%)" }}>
+          <button data-tip="Send SMS" className="glass-send w-9 h-9 rounded-full flex items-center justify-center shrink-0" style={{ background: "linear-gradient(180deg, #AE0D8A 0%, #64168E 47.6%, #2F1155 100%)" }}>
             <svg width="16" height="15" viewBox="0 0 16 15" fill="none"><path d="M14.5439 0.820147C12.4104 -1.22485 5.54146 1.16452 4.76577 1.44327C2.63493 2.21015 0.0788345 3.3864 0.00205328 4.6414C-0.085228 6.36952 2.6264 8.10015 5.02696 8.77515C5.14246 8.80765 5.26715 8.77515 5.35246 8.6939L9.66533 4.5864C9.92193 4.34202 10.3367 4.34202 10.5933 4.5864C10.8499 4.83077 10.8499 5.22577 10.5933 5.47015L6.26924 9.58827C6.18393 9.66952 6.1498 9.78827 6.18327 9.89827C6.90121 12.2458 8.77349 14.6683 10.508 14.6683C10.5217 14.6683 10.5362 14.6683 10.55 14.6683C11.9419 14.5633 13.2524 11.6995 13.9093 10.0026C14.1941 9.27015 16.6183 2.79765 14.5439 0.820147Z" fill="white"/></svg>
           </button>
         </div>

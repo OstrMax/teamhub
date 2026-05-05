@@ -83,20 +83,6 @@ const tips: WalkthroughTip[] = [
   },
 ];
 
-const arrowPositionClasses: Record<string, string> = {
-  up: "absolute bottom-full left-1/2 -translate-x-1/2",
-  down: "absolute top-full left-1/2 -translate-x-1/2",
-  left: "absolute right-full top-1/2 -translate-y-1/2",
-  right: "absolute left-full top-1/2 -translate-y-1/2",
-};
-
-const arrowBorderStyles: Record<string, React.CSSProperties> = {
-  up: { width: 0, height: 0, borderLeft: "6px solid transparent", borderRight: "6px solid transparent", borderBottom: "6px solid var(--th-walkthrough-bg)" },
-  down: { width: 0, height: 0, borderLeft: "6px solid transparent", borderRight: "6px solid transparent", borderTop: "6px solid var(--th-walkthrough-bg)" },
-  left: { width: 0, height: 0, borderTop: "6px solid transparent", borderBottom: "6px solid transparent", borderRight: "6px solid var(--th-walkthrough-bg)" },
-  right: { width: 0, height: 0, borderTop: "6px solid transparent", borderBottom: "6px solid transparent", borderLeft: "6px solid var(--th-walkthrough-bg)" },
-};
-
 export default function WalkthroughBubbles() {
   const [currentTip, setCurrentTip] = useState(0);
   const [visible, setVisible] = useState(false);
@@ -130,6 +116,20 @@ export default function WalkthroughBubbles() {
     setDismissed(true);
   };
 
+  const arrowBaseClasses: Record<string, { position: string; borders: string }> = {
+    up: { position: "bottom-full left-1/2 -translate-x-1/2 mb-0", borders: "border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[6px]" },
+    down: { position: "top-full left-1/2 -translate-x-1/2 mt-0", borders: "border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px]" },
+    left: { position: "right-full top-1/2 -translate-y-1/2 mr-0", borders: "border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-r-[6px]" },
+    right: { position: "left-full top-1/2 -translate-y-1/2 ml-0", borders: "border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-l-[6px]" },
+  };
+
+  const arrowColorProp: Record<string, string> = {
+    up: "borderBottomColor",
+    down: "borderTopColor",
+    left: "borderRightColor",
+    right: "borderLeftColor",
+  };
+
   return (
     <>
       {/* Subtle backdrop */}
@@ -141,12 +141,9 @@ export default function WalkthroughBubbles() {
         style={{ ...tip.position }}
         key={tip.id}
       >
-        <div
-          className="relative rounded-2xl px-5 py-4 shadow-[0_8px_30px_rgba(0,0,0,0.3)] min-w-[300px] max-w-[320px] text-white"
-          style={{ backgroundColor: "var(--th-walkthrough-bg)", border: "1px solid var(--th-walkthrough-border)" }}
-        >
+        <div className="relative text-white rounded-2xl px-5 py-4 min-w-[300px] max-w-[320px]" style={{ backgroundColor: "var(--th-walkthrough-bg)", border: "1px solid var(--th-walkthrough-border)", boxShadow: "var(--th-dropdown-shadow)" }}>
           {/* Arrow */}
-          <div className={arrowPositionClasses[tip.arrowDirection]} style={arrowBorderStyles[tip.arrowDirection]} />
+          <div className={`absolute w-0 h-0 ${arrowBaseClasses[tip.arrowDirection].position} ${arrowBaseClasses[tip.arrowDirection].borders}`} style={{ [arrowColorProp[tip.arrowDirection]]: "var(--th-walkthrough-bg)" }} />
 
           {/* Title */}
           <p className="text-[15px] font-semibold mb-1.5">{tip.title}</p>
@@ -184,8 +181,7 @@ export default function WalkthroughBubbles() {
               )}
               <button
                 onClick={handleNext}
-                className="px-4 py-1.5 text-[12px] font-semibold rounded-full hover:bg-white/90 active:scale-95 transition-all"
-                style={{ backgroundColor: "white", color: "var(--th-walkthrough-bg)" }}
+                className="px-4 py-1.5 bg-white text-[color:var(--th-text-primary)] text-[12px] font-semibold rounded-full hover:bg-white/90 active:scale-95 transition-all"
               >
                 {isLast ? "Got it!" : "Next"}
               </button>

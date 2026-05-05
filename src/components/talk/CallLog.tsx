@@ -46,12 +46,8 @@ export default function CallLog() {
           <button
             key={tab}
             onClick={() => setActiveFilter(tab)}
-            className={`text-xs font-semibold tracking-wider transition-colors flex items-center gap-1 ${
-              activeFilter === tab
-                ? ""
-                : "text-[#7F888F] hover:text-[#4C5863]"
-            }`}
-            style={activeFilter === tab ? { color: 'var(--th-text-primary)' } : undefined}
+            className="text-xs font-semibold tracking-wider transition-colors flex items-center gap-1"
+            style={{ color: activeFilter === tab ? 'var(--th-text-primary)' : 'var(--th-text-muted)' }}
           >
             {activeFilter === tab && (
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -69,7 +65,7 @@ export default function CallLog() {
           className="flex items-center gap-2 px-4 py-2 rounded-lg"
           style={{ backgroundColor: 'var(--th-search-bg)' }}
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-muted)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="11" cy="11" r="8"/>
             <line x1="21" y1="21" x2="16.65" y2="16.65"/>
           </svg>
@@ -78,7 +74,7 @@ export default function CallLog() {
             placeholder="Search calls"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 bg-transparent outline-none text-sm placeholder:text-[#7F888F]"
+            className="flex-1 bg-transparent outline-none text-sm placeholder:text-[var(--th-text-muted)]"
             style={{ color: 'var(--th-text-primary)' }}
           />
         </div>
@@ -86,7 +82,7 @@ export default function CallLog() {
 
       {/* Table header */}
       <div
-        className="grid grid-cols-[1fr_100px_80px_120px_60px] gap-2 px-6 py-2 text-xs font-semibold text-[#7F888F] tracking-wider border-b"
+        className="grid grid-cols-[1fr_100px_80px_120px_60px] gap-2 px-6 py-2 text-xs font-semibold text-[var(--th-text-muted)] tracking-wider border-b"
         style={{ borderColor: 'var(--th-border)' }}
       >
         <span>TO / FROM</span>
@@ -111,13 +107,13 @@ export default function CallLog() {
               {/* Direction icon */}
               <div className="shrink-0">
                 {record.direction === "incoming" && (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-secondary)" strokeWidth="2">
                     <line x1="7" y1="17" x2="17" y2="7"/>
                     <polyline points="7 7 7 17 17 17"/>
                   </svg>
                 )}
                 {record.direction === "outgoing" && (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-secondary)" strokeWidth="2">
                     <line x1="7" y1="17" x2="17" y2="7"/>
                     <polyline points="17 17 17 7 7 7"/>
                   </svg>
@@ -132,8 +128,8 @@ export default function CallLog() {
               <div>
                 <p className="text-sm font-medium" style={{ color: 'var(--th-text-primary)' }}>{record.name}</p>
                 <span
-                  className="text-xs text-[#4C5863] px-1.5 py-0.5 rounded border inline-block mt-0.5"
-                  style={{ backgroundColor: 'var(--th-badge-bg)', borderColor: 'var(--th-border)' }}
+                  className="text-xs px-1.5 py-0.5 rounded border inline-block mt-0.5"
+                  style={{ backgroundColor: 'var(--th-badge-bg)', borderColor: 'var(--th-border)', color: 'var(--th-text-secondary)' }}
                 >
                   {record.extension}
                 </span>
@@ -152,7 +148,7 @@ export default function CallLog() {
             {/* Call time */}
             <div>
               <p className="text-sm" style={{ color: 'var(--th-text-primary)' }}>{record.date}</p>
-              <p className="text-xs text-[#7F888F]">{record.time}</p>
+              <p className="text-xs" style={{ color: 'var(--th-text-muted)' }}>{record.time}</p>
             </div>
 
             {/* Actions */}
@@ -162,7 +158,7 @@ export default function CallLog() {
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="1.5">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--th-text-secondary)" strokeWidth="1.5">
                   <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
                 </svg>
               </button>
@@ -171,7 +167,7 @@ export default function CallLog() {
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="#4C5863">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--th-text-secondary)">
                   <circle cx="12" cy="5" r="1.5"/>
                   <circle cx="12" cy="12" r="1.5"/>
                   <circle cx="12" cy="19" r="1.5"/>

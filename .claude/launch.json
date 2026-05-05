@@ -5,7 +5,8 @@
       "name": "teamhub-dev",
       "runtimeExecutable": "/Users/maxostrozhinskiy/.nvm/versions/node/v24.13.1/bin/node",
       "runtimeArgs": ["/Users/maxostrozhinskiy/teamhub/node_modules/.bin/next", "dev"],
-      "port": 3000
+      "port": 3001,
+      "autoPort": true
     }
   ]
 }

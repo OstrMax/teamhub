@@ -66,6 +66,15 @@ const chartPoints = [
   { x: 500, y: 56, time: "7pm", calls: 48 },
 ];
 
+function hexToRgba(hex: string, alpha: number): string {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+const meetingColors = ["#7C3AED", "#1D3E77", "#2CAD43"];
+
 // More icon component - 20x20 with hover
 function MoreIcon({ className = "" }: { className?: string }) {
   return (
@@ -206,7 +215,7 @@ export default function Home() {
                     borderColor: todo.done ? 'var(--th-text-primary)' : 'var(--th-border)',
                   }}
                 >
-                  {todo.done && <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg>}
+                  {todo.done && <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--th-bg)" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg>}
                 </button>
                 <div className="flex-1 min-w-0">
                   {editingId === todo.id ? (
@@ -239,7 +248,7 @@ export default function Home() {
         </div>
 
         {/* Quick Actions */}
-        <div className="rounded-[16px] p-[23px]" style={{ backgroundColor: 'var(--th-quick-actions-bg, rgba(29,62,119,0.04))' }}>
+        <div className="rounded-[16px] p-[24px]" style={{ backgroundColor: 'var(--th-quick-actions-bg, rgba(29,62,119,0.04))' }}>
           <div className="flex items-center justify-between mb-5">
             <h2 className="text-lg font-semibold" style={{ color: 'var(--th-text-primary)' }}>Quick actions</h2>
             <MoreIcon />
@@ -248,31 +257,32 @@ export default function Home() {
             {[
               {
                 label: "Create new\ntask",
-                iconBg: "border border-[#E5E6E8] bg-white",
-                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4C5863" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
+                iconStyle: { background: "transparent", border: "1.5px solid #CCCFD2" },
+                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
               },
               {
                 label: "Send SMS",
-                iconBg: "bg-[#DCF1E0]",
-                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" fill="#066A18"/><rect x="7" y="9" width="2" height="2" rx="0.5" fill="#066A18"/><rect x="11" y="9" width="2" height="2" rx="0.5" fill="#066A18"/><rect x="15" y="9" width="2" height="2" rx="0.5" fill="#066A18"/></svg>,
+                iconStyle: { background: "rgba(44,173,67,0.12)" },
+                icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="#1a7a2b"><path d="M11.99 3C8.65 3 5.75 4.12 3.83 6.15C1.58 8.54 1 11.5 2.11 14.98C2.68 16.76 3.81 19.26 5.96 21.08C6.13 21.22 6.33 21.29 6.54 21.29C6.76 21.29 6.98 21.21 7.15 21.06C7.64 20.62 8.11 19.98 8.6 19.13C9.76 19.38 10.88 19.5 12 19.5C17.97 19.5 22.47 15.91 22.47 11.14C22.47 6.5 17.97 3 11.99 3ZM8.62 12.75C8 12.75 7.5 12.25 7.5 11.63C7.5 11 8 10.5 8.62 10.5C9.25 10.5 9.75 11 9.75 11.63C9.75 12.25 9.25 12.75 8.62 12.75ZM12.37 12.75C11.75 12.75 11.25 12.25 11.25 11.63C11.25 11 11.75 10.5 12.37 10.5C13 10.5 13.5 11 13.5 11.63C13.5 12.25 13 12.75 12.37 12.75ZM16.12 12.75C15.5 12.75 15 12.25 15 11.63C15 11 15.5 10.5 16.12 10.5C16.75 10.5 17.25 11 17.25 11.63C17.25 12.25 16.75 12.75 16.12 12.75Z"/></svg>,
               },
               {
                 label: "Make a call",
-                iconBg: "bg-[#d1daeb]",
-                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="#1D3E77"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>,
+                iconStyle: { background: "rgba(29,62,119,0.12)" },
+                icon: <svg width="16" height="16" viewBox="0 0 28 28" fill="#1D3E77"><path d="M21.76 18.2c-1.3-1.1-2.61-1.78-3.89-.67l-.77.67c-.56.49-1.56 2.76-5.58-1.87-4.02-4.62-1.61-5.34-1.15-5.82l.77-.67c1.27-1.11.79-2.51-.13-3.94l-.55-.87c-.74-1.15-1.75-2.1-3.02-.99l-.7.6c-.56.41-2.14 1.75-2.52 4.29-.46 3.04.72 6.53 4.05 10.36 3.32 3.83 6.58 5.75 9.66 5.72 2.56-.03 4.11-1.4 4.6-1.9l.69-.61c1.28-1.1.49-2.24-.79-3.35l-.78-.63z"/></svg>,
               },
               {
                 label: "Start video\nmeeting",
-                iconBg: "bg-[#ebd6e8]",
-                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="#7C3AED"><path d="M15 8v8H5V8h10m1-2H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4V7c0-.55-.45-1-1-1z"/></svg>,
+                iconStyle: { background: "rgba(156,50,140,0.12)" },
+                icon: <svg width="17" height="17" viewBox="0 0 24 24" fill="#7C2870"><path d="M23.2 7.95C22.89 7.28 22.15 6.89 21.44 7.07C20.9 7.2 20.33 7.52 19.72 7.92C19.45 8.1 19.33 8.44 19.42 8.75C20.01 10.91 20.01 13.09 19.42 15.25C19.33 15.56 19.45 15.9 19.72 16.08C20.33 16.49 20.9 16.8 21.44 16.93C22.15 17.11 22.89 16.71 23.2 16.05C24.24 13.77 24.24 10.23 23.2 7.95ZM3.7 5.92C7.85 4.35 12.01 4.35 16.16 5.92C16.53 6.06 16.84 6.34 17.02 6.7C18.8 10.23 18.8 13.77 17.02 17.3C16.84 17.66 16.53 17.94 16.16 18.08C12.01 19.65 7.85 19.65 3.7 18.08C3.33 17.94 3.02 17.66 2.84 17.3C1.05 13.77 1.05 10.23 2.84 6.7C3.02 6.34 3.33 6.06 3.7 5.92Z"/></svg>,
               },
             ].map((action) => (
               <button
                 key={action.label}
-                className="flex items-center gap-4 p-3 rounded-[12px] shadow-[0px_1px_12px_0px_rgba(0,0,0,0.04)] hover:shadow-[0_2px_16px_rgba(0,0,0,0.08)] active:scale-[0.98] transition-all"
-                style={{ height: 74, backgroundColor: 'var(--th-bg-card)' }}
+                className="card-lift flex items-center gap-3 p-4 rounded-[12px] shadow-[0px_1px_12px_0px_rgba(0,0,0,0.06)]"
+                style={{ backgroundColor: 'var(--th-bg-card)' }}
+                title={action.label.replace('\n', ' ')}
               >
-                <span className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${action.iconBg}`}>{action.icon}</span>
+                <span className="w-9 h-9 rounded-full flex items-center justify-center shrink-0" style={action.iconStyle}>{action.icon}</span>
                 <span className="text-[14px] font-medium text-left whitespace-pre-wrap leading-[1.3]" style={{ color: 'var(--th-text-primary)' }}>{action.label}</span>
               </button>
             ))}
@@ -302,13 +312,13 @@ export default function Home() {
                   </div>
                 )}
                 {i !== 0 && <div className="w-10 shrink-0" />}
-                <div className="flex-1 min-w-0">
+                <div className="flex-1 p-3 rounded-lg transition-colors" style={{ backgroundColor: hexToRgba(meetingColors[i % meetingColors.length], 0.08), borderLeft: `3px solid ${meetingColors[i % meetingColors.length]}` }}>
                   <p className="text-sm font-medium" style={{ color: 'var(--th-text-primary)' }}>{meeting.title}</p>
                   <p className="text-xs" style={{ color: 'var(--th-text-muted)' }}>{meeting.time}</p>
                 </div>
                 <div className="flex items-center -space-x-2">
                   {meeting.avatars.map((a) => (
-                    <div key={a} className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-medium text-white" style={{ background: avatarColors[a] || "#7C3AED", borderWidth: 2, borderStyle: 'solid', borderColor: 'var(--th-bg-card)' }}>{a}</div>
+                    <div key={a} className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-semibold" style={{ backgroundColor: "var(--th-bg-hover)", color: "var(--th-text-secondary)", borderWidth: 2, borderStyle: 'solid', borderColor: 'var(--th-bg-card)' }}>{a}</div>
                   ))}
                 </div>
                 {meeting.more && <span className="text-xs whitespace-nowrap" style={{ color: 'var(--th-text-muted)' }}>{meeting.more}</span>}
@@ -493,13 +503,13 @@ export default function Home() {
             </svg>
             {/* Chart line */}
             <svg className="absolute left-8 right-0 top-0 bottom-6" viewBox="0 0 500 140" preserveAspectRatio="none">
-              <polyline points="0,98 55,70 110,84 165,56 220,42 275,63 330,77 385,49 440,35 500,56" fill="none" stroke="var(--th-tab-active)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <polyline points="0,98 55,70 110,84 165,56 220,42 275,63 330,77 385,49 440,35 500,56" fill="none" stroke="var(--th-text-primary)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
             {/* Data points */}
             <svg className="absolute left-8 right-0 top-0 bottom-6" viewBox="0 0 500 140">
               {chartPoints.map((p, i) => (
                 <g key={i} onMouseEnter={() => setHoveredPoint(i)} onMouseLeave={() => setHoveredPoint(null)}>
-                  <circle cx={p.x} cy={p.y} r={hoveredPoint === i ? 6 : 4} fill="var(--th-tab-active)" className="transition-all duration-150"/>
+                  <circle cx={p.x} cy={p.y} r={hoveredPoint === i ? 6 : 4} fill="var(--th-text-primary)" className="transition-all duration-150"/>
                   <circle cx={p.x} cy={p.y} r="12" fill="transparent" className="cursor-pointer"/>
                 </g>
               ))}

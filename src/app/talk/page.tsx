@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import ContactsList from "@/components/talk/ContactsList";
 import CallLog from "@/components/talk/CallLog";
 import CallPopup from "@/components/talk/CallPopup";
@@ -29,6 +28,26 @@ const dialPadKeys = [
   { digit: "#", sub: "" },
 ];
 
+const voicemails = [
+  { id: 1, from: "Sarah Chen", phone: "+1 (416) 555-0123", duration: "0:42", date: "Today, 2:30 PM", isNew: true },
+  { id: 2, from: "Unknown", phone: "+1 (905) 555-0456", duration: "1:15", date: "Today, 11:45 AM", isNew: true },
+  { id: 3, from: "Mike Ross", phone: "+1 (647) 555-0789", duration: "0:28", date: "Yesterday, 4:20 PM", isNew: false },
+  { id: 4, from: "Terry Crews", phone: "+1 (416) 555-0321", duration: "2:05", date: "Yesterday, 9:15 AM", isNew: false },
+  { id: 5, from: "Laura Kim", phone: "+1 (905) 555-0654", duration: "0:55", date: "Mar 18, 3:30 PM", isNew: false },
+];
+
+const recordingsList = [
+  { id: 1, title: "Call with Sarah Chen", duration: "12:34", date: "Today, 10:30 AM", size: "4.2 MB" },
+  { id: 2, title: "Support Call #4521", duration: "8:15", date: "Yesterday, 2:15 PM", size: "2.8 MB" },
+  { id: 3, title: "Client Meeting — Acme", duration: "45:22", date: "Mar 18, 11:00 AM", size: "15.6 MB" },
+  { id: 4, title: "Sales Demo Call", duration: "23:10", date: "Mar 17, 3:45 PM", size: "7.9 MB" },
+];
+
+const parkedCalls = [
+  { id: 1, slot: "701", caller: "+1 (416) 555-0123", name: "Sarah Chen", duration: "2:15", queue: "Sales" },
+  { id: 2, slot: "702", caller: "+1 (905) 555-0456", name: "Unknown", duration: "0:45", queue: "Support" },
+];
+
 export default function TalkPage() {
   const [activeTab, setActiveTab] = useState<string>("contacts");
   const [phoneInput, setPhoneInput] = useState("");
@@ -41,21 +60,56 @@ export default function TalkPage() {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Page header — title + phone only */}
+      {/* Header bar: Talk title + phone dropdown + tabs */}
       <div
-        className="flex items-center gap-3 px-6 py-3 border-b"
-        style={{ borderColor: 'var(--th-border)' }}
+        className="flex items-center shrink-0 px-5"
+        style={{ borderBottom: '1px solid var(--th-border)' }}
       >
-        <h1 className="text-lg font-semibold" style={{ color: 'var(--th-text-primary)' }}>Talk</h1>
-        <button className="flex items-center gap-1 text-sm" style={{ color: 'var(--th-text-primary)' }}>
+        {/* Talk title */}
+        <span className="text-lg font-semibold mr-3" style={{ color: 'var(--th-text-primary)' }}>
+          Talk
+        </span>
+
+        {/* Phone number dropdown */}
+        <button
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm transition-colors"
+          style={{ color: 'var(--th-text-primary)' }}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+        >
           +12063127805
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <polyline points="6 9 12 15 18 9"/>
+            <polyline points="6 9 12 15 18 9" />
           </svg>
         </button>
+
+        {/* Separator */}
+        <div className="w-px h-6 mx-4" style={{ backgroundColor: 'var(--th-border)' }} />
+
+        {/* Tabs */}
+        <div className="flex items-center">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className="flex items-center gap-2 px-5 py-5 text-sm font-semibold transition-colors relative"
+              style={{
+                color: activeTab === tab.id ? 'var(--th-tab-active)' : 'var(--th-text-secondary)',
+              }}
+            >
+              <span style={{ color: activeTab === tab.id ? 'var(--th-tab-active)' : 'var(--th-text-secondary)' }}>
+                <tab.icon active={activeTab === tab.id} />
+              </span>
+              {tab.label}
+              {activeTab === tab.id && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5" style={{ backgroundColor: 'var(--th-tab-active)' }} />
+              )}
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/* Content — Left panel (call card + dial pad) | Tabs + Content right */}
+      {/* Content — Left panel (call card + dial pad) | Content right */}
       <div className="flex flex-1 overflow-hidden">
         {/* Left panel */}
         <div
@@ -66,47 +120,47 @@ export default function TalkPage() {
           {showActiveCall && (
             <div className="px-4 py-3" style={{ animation: "fadeIn 0.3s ease-out" }}>
               <span className="text-xs font-semibold" style={{ color: 'var(--th-text-primary)' }}>Ongoing call</span>
-              <div className="mt-2 bg-[#001221] rounded-[12px] p-2">
+              <div className="mt-2 rounded-[12px] p-2" style={{ backgroundColor: "var(--th-call-card-bg)", border: "1px solid var(--th-call-card-border)" }}>
                 {/* Header row: phone number + External badge */}
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-white text-[14px] font-medium">(416) 7638098</span>
-                  <span className="flex items-center gap-1 px-2.5 py-0.5 bg-[#ebd6e8] text-[#9c328c] text-[12px] font-medium rounded-full">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#9c328c" strokeWidth="2"><polyline points="7 17 2 12 7 7"/><polyline points="17 7 22 12 17 17"/></svg>
+                  <span className="text-[14px] font-medium" style={{ color: "var(--th-call-card-text)" }}>(416) 7638098</span>
+                  <span className="flex items-center gap-1 px-2.5 py-0.5 text-[12px] font-medium rounded-full" style={{ backgroundColor: "var(--th-badge-external-bg)", color: "var(--th-badge-external-text)" }}>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="7 17 2 12 7 7"/><polyline points="17 7 22 12 17 17"/></svg>
                     External
                   </span>
                 </div>
 
                 {/* Timer */}
-                <div className="text-[#e5e6e8]/80 text-[12px] mb-3">00:00:02</div>
+                <div className="text-[12px] mb-3" style={{ color: "var(--th-call-card-muted)" }}>00:00:02</div>
 
                 {/* Controls row */}
                 <div className="flex items-center gap-2">
                   {/* Blind dropdown */}
-                  <button className="flex items-center gap-1 bg-white rounded-full px-3 py-1.5 hover:bg-gray-100 transition-colors active:scale-95">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#001221" strokeWidth="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                    <span className="text-[#001221] text-[12px] font-medium">Blind</span>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#001221" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
+                  <button data-tip="Blind transfer" className="flex items-center gap-1 rounded-full px-3 py-1.5 transition-colors active:scale-95" style={{ backgroundColor: "var(--th-call-btn-bg)", color: "var(--th-call-btn-text)" }}>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    <span className="text-[12px] font-medium">Blind</span>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
                   </button>
 
                   <div className="flex-1" />
 
                   {/* Hold */}
-                  <button className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors active:scale-95" title="Hold">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+                  <button data-tip="Hold call" className="w-9 h-9 rounded-full flex items-center justify-center transition-colors active:scale-95" style={{ backgroundColor: "var(--th-call-action-bg)" }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--th-call-card-text)" strokeWidth="2"><line x1="8" y1="5" x2="8" y2="19"/><line x1="16" y1="5" x2="16" y2="19"/></svg>
                   </button>
 
                   {/* Park */}
-                  <button className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors active:scale-95" title="Park">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="18" r="1"/></svg>
+                  <button data-tip="Park call" className="w-9 h-9 rounded-full flex items-center justify-center transition-colors active:scale-95" style={{ backgroundColor: "var(--th-call-action-bg)" }}>
+                    <span className="text-[13px] font-bold" style={{ color: "var(--th-call-card-text)" }}>P</span>
                   </button>
 
                   {/* End call */}
                   <button
                     onClick={() => setShowActiveCall(false)}
-                    className="w-9 h-9 rounded-full bg-[#c70816] flex items-center justify-center hover:bg-[#a90612] transition-all active:scale-90"
-                    title="End call"
+                    data-tip="End call"
+                    className="w-9 h-9 rounded-full bg-[#EF4444] flex items-center justify-center hover:bg-[#dc3545] transition-all active:scale-90"
                   >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M23.71 16.67C20.66 13.78 16.54 12 12 12 7.46 12 3.34 13.78.29 16.67c-.18.18-.29.43-.29.71 0 .28.11.53.29.71l2.48 2.48c.18.18.43.29.71.29.27 0 .52-.11.7-.28.79-.74 1.69-1.36 2.66-1.85.33-.16.56-.5.56-.9v-3.1C8.69 14.25 10.32 14 12 14s3.31.25 4.9.72v3.1c0 .39.23.74.56.9.98.49 1.87 1.12 2.67 1.85.18.18.43.28.7.28.28 0 .53-.11.71-.29l2.48-2.48c.18-.18.29-.43.29-.71 0-.27-.11-.52-.29-.7z"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4.32564 12.1201C5.47897 11.9481 6.42229 11.5697 6.44429 10.4146L6.4556 9.72167C6.464 9.2154 5.78853 7.66424 9.96947 7.66096C14.1454 7.65328 13.4184 9.20775 13.4052 9.71277L13.3941 10.4089C13.375 11.5606 14.3024 11.9371 15.4514 12.1067L16.1447 12.2107C17.2919 12.3757 18.2292 12.2774 18.2514 11.1255L18.2599 10.4991C18.311 10.0246 18.3529 8.61362 17.2413 7.28151C15.9087 5.68225 13.4754 4.87232 10.0172 4.87638C6.55883 4.87729 4.0967 5.69704 2.70646 7.30024C1.55202 8.63383 1.54033 10.0474 1.57292 10.5207L1.56446 11.1471C1.54229 12.299 2.47557 12.3955 3.63039 12.2217L4.32564 12.1201Z" fill="white"/></svg>
                   </button>
                 </div>
               </div>
@@ -124,44 +178,16 @@ export default function TalkPage() {
               style={{ backgroundColor: 'transparent' }}
             />
 
-            {/* Volume slider */}
-            <div className="flex items-center gap-2.5 w-full mb-5 px-1">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M11 5L6 9H2v6h4l5 4V5z" fill="var(--th-text-muted)"/>
-                <path d="M15.54 8.46a5 5 0 010 7.07" stroke="var(--th-text-muted)" strokeWidth="1.5" strokeLinecap="round"/>
-              </svg>
-              <input
-                type="range"
-                min={0}
-                max={100}
-                defaultValue={50}
-                className="flex-1 h-[3px] rounded-full appearance-none cursor-pointer"
-                style={{
-                  background: `linear-gradient(to right, var(--th-text-muted) 0%, var(--th-text-muted) 50%, var(--th-border) 50%, var(--th-border) 100%)`,
-                }}
-                onChange={(e) => {
-                  const v = Number(e.target.value);
-                  e.target.style.background = `linear-gradient(to right, var(--th-text-muted) 0%, var(--th-text-muted) ${v}%, var(--th-border) ${v}%, var(--th-border) 100%)`;
-                }}
-              />
-              <button className="text-[11px] font-semibold text-[var(--th-text-muted)] uppercase tracking-wider whitespace-nowrap hover:text-[var(--th-text-primary)] transition-colors">
-                Phone Settings
-              </button>
-            </div>
-
             <div className="grid grid-cols-3 gap-3 mb-6">
               {dialPadKeys.map((key) => (
                 <button
                   key={key.digit}
                   onClick={() => setPhoneInput((prev) => prev + key.digit)}
-                  className="flex flex-col items-center justify-center w-16 h-16 rounded-full border active:scale-95 transition-all"
-                  style={{ borderColor: 'var(--th-border)', backgroundColor: 'var(--th-bg)' }}
-                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'}
-                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg)'}
+                  className="dial-key flex flex-col items-center justify-center w-16 h-16 rounded-full"
                 >
                   <span className="text-2xl font-medium" style={{ color: 'var(--th-text-primary)' }}>{key.digit}</span>
                   {key.sub && (
-                    <span className="text-[10px] font-medium text-[#7F888F] tracking-wider">{key.sub}</span>
+                    <span className="text-[10px] font-medium text-[color:var(--th-text-muted)] tracking-wider">{key.sub}</span>
                   )}
                 </button>
               ))}
@@ -169,46 +195,23 @@ export default function TalkPage() {
 
             <button
               onClick={handleCall}
-              className={`w-14 h-14 rounded-full bg-[#2CAD43] hover:bg-[#259c3a] flex items-center justify-center transition-all shadow-lg ${phoneInput.length > 0 ? "active:scale-90" : "opacity-60 cursor-not-allowed"}`}
+              data-tip="Make a call"
+              className={`btn-call w-14 h-14 rounded-full bg-[#2CAD43] flex items-center justify-center shadow-lg ${phoneInput.length > 0 ? "" : "opacity-60 cursor-not-allowed"}`}
             >
-              <Image src="/icons/call-button.svg" alt="Call" width={22} height={23} />
+              <svg width="22" height="22" viewBox="0 0 28 28" fill="white"><path d="M21.76 18.2c-1.3-1.1-2.61-1.78-3.89-.67l-.77.67c-.56.49-1.56 2.76-5.58-1.87-4.02-4.62-1.61-5.34-1.15-5.82l.77-.67c1.27-1.11.79-2.51-.13-3.94l-.55-.87c-.74-1.15-1.75-2.1-3.02-.99l-.7.6c-.56.41-2.14 1.75-2.52 4.29-.46 3.04.72 6.53 4.05 10.36 3.32 3.83 6.58 5.75 9.66 5.72 2.56-.03 4.11-1.4 4.6-1.9l.69-.61c1.28-1.1.49-2.24-.79-3.35l-.78-.63z"/></svg>
             </button>
           </div>
         </div>
 
-        {/* Right panel — tabs sit at top, content below */}
+        {/* Right panel — content */}
         <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Tabs row */}
-          <div className="flex items-center gap-1 border-b" style={{ borderColor: 'var(--th-border)' }}>
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`relative flex items-center gap-1.5 px-4 py-3 text-sm font-medium transition-colors ${
-                  activeTab === tab.id
-                    ? ""
-                    : "text-[#7F888F] hover:text-[#4C5863]"
-                }`}
-                style={activeTab === tab.id ? { color: 'var(--th-tab-active)' } : undefined}
-              >
-                <tab.icon active={activeTab === tab.id} />
-                {tab.label}
-                {activeTab === tab.id && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5" style={{ backgroundColor: 'var(--th-tab-active)' }} />
-                )}
-              </button>
-            ))}
-          </div>
-
           {/* Tab content */}
           <div className="flex-1 overflow-hidden">
             {activeTab === "contacts" && <ContactsList />}
             {activeTab === "call-log" && <CallLog />}
-            {activeTab !== "contacts" && activeTab !== "call-log" && (
-              <div className="flex-1 flex items-center justify-center text-[#7F888F] text-sm h-full">
-                {tabs.find(t => t.id === activeTab)?.label} - Coming soon
-              </div>
-            )}
+            {activeTab === "voicemail" && <VoicemailList />}
+            {activeTab === "recordings" && <RecordingsListView />}
+            {activeTab === "parked" && <ParkedCallsView />}
           </div>
         </div>
       </div>
@@ -218,6 +221,314 @@ export default function TalkPage() {
   );
 }
 
+/* ------------------------------------------------------------------ */
+/* Voicemail List                                                      */
+/* ------------------------------------------------------------------ */
+function VoicemailList() {
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
+
+  return (
+    <div className="flex flex-col flex-1 overflow-hidden h-full">
+      {/* Header */}
+      <div
+        className="flex items-center gap-4 px-6 py-3 border-b"
+        style={{ borderColor: 'var(--th-border)' }}
+      >
+        <span className="text-sm font-semibold" style={{ color: 'var(--th-text-primary)' }}>
+          Voicemail
+        </span>
+        <span className="text-xs px-2 py-0.5 rounded-full font-medium" style={{ backgroundColor: 'var(--th-tab-active)', color: '#fff' }}>
+          {voicemails.filter(v => v.isNew).length} new
+        </span>
+        <div className="flex-1" />
+        <div
+          className="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+          style={{ backgroundColor: 'var(--th-search-bg)' }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            type="text"
+            placeholder="Search voicemails"
+            className="bg-transparent outline-none text-sm placeholder:text-[#7F888F] w-48"
+            style={{ color: 'var(--th-text-primary)' }}
+          />
+        </div>
+      </div>
+
+      {/* List */}
+      <div className="flex-1 overflow-y-auto">
+        {voicemails.map((vm) => (
+          <div
+            key={vm.id}
+            className="flex items-center gap-4 px-6 py-3.5 transition-colors cursor-pointer"
+            style={{ backgroundColor: hoveredId === vm.id ? 'var(--th-bg-hover)' : 'transparent' }}
+            onMouseEnter={() => setHoveredId(vm.id)}
+            onMouseLeave={() => setHoveredId(null)}
+          >
+            {/* New indicator */}
+            <div className="w-2.5 shrink-0 flex items-center justify-center">
+              {vm.isNew && (
+                <div className="w-2.5 h-2.5 rounded-full bg-[#3B82F6]" />
+              )}
+            </div>
+
+            {/* Play button */}
+            <button
+              className="w-9 h-9 rounded-full border flex items-center justify-center shrink-0 transition-colors"
+              style={{ borderColor: 'var(--th-border)', backgroundColor: 'var(--th-bg)' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg)'}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--th-text-primary)">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+            </button>
+
+            {/* Info */}
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium truncate" style={{ color: 'var(--th-text-primary)' }}>
+                {vm.from}
+              </p>
+              <p className="text-xs text-[color:var(--th-text-muted)]">{vm.phone}</p>
+            </div>
+
+            {/* Duration */}
+            <span className="text-xs font-medium shrink-0" style={{ color: 'var(--th-text-secondary)' }}>
+              {vm.duration}
+            </span>
+
+            {/* Date */}
+            <span className="text-xs text-[color:var(--th-text-muted)] shrink-0 w-36 text-right">
+              {vm.date}
+            </span>
+
+            {/* Actions */}
+            <div className="flex items-center gap-1 shrink-0">
+              <button
+                data-tip="Call back"
+                className="p-1.5 rounded transition-colors"
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+                </svg>
+              </button>
+              <button
+                data-tip="Delete voicemail"
+                className="p-1.5 rounded transition-colors"
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="3 6 5 6 21 6"/>
+                  <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Recordings List                                                     */
+/* ------------------------------------------------------------------ */
+function RecordingsListView() {
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
+
+  return (
+    <div className="flex flex-col flex-1 overflow-hidden h-full">
+      {/* Header */}
+      <div
+        className="flex items-center gap-4 px-6 py-3 border-b"
+        style={{ borderColor: 'var(--th-border)' }}
+      >
+        <span className="text-sm font-semibold" style={{ color: 'var(--th-text-primary)' }}>
+          Recordings
+        </span>
+        <span className="text-xs text-[color:var(--th-text-muted)]">
+          {recordingsList.length} recordings
+        </span>
+        <div className="flex-1" />
+        <div
+          className="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+          style={{ backgroundColor: 'var(--th-search-bg)' }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            type="text"
+            placeholder="Search recordings"
+            className="bg-transparent outline-none text-sm placeholder:text-[#7F888F] w-48"
+            style={{ color: 'var(--th-text-primary)' }}
+          />
+        </div>
+      </div>
+
+      {/* List */}
+      <div className="flex-1 overflow-y-auto">
+        {recordingsList.map((rec) => (
+          <div
+            key={rec.id}
+            className="flex items-center gap-4 px-6 py-3.5 transition-colors cursor-pointer"
+            style={{ backgroundColor: hoveredId === rec.id ? 'var(--th-bg-hover)' : 'transparent' }}
+            onMouseEnter={() => setHoveredId(rec.id)}
+            onMouseLeave={() => setHoveredId(null)}
+          >
+            {/* Play button */}
+            <button
+              className="w-9 h-9 rounded-full border flex items-center justify-center shrink-0 transition-colors"
+              style={{ borderColor: 'var(--th-border)', backgroundColor: 'var(--th-bg)' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg)'}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--th-text-primary)">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+            </button>
+
+            {/* Info */}
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium truncate" style={{ color: 'var(--th-text-primary)' }}>
+                {rec.title}
+              </p>
+              <p className="text-xs text-[color:var(--th-text-muted)]">{rec.date}</p>
+            </div>
+
+            {/* Duration */}
+            <span className="text-xs font-medium shrink-0" style={{ color: 'var(--th-text-secondary)' }}>
+              {rec.duration}
+            </span>
+
+            {/* Size badge */}
+            <span
+              className="text-xs px-2 py-0.5 rounded border shrink-0"
+              style={{ backgroundColor: 'var(--th-badge-bg)', borderColor: 'var(--th-border)', color: 'var(--th-text-secondary)' }}
+            >
+              {rec.size}
+            </span>
+
+            {/* Download button */}
+            <button
+              data-tip="Download recording"
+              className="p-1.5 rounded transition-colors"
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--th-bg-hover)'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7F888F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Parked Calls                                                        */
+/* ------------------------------------------------------------------ */
+function ParkedCallsView() {
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
+
+  return (
+    <div className="flex flex-col flex-1 overflow-hidden h-full">
+      {/* Header */}
+      <div
+        className="flex items-center gap-4 px-6 py-3 border-b"
+        style={{ borderColor: 'var(--th-border)' }}
+      >
+        <span className="text-sm font-semibold" style={{ color: 'var(--th-text-primary)' }}>
+          Parked Calls
+        </span>
+        <span className="text-xs text-[color:var(--th-text-muted)]">
+          {parkedCalls.length} calls parked
+        </span>
+        <div className="flex-1" />
+      </div>
+
+      {/* List */}
+      <div className="flex-1 overflow-y-auto">
+        {parkedCalls.map((call) => (
+          <div
+            key={call.id}
+            className="flex items-center gap-4 px-6 py-3.5 transition-colors cursor-pointer"
+            style={{ backgroundColor: hoveredId === call.id ? 'var(--th-bg-hover)' : 'transparent' }}
+            onMouseEnter={() => setHoveredId(call.id)}
+            onMouseLeave={() => setHoveredId(null)}
+          >
+            {/* Slot badge */}
+            <span
+              className="text-xs font-bold px-2.5 py-1 rounded-md shrink-0"
+              style={{ backgroundColor: 'var(--th-tab-active)', color: '#fff' }}
+            >
+              {call.slot}
+            </span>
+
+            {/* Caller info */}
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium truncate" style={{ color: 'var(--th-text-primary)' }}>
+                {call.name}
+              </p>
+              <p className="text-xs text-[color:var(--th-text-muted)]">{call.caller}</p>
+            </div>
+
+            {/* Duration */}
+            <span className="text-xs font-medium shrink-0" style={{ color: 'var(--th-text-secondary)' }}>
+              {call.duration}
+            </span>
+
+            {/* Queue badge */}
+            <span
+              className="text-xs px-2.5 py-0.5 rounded-full font-medium shrink-0"
+              style={{
+                backgroundColor: call.queue === "Sales" ? '#DBEAFE' : '#FEF3C7',
+                color: call.queue === "Sales" ? '#1E40AF' : '#92400E',
+              }}
+            >
+              {call.queue}
+            </span>
+
+            {/* Pickup button */}
+            <button
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-white transition-colors active:scale-95"
+              style={{ backgroundColor: '#2CAD43' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#259c3a'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#2CAD43'}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="white">
+                <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+              </svg>
+              Pickup
+            </button>
+          </div>
+        ))}
+
+        {/* Empty state hint */}
+        {parkedCalls.length === 0 && (
+          <div className="flex items-center justify-center h-full text-sm text-[color:var(--th-text-muted)]">
+            No calls currently parked
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Tab Icons                                                           */
+/* ------------------------------------------------------------------ */
 function ContactsIcon({ active }: { active: boolean }) {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={active ? "var(--th-tab-active)" : "#7F888F"} strokeWidth="1.8">

@@ -52,7 +52,7 @@ export default function DialPad() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Enter a name or number"
-          className="w-full text-center text-base text-[var(--th-text-muted)] mb-4 pb-2 outline-none placeholder:text-[var(--th-text-muted)] bg-transparent"
+          className="w-full text-center text-[14px] text-[var(--th-text-primary)] mb-4 pb-2 outline-none placeholder:text-[var(--th-text-muted)] placeholder:text-[13px] bg-transparent"
         />
 
         {/* Volume slider */}

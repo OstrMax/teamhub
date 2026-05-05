@@ -46,7 +46,7 @@ export default function FilesPage() {
               <circle cx="7" cy="7" r="4.5" stroke="#7F888F" strokeWidth="1.3"/>
               <path d="M10.5 10.5L13.5 13.5" stroke="#7F888F" strokeWidth="1.3" strokeLinecap="round"/>
             </svg>
-            <input type="text" placeholder="Search files..." className="pl-8 pr-3 py-1.5 w-52 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-lg bg-[var(--th-bg)] focus:outline-none focus:border-[#2E1055] transition-colors" />
+            <input type="text" placeholder="Search files..." className="pl-8 pr-3 py-1.5 w-52 text-[13px] text-[var(--th-text-primary)] border border-[var(--th-border)] rounded-lg bg-[var(--th-bg)] focus:outline-none focus:border-[color:var(--th-tab-active)] transition-colors" />
           </div>
 
           {/* Sort */}
@@ -63,15 +63,15 @@ export default function FilesPage() {
           {/* View toggle */}
           <div className="flex items-center bg-[var(--th-bg-hover)] rounded-lg p-0.5">
             <button onClick={() => setView("list")} className={`p-1.5 rounded-md transition-all ${view === "list" ? "bg-[var(--th-bg)] shadow-sm" : ""}`}>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h12" stroke={view === "list" ? "#001221" : "#7F888F"} strokeWidth="1.3" strokeLinecap="round"/></svg>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h12" stroke={view === "list" ? "var(--th-text-primary)" : "var(--th-text-muted)"} strokeWidth="1.3" strokeLinecap="round"/></svg>
             </button>
             <button onClick={() => setView("grid")} className={`p-1.5 rounded-md transition-all ${view === "grid" ? "bg-[var(--th-bg)] shadow-sm" : ""}`}>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke={view === "grid" ? "#001221" : "#7F888F"} strokeWidth="1.3"/><rect x="9" y="2" width="5" height="5" rx="1" stroke={view === "grid" ? "#001221" : "#7F888F"} strokeWidth="1.3"/><rect x="2" y="9" width="5" height="5" rx="1" stroke={view === "grid" ? "#001221" : "#7F888F"} strokeWidth="1.3"/><rect x="9" y="9" width="5" height="5" rx="1" stroke={view === "grid" ? "#001221" : "#7F888F"} strokeWidth="1.3"/></svg>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke={view === "grid" ? "var(--th-text-primary)" : "var(--th-text-muted)"} strokeWidth="1.3"/><rect x="9" y="2" width="5" height="5" rx="1" stroke={view === "grid" ? "var(--th-text-primary)" : "var(--th-text-muted)"} strokeWidth="1.3"/><rect x="2" y="9" width="5" height="5" rx="1" stroke={view === "grid" ? "var(--th-text-primary)" : "var(--th-text-muted)"} strokeWidth="1.3"/><rect x="9" y="9" width="5" height="5" rx="1" stroke={view === "grid" ? "var(--th-text-primary)" : "var(--th-text-muted)"} strokeWidth="1.3"/></svg>
             </button>
           </div>
 
           {/* Upload */}
-          <button className="flex items-center gap-1.5 px-4 py-1.5 bg-[#2a1051] text-white text-[13px] font-medium rounded-lg hover:bg-[#3d1a6e] active:scale-[0.98] transition-all">
+          <button style={{ backgroundColor: "var(--th-tab-active)" }} className="flex items-center gap-1.5 px-4 py-1.5 text-white text-[13px] font-medium rounded-lg hover:bg-[#3d1a6e] active:scale-[0.98] transition-all">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 11V3m0 0L5 6m3-3l3 3M3 13h10" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
             Upload
           </button>
@@ -85,7 +85,7 @@ export default function FilesPage() {
           {folders.map((folder, i) => (
             <button
               key={folder.name}
-              className="flex items-center gap-3 px-4 py-3.5 bg-[var(--th-bg)] border border-[var(--th-border)] rounded-xl hover:border-[#C5C7CA] hover:shadow-sm active:scale-[0.98] transition-all text-left"
+              className="flex items-center gap-3 px-4 py-3.5 bg-[var(--th-bg)] border border-[var(--th-border)] rounded-xl hover:border-[var(--th-text-muted)] hover:shadow-sm active:scale-[0.98] transition-all text-left"
               style={{ animation: `fadeIn 0.2s ease-out ${0.04 * i}s both` }}
             >
               <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: `${folder.color}15` }}>
@@ -149,7 +149,7 @@ export default function FilesPage() {
             {files.map((file, i) => (
               <button
                 key={file.name}
-                className="flex flex-col items-center gap-2 p-4 bg-[var(--th-bg)] border border-[var(--th-border)] rounded-xl hover:border-[#C5C7CA] hover:shadow-sm active:scale-[0.98] transition-all text-center"
+                className="flex flex-col items-center gap-2 p-4 bg-[var(--th-bg)] border border-[var(--th-border)] rounded-xl hover:border-[var(--th-text-muted)] hover:shadow-sm active:scale-[0.98] transition-all text-center"
                 style={{ animation: `fadeIn 0.2s ease-out ${0.03 * i}s both` }}
               >
                 <FileTypeIcon type={file.type} />
